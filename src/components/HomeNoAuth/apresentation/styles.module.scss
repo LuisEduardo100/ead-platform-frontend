@@ -1,0 +1,43 @@
+.img{
+    width: 720px;
+}
+
+.comentario{
+    font-size: 16px;
+    font-weight: 500;
+    color: #F0C36E;
+    font-weight: bolder;
+}
+.titulo{
+    font-weight: bold;
+    font-size: 45px;
+    line-height: 50px;
+}
+.descricao{
+    margin: 35px 0 20px 0;
+    font-size: 25px;
+    font-weight: 500;
+    color: #E2D2B4;
+    line-height: 36px;
+}
+.btnAcesseAgora{
+    width: 180px;
+    border-radius: 8px;
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    &:hover{
+        background-color: #F0C36E;
+        color: black;
+        border: none;
+        font-weight: bolder;
+        transition: 0.6s;
+    }
+}
+
+.arrowImg{
+    width: 60px;
+    margin-top: 120px;
+}
