@@ -19,7 +19,7 @@ const PresentationSection = function () {
                         <Button className={styles.btnAcesseAgora} outline>ACESSE AGORA</Button>
                     </Link>
                 </Col>
-                <Col>
+                <Col md>
                     <img className={styles.img} src="/homeNoAuth/imgPresentation.png" alt="imgDeApresentacao"/>
                 </Col>
             </Row>
