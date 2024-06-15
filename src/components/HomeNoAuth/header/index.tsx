@@ -10,8 +10,11 @@ const HeaderNoAuth = function () {
         <>
             <div className={styles.backgroundContainer}>
                 <Container className={styles.containerHeader}>
-                    <h1 className={styles.tituloNav}>NOTA DEZ</h1>
-                    <div>
+                    <div className={styles.divLogo}>
+                        <img src="/favicon.png" alt="logoFooter" className={styles.imgLogo} />
+                        <h1 className={styles.tituloNav}>VOCÊ NOTA DEZ!</h1>
+                    </div>
+                    <div className={styles.divBtn}>
                         <Link href="/register">
                             <Button className={styles.btnAssine} outline>ASSINE</Button>
                         </Link>

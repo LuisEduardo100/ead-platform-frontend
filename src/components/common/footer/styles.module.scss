@@ -1,0 +1,31 @@
+.footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 10px;
+}
+.pFooter{
+    font-weight: 500;
+    font-size: 16px;
+    text-align: center;
+    padding: 12px;
+}
+.pLogo{
+    display: inline;
+    padding-left: 10px;
+    font-weight: bold;
+}
+.media{
+    padding: 12px;
+}
+.imgLogo{
+    width: 42px;
+}
+.imgFooter{
+    width: 42px;
+    filter: grayscale(100%);
+    &:hover{
+        filter: grayscale(0%);
+        transition: 0.3;
+    }
+}

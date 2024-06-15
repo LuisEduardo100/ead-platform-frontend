@@ -13,7 +13,7 @@ const PresentationSection = function () {
                     <p className={styles.titulo}>Tenha acesso a melhor plataforma EAD e seja nota dez.</p>
                     <p className={styles.descricao}>
                         Estude a qualquer momento e reveja as videoaulas quantas vezes
-                        precisas e reforce seu aprendizado com os materias de apoio!
+                        precisar e reforce seu aprendizado com os materias de apoio!
                     </p>
                     <Link href="/register">
                         <Button className={styles.btnAcesseAgora} outline>ACESSE AGORA</Button>
