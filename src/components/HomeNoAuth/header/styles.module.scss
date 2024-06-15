@@ -77,13 +77,12 @@
     }
 }
 
-@media screen and (max-width: 767px) {
+@media (max-width: 767px) {
     .containerHeader {
         justify-content: center;
     }
 
     .btnSouNotaDez {
-        margin: 16px 10px;
         border: 1px solid white;
         border-radius: 60px;
     }
@@ -91,7 +90,8 @@
     .btnAssine {
         font-size: 18px;
         width: 120px;
-        margin: 16px 10px;
+        margin: 16px auto;
+        display: block;
     }
     .btnSouNotaDez {
         margin: 6px 10px;

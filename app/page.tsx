@@ -11,7 +11,7 @@ import "aos/dist/aos.css";
 const HomeNoAuth = () => {
   useEffect(()=>{
     AOS.init()
-  })
+  }, [])
   return (
     <>
       <main >
