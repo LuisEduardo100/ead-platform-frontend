@@ -1,6 +1,6 @@
 'use client'
 import { useEffect } from 'react';
-import PresentationSection from '../src/components/HomeNoAuth/apresentation'
+import PresentationSection from '../src/components/HomeNoAuth/presentation'
 import HeaderNoAuth from '../src/components/HomeNoAuth/header'
 import Footer from '../src/components/common/footer'
 import styles from './styles/homeNoAuth.module.scss'

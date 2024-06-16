@@ -9,7 +9,8 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "VoceNotaDez",
   description: "Tenha acesso a melhor plataforma de suporte escolar online!",
-  icons: "/favicon.png"
+  icons: "/favicon.png",
+  
 };
 
 export default function RootLayout({
