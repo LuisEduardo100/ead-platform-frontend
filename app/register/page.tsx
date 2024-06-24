@@ -4,15 +4,22 @@ import HeaderGeneric from '../../src/components/common/headerGeneric'
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap'
 import 'jsuites';
 import Footer from '../../src/components/common/footer';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import authService from '../../src/services/authService';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import ToastComponent from '../../src/components/common/toastComponent';
 
 const Register = function () {
     const router = useRouter();
     const [toastIsOpen, setToastIsOpen] = useState(false)
     const [toastMessage, setToastMessage] = useState("")
+
+    useEffect(()=>{
+        if (sessionStorage.getItem("vocenotadez-token")){
+            router.push("/home")
+        }
+    }, [])
+
     const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -27,28 +34,28 @@ const Register = function () {
         const params = { firstName, lastName, phone, birth, email, password };
 
         if (password != confirmPassword) {
-            setToastIsOpen(true)
-            setTimeout(()=>{
-                setToastIsOpen(false)
-            }, 3000)
+            setToastIsOpen(true);
+            setTimeout(() => {
+                setToastIsOpen(false);
+            }, 2500);
+            setToastMessage("Senha e confirmação diferentes.");
 
-            setToastMessage("Senha e confirmação diferentes")
             return;
         }
 
-        const { data, status }= await authService.register(params);
+        const { data, status } = await authService.register(params);
 
         if (status === 201) {
-            router.push('/login?registred=true')
+            router.push("/login?success=true");
         } else {
-            setToastIsOpen(true)
-            setTimeout(()=>{
-                setToastIsOpen(false)
-            }, 3000)
-
-            setToastMessage(data.message)
+            setToastIsOpen(true);
+            setTimeout(() => {
+                setToastIsOpen(false);
+            }, 1000 * 3);
+            setToastMessage(data.message);
         }
     }
+
     return (
         <>
             <main className={styles.main}>
@@ -156,7 +163,7 @@ const Register = function () {
                     </Form>
                 </Container>
                 <Footer />
-                <ToastComponent isOpen={toastIsOpen} color="bg-danger" message={toastMessage} ></ToastComponent>
+                <ToastComponent color="bg-danger" isOpen={toastIsOpen} message={toastMessage} />
             </main>
         </>
     )

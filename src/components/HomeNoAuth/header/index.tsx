@@ -15,11 +15,14 @@ const HeaderNoAuth = function () {
                         <h1 className={styles.tituloNav}>VOCÊ NOTA DEZ!</h1>
                     </div>
                     <div className={styles.divBtn}>
+                        <Link href="/preços">
+                            <Button className={styles.btnPrecos}>PREÇOS</Button>
+                        </Link>
                         <Link href="/register">
-                            <Button className={styles.btnAssine} outline>ASSINE</Button>
+                            <Button className={styles.btnAssine} outline>REGISTRE-SE</Button>
                         </Link>
                         <Link href="/login">
-                            <Button className={styles.btnSouNotaDez}>SOU NOTA DEZ<span className={styles.fixingIconInMiddle}><i className="material-symbols-outlined">login</i></span></Button>
+                            <Button className={styles.btnSouNotaDez}>ENTRAR<span className={styles.fixingIconInMiddle}><i className="material-symbols-outlined">login</i></span></Button>
                         </Link>
                     </div>
                 </Container>

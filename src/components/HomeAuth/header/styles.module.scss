@@ -1,0 +1,153 @@
+.divbackground {
+    background-color: #deb66b;
+    padding: 10px;
+}
+
+.divLogo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+}
+
+.tituloNav {
+    font-weight: bold;
+    font-size: 36px;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+.imgLogo {
+    width: 60px;
+}
+
+.linkStyle {
+    text-decoration: none;
+    color: white;
+
+    &:hover {
+        color: white;
+    }
+}
+
+.searchIcon {
+    width: 22px;
+    margin-left: 9px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.userProfile {
+    margin-left: 9px;
+    background-color: white;
+    color: black;
+    border-radius: 50%;
+    justify-content: center;
+    font-weight: bold;
+    min-height: 45px;
+    min-width: 45px;
+    text-transform: uppercase;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.searchbar {
+    background-color: transparent;
+    width: 250px;
+    border-color: white;
+
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal{
+    position: absolute;
+    width: 180px;
+    height: 80px;
+    top: 85px;
+    right: 6.2%;
+    background-color: #DEB66B;
+    outline: none;
+    border-radius: 5px;
+    box-shadow: 8px 6px rgba(0, 0, 0, 0.486);
+
+
+    // Conteúdo do modal
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0px 24px;
+}
+.modalLink{
+    color: white;
+    margin: 5px 0px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    text-transform: uppercase;
+    &:hover{
+        color: black;
+        font-size: 18px;
+        transition: 0.3s;
+    }
+}
+.overlayModal{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: transparent;
+}
+@media (max-width: 991px){
+    .tituloNav{
+        font-size: 30px;
+    }
+    .modal{
+        right: 14%;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px){
+    .modal{
+        right: 10%;
+    }
+}
+@media (min-width: 367px) and (max-width: 767px){
+    .modal{
+        top: 143px;
+        right: 6%;
+    }
+    .tituloNav{
+        font-size: 24px;
+    }
+    .nav{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+    }
+}
+@media (max-width: 366px){
+    .nav{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        width: 95%;
+    }
+    .divLogo{
+        display: none;
+    }
+    .modal{
+        right: 3%;
+    }
+    .searchbar{
+        width: 95%;
+    }
+
+}

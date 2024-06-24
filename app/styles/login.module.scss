@@ -1,3 +1,7 @@
+.container{
+    padding: 48px 0px;
+    height: 75vh;
+}
 .main {
     background-image: linear-gradient(to bottom, #353535, black);
 }
@@ -56,15 +60,6 @@
         box-shadow: none;
     }
 }
-
-.inputName {
-    @extend .input;
-    text-transform: uppercase;
-    &::placeholder {
-        text-transform: none;
-    }
-}
-
 @media (max-width: 767px){
     .formTitle{
         font-size: 28px;

@@ -1,35 +1,30 @@
 'use client';
-import {Col, Row, Button, Container} from 'reactstrap'
+import { Col, Row, Button, Container, Input, Form } from 'reactstrap'
 import styles from './styles.module.scss'
-import Link from 'next/link'
 
 const PresentationSection = function () {
     return (
-    <>
-        <Container className="py-5">
-            <Row>
-                <Col md className="d-flex flex-column justify-content-center align-items-start">
-                    <p className={styles.comentario}>UM REFORÇO COMPLETO</p>
-                    <p className={styles.titulo}>Tenha acesso a melhor plataforma EAD e seja nota dez.</p>
-                    <p className={styles.descricao}>
-                        Estude a qualquer momento e reveja as videoaulas quantas vezes
-                        precisar e reforce seu aprendizado com os materias de apoio!
-                    </p>
-                    <Link href="/register">
-                        <Button className={styles.btnAcesseAgora} outline>ACESSE AGORA</Button>
-                    </Link>
-                </Col>
-                <Col md>
-                    <img className={styles.img} src="/homeNoAuth/imgPresentation.png" alt="imgDeApresentacao"/>
-                </Col>
-            </Row>
-            <Row>
-                <Col md className="d-flex justify-content-center pt-5">
-                    <img className={styles.arrowImg} src="/HomeNoAuth/iconArrowDown.svg" alt="arrowImg" />
-                </Col>
-            </Row>
-        </Container>
-    </>
+        <>
+            <Container className="py-5">
+                <Row className='py-3'>
+                    <Col md className="d-flex flex-column justify-items-center align-items-center">
+                        <p className={styles.comentario}>UM REFORÇO COMPLETO</p>
+                        <p className={styles.titulo}>SE TORNE O (A) MAIS INTELIGENTE DA SALA</p>
+                        <p className={styles.descricao}>
+                            AULAS, EXERÍCIOS, RESUMOS, ESTRATÉGIAS E SEGREDOS PARA VOCÊ SER NOTA DEZ!
+                        </p>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md className="d-flex justify-content-center pt-4">
+                        <Form>
+                            <Input name="search" id="search" placeholder="Buscar cursos" className={styles.searchbar} />
+                        </Form>
+                        <img src="/iconSearch.svg" alt="searchIcon" className={styles.searchIcon}/>
+                    </Col>
+                </Row>
+            </Container>
+        </>
     )
 }
 
