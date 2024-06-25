@@ -6,7 +6,7 @@ import Footer from '../src/components/common/footer'
 import styles from './styles/homeNoAuth.module.scss'
 import AOS from "aos";
 import "aos/dist/aos.css";
-import HomeSlide from '../src/components/HomeNoAuth/HomeSlide';
+import HomeSlide from '../src/components/HomeNoAuth/homeNoAuthSlide/HomeSlide';
 
 const HomeNoAuth = () => {
   useEffect(() => {

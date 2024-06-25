@@ -12,7 +12,6 @@ export default function SlideSection ({ newestCourses }: props){
     return (
       <>
         <Container fluid className="d-flex flex-column align-items-center pb-3">
-          <p className={styles.sectionTitle}>MÓDULOS SOMA E MULTIPLICAÇÃO</p>
           <SlideComponent course={newestCourses} />
         </Container>
       </>
