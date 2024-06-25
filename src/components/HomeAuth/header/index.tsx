@@ -28,7 +28,7 @@ const HeaderAuth = function () {
     return (<>
         <div id="next" className={styles.divbackground}>
             <Container className={styles.nav}>
-                <Link className={styles.linkStyle} href="/">
+                <Link className={styles.linkStyle} href="/home">
                     <div className={styles.divLogo}>
                         <img src="/favicon.png" alt="logoFooter" className={styles.imgLogo} />
                         <h1 className={styles.tituloNav}>VOCÊ NOTA DEZ!</h1>
