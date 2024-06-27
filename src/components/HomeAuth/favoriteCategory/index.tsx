@@ -5,14 +5,16 @@ import PageSpinner from '../../common/pageSpinner'
 import styles from './styles.module.scss'
 import courseService from '../../../services/courseService'
 import SlideSection from '../../HomeNoAuth/slideSection'
+import { Container } from 'reactstrap'
 
 export default function FavoriteCourses() {
-    const { data, error } = useSWR("/favorites", courseService.getFavCourses);
-    if (error) return error;
-    if (!data)  return (<><PageSpinner/></>);
-    return (
-      <>
-        <p className={styles.pStyle}>Minha Lista</p>
+  const { data, error } = useSWR("/favorites", courseService.getFavCourses);
+  if (error) return error;
+  if (!data) return (<><PageSpinner /></>);
+  return (
+    <>
+      <Container>
+        <p className={styles.pStyle}>MINHA LISTA</p>
         {data.data.courses.length >= 1 ? (
           <SlideSection newestCourses={data.data.courses} />
         ) : (
@@ -20,6 +22,7 @@ export default function FavoriteCourses() {
             <p>Você não tem nenhum curso na lista</p>
           </p>
         )}
-      </>
-    );
+      </Container>
+    </>
+  );
 }
