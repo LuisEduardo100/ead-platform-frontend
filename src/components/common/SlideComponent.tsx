@@ -6,28 +6,43 @@ export interface props {
     course: CourseType[]
 }
 
-const SlideComponent = function ({ course }: props) {  
+const SlideComponent = function ({ course }: props) {
+
+    let slideCount = 0;
+
+    if (course && course.length > 4) {
+        slideCount = 4;
+    } else if (course) {
+        slideCount = course.length;
+    }
+
     return (
         <>
             <div className="d-flex flex-column align-items-center py-4">
                 <Splide
                     options={{
                         type: "loop",
-                        perPage: 4,
+                        perPage: slideCount,
                         perMove: 1,
-                        width: 1280,
+                        width: slideCount * 320,
                         pagination: false,
+                        arrows: course?.length > 4 ? true : false,
+                        drag: course?.length > 4 ? true : false,
                         breakpoints: {
-                            1300: {
-                                perPage: 2,
-                                width: 640
+                            1200: {
+                                perPage: slideCount >= 2 ? 2 : 1,
+                                width: slideCount >= 2 ? 640 : 300,
+                                arrows: course?.length > 2 ? true : false,
+                                drag: course?.length > 2 ? true : false,
                             },
-                            730: {
+                            640: {
                                 perPage: 1,
-                                width: 320
+                                width: 320,
+                                arrows: course?.length > 1 ? true : false,
+                                drag: course?.length > 1 ? true : false,
                             },
-                            350: {
-                                width: 260
+                            300: {
+                                width: 300,
                             }
                         },
                     }}>

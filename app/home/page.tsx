@@ -1,3 +1,4 @@
+import FavoriteCourses from '../../src/components/HomeAuth/favoriteCategory'
 import HeaderAuth from '../../src/components/HomeAuth/header'
 import NewestCategory from '../../src/components/HomeAuth/newestCategory'
 import HomeAuthPresentation from '../../src/components/HomeAuth/presentation'
@@ -8,6 +9,7 @@ const HomeAuth = function () {
         <main>
             <HomeAuthPresentation/>
             <NewestCategory/>
+            <FavoriteCourses/>
         </main>
     </>)
 }
