@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "VoceNotaDez - Login",
+  title: "Meu perfil",
 };
 
 export default function RootLayout({

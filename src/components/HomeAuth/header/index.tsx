@@ -3,12 +3,13 @@ import Modal from "react-modal";
 import Link from 'next/link';
 import styles from './styles.module.scss'
 import { Container, Form, Input } from 'reactstrap'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import profileService from "../../../services/profileService";
 
 const HeaderAuth = function () {
     // Modal.setAppElement('#next')
-
+    const [initials, setInitials] = useState("")
     const [modalOpen, setModalOpen] = useState(false);
     const router = useRouter();
 
@@ -25,6 +26,14 @@ const HeaderAuth = function () {
         router.push("/")
     }
 
+    useEffect(()=>{
+        profileService.fetchCurrent().then((user)=>{
+            const firstNameInitial = user.firstName.slice(0,1)
+            const lastNameInitial = user.lastName.slice(0,1)
+            setInitials(firstNameInitial + lastNameInitial)
+        })
+    })
+
     return (<>
         <div id="next" className={styles.divbackground}>
             <Container className={styles.nav}>
@@ -39,7 +48,7 @@ const HeaderAuth = function () {
                         <Input name="search" id="search" placeholder="Buscar cursos" className={styles.searchbar} />
                     </Form>
                     <img src="/iconSearch.svg" alt="searchIcon" className={styles.searchIcon} />
-                    <p className={styles.userProfile} onClick={handleOpenModal}>AB</p>
+                    <p className={styles.userProfile} onClick={handleOpenModal}>{initials}</p>
                 </div>
                 <Modal
                     isOpen={modalOpen}
