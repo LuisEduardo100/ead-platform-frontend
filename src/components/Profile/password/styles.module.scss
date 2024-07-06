@@ -1,0 +1,100 @@
+.forms {
+    border: 1px solid #F0C36E;
+    padding: 20px 0px;
+    max-width: 100%;
+}
+
+//   Inputs formulários 
+
+.label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.inputFlexDiv {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px;
+}
+
+.inputFlex {
+    width: 350px;
+    background-color: transparent;
+    border: 1px solid #64512e;
+    color: white;
+    transition: 0.3s;
+    text-transform: uppercase;
+
+    &::placeholder {
+        color: gray;
+    }
+
+    &:focus {
+        box-shadow: none;
+        border-color: #F0C36E;
+        background-color: transparent;
+        color: white;
+    }
+}
+
+.inputNormalDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.input {
+    @extend .inputFlex;
+    text-transform: lowercase;
+    width: 350px;
+}
+
+.formBtn {
+    border-color: #F0C36E;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 6px 20px;
+    transition: 0.4s;
+
+    &:hover {
+        border-color: #81683a;
+        background-color: transparent;
+        color: gray;
+    }
+
+    &:focus {
+        box-shadow: none;
+        outline: none;
+    }
+}
+
+@media (max-width: 482px) {
+    .forms {
+        width: 95%;
+        margin: 0 auto;
+    }
+
+    .input {
+        width: 250px;
+    }
+
+    .inputFlex {
+        width: 250px;
+    }
+}
+@media (max-width: 337px) {
+
+
+    .input {
+        width: 180px;
+    }
+
+    .inputFlex {
+        width: 180px;
+    }
+}

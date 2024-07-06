@@ -1,11 +1,15 @@
 import api from './api'
 
-export interface UserParams {
+interface UserParams {
     firstName: string;
     lastName: string;
     phone: string;
     email: string;
     createdAt: string;
+}
+interface PasswordParams {
+    currentPassword: string;
+    newPassword: string;
 }
 
 const profileService = {
@@ -25,12 +29,22 @@ const profileService = {
                 Authorization: `Bearer ${token}`,
             }
         }).catch((error) => {
-            if (error.response.status === 400 || error.response.status === 401) { 
+            if (error.response.status === 400 || error.response.status === 401) {
                 return error.response
             }
             return error
         })
         return res.status
+    },
+    passwordUpdate: async (params: PasswordParams) => {
+        const token = sessionStorage.getItem('vocenotadez-token')
+
+        const res = await api.put("/users/current/password", params, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).catch((error) => { return error.response })
+        return res
     }
 }
 

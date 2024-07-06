@@ -5,7 +5,10 @@ import { FormEvent, useEffect, useState } from "react";
 import profileService from "../../../services/profileService";
 import 'jsuites'
 import ToastComponent from "../../common/toastComponent";
-export default function UserFrom() {
+import { useRouter } from "next/navigation";
+
+export default function UserForm() {
+    const router = useRouter()
     const [color, setColor] = useState("");
     const [toastIsOpen, setToastIsOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -14,6 +17,7 @@ export default function UserFrom() {
     const [lastName, setLastName] = useState("")
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
+    const [initialEmail, setInitialEmail] = useState("")
     const [createdAt, setCreatedAt] = useState("")
 
     const date = new Date(createdAt);
@@ -25,6 +29,7 @@ export default function UserFrom() {
             setLastName(user.lastName);
             setPhone(user.phone);
             setEmail(user.email);
+            setInitialEmail(user.email);
             setCreatedAt(user.createdAt);
         })
     }, [])
@@ -41,11 +46,16 @@ export default function UserFrom() {
             createdAt
         })
 
-        if (res === 200) {
+        if (res === 200 || res == 201) {
             setToastIsOpen(true);
             setErrorMessage("Informações alteradas com sucesso!");
             setColor("bg-success");
             setTimeout(() => setToastIsOpen(false), 2500);
+
+            if (email != initialEmail){
+                sessionStorage.clear()
+                router.push("/")
+            }
         } else {
             setToastIsOpen(true);
             setErrorMessage("Você não pode mudar para esse email!");
