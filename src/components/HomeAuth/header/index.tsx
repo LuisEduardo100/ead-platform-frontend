@@ -3,12 +3,13 @@ import Modal from "react-modal";
 import Link from 'next/link';
 import styles from './styles.module.scss'
 import { Container, Form, Input } from 'reactstrap'
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import profileService from "../../../services/profileService";
 
 const HeaderAuth = function () {
     // Modal.setAppElement('#next')
+    const [searchName, setSearchName] = useState("")
     const [initials, setInitials] = useState("")
     const [modalOpen, setModalOpen] = useState(false);
     const router = useRouter();
@@ -26,14 +27,25 @@ const HeaderAuth = function () {
         router.push("/")
     }
 
-    useEffect(()=>{
-        profileService.fetchCurrent().then((user)=>{
-            const firstNameInitial = user.firstName.slice(0,1)
-            const lastNameInitial = user.lastName.slice(0,1)
-            setInitials(firstNameInitial + lastNameInitial)
-        })
-    })
+    const handleSearch = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
 
+        router.push(`/search?name=${searchName}`);
+        setSearchName("");
+    };
+
+    const handleSearchClick = () => {
+        router.push(`/search?name=${searchName}`);
+        setSearchName("");
+    };
+
+    useEffect(() => {
+        profileService.fetchCurrent().then((user) => {
+            const firstNameInitial = user.firstName.slice(0, 1);
+            const lastNameInitial = user.lastName.slice(0, 1);
+            setInitials(firstNameInitial + lastNameInitial);
+        });
+    }, []);
     return (<>
         <div id="next" className={styles.divbackground}>
             <Container className={styles.nav}>
@@ -44,10 +56,18 @@ const HeaderAuth = function () {
                     </div>
                 </Link>
                 <div className='d-flex align-items-center'>
-                    <Form>
-                        <Input name="search" id="search" placeholder="Buscar cursos" className={styles.searchbar} />
+                    <Form onSubmit={handleSearch}>
+                        <Input
+                            name="search"
+                            id="search"
+                            placeholder="Buscar cursos"
+                            className={styles.searchbar}
+                            value={searchName}
+                            onChange={(event) => {
+                                setSearchName(event.currentTarget.value.toLowerCase())
+                            }} />
                     </Form>
-                    <img src="/iconSearch.svg" alt="searchIcon" className={styles.searchIcon} />
+                    <img src="/iconSearch.svg" alt="searchIcon" className={styles.searchIcon} onClick={handleSearchClick} />
                     <p className={styles.userProfile} onClick={handleOpenModal}>{initials}</p>
                 </div>
                 <Modal

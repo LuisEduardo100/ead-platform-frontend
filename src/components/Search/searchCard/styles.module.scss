@@ -1,0 +1,41 @@
+.searchCard {
+    width: 300px;
+    border: 1px solid #DEB66B;
+    transition: 0.4s;
+    cursor: pointer;
+    margin-left: 12px;
+    overflow: hidden;
+    text-overflow: clip;
+  
+    &:hover {
+      border-color: #6b4c12;
+    }
+  }
+  .linkStyle{
+    text-decoration: none;
+  }
+  .searchCardDescription{
+    text-decoration: none;
+    color: white;
+    width: 260px;
+    margin: 0 auto;
+    padding: 0px 10px 20px 10px;
+  }
+  .searchCardImg {
+    width: 100%;
+    height: 190px;
+  }
+  
+  .searchCardTitle {
+    color: white;
+    font-weight: bold;
+    padding: 8px 16px;
+    text-transform: uppercase;
+  }
+  
+  @media (max-width: 350px){
+    .searchCard {
+      margin: auto;
+      width: 95%;
+    }
+  }

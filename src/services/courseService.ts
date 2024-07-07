@@ -6,7 +6,7 @@ export type EpisodeType = {
     synopsis: string,
     order: number,
     videoUrl: string
-    secondsLong: number 
+    secondsLong: number
 }
 
 export type CourseType = {
@@ -19,44 +19,44 @@ export type CourseType = {
 
 
 const courseService = {
-    getNewestCourses: async () =>{
+    getNewestCourses: async () => {
         const res = await api.get("/courses/newest").catch((error) => {
             return error.response
         })
         return res
     },
-    getFeaturedCourses: async () =>{
+    getFeaturedCourses: async () => {
         const token = sessionStorage.getItem("vocenotadez-token")
         const res = await api // talvez tenha que ter interrogação no final 'featured?'
-        .get('/courses/featured', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-        .catch((error) =>{
-            return error.message
-        })
+            .get('/courses/featured', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            .catch((error) => {
+                return error.message
+            })
         return res
     },
-    addToFav: async (courseId: number | string) =>{
-        const token = sessionStorage.getItem("vocenotadez-token")  
+    addToFav: async (courseId: number | string) => {
+        const token = sessionStorage.getItem("vocenotadez-token")
         const res = await api.post('/favorites', courseId, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).catch((error)=>{
+        }).catch((error) => {
             return error.response
         })
         return res
     },
-    removeFav: async (courseId: number | string) =>{
-        const token = sessionStorage.getItem("vocenotadez-token")  
+    removeFav: async (courseId: number | string) => {
+        const token = sessionStorage.getItem("vocenotadez-token")
         const res = await api.delete('/favorites/:id', {
             headers: {
                 Authorization: `Bearer ${token}`
             },
-            data: {courseId}
-        }).catch((error)=>{
+            data: { courseId }
+        }).catch((error) => {
             return error.response
         })
         return res
@@ -67,9 +67,23 @@ const courseService = {
             headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).catch((error)=>{return error.message})
+        }).catch((error) => { return error.message })
         return res
-      },
+    },
+    getSearch: async (name: string) => {
+        const token = sessionStorage.getItem("vocenotadez-token")
+
+        const res = await api.get(`/courses/search?name=${name}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).catch((error) => { return error.message })
+        return res
+    },
+    getSearchNoAuth: async (name: string) => {
+        const res = await api.get(`/courses/search?name=${name}`).catch((error) => { return error.message })
+        return res
+    }
 }
 
 export default courseService

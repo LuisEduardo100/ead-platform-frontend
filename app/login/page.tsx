@@ -65,7 +65,7 @@ const Login = function () {
             <Container className={styles.container}>
                 <p className={styles.formTitle}>Bem-vindo(a) ao Você Nota Dez!</p>
                 <Form className={styles.form} onSubmit={handleLogin}>
-                    <p className="text-center py-2"><strong>Crie a sua conta</strong></p>
+                    <p className="text-center py-2"><strong>Faça seu login</strong></p>
                     <FormGroup>
                         <Label for="email" className={styles.label}>E-MAIL</Label>
                         <Input
