@@ -14,7 +14,7 @@ export type CourseType = {
     name: string;
     thumbnailUrl: string;
     synopsis: string;
-    episodes?: EpisodeType[];
+    Episodes?: EpisodeType[];
 }
 
 
@@ -40,26 +40,61 @@ const courseService = {
     },
     addToFav: async (courseId: number | string) => {
         const token = sessionStorage.getItem("vocenotadez-token")
-        const res = await api.post('/favorites', courseId, {
+        const res = await api.post('/favorites' , {courseId}, {
             headers: {
                 Authorization: `Bearer ${token}`
-            }
+            },
+            data: {courseId}
         }).catch((error) => {
             return error.response
         })
         return res
     },
     removeFav: async (courseId: number | string) => {
-        const token = sessionStorage.getItem("vocenotadez-token")
-        const res = await api.delete('/favorites/:id', {
+        try {
+          const token = sessionStorage.getItem("vocenotadez-token");
+    
+          const favorite = await api.delete(`/favorites/${courseId}`, {
             headers: {
-                Authorization: `Bearer ${token}`
+              Authorization: `Bearer ${token}`,
             },
-            data: { courseId }
-        }).catch((error) => {
-            return error.response
-        })
-        return res
+          });
+          return favorite;
+        } catch (error: any) {
+          return error.response;
+        }
+      },
+    like: async (courseId: number | string) => {
+        try {
+            const token = sessionStorage.getItem("vocenotadez-token");
+            const like = await api.post(
+                "/likes",
+                { courseId },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                }
+            );
+            return like;
+        } catch (error: any) {
+            return error.response;
+        }
+    },
+    removeLike: async (courseId: number | string) => {
+        try {
+            const token = sessionStorage.getItem("vocenotadez-token");
+
+            const like = await api.delete(`/likes/${courseId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                data: {courseId}
+            });
+            return like;
+        } catch (error: any) {
+            return error.response;
+        }
     },
     getFavCourses: async () => {
         const token = sessionStorage.getItem("vocenotadez-token")
@@ -80,8 +115,18 @@ const courseService = {
         }).catch((error) => { return error.message })
         return res
     },
-    getSearchNoAuth: async (name: string) => {
-        const res = await api.get(`/courses/search?name=${name}`).catch((error) => { return error.message })
+    // getSearchNoAuth: async (name: string) => {
+    //     const res = await api.get(`/courses/search?name=${name}`).catch((error) => { return error.message })
+    //     return res
+    // },
+    getEpisodes: async (id: number | string) => {
+        const token = sessionStorage.getItem("vocenotadez-token")
+
+        const res = await api.get(`/courses/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).catch((error) => { return error.message })
         return res
     }
 }

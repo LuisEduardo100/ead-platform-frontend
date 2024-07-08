@@ -1,0 +1,56 @@
+.episodeTitle {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.episodeButtonDiv {
+    display: flex;
+    gap: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+}
+
+.arrowImg {
+    width: 25px;
+    filter: brightness(200);
+}
+
+.episodeButton {
+    border: none;
+    padding: 0;
+    background-color: transparent;
+    font-size: 40px;
+    cursor: pointer;
+    transition: 0.4s;
+
+    &:hover {
+        border: none;
+        padding: 0;
+        background-color: transparent;
+        font-size: 45px;
+        text-shadow: 6px 4px 4px black;
+      }
+      &:disabled {
+        border: none;
+        padding: 0;
+        background-color: transparent;
+      }
+      &:active {
+        outline: none;
+        border: none;
+        box-shadow: none;
+      }
+      &:focus {
+        border: none;
+        outline: none;
+        box-shadow: none;
+        background-color: transparent;
+      }
+}
+
+.player {
+    max-width: 100%;
+}
+

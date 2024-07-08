@@ -1,0 +1,104 @@
+.courseInfo{
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+
+}
+.interactionImages {
+    width: 25px;
+    margin-left: 10px;
+    &:hover{
+        width: 30px;
+        transition: 0.3s;
+    }
+}
+
+.interactions {
+    margin: 20px 0px 0px 10px;
+    cursor: pointer;
+}
+.divBtnImg{
+    display: flex;
+    align-items: center;
+}
+.courseBtn {
+    width: 170px;
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    .buttonImg {
+        width: 20px;
+        margin: 0 0 0 10px;
+        padding: 0;
+        filter: invert(86%) sepia(89%) saturate(5326%) hue-rotate(308deg) brightness(94%) contrast(84%);
+    }
+
+    &:hover {
+        font-size: 26px;
+        background-color: #F0C36E;
+        color: black;
+        border: none;
+        transition: 0.4s;
+        font-weight: bolder;
+
+        .buttonImg {
+            filter: invert(0%) sepia(92%) saturate(31%) hue-rotate(76deg) brightness(91%) contrast(306%);
+        }
+
+        transition: 0.4;
+    }
+}
+
+.courseTitle{
+    font-size: 42px;
+    font-weight: bold;
+}
+.courseDescription{
+    width: 680px;
+}
+
+.episodeInfo{
+    padding: 20px 0px 50px 0px;
+    height: 100%;
+    .episodeDivision{
+        font-size: 32px;
+        font-weight: bold;
+    }
+    .titleAndDescription{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+}
+
+@media (max-width: 767px){
+    
+    .courseInfo{
+        justify-content: center;
+        text-align: center;
+        gap: 20px;
+    }
+    .courseDescription{
+        width: 95%;
+        display: block;
+        margin: 0 auto;
+    }
+    .divBtnImg{
+        justify-content: center;
+    }
+    .episodeInfo{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+}
+
+@media(max-width: 430px){
+    .courseTitle{
+        font-size: 30px;
+    }
+
+}
