@@ -2,7 +2,7 @@
 import styles from "./styles.module.scss";
 import { useEffect, useState } from "react";
 import { Button, Container } from "reactstrap";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import courseService, { CourseType } from "../../../src/services/courseService";
 import PageSpinner from "../../../src/components/common/pageSpinner";
 import HeaderAuth from "../../../src/components/HomeAuth/header";
@@ -14,7 +14,7 @@ type ParamsProps = {
   params: { id: number | string };
 };
 
-const getStaticPaths  = async ({ params }: ParamsProps) => {
+const getCourseId = async ({ params }: ParamsProps) => {
   const courseId = params.id;
 
   if (typeof courseId !== "string") return;
@@ -39,7 +39,7 @@ export default function Course({ params }: ParamsProps) {
   const courseId = params.id;
   
   const getCourse = async () => {
-    const course = await getStaticPaths ({ params });
+    const course = await getCourseId({ params });
     setCourse(course);
     setLiked(course.liked);
     setFavorited(course.favorited);
