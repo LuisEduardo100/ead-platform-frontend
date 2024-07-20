@@ -2,33 +2,49 @@
 import styles from "./styles.module.scss";
 import { useEffect, useState } from "react";
 import { Button, Container } from "reactstrap";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import courseService, { CourseType } from "../../../src/services/courseService";
 import PageSpinner from "../../../src/components/common/pageSpinner";
 import HeaderAuth from "../../../src/components/HomeAuth/header";
 import EpisodeList from "../../../src/components/Course";
 import Footer from "../../../src/components/common/footer";
 import Link from "next/link";
-import { ParamsProps } from "./generateStaticParams";
-import { generateStaticParams } from "./generateStaticParams";
+
+type ParamsProps = {
+  params: { id: number | string };
+};
+
+const getCourseId = async ({ params }: ParamsProps) => {
+  const courseId = params.id;
+
+  if (typeof courseId !== "string") return;
+
+  const res = await courseService.getEpisodes(courseId);
+
+  if (res.status === 200) {
+    return res.data;
+  }
+};
+
 
 export default function Course({ params }: ParamsProps) {
+  
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [course, setCourse] = useState<CourseType>();
-
+  
   const [liked, setLiked] = useState(Boolean);
   const [favorited, setFavorited] = useState(Boolean);
-
+  
   const courseId = params.id;
-
+  
   const getCourse = async () => {
-    const course = await generateStaticParams({ params });
+    const course = await getCourseId({ params });
     setCourse(course);
     setLiked(course.liked);
     setFavorited(course.favorited);
   };
-
+  
   useEffect(() => {
     getCourse();
   }, [courseId]);
