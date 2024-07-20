@@ -119,14 +119,14 @@ export default function EpisodePlayer({
               className={styles.episodeButton} 
               disabled={episodeOrder === 0 ? true : false} 
               onClick={() => handleLastEpisode()}
-              outline>
+              >
               <img src="/episode/iconArrowLeft.svg" alt="setaEsquerda" className={styles.arrowImg} />
             </Button>
             <Button
               className={styles.episodeButton}
               disabled={episodeOrder + 1 === course.Episodes.length ? true : false}
               onClick={() => handleNextEpisode()}
-              outline>
+              >
               <img src="/episode/iconArrowRight.svg" alt="setaDireita" className={styles.arrowImg} />
             </Button>
           </div>

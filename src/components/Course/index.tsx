@@ -7,7 +7,7 @@ interface props {
     course: CourseType
 }
 
-export default function EpisodeList({ episode, course }: props) {
+export default function  EpisodeList({ episode, course }: props) {
     const router = useRouter()
 
     const handleEpisodePlayer = () => {
