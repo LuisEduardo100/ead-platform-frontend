@@ -15,12 +15,14 @@ export default function SearchComponents({ searchParams }: { searchParams: { nam
     const [searchResult, setSearchResult] = useState<CourseType[]>([]);
 
     const searchName = searchParams.name;
+
     const searchCourses = async function () {
         if (typeof searchName === "string") {
             const res = await courseService.getSearch(searchName);
             setSearchResult(res.data.courses);
         }
     };
+
     useEffect(() => {
         searchCourses();
     }, [searchName]);
@@ -30,7 +32,7 @@ export default function SearchComponents({ searchParams }: { searchParams: { nam
         } else {
             setLoading(false);
         }
-    }, []);
+    }, [router]);
 
     if (loading) {
         return <PageSpinner />;

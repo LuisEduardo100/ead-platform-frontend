@@ -9,23 +9,8 @@ import HeaderAuth from "../../../src/components/HomeAuth/header";
 import EpisodeList from "../../../src/components/Course";
 import Footer from "../../../src/components/common/footer";
 import Link from "next/link";
-
-type ParamsProps = {
-  params: { id: number | string };
-};
-
-const getCourseId = async ({ params }: ParamsProps) => {
-  const courseId = params.id;
-
-  if (typeof courseId !== "string") return;
-
-  const res = await courseService.getEpisodes(courseId);
-
-  if (res.status === 200) {
-    return res.data;
-  }
-};
-
+import { ParamsProps } from "./generateStaticParams";
+import { generateStaticParams } from "./generateStaticParams";
 
 export default function Course({ params }: ParamsProps) {
   const router = useRouter();
@@ -38,7 +23,7 @@ export default function Course({ params }: ParamsProps) {
   const courseId = params.id;
 
   const getCourse = async () => {
-    const course = await getCourseId({ params });
+    const course = await generateStaticParams({ params });
     setCourse(course);
     setLiked(course.liked);
     setFavorited(course.favorited);
