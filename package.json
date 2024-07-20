@@ -33,5 +33,13 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "typescript": "^5"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "require": "./dist/js/react-splide.cjs.js",
+      "import": "./dist/js/react-splide.esm.js",
+      "default": "./dist/js/react-splide.esm.js"
+    }
   }
 }

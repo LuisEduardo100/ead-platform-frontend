@@ -1,5 +1,5 @@
-import { Splide, SplideSlide } from '@splidejs/react-splide'
 import '@splidejs/react-splide/css'
+import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { CourseType } from '../../services/courseService'
 import SlideCard from './slideCard'
 export interface props {
