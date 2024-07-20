@@ -14,7 +14,7 @@ type ParamsProps = {
   params: { id: number | string };
 };
 
-const getCourseId = async ({ params }: ParamsProps) => {
+const getStaticPaths  = async ({ params }: ParamsProps) => {
   const courseId = params.id;
 
   if (typeof courseId !== "string") return;
@@ -39,7 +39,7 @@ export default function Course({ params }: ParamsProps) {
   const courseId = params.id;
   
   const getCourse = async () => {
-    const course = await getCourseId({ params });
+    const course = await getStaticPaths ({ params });
     setCourse(course);
     setLiked(course.liked);
     setFavorited(course.favorited);

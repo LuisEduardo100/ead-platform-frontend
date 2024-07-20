@@ -1,6 +1,10 @@
+// @ts-ignore
 import '@splidejs/react-splide/css'
+// @ts-ignore
 import { Splide, SplideSlide } from '@splidejs/react-splide';
+// @ts-ignore
 import { CourseType } from '../../services/courseService'
+// @ts-ignore
 import SlideCard from './slideCard'
 export interface props {
     course: CourseType[]
