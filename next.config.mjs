@@ -3,8 +3,7 @@ const nextConfig = {
     experimental: {
         missingSuspenseWithCSRBailout: false,
     },
-    // output: "export"
-
+    reactStrictMode: true,
 };
 
 export default nextConfig;

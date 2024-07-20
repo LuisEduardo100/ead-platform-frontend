@@ -7,7 +7,6 @@ import { FormEvent, useEffect, useState } from 'react'
 import ToastComponent from '../../src/components/common/toastComponent'
 import { useRouter, useSearchParams } from 'next/navigation'
 import authService from '../../src/services/authService'
-import ListCategories from '../../src/components/HomeAuth/listCategories';
 
 
 const Login = function () {
@@ -89,7 +88,6 @@ const Login = function () {
                         />
                     </FormGroup>
                     <Button type="submit" className={styles.formBtn}>ENTRAR</Button>
-                    <ListCategories/>
                 </Form>
             </Container>
             <Footer />
