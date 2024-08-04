@@ -15,8 +15,7 @@ const HeaderGeneric = function ({btnContent, btnUrl, logoUrl}: props) {
                 <Container className={styles.containerHeader}>
                         <Link href={logoUrl} className={styles.linkStyle}>
                             <div className={styles.divLogo}>
-                                <img src="/favicon.png" alt="logoFooter" className={styles.imgLogo} />
-                                <h1 className={styles.tituloNav}>VOCÊ NOTA DEZ!</h1>
+                                <img src="/logo-vocenotadez.png" alt="logoFooter" className={styles.imgLogo} />
                             </div>
                         </Link>
                         <Link href={btnUrl}>

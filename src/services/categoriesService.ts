@@ -27,6 +27,10 @@ const categoriesService = {
         }).catch((error)=>{return error.response})
         return res
     },
+    getCategoriesForBranding: async() => {
+        const res = await api.get('/categories').catch((error)=>{return error.response})
+        return res
+    },
 }
 
 export default categoriesService

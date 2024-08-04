@@ -1,0 +1,243 @@
+.backgroundContainer {
+    background-color: #222222;
+    position: relative;
+}
+
+
+.apresentation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.divAnuncio {
+    width: 400px;
+    text-align: center;
+
+    .btnMatricula {
+        background: #CC202C;
+        border: none;
+        font-weight: bold;
+        text-transform: uppercase;
+
+        &:hover {
+            transform: translateX(2px) translateY(-2px);
+            transition: 0.3s;
+        }
+    }
+
+    .imgAnuncio {
+        width: 100%;
+        margin: 20px 0px;
+        border: 5px solid #CC202C;
+
+    }
+}
+
+.wrapper {
+    .reactPlayer {
+        width: 100%;
+        border: 5px solid #CC202C;
+        padding: 0;
+    }
+}
+
+.pWrapper {
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    margin-right: 20px;
+    display: inline-block;
+}
+
+.media {
+    width: 600px;
+    padding-top: 12px;
+}
+
+.imgFooter {
+    width: 45px;
+    margin-right: 5px;
+
+    &:hover {
+        transform: translateX(2px) translateY(-2px);
+    }
+}
+
+.duvidas {
+    position: fixed;
+    right: 2%;
+    bottom: 2%;
+    z-index: 4;
+
+    .imgDuvidas {
+        width: 62px;
+        filter: grayscale(0%);
+
+        &:hover {
+            transition: 0.4s;
+            filter: grayscale(100%);
+
+        }
+    }
+}
+
+.separator {
+    background: #DEB66B;
+    height: 150px;
+    margin-top: 20px;
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+
+    .capa1 {
+        width: 130px;
+        margin-right: 10px;
+        z-index: 3;
+        border: 5px solid #CC202C;
+        box-shadow: 7px 5px 2px rgba(36, 36, 36, 0.842);
+
+
+        &:hover {
+            transform: translateX(6px) translateY(-6px);
+            transition: 0.3s;
+        }
+    }
+
+    .capa2 {
+        width: 150px;
+        margin-right: 10px;
+        z-index: 3;
+        border: 5px solid #CC202C;
+        box-shadow: 7px 5px 2px rgba(36, 36, 36, 0.842);
+
+        &:hover {
+            transform: translateX(6px) translateY(-6px);
+            transition: 0.3s;
+        }
+    }
+
+    .capa3 {
+        width: 160px;
+        margin-right: 10px;
+        z-index: 3;
+        border: 5px solid #CC202C;
+        box-shadow: 7px 5px 2px rgba(36, 36, 36, 0.842);
+
+
+        &:hover {
+            transform: translateX(6px) translateY(-6px);
+            transition: 0.3s;
+        }
+    }
+
+    .pSeparator {
+        text-transform: uppercase;
+        font-size: 28px;
+        text-align: center;
+        line-height: 34px;
+        display: inline-block;
+        border-top: 5px solid #CC202C;
+        border-bottom: 5px solid #CC202C;
+        font-weight: bold;
+        width: 450px;
+        padding: 5px;
+        margin-right: 15px;
+    }
+}
+
+.divTabela {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin: 80px auto 80px auto;
+    border: 5px solid #DEB66B;
+    width: 500px;
+    height: 720px;
+    border-radius: 30px;
+
+    .btnMatriculaPropaganda {
+        background: #DEB66B;
+        margin-top: 20px;
+        color: black;
+        border: none;
+        font-weight: bold;
+        text-transform: uppercase;
+
+        &:hover {
+            font-size: 22px;
+            transition: 0.3s;
+            box-shadow: 0px 0px 20px 4px black;
+        }
+    }
+
+    .pPropaganda {
+        text-align: center;
+        width: 430px;
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 28px;
+        margin-bottom: 12px;
+    }
+
+    .table {
+        .trTitulo {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .tbody {
+            width: 300px;
+        }
+
+        .thTitulo {
+            padding: 15px 0px 0px 0px;
+            text-align: center;
+            display: block;
+            font-size: 18px;
+            margin: 0 auto;
+            font-weight: bolder;
+        }
+
+        .thPreco {
+            font-size: 42px;
+            text-align: center;
+            display: block;
+            margin: 0;
+            padding: 0;
+            margin-bottom: 15px;
+
+            .thPrecoSpan {
+                font-size: 18px;
+            }
+        }
+
+        .trDiv {
+            display: flex;
+            padding: 5px;
+            align-items: center;
+            width: 400px;
+            text-align: left;
+
+            .checkImg {
+                width: 20px;
+                margin-right: 20px;
+                filter: brightness(0) saturate(100%) invert(100%) sepia(24%) saturate(6178%) hue-rotate(312deg) brightness(94%) contrast(85%);
+            }
+        }
+    }
+}
+
+.cursosOfertados {
+    padding: 80px 0px;
+
+    .pCursosOfertados {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        padding-bottom: 20px;
+    }
+}

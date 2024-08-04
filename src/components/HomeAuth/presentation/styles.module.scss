@@ -25,23 +25,23 @@
     }
 
     .button {
-        padding: 6px 10px;
-        width: 256px;
+        padding: 6px 12px;
+        width: 265px;
         margin-top: 20px;
-        font-size: 24px;
+        font-size: 23px;
         display: flex;
         align-items: center;
         font-weight: bold;
 
         .imgBtn {
             width: 20px;
-            margin: 0 0 0 10px;
+            margin: 0 0 0 20px;
             padding: 0;
             filter: invert(86%) sepia(89%) saturate(5326%) hue-rotate(308deg) brightness(94%) contrast(84%);
         }
 
         &:hover {
-            font-size: 26px;
+            font-size: 25px;
             background-color: #F0C36E;
             color: black;
             border: none;

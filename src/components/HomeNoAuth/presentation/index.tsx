@@ -1,5 +1,5 @@
 'use client';
-import { Col, Row, Button, Container, Input, Form } from 'reactstrap'
+import { Col, Row, Container, Input, Form } from 'reactstrap'
 import styles from './styles.module.scss'
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';

@@ -1,39 +1,24 @@
-.backgroundContainer {
-    background-color: #deb66b;
-    display: flex;
-    justify-items: center;
+.bgdiv{
+    background-color: #e6ba69;
     padding: 10px;
-}
 
+}
 .containerHeader {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     justify-items: center;
     flex-wrap: wrap;
 }
 
-.tituloNav {
-    font-weight: bold;
-    font-size: 36px;
-    margin-left: 10px;
-    margin-top: 5px;
-}
-
-.divLogo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    justify-items: center;
-}
-
 .imgLogo {
-    width: 60px;
+    width: 100px;
 }
 
 .btnAssine {
-    width: 130px;
-    height: 38.5px;
+    width: 100px;
+    height: 36.5px;
+    font-size: 12px;
     background-color: rgba(255, 255, 255, 0);
     border: 1px solid white;
     color: white;
@@ -49,11 +34,12 @@
     }
 }
 .btnPrecos{
-    width: 130px;
-    height: 38.5px;
+    width: 100px;
+    height: 36.5px;
     margin-right: 9px;
     background-color:rgba(255, 255, 255, 0);
     border-color: white;
+    font-size: 12px;
     &:hover {
         background-color: #F0C36E;
         color: black;
@@ -63,10 +49,11 @@
     }
 }
 .btnSouNotaDez {
-    width: 130px;
-    height: 38.5px;
+    width: 100px;
+    height: 36.5px;
     background-color: transparent;
     border: none;
+    font-size: 12px;
     font-weight: 500;
     border: 1px solid white;
     &:hover {
@@ -85,9 +72,11 @@
 }
 
 @media (max-width: 991px) {
+    .imgLogo{
+        margin-right: 15px;
+    }
     .containerHeader {
         justify-content: center;
-        margin-bottom: 8px;
     }
     .divBtn {
         margin: 16px 0;
@@ -115,6 +104,9 @@
 }
 
 @media (max-width: 463px) {
+    .bgdiv{
+        background-color: transparent;
+    }
     .containerHeader {
         justify-content: center;
     }

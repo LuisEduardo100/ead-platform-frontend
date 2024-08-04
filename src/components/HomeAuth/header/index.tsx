@@ -51,8 +51,7 @@ const HeaderAuth = function () {
             <Container className={styles.nav}>
                 <Link className={styles.linkStyle} href="/home">
                     <div className={styles.divLogo}>
-                        <img src="/favicon.png" alt="logoFooter" className={styles.imgLogo} />
-                        <h1 className={styles.tituloNav}>VOCÊ NOTA DEZ!</h1>
+                        <img src="/logo-vocenotadez.png" alt="logoFooter" className={styles.imgLogo} />
                     </div>
                 </Link>
                 <div className='d-flex align-items-center'>

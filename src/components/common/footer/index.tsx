@@ -5,8 +5,7 @@ const Footer = function () {
     return (<>
         <Container className={styles.footer}>
             <div>
-                <img src="/favicon.png" alt="logoFooter" className={styles.imgLogo} />
-                <p className={styles.pLogo}>VOCÊ NOTA DEZ!</p>
+                <img src="/logo-vocenotadez.png" alt="logoFooter" className={styles.imgLogo} />
             </div>
             <div className={styles.media}>
                 <Link href="https://www.tiktok.com/@vocenotadez">
