@@ -20,7 +20,6 @@ const Footer = function () {
             </div>
         </Container>
         <p className={styles.pFooter}>Criado por Gabriel de Sousa</p>
-
     </>)
 }
 

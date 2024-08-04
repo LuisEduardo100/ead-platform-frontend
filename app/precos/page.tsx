@@ -27,6 +27,8 @@ export default function PaginaPrecos() {
                         url="https://vimeo.com/994606159?share=copy"
                         controls
                         className={styles.reactPlayer}
+                        width={'100%'}
+                        height={'100%'}
                     />
                     <div className={styles.media}>
                         <p className={styles.pWrapper}>Fale conosco em nossas redes sociais: </p>

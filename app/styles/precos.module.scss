@@ -22,8 +22,11 @@
         text-transform: uppercase;
 
         &:hover {
-            transform: translateX(2px) translateY(-2px);
-            transition: 0.3s;
+            &:hover {
+                font-size: 22px;
+                transition: 0.3s;
+                box-shadow: 0px 0px 20px 4px black;
+            }
         }
     }
 
@@ -36,10 +39,10 @@
 }
 
 .wrapper {
+    height: 342px;
+
     .reactPlayer {
-        width: 100%;
         border: 5px solid #CC202C;
-        padding: 0;
     }
 }
 
@@ -239,5 +242,172 @@
         font-size: 24px;
         font-weight: bold;
         padding-bottom: 20px;
+    }
+}
+
+@media (max-width: 1094px) {
+    .divAnuncio {
+        padding: 20px;
+
+        .imgAnuncio {
+            width: 95%;
+        }
+    }
+
+    .wrapper {
+        width: 600px;
+        margin-right: 20px;
+    }
+
+}
+
+@media (max-width: 974px) {
+    .wrapper {
+        .reactPlayer {
+            width: 100%;
+        }
+    }
+
+    .separator {
+        width: 100%;
+        padding: 130px;
+
+        .pSeparator {
+            width: 95%;
+            font-size: 16px;
+            line-height: 23px;
+        }
+    }
+}
+
+@media (max-width: 922px) {
+    .apresentation {
+        flex-wrap: wrap;
+        margin-bottom: 150px;
+    }
+}
+
+@media(max-width: 664px) {
+    .duvidas {
+        .pWrapper {
+            font-size: 14px;
+        }
+
+        .imgDuvidas {
+            width: 48px;
+            filter: grayscale(0%);
+
+            &:hover {
+                transition: 0.4s;
+                filter: grayscale(100%);
+            }
+        }
+    }
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 500px;
+        margin-right: 0px;
+        text-align: center;
+
+        .reactPlayer {
+            width: 100%;
+            border: none;
+
+        }
+    }
+
+    .separator {
+        .capa1 {
+            width: 100px;
+        }
+
+        .capa2 {
+            width: 110px;
+        }
+
+        .capa3 {
+            width: 120px;
+        }
+    }
+
+    .media {
+        width: 400px;
+    }
+
+    .cursosOfertados {
+        .pCursosOfertados {
+            font-size: 18px;
+        }
+    }
+}
+
+@media (max-width: 552px) {
+    .separator {
+        margin: 0;
+        padding: 40px 0px;
+
+        .pSeparator {
+            margin-bottom: 10px;
+        }
+
+        height: 100%;
+        flex-wrap: wrap;
+        flex-direction: column;
+
+        .capa1 {
+            width: 150px;
+            margin-bottom: 10px;
+        }
+
+        .capa2 {
+            width: 150px;
+            margin-bottom: 10px;
+
+        }
+
+        .capa3 {
+            width: 150px;
+            margin-bottom: 10px;
+        }
+    }
+
+    .divTabela {
+        width: 95%;
+
+        .table {
+            width: 95%;
+        }
+    }
+
+}
+
+@media(max-width: 472px) {
+    .divTabela {
+        height: 95%;
+        padding: 30px;
+        .pPropaganda {
+            width: 95%;
+            font-size: 18px;
+        }
+
+        .table {
+            .tbody {
+                .trDiv {
+                    width: 95%;
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 400px){
+    .apresentation{
+        .media{
+            width: 95%;
+        }
     }
 }

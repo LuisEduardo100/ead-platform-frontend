@@ -9,7 +9,9 @@ const HeaderNoAuth = function () {
             <div className={styles.bgdiv}>
                 <Container className={styles.containerHeader}>
                     <div className={styles.divLogo}>
-                        <img src="/logo-vocenotadez.png" alt="logoFooter" className={styles.imgLogo} />
+                        <Link href="/">
+                            <img src="/logo-vocenotadez.png" alt="logoFooter" className={styles.imgLogo} />
+                        </Link>
                     </div>
                     <div className={styles.divBtn}>
                         <Link href="/precos">
