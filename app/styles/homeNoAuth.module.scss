@@ -1,14 +1,36 @@
-.sectionBackground{
-    background-image: linear-gradient(to bottom, #dadada1a, #0c0c0c), url('../../public/capa-fundo-home-no-auth.jpg');
+.sectionBackground {
+    background-image: linear-gradient(to bottom, #dadada04, #E8E8E8), url('../../public/capa-fundo-home-no-auth.png');
     background-position: center;
-    background-size: auto;
+    background-size: cover;
     background-repeat: no-repeat;
-    min-height: 90vh;
+    min-height: 70vh;
     width: 100%;
 }
 
-@media (max-width: 463px){
-    .sectionBackground{
+.main {
+    .divPresentation {
+        display: flex;
+        flex: 1 1 auto;
+    }
+
+}
+
+@media (max-width: 463px) {
+    .sectionBackground {
         min-height: 100%;
+    }
+}
+
+@media (max-width: 767px) {
+    .sectionBackground {
+        background-size: 200%;
+    }
+}
+@media(max-width: 463px){
+    .sectionBackground{
+        min-height: 40vh;
+    };
+    .divPresentation{
+        padding: 50px 0px 140px 0px; 
     }
 }

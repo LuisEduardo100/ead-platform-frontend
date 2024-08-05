@@ -16,15 +16,17 @@ const HomeNoAuth = () => {
 
   return (
     <>
-      <main>
+      <main className={styles.main}>
         <div className={styles.sectionBackground} data-aos="zoom-out-left" data-aos-duration="800" >
           <HeaderNoAuth />
           <PresentationSection />
         </div>
-        <div data-aos="fade-right" data-aos-duration="1000" data-aos-easing="ease-in-sine">
+        <div className={styles.divPresentation} data-aos="fade-right" data-aos-duration="1000" data-aos-easing="ease-in-sine">
           <HomeSlide />
         </div>
-        <Footer />
+        <div className={styles.footer1}>
+          <Footer />
+        </div>
       </main>
     </>
   )

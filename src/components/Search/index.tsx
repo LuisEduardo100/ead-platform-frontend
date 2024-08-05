@@ -26,13 +26,7 @@ export default function SearchComponents({ searchParams }: { searchParams: { nam
     useEffect(() => {
         searchCourses();
     }, [searchName]);
-    useEffect(() => {
-        if (!sessionStorage.getItem("vocenotadez-token")) {
-            router.push("/login");
-        } else {
-            setLoading(false);
-        }
-    }, [router]);
+
 
     if (loading) {
         return <PageSpinner />;

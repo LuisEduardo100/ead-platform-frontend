@@ -6,20 +6,19 @@
     font-family: "Open Sans", sans-serif;
 }
 main {
-    background-color: #0c0c0c;
+    background-color: #E8E8E8;
     min-height: 100vh;
     color: white;
     p {
         margin: 0;
     }
 }
-
 ::-webkit-scrollbar{
     width: 8px;  
 }
 ::-webkit-scrollbar-track{
-    background: #151515;
+    background: #ffffff;
 }
 ::-webkit-scrollbar-thumb{
-    background: #868686;  
+    background: #CFCFCF;  
 }

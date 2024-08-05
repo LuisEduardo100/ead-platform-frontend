@@ -2,32 +2,32 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 10px;
+    padding: 0px 10px;
     flex-wrap: wrap;
+    margin-top: 54px;
 }
 .pFooter{
-    font-weight: 500;
+    font-weight: bold;
     font-size: 16px;
     text-align: center;
-    padding: 12px;
+    color: black;
+    
 }
-.pLogo{
-    display: inline;
-    padding-left: 10px;
-    font-weight: bold;
-}
+
 .media{
     padding: 12px;
 }
 .imgLogo{
     width: 122px;
+    
 }
 .imgFooter{
     width: 42px;
-    filter: grayscale(100%);
+    margin-right: 10px;
+    box-shadow: 1px 0.5px rgb(116, 116, 116);
+    border-radius: 50%;
     &:hover{
-        filter: grayscale(0%);
-        transition: 0.3;
+        width: 46px;
     }
 }
 @media (max-width: 353px){
