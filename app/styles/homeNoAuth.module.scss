@@ -1,9 +1,10 @@
 .sectionBackground{
-    background-image: linear-gradient(to bottom, #8b8b8b1a, #0c0c0c), url('../../public/homeNoAuth/backgroundBel.png');
-    background-position: bottom;
-    background-size: cover;
+    background-image: linear-gradient(to bottom, #dadada1a, #0c0c0c), url('../../public/capa-fundo-home-no-auth.jpg');
+    background-position: center;
+    background-size: auto;
     background-repeat: no-repeat;
-    min-height: 60vh;
+    min-height: 90vh;
+    width: 100%;
 }
 
 @media (max-width: 463px){

@@ -60,7 +60,7 @@ export default function PaginaPrecos() {
                 <img className={styles.capa3} src="/capa-ebooks/capa-quimica-3.png" alt="capa-2" />
             </div>
             <div className={styles.divTabela}>
-                <p className={styles.pPropaganda}>Tenha acesso a um reforço completo, onde terá materiais personalizados e aulas preparadas para você ter o melhor desempenho na sula sala de aula!</p>
+                <p className={styles.pPropaganda}>Tenha acesso a um reforço completo, onde terá materiais personalizados e aulas preparadas para você ter o melhor desempenho na sua sala de aula!</p>
                 <table className={styles.table}>
                     <thead>
                         <tr className={styles.trTitulo}>
