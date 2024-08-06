@@ -106,8 +106,6 @@ const courseService = {
         return res
     },
     getSearch: async (name: string) => {
-        const token = sessionStorage.getItem("vocenotadez-token")
-
         const res = await api.get(`/courses/search?name=${name}`).catch((error) => { return error.message })
         return res
     },

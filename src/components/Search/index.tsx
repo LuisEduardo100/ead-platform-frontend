@@ -8,12 +8,15 @@ import courseService, { CourseType } from "../../services/courseService";
 import PageSpinner from "../common/pageSpinner";
 import HeaderAuth from "../HomeAuth/header";
 import Footer from "../common/footer";
+import profileService from "../../services/profileService";
+import HeaderNoAuth from "../HomeNoAuth/header";
+import HeaderGeneric from "../common/headerGeneric";
 
 export default function SearchComponents({ searchParams }: { searchParams: { name: string } }) {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
     const [searchResult, setSearchResult] = useState<CourseType[]>([]);
-
+    const [searchUser, SetSearchUser] = useState("")
     const searchName = searchParams.name;
 
     const searchCourses = async function () {
@@ -24,16 +27,31 @@ export default function SearchComponents({ searchParams }: { searchParams: { nam
     };
 
     useEffect(() => {
+        profileService.fetchCurrent().then((user) => {
+            const email = user.email
+            SetSearchUser(email);
+        });
+    }, []);
+
+    useEffect(() => {
+        
+    }, [])
+    useEffect(() => {
         searchCourses();
     }, [searchName]);
 
 
     if (loading) {
+        if (searchResult != null){
+            setLoading(false)
+        }
         return <PageSpinner />;
     }
     return (
         <>
-            <HeaderAuth />
+            <div className={styles.header}>~
+                {searchUser != null ? <HeaderAuth /> : <HeaderGeneric logoUrl="/" btnUrl="/" btnContent="Voltar"/>}
+            </div>
             <main>
                 <section className={styles.mainContent}>
                     {searchResult.length >= 1 ? (

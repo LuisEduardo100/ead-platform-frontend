@@ -45,6 +45,10 @@ const profileService = {
             }
         }).catch((error) => { return error.response })
         return res
+    },
+    searchUser: async () => {
+        const res = await api.get("/users/current")
+        return res
     }
 }
 

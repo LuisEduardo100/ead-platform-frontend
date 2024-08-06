@@ -19,7 +19,7 @@ export default function FavoriteCourses() {
           <SlideSection newestCourses={data.data.courses} />
         ) : (
           <p className="h6 text-center pt-3">
-            <p>Você não tem nenhum curso na lista</p>
+            <p className={styles.p}>Você não tem nenhum curso na lista</p>
           </p>
         )}
       </Container>

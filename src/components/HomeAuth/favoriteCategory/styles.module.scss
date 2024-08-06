@@ -1,9 +1,15 @@
-.pStyle{
-    font-size: 20px;
-    font-weight: bold;
-    text-align: left;
-    padding-top: 20px;
+.pStyle {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left;
+  padding-top: 20px;
+  color: #ff3131;
 }
+.p{
+  color: #ff3131;
+
+}
+
 
 @media (max-width: 451px){
   .pStyle{
