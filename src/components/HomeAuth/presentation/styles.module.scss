@@ -29,7 +29,7 @@
     .button {
         color: black;
         padding: 6px 12px;
-        width: 265px;
+        width: 285px;
         margin-top: 20px;
         font-size: 23px;
         display: flex;
@@ -38,7 +38,7 @@
         border: 2px solid black;
         .imgBtn {
             width: 20px;
-            margin: 0 0 0 20px;
+            margin: 0 0 0 30px;
             padding: 0;
             filter: brightness(0) saturate(100%) invert(33%) sepia(40%) saturate(3095%) hue-rotate(337deg) brightness(101%) contrast(110%);
         }

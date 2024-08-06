@@ -9,25 +9,8 @@
     justify-content: center;
     justify-items: center;
 }
-
-.tituloNav {
-    font-weight: bold;
-    font-size: 36px;
-    margin-left: 10px;
-    margin-top: 5px;
-}
-
 .imgLogo {
     width: 160px;
-}
-
-.linkStyle {
-    text-decoration: none;
-    color: white;
-
-    &:hover {
-        color: white;
-    }
 }
 
 .searchIcon {
@@ -35,11 +18,12 @@
     margin-left: 9px;
     margin-right: 10px;
     cursor: pointer;
+    filter: brightness(0) saturate(100%) invert(0%) sepia(97%) saturate(0%) hue-rotate(154deg) brightness(94%) contrast(102%);
 }
 
 .userProfile {
     margin-left: 9px;
-    background-color: white;
+    background-color: #ff3131;
     color: black;
     border-radius: 50%;
     justify-content: center;
@@ -56,10 +40,10 @@
 .searchbar {
     background-color: transparent;
     width: 250px;
-    border-color: white;
+    border-color: black;
 
     &::placeholder {
-        color: white;
+        color: black;
     }
 }
 
