@@ -1,6 +1,9 @@
+'use client'
 import { useRouter } from 'next/navigation'
 import { CourseType, EpisodeType } from '../../services/courseService'
 import styles from './styles.module.scss'
+import Link from 'next/link'
+import { Button } from 'reactstrap'
 
 interface props {
     episode: EpisodeType
@@ -9,6 +12,7 @@ interface props {
 
 export default function  EpisodeList({ episode, course }: props) {
     const router = useRouter()
+
 
     const handleEpisodePlayer = () => {
         router.push(`/courses/episodes/${episode.order - 1}?courseid=${course.id}&episodeid=${episode.id}`)

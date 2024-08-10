@@ -1,58 +1,96 @@
 .episodeTitle {
-    font-size: 36px;
-    font-weight: bold;
-    text-align: center;
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+  color: #deb66b;
 }
 
 .episodeButtonDiv {
-    display: flex;
-    gap: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+  display: flex;
+  gap: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 
+}
+
+.divFileUrl {
+
+  display: flex;
+
+  .btn {
+    display: inline;
+    border: none;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
+  .linkStyleFile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #deb66b;
+    text-decoration: none;
+  }
+
+  .pdfviewer {
+    width: 50px;
+    filter: brightness(0) saturate(100%) invert(75%) sepia(52%) saturate(359%) hue-rotate(357deg) brightness(91%) contrast(90%);
+  }
+
+  &:hover {
+    filter: brightness(90%);
+    transition: 0.2s;
+    scale: 110%;
+  }
 }
 
 .arrowImg {
-    width: 25px;
-    filter: brightness(200);
+  width: 25px;
+  filter: brightness(0) saturate(100%) invert(75%) sepia(52%) saturate(359%) hue-rotate(357deg) brightness(91%) contrast(90%);
 }
-
+.pSinopse{
+  text-align: center;
+  color: #deb66b;
+}
 .episodeButton {
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  font-size: 40px;
+  cursor: pointer;
+  transition: 0.4s;
+  color: #deb66b;
+
+  &:hover {
     border: none;
     padding: 0;
     background-color: transparent;
-    font-size: 40px;
-    cursor: pointer;
-    transition: 0.4s;
+    font-size: 45px;
+    text-shadow: 6px 4px 4px black;
+  }
 
-    &:hover {
-        border: none;
-        padding: 0;
-        background-color: transparent;
-        font-size: 45px;
-        text-shadow: 6px 4px 4px black;
-      }
-      &:disabled {
-        border: none;
-        padding: 0;
-        background-color: transparent;
-      }
-      &:active {
-        outline: none;
-        border: none;
-        box-shadow: none;
-      }
-      &:focus {
-        border: none;
-        outline: none;
-        box-shadow: none;
-        background-color: transparent;
-      }
+  &:disabled {
+    border: none;
+    padding: 0;
+    background-color: transparent;
+  }
+
+  &:active {
+    outline: none;
+    border: none;
+    box-shadow: none;
+  }
+
+  &:focus {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    background-color: transparent;
+  }
 }
 
 .player {
-    max-width: 100%;
+  max-width: 100%;
 }
-
-
-

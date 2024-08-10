@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "VoceNotaDez",
+  title: "NOTA DEZ",
   description: "Tenha acesso a melhor plataforma de suporte escolar online!",
   icons: "/favicon.png",
 };

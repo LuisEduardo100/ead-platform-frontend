@@ -1,5 +1,5 @@
 .backgroundContainer {
-    background-color: #222222;
+    background-color: #E8E8E8;
     position: relative;
 }
 
@@ -70,7 +70,7 @@
 .duvidas {
     position: fixed;
     right: 2%;
-    bottom: 2%;
+    bottom: 6%;
     z-index: 4;
 
     .imgDuvidas {
@@ -79,8 +79,8 @@
 
         &:hover {
             transition: 0.4s;
-            filter: grayscale(100%);
-
+            filter: grayscale(50%);
+            scale: 105%;
         }
     }
 }

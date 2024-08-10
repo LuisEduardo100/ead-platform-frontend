@@ -1,12 +1,13 @@
 import api from './api'
 
 export type EpisodeType = {
-    id: number
-    name: string
-    synopsis: string,
-    order: number,
-    videoUrl: string
-    secondsLong: number
+    id: number;
+    name: string;
+    synopsis: string;
+    order: number;
+    videoUrl: string;
+    secondsLong: number;
+    Files: EpisodeFileType[];
 }
 
 export type CourseType = {
@@ -15,6 +16,13 @@ export type CourseType = {
     thumbnailUrl: string;
     synopsis: string;
     Episodes?: EpisodeType[];
+}
+
+export type EpisodeFileType = {
+    id: number;
+    episodeId: EpisodeFileType;
+    name: string;
+    fileUrl: string;
 }
 
 

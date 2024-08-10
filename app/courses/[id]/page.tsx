@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import { useEffect, useState } from "react";
 import { Button, Container } from "reactstrap";
 import { useRouter } from "next/navigation";
-import courseService, { CourseType } from "../../../src/services/courseService";
+import courseService, { CourseType, EpisodeType } from "../../../src/services/courseService";
 import PageSpinner from "../../../src/components/common/pageSpinner";
 import HeaderAuth from "../../../src/components/HomeAuth/header";
 import EpisodeList from "../../../src/components/Course";
@@ -20,31 +20,31 @@ const getCourseId = async ({ params }: ParamsProps) => {
   if (typeof courseId !== "string") return;
 
   const res = await courseService.getEpisodes(courseId);
-
   if (res.status === 200) {
     return res.data;
   }
 };
 
-
 export default function Course({ params }: ParamsProps) {
-  
+
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+  const [episodeFile, setEpisodeFile] = useState<EpisodeType>();
+
   const [course, setCourse] = useState<CourseType>();
-  
+
   const [liked, setLiked] = useState(Boolean);
   const [favorited, setFavorited] = useState(Boolean);
-  
+
   const courseId = params.id;
-  
+
   const getCourse = async () => {
     const course = await getCourseId({ params });
     setCourse(course);
     setLiked(course.liked);
     setFavorited(course.favorited);
   };
-  
+
   useEffect(() => {
     getCourse();
   }, [courseId]);
@@ -88,11 +88,10 @@ export default function Course({ params }: ParamsProps) {
       <main>
         <div
           style={{
-            backgroundImage: `linear-gradient(to bottom, #6666661a, #151515),
-              url(${process.env.NEXT_PUBLIC_BASEURL}/${course?.thumbnailUrl})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            minHeight: "450px",
+              backgroundImage: `linear-gradient(to bottom, #dadada04, #E8E8E8), url(${process.env.NEXT_PUBLIC_BASEURL}/${course?.thumbnailUrl})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              height: "600px",
           }}>
           <HeaderAuth />
         </div>
@@ -112,12 +111,12 @@ export default function Course({ params }: ParamsProps) {
             </Link>
             <div className={styles.interactions}>
               {liked === true ? (
-                <img src="/course/iconLiked.svg" alt="likedImage" className={styles.interactionImages} onClick={() => handleLikeCourse()} />
+                <img src="/course/iconLiked.svg" alt="likedImage" className={styles.interactionImagesTrue} onClick={() => handleLikeCourse()} />
               ) : (
                 <img src="/course/iconLike.svg" alt="likeImage" className={styles.interactionImages} onClick={() => handleLikeCourse()} />
               )}
               {favorited === true ? (
-                <img onClick={() => handleFavCourse()} src="/course/iconFavorited.svg" alt="favorited" className={styles.interactionImages} />
+                <img onClick={() => handleFavCourse()} src="/course/iconFavorited.svg" alt="favorited" className={styles.interactionImagesTrue} />
               ) : (
                 <img onClick={() => handleFavCourse()} src="/course/iconAddFav.svg" alt="addFav" className={styles.interactionImages} />
               )}

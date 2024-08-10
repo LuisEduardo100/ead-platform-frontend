@@ -18,26 +18,26 @@
     gap: 50px;
 }
 
+
 .inputFlex {
     width: 350px;
-    background-color: transparent;
+    background-color: #deb66b;
     border: 1px solid #64512e;
     color: white;
     transition: 0.3s;
     text-transform: uppercase;
 
     &::placeholder {
-        color: gray;
+        color: rgba(0, 0, 0, 0.753);
     }
 
     &:focus {
         box-shadow: none;
         border-color: #F0C36E;
-        background-color: transparent;
+        background-color: #deb66b;
         color: white;
     }
 }
-
 .inputNormalDiv {
     display: flex;
     flex-direction: column;
@@ -53,17 +53,18 @@
 }
 
 .formBtn {
-    border-color: #F0C36E;
+    border-color: black;
     text-align: center;
-    color: white;
+    color: black;
     font-weight: bold;
     font-size: 15px;
     padding: 6px 20px;
     transition: 0.4s;
+    background-color: #deb66b;
 
     &:hover {
-        border-color: #81683a;
-        background-color: transparent;
+        background-color: #deb66b;
+        filter: brightness(80%);
         color: gray;
     }
 

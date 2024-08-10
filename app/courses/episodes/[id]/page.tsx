@@ -4,15 +4,29 @@ import { useEffect, useRef, useState } from "react";
 import { Button, Container } from "reactstrap";
 import { useRouter } from "next/navigation";
 import ReactPlayer from "react-player";
-import courseService, { CourseType } from "../../../../src/services/courseService";
+import courseService, { CourseType, EpisodeType } from "../../../../src/services/courseService";
 import watchEpisodeService from "../../../../src/services/episodeService";
 import PageSpinner from "../../../../src/components/common/pageSpinner";
 import HeaderGeneric from "../../../../src/components/common/headerGeneric";
+import episodeFileService from "../../../../src/services/episodeFileService";
+import Link from "next/link";
 
-export default function EpisodePlayer({
-  params,
-  searchParams,
-}: {
+type ParamsProps = {
+  params: { id: number | string };
+};
+
+const getCourseId = async ({ params }: ParamsProps) => {
+  const courseId = params.id;
+
+  if (typeof courseId !== "string") return;
+
+  const res = await courseService.getEpisodes(courseId);
+  if (res.status === 200) {
+    return res.data;
+  }
+}
+
+export default function EpisodePlayer({ params, searchParams, }: {
   params: { id: number | string };
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
@@ -25,10 +39,28 @@ export default function EpisodePlayer({
   const courseId = searchParams?.courseid?.toString() || "";
 
   const [getEpisodeTime, setGetEpisodeTime] = useState(0);
+  const [getEpisodeFile, setGetEpisodeFile] = useState<EpisodeType>()
   const [episodeTime, setEpisodeTime] = useState(0);
   const [isReady, setIsReady] = useState(false);
 
   const playerRef = useRef<ReactPlayer>(null);
+
+  const handleEpisodeFile = async () => {
+    try {
+      const res = await episodeFileService.getEpisodeWithFile(episodeId);
+      if (res && res.Files && res.Files.length > 0) {
+        setGetEpisodeFile(res);
+      } else {
+        console.error('No files found in the response.');
+      }
+    } catch (error) {
+      console.error('Error fetching episode file:', error);
+    }
+  };
+
+  useEffect(() => {
+    handleEpisodeFile();
+  }, [episodeId]);
 
   const handleGetEpisodeTime = async () => {
     const res = await watchEpisodeService.getWatchTime(episodeId);
@@ -94,6 +126,10 @@ export default function EpisodePlayer({
       handleNextEpisode();
     }
   }
+
+
+  const hasFiles = getEpisodeFile?.Files && getEpisodeFile.Files.length > 0;
+  const file = hasFiles ? getEpisodeFile.Files[0] : null;
   return (
     <>
       <main>
@@ -103,9 +139,8 @@ export default function EpisodePlayer({
           {typeof window == "undefined" ? null : (
             <ReactPlayer
               className={styles.player}
-              url={`${process.env.NEXT_PUBLIC_BASEURL}/episodes/stream?videoUrl=${
-                course.Episodes[episodeOrder].videoUrl
-              }&token=${sessionStorage.getItem("vocenotadez-token")}`}
+              url={`${process.env.NEXT_PUBLIC_BASEURL}/episodes/stream?videoUrl=${course.Episodes[episodeOrder].videoUrl
+                }&token=${sessionStorage.getItem("vocenotadez-token")}`}
               controls
               ref={playerRef}
               onStart={() => handlePlayerTime()}
@@ -114,23 +149,44 @@ export default function EpisodePlayer({
               }}
             />
           )}
+          <div className={styles.divFileUrl}>
+            {hasFiles ? (
+              <div className={styles.divFileUrl}>
+                <Link
+                  className={styles.linkStyleFile}
+                  target="_blank"
+                  href={`${process.env.NEXT_PUBLIC_BASEURL}/${file?.fileUrl}`}
+                  passHref
+                >
+                  <Button className={styles.btn} color="danger" outline>
+                    <img className={styles.pdfviewer} src="/pdfviewer.png" alt="pdfimg" />
+                  </Button>
+                  <p className={styles.nameFile}>{file?.name}</p>
+                </Link>
+              </div>
+            ): (
+              <p>Sem material para download.</p>
+            )} 
+          </div>
           <div className={styles.episodeButtonDiv}>
-            <Button 
-              className={styles.episodeButton} 
-              disabled={episodeOrder === 0 ? true : false} 
+            <Button
+              className={styles.episodeButton}
+              disabled={episodeOrder === 0 ? true : false}
               onClick={() => handleLastEpisode()}
-              >
+            >
               <img src="/episode/iconArrowLeft.svg" alt="setaEsquerda" className={styles.arrowImg} />
             </Button>
             <Button
               className={styles.episodeButton}
               disabled={episodeOrder + 1 === course.Episodes.length ? true : false}
               onClick={() => handleNextEpisode()}
-              >
+            >
               <img src="/episode/iconArrowRight.svg" alt="setaDireita" className={styles.arrowImg} />
             </Button>
           </div>
-          <p className="text-center py-3">{course.Episodes[episodeOrder].synopsis}</p>
+
+          <p className={styles.pSinopse}>{course.Episodes[episodeOrder].synopsis}</p>
+
         </Container>
       </main>
     </>

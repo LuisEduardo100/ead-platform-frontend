@@ -3,9 +3,11 @@
     padding: 20px 0px;
     max-width: 100%;
 }
-.hr{
+
+.hr {
     color: #F0C36E;
 }
+
 .formName {
     display: flex;
     align-items: center;
@@ -42,14 +44,15 @@
 }
 
 .memberTimeImg {
-    width: 40px;
+    width: 60px;
 }
 
 .memberTimeText {
     font-size: 14px;
     color: gray;
 }
-@media( max-width: 335px){
+
+@media(max-width: 335px) {
     .formName {
         flex-direction: column;
     }
@@ -70,20 +73,20 @@
 
 .inputFlex {
     width: 250px;
-    background-color: transparent;
+    background-color: #deb66b;
     border: 1px solid #64512e;
     color: white;
     transition: 0.3s;
     text-transform: uppercase;
 
     &::placeholder {
-        color: gray;
+        color: rgba(0, 0, 0, 0.753);
     }
 
     &:focus {
         box-shadow: none;
         border-color: #F0C36E;
-        background-color: transparent;
+        background-color: #deb66b;
         color: white;
     }
 }
@@ -103,17 +106,18 @@
 }
 
 .formBtn {
-    border-color: #F0C36E;
+    border-color: black;
     text-align: center;
-    color: white;
+    color: black;
     font-weight: bold;
     font-size: 15px;
     padding: 6px 20px;
     transition: 0.4s;
+    background-color: #deb66b;
 
     &:hover {
-        border-color: #81683a;
-        background-color: transparent;
+        background-color: #deb66b;
+        filter: brightness(80%);
         color: gray;
     }
 
@@ -123,21 +127,24 @@
     }
 }
 
-@media(max-width: 767px){
+@media(max-width: 767px) {
     .inputFlexDiv {
         gap: 20px;
     }
 }
-@media (min-width: 543px) and (max-width: 575px){
+
+@media (min-width: 543px) and (max-width: 575px) {
     .inputFlexDiv {
         flex-direction: column;
         align-items: center;
     }
 }
-@media (max-width: 594px){
-    .input{
+
+@media (max-width: 594px) {
+    .input {
         width: 250px;
     }
+
     .inputFlexDiv {
         gap: 20px;
     }

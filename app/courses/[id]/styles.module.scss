@@ -5,17 +5,28 @@
 
 }
 .interactionImages {
+    filter: brightness(0) saturate(100%) invert(0%) sepia(2%) saturate(7436%) hue-rotate(124deg) brightness(103%) contrast(99%);
     width: 25px;
-    margin-left: 10px;
     &:hover{
-        width: 30px;
+        width: 40px;
         transition: 0.3s;
     }
 }
-
+.interactionImagesTrue{
+    width: 25px;
+    &:hover{
+        width: 40px;
+        transition: 0.3s;
+    }
+}
 .interactions {
+    display: flex;
+    gap: 10px;
     margin: 20px 0px 0px 10px;
     cursor: pointer;
+    padding: 11px 20px;
+    border: 1px solid black;
+    border-radius: 10px;
 }
 .divBtnImg{
     display: flex;
@@ -26,7 +37,7 @@
     margin-top: 20px;
     font-size: 24px;
     font-weight: bold;
-    color: white;
+    color: #deb66b;
     .buttonImg {
         width: 20px;
         margin: 0 0 0 10px;

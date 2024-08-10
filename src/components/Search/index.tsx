@@ -49,8 +49,8 @@ export default function SearchComponents({ searchParams }: { searchParams: { nam
     }
     return (
         <>
-            <div className={styles.header}>~
-                {searchUser != null ? <HeaderAuth /> : <HeaderGeneric logoUrl="/" btnUrl="/" btnContent="Voltar"/>}
+            <div className={styles.header}>
+                {searchUser != null ? (<HeaderAuth />) : (<HeaderGeneric logoUrl="/" btnUrl="/" btnContent="Voltar"/>)}
             </div>
             <main>
                 <section className={styles.mainContent}>

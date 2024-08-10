@@ -73,7 +73,7 @@ export default function UserForm() {
                 <p className={styles.userName}>{`${firstName} ${lastName}`}</p>
             </div>
             <div className={styles.memberTime}>
-                <img src="/favicon.png" alt="iconProfile" className={styles.memberTimeImg} />
+                <img src="/logo-vocenotadez.png" alt="iconProfile" className={styles.memberTimeImg} />
                 <p className={styles.memberTimeText}>Membro desde <br /> {`${date.getDate()} de ${month} de ${date.getFullYear()}`}</p>
             </div>
 
@@ -145,7 +145,7 @@ export default function UserForm() {
                     />
                 </FormGroup>
 
-                <Button className={styles.formBtn} outline type="submit">
+                <Button className={styles.formBtn} type="submit">
                     Salvar Alterações
                 </Button>
                 <ToastComponent color={color} isOpen={toastIsOpen} message={errorMessage} />
