@@ -27,7 +27,10 @@
     box-shadow: 1px 0.5px rgb(116, 116, 116);
     border-radius: 50%;
     &:hover{
-        width: 46px;
+        scale: 108%;
+        transition: 0.3s;
+        transform: translateX(2px) translateY(-2px);
+
     }
 }
 @media (max-width: 353px){

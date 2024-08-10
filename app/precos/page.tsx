@@ -54,10 +54,10 @@ export default function PaginaPrecos() {
             </div>
             <div className={styles.separator}>
                 <p className={styles.pSeparator}>Materiais personalizados com teoria e exercícios!</p>
+                    <img className={styles.capa} src="/capa-ebooks/capaquimica1.png" alt="capa" />
+                    <img className={styles.capa} src="/capa-ebooks/capa-fisica-1.png" alt="capa-2" />
+                    <img className={styles.capa} src="/capa-ebooks/capa-matematica-1.png" alt="capa-2" />
 
-                <img className={styles.capa1} src="/capa-ebooks/capaquimica1.png" alt="capa" />
-                <img className={styles.capa2} src="/capa-ebooks/capa-quimica-2.png" alt="capa-2" />
-                <img className={styles.capa3} src="/capa-ebooks/capa-quimica-3.png" alt="capa-2" />
             </div>
             <div className={styles.divTabela}>
                 <p className={styles.pPropaganda}>Tenha acesso a um reforço completo, onde terá materiais personalizados e aulas preparadas para você ter o melhor desempenho na sua sala de aula!</p>
@@ -100,11 +100,11 @@ export default function PaginaPrecos() {
                 </Link>
             </div>
             <div className={styles.separator}>
-                <p className={styles.pSeparator}>Materiais personalizados com teoria e exercícios!</p>
+                <p className={styles.pSeparator}>Materiais separados em níveis para uma melhor aprendizagem!</p>
 
-                <img className={styles.capa1} src="/capa-ebooks/capaquimica1.png" alt="capa" />
-                <img className={styles.capa2} src="/capa-ebooks/capa-quimica-2.png" alt="capa-2" />
-                <img className={styles.capa3} src="/capa-ebooks/capa-quimica-3.png" alt="capa-2" />
+                <img className={styles.capa} src="/capa-ebooks/capa-fisica-2.png" alt="capa" />
+                <img className={styles.capa} src="/capa-ebooks/capa-quimica-3.png" alt="capa-2" />
+                <img className={styles.capa} src="/capa-ebooks/capa-matematica-3.png" alt="capa-2" />
             </div>
             <div className={styles.cursosOfertados}>
                 <p className={styles.pCursosOfertados}>Confira os cursos já disponíveis no Nota Dez!</p>
