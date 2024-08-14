@@ -11,7 +11,7 @@ export default function ListCategories() {
     if (!data) return <PageSpinner />
 
     return (<>
-        {data.data.categories?.map((category: CategoryType) => (
+        {data?.map((category: CategoryType) => (
             <Container key={category.id}>
                 <ListCategoriesSlide key={category.id} categoryId={category.id} categoryName={category.name.toUpperCase()}/>
             </Container>

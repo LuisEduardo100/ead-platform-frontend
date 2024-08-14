@@ -29,7 +29,6 @@ export default function Course({ params }: ParamsProps) {
 
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-  const [episodeFile, setEpisodeFile] = useState<EpisodeType>();
 
   const [course, setCourse] = useState<CourseType>();
 

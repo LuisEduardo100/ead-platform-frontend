@@ -10,13 +10,34 @@
   gap: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
-
 }
 
-.divFileUrl {
-
+.fileAndButtons {
   display: flex;
+  max-width: 632px;
+  background-color: #dddddd;
+  padding: 0px 15px 15px 15px; 
+  gap: 30px;
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  border-radius: 18px;
+  margin-bottom: 50px;
 
+  .divSinopse{
+    flex: 2 0 350px;
+  }
+    .pSinopse {
+      text-align: left;
+      color: #deb66b;
+      margin-left: 13px;
+    }
+}
+
+
+.divFileUrl {
+  display: flex;
   .btn {
     display: inline;
     border: none;
@@ -29,20 +50,19 @@
   .linkStyleFile {
     display: flex;
     align-items: center;
-    gap: 10px;
     color: #deb66b;
     text-decoration: none;
   }
 
   .pdfviewer {
-    width: 50px;
+    width: 40px;
     filter: brightness(0) saturate(100%) invert(75%) sepia(52%) saturate(359%) hue-rotate(357deg) brightness(91%) contrast(90%);
   }
 
   &:hover {
     filter: brightness(90%);
     transition: 0.2s;
-    scale: 110%;
+    scale: 104%;
   }
 }
 
@@ -50,10 +70,7 @@
   width: 25px;
   filter: brightness(0) saturate(100%) invert(75%) sepia(52%) saturate(359%) hue-rotate(357deg) brightness(91%) contrast(90%);
 }
-.pSinopse{
-  text-align: center;
-  color: #deb66b;
-}
+
 .episodeButton {
   border: none;
   padding: 0;
@@ -69,6 +86,7 @@
     background-color: transparent;
     font-size: 45px;
     text-shadow: 6px 4px 4px black;
+    filter: brightness(90%);
   }
 
   &:disabled {
@@ -90,7 +108,29 @@
     background-color: transparent;
   }
 }
-
+.pSemDownload{
+  margin-left: 12px;
+}
+.playerWrapper {
+  border: 2px solid #E8E8E8; 
+  border-radius: 18px;     
+  overflow: hidden;         
+  position: relative;
+  width: 630px;              
+  height: 360px;             
+}
 .player {
   max-width: 100%;
+}
+
+@media(max-width: 991px){
+  .fileAndButtons{
+    justify-content: center;
+  }
+}
+@media(max-width: 675px){
+  .playerWrapper {
+    width: 100%;    
+  }
+
 }

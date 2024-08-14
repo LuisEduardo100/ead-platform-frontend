@@ -11,21 +11,6 @@ import HeaderGeneric from "../../../../src/components/common/headerGeneric";
 import episodeFileService from "../../../../src/services/episodeFileService";
 import Link from "next/link";
 
-type ParamsProps = {
-  params: { id: number | string };
-};
-
-const getCourseId = async ({ params }: ParamsProps) => {
-  const courseId = params.id;
-
-  if (typeof courseId !== "string") return;
-
-  const res = await courseService.getEpisodes(courseId);
-  if (res.status === 200) {
-    return res.data;
-  }
-}
-
 export default function EpisodePlayer({ params, searchParams, }: {
   params: { id: number | string };
   searchParams?: { [key: string]: string | string[] | undefined };
@@ -137,55 +122,63 @@ export default function EpisodePlayer({ params, searchParams, }: {
         <Container className="d-flex flex-column align-items-center gap-3 pt-5">
           <p className={styles.episodeTitle}>{course.Episodes[episodeOrder].name}</p>
           {typeof window == "undefined" ? null : (
-            <ReactPlayer
-              className={styles.player}
-              url={`${process.env.NEXT_PUBLIC_BASEURL}/episodes/stream?videoUrl=${course.Episodes[episodeOrder].videoUrl
-                }&token=${sessionStorage.getItem("vocenotadez-token")}`}
-              controls
-              ref={playerRef}
-              onStart={() => handlePlayerTime()}
-              onProgress={(progress) => {
-                setEpisodeTime(progress.playedSeconds);
-              }}
-            />
+            <div className={styles.playerWrapper}>
+              <ReactPlayer
+                className={styles.player}
+                url={`${process.env.NEXT_PUBLIC_BASEURL}/episodes/stream?videoUrl=${course.Episodes[episodeOrder].videoUrl
+                  }&token=${sessionStorage.getItem("vocenotadez-token")}`}
+                controls
+                width={'100%'}
+                height={'100%'}
+                ref={playerRef}
+                onStart={() => handlePlayerTime()}
+                onProgress={(progress) => {
+                  setEpisodeTime(progress.playedSeconds);
+                }}
+              />
+            </div>
           )}
-          <div className={styles.divFileUrl}>
-            {hasFiles ? (
-              <div className={styles.divFileUrl}>
-                <Link
-                  className={styles.linkStyleFile}
-                  target="_blank"
-                  href={`${process.env.NEXT_PUBLIC_BASEURL}/${file?.fileUrl}`}
-                  passHref
-                >
-                  <Button className={styles.btn} color="danger" outline>
-                    <img className={styles.pdfviewer} src="/pdfviewer.png" alt="pdfimg" />
-                  </Button>
-                  <p className={styles.nameFile}>{file?.name}</p>
-                </Link>
-              </div>
-            ): (
-              <p>Sem material para download.</p>
-            )} 
-          </div>
-          <div className={styles.episodeButtonDiv}>
-            <Button
-              className={styles.episodeButton}
-              disabled={episodeOrder === 0 ? true : false}
-              onClick={() => handleLastEpisode()}
-            >
-              <img src="/episode/iconArrowLeft.svg" alt="setaEsquerda" className={styles.arrowImg} />
-            </Button>
-            <Button
-              className={styles.episodeButton}
-              disabled={episodeOrder + 1 === course.Episodes.length ? true : false}
-              onClick={() => handleNextEpisode()}
-            >
-              <img src="/episode/iconArrowRight.svg" alt="setaDireita" className={styles.arrowImg} />
-            </Button>
+          <div className={styles.fileAndButtons}>
+            <div className={styles.divFileUrl}>
+              {hasFiles ? (
+                <div className={styles.divFileUrl}>
+                  <Link
+                    className={styles.linkStyleFile}
+                    target="_blank"
+                    href={`${process.env.NEXT_PUBLIC_BASEURL}/${file?.fileUrl}`}
+                    passHref
+                  >
+                    <Button className={styles.btn} color="danger" outline>
+                      <img className={styles.pdfviewer} src="/pdfviewer.png" alt="pdfimg" />
+                    </Button>
+                    <p className={styles.nameFile}>{file?.name}</p>
+                  </Link>
+                </div>
+              ) : (
+                <p className={styles.pSemDownload}>Sem material para download.</p>
+              )}
+            </div>
+            <div className={styles.episodeButtonDiv}>
+              <Button
+                className={styles.episodeButton}
+                disabled={episodeOrder === 0 ? true : false}
+                onClick={() => handleLastEpisode()}
+              >
+                <img src="/episode/iconArrowLeft.svg" alt="setaEsquerda" className={styles.arrowImg} />
+              </Button>
+              <Button
+                className={styles.episodeButton}
+                disabled={episodeOrder + 1 === course.Episodes.length ? true : false}
+                onClick={() => handleNextEpisode()}
+              >
+                <img src="/episode/iconArrowRight.svg" alt="setaDireita" className={styles.arrowImg} />
+              </Button>
+            </div>
+            <div className={styles.divSinopse}>
+              <p className={styles.pSinopse}>{course.Episodes[episodeOrder].synopsis}</p>
+            </div>
           </div>
 
-          <p className={styles.pSinopse}>{course.Episodes[episodeOrder].synopsis}</p>
 
         </Container>
       </main>

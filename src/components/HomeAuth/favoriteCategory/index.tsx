@@ -1,5 +1,4 @@
 'use client'
-
 import useSWR from 'swr'
 import PageSpinner from '../../common/pageSpinner'
 import styles from './styles.module.scss'

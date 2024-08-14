@@ -16,8 +16,18 @@ export type CourseType = {
     thumbnailUrl: string;
     synopsis: string;
     Episodes?: EpisodeType[];
+    watchStatus: WatchStatus[]
 }
 
+export type WatchStatus = {
+    isWatching: boolean
+}
+export type CourseTypeWithNoEps = {
+    id: number;
+    name: string;
+    thumbnailUrl: string;
+    synopsis: string;
+}
 export type EpisodeFileType = {
     id: number;
     episodeId: EpisodeFileType;
@@ -117,10 +127,6 @@ const courseService = {
         const res = await api.get(`/courses/search?name=${name}`).catch((error) => { return error.message })
         return res
     },
-    // getSearchNoAuth: async (name: string) => {
-    //     const res = await api.get(`/courses/search?name=${name}`).catch((error) => { return error.message })
-    //     return res
-    // },
     getEpisodes: async (id: number | string) => {
         const token = sessionStorage.getItem("vocenotadez-token")
 

@@ -1,6 +1,11 @@
 import api from './api'
 import { CourseType } from './courseService'
 
+export type CategoryWithNoCourse = {
+    id: number
+    name: string
+    position: number
+}
 export type CategoryType = {
     id: number
     name: string
@@ -16,7 +21,13 @@ const categoriesService = {
                 Authorization: `Bearer ${token}`
             }
         }).catch((error)=>{return error.response})
-        return res
+        if (Array.isArray(res.data.categories)) {
+            return res.data.categories
+        } else {
+            console.error('Categorias não são um array:', res.data.categories);
+            return [];
+        }
+        // return res
     },
     getCourses: async(id: number) => {
         const token = sessionStorage.getItem('vocenotadez-token')
