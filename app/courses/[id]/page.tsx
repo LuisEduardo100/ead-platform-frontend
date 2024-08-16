@@ -51,11 +51,9 @@ export default function Course({ params }: ParamsProps) {
   const handleLikeCourse = async () => {
     if (liked === true) {
       await courseService.removeLike(courseId);
-      console.log("it's working to remove" + await courseService.removeLike(courseId))
       setLiked(false);
     } else {
       await courseService.like(courseId);
-      console.log("it's working to" + await courseService.like(courseId))
       setLiked(true);
     }
   };
@@ -82,6 +80,8 @@ export default function Course({ params }: ParamsProps) {
     return <PageSpinner />;
   }
 
+
+  //teste
   return (
     <>
       <main>

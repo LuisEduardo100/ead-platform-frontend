@@ -1,15 +1,23 @@
 "use client";
 import styles from "./styles.module.scss";
+import "./styles.module.scss";
+
 import { useEffect, useRef, useState } from "react";
 import { Button, Container } from "reactstrap";
 import { useRouter } from "next/navigation";
 import ReactPlayer from "react-player";
+import classNames from 'classnames';
 import courseService, { CourseType, EpisodeType } from "../../../../src/services/courseService";
 import watchEpisodeService from "../../../../src/services/episodeService";
 import PageSpinner from "../../../../src/components/common/pageSpinner";
 import HeaderGeneric from "../../../../src/components/common/headerGeneric";
 import episodeFileService from "../../../../src/services/episodeFileService";
 import Link from "next/link";
+import EpisodeList from "../../../../src/components/Course";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBackwardStep, faCompress, faExpand, faForward, faForwardStep, faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faBackward } from "@fortawesome/free-solid-svg-icons/faBackward";
+import EpisodeAdaptedList from "../../../../src/components/common/episodeListAdapted";
 
 export default function EpisodePlayer({ params, searchParams, }: {
   params: { id: number | string };
@@ -27,6 +35,9 @@ export default function EpisodePlayer({ params, searchParams, }: {
   const [getEpisodeFile, setGetEpisodeFile] = useState<EpisodeType>()
   const [episodeTime, setEpisodeTime] = useState(0);
   const [isReady, setIsReady] = useState(false);
+  const [playing, setPlaying] = useState(true)
+  const [fullscreen, setFullscreen] = useState(false);
+  const [progress, setProgress] = useState(0)
 
   const playerRef = useRef<ReactPlayer>(null);
 
@@ -68,6 +79,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
     playerRef.current?.seekTo(getEpisodeTime);
     setIsReady(true);
   };
+
   if (isReady === true) {
     setTimeout(() => {
       handleSetEpisodeTime();
@@ -112,33 +124,166 @@ export default function EpisodePlayer({ params, searchParams, }: {
     }
   }
 
+  // VIDEO PLAYER FUNCTIONALITY 
 
+
+  const handleFullScreen = () => {
+    const player = playerRef.current?.getInternalPlayer();
+    if (!player) return;
+  
+    const container = player.parentElement?.parentElement; // Garante que o contêiner que inclui o player e os controles vai para fullscreen
+    if (!document.fullscreenElement) {
+      if (container?.requestFullscreen) {
+        setFullscreen(true)
+        container.requestFullscreen()
+      }
+    } else {
+      if (document.exitFullscreen) {
+        setFullscreen(false)
+        document.exitFullscreen();
+      }
+    }
+  };
+  const handleDuration = () => {
+    const duration = playerRef.current?.getDuration()
+    return duration
+  };
+
+  const handleCurrentTime = () => {
+    const duration = playerRef.current?.getCurrentTime()
+    return duration
+  }
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+  };
+
+
+  const handlePlayPause = () => {
+    setPlaying(!playing)
+  }
+
+  const handleForwardBtn = () => {
+    if (playerRef.current) {
+      playerRef.current.seekTo(playerRef.current.getCurrentTime() + 10);
+    }
+  }
+  const handleBackwardBtn = () => {
+    if (playerRef.current) {
+      playerRef.current.seekTo(playerRef.current.getCurrentTime() - 10);
+    }
+  }
+
+
+
+  // Ajustes de constantes
+  const filteredEpisodes = course.Episodes?.filter((episode) => episode.id !== episodeId)
   const hasFiles = getEpisodeFile?.Files && getEpisodeFile.Files.length > 0;
   const file = hasFiles ? getEpisodeFile.Files[0] : null;
+  const confirmNextVideo = episodeOrder + 1 == course.Episodes.length ? true : false
+  const confirmLastVideo = episodeOrder == 0 ? true : false
+
   return (
     <>
+      <HeaderGeneric logoUrl="/home" btnContent={`Voltar para o curso`} btnUrl={`/courses/${courseId}`} />
       <main>
-        <HeaderGeneric logoUrl="/home" btnContent={`Voltar para o curso`} btnUrl={`/courses/${courseId}`} />
-        <Container className="d-flex flex-column align-items-center gap-3 pt-5">
-          <p className={styles.episodeTitle}>{course.Episodes[episodeOrder].name}</p>
-          {typeof window == "undefined" ? null : (
-            <div className={styles.playerWrapper}>
-              <ReactPlayer
-                className={styles.player}
-                url={`${process.env.NEXT_PUBLIC_BASEURL}/episodes/stream?videoUrl=${course.Episodes[episodeOrder].videoUrl
-                  }&token=${sessionStorage.getItem("vocenotadez-token")}`}
-                controls
-                width={'100%'}
-                height={'100%'}
-                ref={playerRef}
-                onStart={() => handlePlayerTime()}
-                onProgress={(progress) => {
-                  setEpisodeTime(progress.playedSeconds);
-                }}
+        <div className={styles.mainDiv}>
+          <div className={classNames(styles.playerWrapper, { [styles.fullscreen]: fullscreen })}>
+            <p className={styles.video_player_title}>{course.Episodes[episodeOrder].name}</p>
+            <div className={styles.divProgressBar}>
+              <input
+                className={styles.progress_bar}
+                type="range"
+                min={0}
+                max={1}
+                step="any"
+                onChange={(e) => {
+                  const newTime = (parseFloat(e.target.value) / 100) * (playerRef.current?.getDuration() || 0);
+                  playerRef.current?.seekTo(newTime);
+                  setProgress(parseFloat(e.target.value));
+              }}
+                style={{ width: '100%' }}
               />
             </div>
-          )}
+            <ReactPlayer
+              className={styles.player}
+              url={`${process.env.NEXT_PUBLIC_BASEURL}/episodes/stream?videoUrl=${course.Episodes[episodeOrder].videoUrl
+                }&token=${sessionStorage.getItem("vocenotadez-token")}`}
+              controls={false}
+              playing={playing}
+              ref={playerRef}
+              width={'100%'}
+              height={'100%'}
+              muted={true}
+              onStart={() => handlePlayerTime()}
+              onProgress={(progress) => {
+                setEpisodeTime(progress.playedSeconds);
+              }}
+            />
+
+
+            <div className={classNames(styles.video_player_control, { [styles.fullscreenControls]: fullscreen })}>
+              <Button className={styles.control_btn} onClick={handleLastEpisode} disabled={confirmLastVideo}>
+                <FontAwesomeIcon icon={faBackwardStep} style={{ fontSize: "24px" }} />
+              </Button>
+              <Button className={styles.control_btn} onClick={handlePlayPause}>
+                {
+                  !(playing) ? (
+                    <div className="play-icon">
+                      <FontAwesomeIcon icon={faPlay} style={{ fontSize: '24px' }} />
+                    </div>
+                  ) : (
+                    <div className="pause-icon">
+                      <FontAwesomeIcon icon={faPause} style={{ fontSize: '24px' }} />
+                    </div>
+                  )
+                }
+              </Button>
+              <Button className={styles.control_btn} onClick={handleNextEpisode} disabled={confirmNextVideo}>
+                <FontAwesomeIcon icon={faForwardStep} style={{ fontSize: "24px" }} />
+              </Button>
+              <Button className={styles.control_btn} onClick={handleBackwardBtn}>
+                <FontAwesomeIcon icon={faBackward} style={{ fontSize: "24px" }} />
+              </Button>
+              <Button className={styles.control_btn} onClick={handleForwardBtn}>
+                <FontAwesomeIcon icon={faForward} style={{ fontSize: "24px" }} />
+              </Button>
+              <div className={styles.duration_container}>
+                <span style={{ marginLeft: '10px' }}>
+                  {formatTime(handleCurrentTime()!)} / {formatTime(handleDuration()!)}
+                </span>
+              </div>
+              <Button className={styles.control_btn} onClick={handleFullScreen}>
+                {fullscreen ?
+                  <div className={styles.fullscren_on}>
+                    <FontAwesomeIcon icon={faCompress} style={{ fontSize: "24px" }} />
+                  </div>
+                  :
+                  <div className={styles.fullscren_off}>
+                    <FontAwesomeIcon icon={faExpand} style={{ fontSize: "24px" }} />
+                  </div>
+                }
+              </Button>
+            </div>
+
+          </div>
+
+          {/* EPISODE LIST  */}
+
+          <div className={styles.div_episode_list}>
+            <div className={styles.progress}>
+              <h4>Meu progresso - {`${Math.round(((episodeOrder + 1) / course.Episodes?.length) * 100)}%`}</h4>
+              <p>{`${episodeOrder + 1} de ${course.Episodes.length}`}</p>
+            </div>
+            {
+              course.Episodes?.map((episode) =>
+                <EpisodeAdaptedList key={episode.id} episode={episode} course={course} />
+              )
+            }
+          </div>
           <div className={styles.fileAndButtons}>
+            {/* FILE BUTTON  */}
             <div className={styles.divFileUrl}>
               {hasFiles ? (
                 <div className={styles.divFileUrl}>
@@ -158,29 +303,14 @@ export default function EpisodePlayer({ params, searchParams, }: {
                 <p className={styles.pSemDownload}>Sem material para download.</p>
               )}
             </div>
-            <div className={styles.episodeButtonDiv}>
-              <Button
-                className={styles.episodeButton}
-                disabled={episodeOrder === 0 ? true : false}
-                onClick={() => handleLastEpisode()}
-              >
-                <img src="/episode/iconArrowLeft.svg" alt="setaEsquerda" className={styles.arrowImg} />
-              </Button>
-              <Button
-                className={styles.episodeButton}
-                disabled={episodeOrder + 1 === course.Episodes.length ? true : false}
-                onClick={() => handleNextEpisode()}
-              >
-                <img src="/episode/iconArrowRight.svg" alt="setaDireita" className={styles.arrowImg} />
-              </Button>
-            </div>
+
+            {/* SINOPSE  */}
+
             <div className={styles.divSinopse}>
               <p className={styles.pSinopse}>{course.Episodes[episodeOrder].synopsis}</p>
             </div>
           </div>
-
-
-        </Container>
+        </div>
       </main>
     </>
   );

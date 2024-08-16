@@ -1,13 +1,18 @@
 .slide {
   width: 300px;
-  height: 190px;
+  height: 210px;
   border: 3px solid #666666b2;
   transition: 0.3s;
   cursor: pointer;
-  overflow: hidden;
-  text-overflow: clip;
+  overflow: visible;
+  text-overflow: visible;
+  position: relative;
+  /* Necessário para que o z-index funcione */
 
-  &:hover {}
+}
+
+.slideImg {
+  object-fit: fill;
 }
 
 .imgBox {
@@ -35,7 +40,7 @@
   text-decoration: none;
   position: relative;
   background-color: white;
-
+  overflow: visible;
 
   .imgBtn {
     width: 40px;

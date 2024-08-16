@@ -5,6 +5,7 @@ import styles from './styles.module.scss'
 import { Container } from 'reactstrap';
 import PageSpinner from '../../common/pageSpinner';
 import useSWR from 'swr';
+import SlideComponentNoAuth from '../sliderAutoplay/SlideComponent';
 
 const HomeSlide = () => {
   const { data, error } = useSWR('/newest', courseService.getNewestCourses)
@@ -12,10 +13,7 @@ const HomeSlide = () => {
   if (error) return error
   if (!data) return <PageSpinner />
   return (<>
-      <Container>
-          <p className={styles.pStyle}>LANÇAMENTOS</p>
-          <SlideSection newestCourses={data.data} />
-      </Container>
+    <SlideComponentNoAuth course={data.data} />
   </>)
 }
 

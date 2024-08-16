@@ -32,7 +32,6 @@ export default function  EpisodeList({ episode, course }: props) {
     return (
         <>
             <div className={styles.episodeCard}>
-            <hr />
                 <div className={styles.titleAndTime} onClick={() => handleEpisodePlayer()}>
                     <p className={styles.episodeTitle}>{episode.name}</p>
                     <p className={styles.episodeTime}>{`${handleSecondsToMin(episode.secondsLong)}`}</p>

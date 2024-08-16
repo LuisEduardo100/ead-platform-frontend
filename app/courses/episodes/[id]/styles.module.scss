@@ -1,43 +1,28 @@
-.episodeTitle {
-  font-size: 36px;
-  font-weight: bold;
-  text-align: center;
-  color: #deb66b;
-}
-
-.episodeButtonDiv {
-  display: flex;
-  gap: 20px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
 .fileAndButtons {
   display: flex;
-  max-width: 632px;
+  max-width: 850px;
   background-color: #dddddd;
-  padding: 0px 15px 15px 15px; 
-  gap: 30px;
-  box-sizing: border-box;
-  justify-content: space-between;
-  align-items: center;
+  padding: 15px 25px;
+  gap: 12px;
   flex-wrap: wrap;
   border-radius: 18px;
-  margin-bottom: 50px;
+  flex: 1 0 500px;
 
-  .divSinopse{
-    flex: 2 0 350px;
+  .divSinopse {
+    flex: 1 0 650px;
   }
-    .pSinopse {
-      text-align: left;
-      color: #deb66b;
-      margin-left: 13px;
-    }
+
+  .pSinopse {
+    text-align: left;
+    color: black;
+  }
 }
 
 
 .divFileUrl {
   display: flex;
+  color: black;
+
   .btn {
     display: inline;
     border: none;
@@ -50,7 +35,7 @@
   .linkStyleFile {
     display: flex;
     align-items: center;
-    color: #deb66b;
+    color: black;
     text-decoration: none;
   }
 
@@ -71,66 +56,151 @@
   filter: brightness(0) saturate(100%) invert(75%) sepia(52%) saturate(359%) hue-rotate(357deg) brightness(91%) contrast(90%);
 }
 
-.episodeButton {
-  border: none;
-  padding: 0;
-  background-color: transparent;
-  font-size: 40px;
-  cursor: pointer;
-  transition: 0.4s;
-  color: #deb66b;
 
-  &:hover {
-    border: none;
-    padding: 0;
-    background-color: transparent;
-    font-size: 45px;
-    text-shadow: 6px 4px 4px black;
-    filter: brightness(90%);
+
+// VIDEO-PLAYER FUNCTIONALITY 
+
+.mainDiv {
+  display: flex;
+  padding: 50px 0px;
+  align-items: center;
+  gap: 35px;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  max-width: 1200px;
+
+  .duration_container {
+    display: flex;
+    align-items: center;
+    gap: 4.5px;
+    color: white;
+    flex-grow: 1;
   }
 
-  &:disabled {
-    border: none;
-    padding: 0;
-    background-color: transparent;
+  .div_episode_list {
+    max-width: 300px;
+    margin: 0 auto;
+
+    .progress {
+      margin-bottom: 12px;
+    }
   }
 
-  &:active {
-    outline: none;
-    border: none;
-    box-shadow: none;
+  .playerWrapper {
+    position: relative;
+    max-width: 850px;
+    background-color: black;
+
+    // &.fullscreen {
+    //   position: fixed;
+    //   top: 0;
+    //   left: 0;
+    //   width: 100vw;
+    //   height: 100vh;
+    //   z-index: 9999;
+
+    //   .player {
+    //     width: 100%;
+    //     position: relative;
+    //     z-index: -1;
+    //   }
+    // }
+
+
+    &:hover {
+
+      .video_player_control,
+      .video_player_title,
+      .divProgressBar {
+        opacity: 1
+      }
+    }
+
+    .video_player_title {
+      position: absolute;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      text-transform: uppercase;
+      min-height: 10vh;
+      background: linear-gradient(to bottom, rgba(17, 17, 17, 0.788), rgba(255, 255, 255, 0));
+      width: 100%;
+      padding: 12px;
+      opacity: 0;
+      transition: opacity 280ms ease-in-out;
+    }
+
+    .divProgressBar {
+      width: 100%;
+      position: absolute;
+      bottom: 44px;
+      padding: 0 20px;
+      margin: 0;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 280ms ease-in-out;
+      background: transparent;
+    }
   }
 
-  &:focus {
-    border: none;
-    outline: none;
-    box-shadow: none;
-    background-color: transparent;
+  .progress_bar[type="range"] {
+    appearance: none;
+    background-color: #DEB66B;
+    position: relative;
+    z-index: 400;
+    cursor: pointer;
+    height: 6px;
+    border-radius: 10px;
+  }
+
+  .progress_bar[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 25px;
+    position: relative;
+    z-index: 400;
+    border-radius: 50%;
+    height: 25px;
+    background-color: #DEB66B;
+  }
+
+  .video_player_control {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    min-height: 5vh;
+    background: linear-gradient(to top, rgba(17, 17, 17, 0.788), rgba(236, 236, 236, 0));
+    gap: 1.0rem;
+    padding: 12px 20px;
+    bottom: 0px;
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity 280ms ease-in-out;
+
+    .control_btn {
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      margin: 0;
+
+      &:hover {
+        background-color: none;
+        opacity: 0.75;
+      }
+    }
   }
 }
-.pSemDownload{
-  margin-left: 12px;
-}
-.playerWrapper {
-  border: 2px solid #E8E8E8; 
-  border-radius: 18px;     
-  overflow: hidden;         
-  position: relative;
-  width: 630px;              
-  height: 360px;             
-}
-.player {
-  max-width: 100%;
-}
 
-@media(max-width: 991px){
-  .fileAndButtons{
+
+
+@media(max-width: 991px) {
+  .fileAndButtons {
     justify-content: center;
   }
 }
-@media(max-width: 675px){
+
+@media(max-width: 675px) {
   .playerWrapper {
-    width: 100%;    
+    width: 100%;
   }
 
 }
