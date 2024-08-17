@@ -76,38 +76,45 @@ export default function Course({ params }: ParamsProps) {
     }
   }, []);
 
+
+  const FirstEpisodeOrder = course?.Episodes![0].order
+  const FirstEpisodeId = course?.Episodes![0].id
+  const handleFirstEpisode = () => {
+    router.push(`/courses/episodes/${FirstEpisodeOrder! - 1}?courseid=${course?.id}&episodeid=${FirstEpisodeId}`)
+  }
+
   if (loading) {
     return <PageSpinner />;
   }
 
-
-  //teste
   return (
     <>
       <main>
         <div
           style={{
-              backgroundImage: `linear-gradient(to bottom, #dadada04, #E8E8E8), url(${process.env.NEXT_PUBLIC_BASEURL}/${course?.thumbnailUrl})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              height: "600px",
+            backgroundImage: `linear-gradient(to bottom, #dadada04, #E8E8E8), url(${process.env.NEXT_PUBLIC_BASEURL}/${course?.thumbnailUrl})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            height: "600px",
           }}>
           <HeaderAuth />
         </div>
         <Container className={styles.courseInfo}>
           <p className={styles.courseTitle}>{course?.name}</p>
           <p className={styles.courseDescription}>{course?.synopsis}</p>
+          <div className={styles.titleAndDescription} id={"titulo"}>
+            <p className={styles.episodeDivision}>Episódios:&nbsp;&nbsp;{`${course?.Episodes?.length}`} </p>
+          </div>
           <div className={styles.divBtnImg}>
-            <Link href={'#titulo'}>
-              <Button
-                outline
-                className={styles.courseBtn}
-                disabled={course?.Episodes?.length === 0 ? true : false}
-              >
-                ASSISTIR
-                <img src="/buttonPlay.svg" alt="buttonImg" className={styles.buttonImg} />
-              </Button>
-            </Link>
+            <Button
+              outline
+              className={styles.courseBtn}
+              disabled={course?.Episodes?.length === 0 ? true : false}
+              onClick={handleFirstEpisode}
+            >
+              ASSISTIR
+              <img src="/buttonPlay.svg" alt="buttonImg" className={styles.buttonImg} />
+            </Button>
             <div className={styles.interactions}>
               {liked === true ? (
                 <img src="/course/iconLiked.svg" alt="likedImage" className={styles.interactionImagesTrue} onClick={() => handleLikeCourse()} />
@@ -123,10 +130,6 @@ export default function Course({ params }: ParamsProps) {
           </div>
         </Container>
         <Container className={styles.episodeInfo}>
-          <div className={styles.titleAndDescription} id={"titulo"}>
-            <p className={styles.episodeDivision}>EPISÓDIOS</p>
-            <p className={styles.episodeLength}>{`(${course?.Episodes?.length})`}</p>
-          </div>
           {course?.Episodes?.length === 0 ? (
             <p>
               <strong>Não temos episódios ainda, volte outra hora! &#x1F606;&#x1F918;</strong>

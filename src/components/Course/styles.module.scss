@@ -1,39 +1,61 @@
 .episodeCard {
-    padding: 20px 20px 0px 0px;
-}
-
-.episodeTitle {
-    font-size: 22px;
-    font-weight: bold;
-}
-
-.titleAndTime {
+    background-color: #F0C36E;
+    padding: 0px 15px;
+    width: 350px;
     display: flex;
-    gap: 12px;
-    align-items: flex-end;
-    cursor: pointer;
-
-    &:hover {
-        .episodeTitle {
-            font-size: 24.5px;
-            transition: 0.4s;
-            color: #F0C36E;
-        }
-
-        .episodeTime {
-            color: #F0C36E;
-        }
-
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    height: 150px;
+    border-radius: 20px;
+    box-shadow: -2px 4px #183153;
+    position: relative;
+    border: 2px solid #183153;
+}
+.episodeTitle {
+    font-size: 16px;
+    font-weight: bold;
+    width: 300px;
+    cursor: pointer;  
+    margin-top: 15px;
+    &:hover{
+        opacity: .55
     }
 }
-
-.episodeDescription {
-    padding: 8px 0px 0px 20px;
-    width: 700px;
+.episodeTimeDiv{
+    width: 80px;
+    display: flex;
+    position: absolute;
+    top: 12px;
+    left: 15px;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    &:hover{
+        opacity: .55
+    }
 }
-
 .episodeTime {
-    color: rgb(154, 155, 136);
+    font-size: 15px;
+    color: rgb(0, 0, 0);
+}
+.link_file{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+    padding: 8px 0px 0px 0px;
+    gap: 8px;
+    .img{
+        width: 30px;
+    }
+
+    &:hover{
+        opacity: .55
+    }
 }
 
 @media (max-width: 738px) {

@@ -44,7 +44,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
   const handleEpisodeFile = async () => {
     try {
       const res = await episodeFileService.getEpisodeWithFile(episodeId);
-      if (res && res.Files && res.Files.length > 0) {
+      if (res) {
         setGetEpisodeFile(res);
       } else {
         console.error('No files found in the response.');
@@ -118,7 +118,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
 
   if (course?.Episodes == undefined) return <PageSpinner />;
 
-  if (episodeOrder + 1 < course.Episodes.length) {
+  if (episodeOrder + 1 <= course.Episodes.length) {
     if (Math.round(episodeTime) === course.Episodes[episodeOrder].secondsLong) {
       handleNextEpisode();
     }
@@ -219,6 +219,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
               onStart={() => handlePlayerTime()}
               onProgress={(progress) => {
                 setEpisodeTime(progress.playedSeconds);
+                
               }}
             />
 
@@ -243,6 +244,21 @@ export default function EpisodePlayer({ params, searchParams, }: {
               <Button className={styles.control_btn} onClick={handleNextEpisode} disabled={confirmNextVideo}>
                 <FontAwesomeIcon icon={faForwardStep} style={{ fontSize: "24px" }} />
               </Button>
+              <div className={styles.div_volume_bar}>
+              <input
+                className={styles.volume_bar}
+                type="range"
+                min={0}
+                max={1}
+                step="any"
+                onChange={(e) => {
+                  const newTime = (parseFloat(e.target.value) / 100) * (playerRef.current?.getDuration() || 0);
+                  playerRef.current?.seekTo(newTime);
+                  setProgress(parseFloat(e.target.value));
+              }}
+                style={{ width: '100%' }}
+              />
+            </div>
               <Button className={styles.control_btn} onClick={handleBackwardBtn}>
                 <FontAwesomeIcon icon={faBackward} style={{ fontSize: "24px" }} />
               </Button>
@@ -282,8 +298,10 @@ export default function EpisodePlayer({ params, searchParams, }: {
               )
             }
           </div>
+
+          {/* FILE BUTTON  */}
+
           <div className={styles.fileAndButtons}>
-            {/* FILE BUTTON  */}
             <div className={styles.divFileUrl}>
               {hasFiles ? (
                 <div className={styles.divFileUrl}>
