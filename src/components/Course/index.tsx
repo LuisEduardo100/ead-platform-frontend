@@ -3,11 +3,11 @@ import { useRouter } from 'next/navigation'
 import { CourseType, EpisodeType } from '../../services/courseService'
 import styles from './styles.module.scss'
 import Link from 'next/link'
-import { Button } from 'reactstrap'
 import episodeFileService from '../../services/episodeFileService'
 import { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCirclePlay, faCloudArrowDown } from '@fortawesome/free-solid-svg-icons'
+import { faCircleCheck, faCirclePlay, faCloudArrowDown } from '@fortawesome/free-solid-svg-icons'
+import { faCircleCheck as faCircleCheckRegular } from '@fortawesome/free-regular-svg-icons';
 
 interface props {
     episode: EpisodeType
@@ -56,12 +56,15 @@ export default function EpisodeList({ episode, course }: props) {
         <>
             <div className={styles.episodeCard} >
                 <div className={styles.episodeTimeDiv} onClick={handleEpisodePlayer}>
-                    <FontAwesomeIcon icon={faCirclePlay} style={{ color: "#183153", fontSize: "30px" }} />
-                    <p className={styles.episodeTime}>{`${handleSecondsToMin(episode.secondsLong)}`}</p>
+                    <div className={styles.playIconAndTime}>
+                        <FontAwesomeIcon icon={faCirclePlay} style={{ color: "#183153", fontSize: "30px" }} />
+                        <p className={styles.episodeTime}>{`${handleSecondsToMin(episode.secondsLong)}`}</p>
+                    </div>
+                    <p className={styles.episodeTitle}>{episode.name}</p>
                 </div>
-                <p className={styles.episodeTitle} onClick={handleEpisodePlayer}>{episode.name}</p>
+                <FontAwesomeIcon className={styles.checkItem} icon={faCircleCheckRegular} style={{ fontSize: '30px' }} />
                 {(hasFile) ? <Link target="_blank" className={styles.link_file} href={`${process.env.NEXT_PUBLIC_BASEURL}/${File?.fileUrl}`}>
-                    <FontAwesomeIcon icon={faCloudArrowDown} style={{color: '#183153'}} />
+                    <FontAwesomeIcon icon={faCloudArrowDown} style={{ color: '#183153' }} />
                     <p className={styles.archives}>Roteiro</p>
                 </Link> : null
                 }

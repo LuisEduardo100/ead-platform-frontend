@@ -15,7 +15,7 @@ import episodeFileService from "../../../../src/services/episodeFileService";
 import Link from "next/link";
 import EpisodeList from "../../../../src/components/Course";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBackwardStep, faCompress, faExpand, faForward, faForwardStep, faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faBackwardStep, faCompress, faExpand, faForward, faForwardStep, faPause, faPlay, faVolumeHigh, faVolumeLow, faVolumeMute } from "@fortawesome/free-solid-svg-icons";
 import { faBackward } from "@fortawesome/free-solid-svg-icons/faBackward";
 import EpisodeAdaptedList from "../../../../src/components/common/episodeListAdapted";
 
@@ -38,9 +38,23 @@ export default function EpisodePlayer({ params, searchParams, }: {
   const [playing, setPlaying] = useState(true)
   const [fullscreen, setFullscreen] = useState(false);
   const [progress, setProgress] = useState(0)
-
+  const [volume, setVolume] = useState(1)
+  const [volumeState, setVolumeState] = useState("high")
+  const [changeVolumeState, setChangeVolumeState] = useState(true)
   const playerRef = useRef<ReactPlayer>(null);
 
+
+
+  const handleChangeVolumeState = () => {
+    if (changeVolumeState == true) {
+      setVolume(1)
+      setVolumeState("high")
+    } else {
+      setVolume(0)
+      setVolumeState("muted")
+    }
+    setChangeVolumeState(!changeVolumeState)
+  }
   const handleEpisodeFile = async () => {
     try {
       const res = await episodeFileService.getEpisodeWithFile(episodeId);
@@ -53,6 +67,21 @@ export default function EpisodePlayer({ params, searchParams, }: {
       console.error('Error fetching episode file:', error);
     }
   };
+
+  const handleVolumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseFloat(event.target.value);
+    setVolume(value);
+
+    if (value === 0) {
+      setVolumeState("muted");
+    } else {
+      if (value > 0 && value <= 0.5) {
+        setVolumeState("low")
+      } else {
+        setVolumeState("high")
+      }
+    }
+  }
 
   useEffect(() => {
     handleEpisodeFile();
@@ -130,7 +159,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
   const handleFullScreen = () => {
     const player = playerRef.current?.getInternalPlayer();
     if (!player) return;
-  
+
     const container = player.parentElement?.parentElement; // Garante que o contêiner que inclui o player e os controles vai para fullscreen
     if (!document.fullscreenElement) {
       if (container?.requestFullscreen) {
@@ -175,8 +204,6 @@ export default function EpisodePlayer({ params, searchParams, }: {
     }
   }
 
-
-
   // Ajustes de constantes
   const filteredEpisodes = course.Episodes?.filter((episode) => episode.id !== episodeId)
   const hasFiles = getEpisodeFile?.Files && getEpisodeFile.Files.length > 0;
@@ -189,7 +216,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
       <HeaderGeneric logoUrl="/home" btnContent={`Voltar para o curso`} btnUrl={`/courses/${courseId}`} />
       <main>
         <div className={styles.mainDiv}>
-          <div className={classNames(styles.playerWrapper, { [styles.fullscreen]: fullscreen })}>
+          <div className={styles.playerWrapper}>
             <p className={styles.video_player_title}>{course.Episodes[episodeOrder].name}</p>
             <div className={styles.divProgressBar}>
               <input
@@ -202,7 +229,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
                   const newTime = (parseFloat(e.target.value) / 100) * (playerRef.current?.getDuration() || 0);
                   playerRef.current?.seekTo(newTime);
                   setProgress(parseFloat(e.target.value));
-              }}
+                }}
                 style={{ width: '100%' }}
               />
             </div>
@@ -215,16 +242,15 @@ export default function EpisodePlayer({ params, searchParams, }: {
               ref={playerRef}
               width={'100%'}
               height={'100%'}
-              muted={true}
+              volume={volume}
+              muted={false}
               onStart={() => handlePlayerTime()}
               onProgress={(progress) => {
                 setEpisodeTime(progress.playedSeconds);
-                
+
               }}
             />
-
-
-            <div className={classNames(styles.video_player_control, { [styles.fullscreenControls]: fullscreen })}>
+            <div className={styles.video_player_control}>
               <Button className={styles.control_btn} onClick={handleLastEpisode} disabled={confirmLastVideo}>
                 <FontAwesomeIcon icon={faBackwardStep} style={{ fontSize: "24px" }} />
               </Button>
@@ -245,20 +271,22 @@ export default function EpisodePlayer({ params, searchParams, }: {
                 <FontAwesomeIcon icon={faForwardStep} style={{ fontSize: "24px" }} />
               </Button>
               <div className={styles.div_volume_bar}>
-              <input
-                className={styles.volume_bar}
-                type="range"
-                min={0}
-                max={1}
-                step="any"
-                onChange={(e) => {
-                  const newTime = (parseFloat(e.target.value) / 100) * (playerRef.current?.getDuration() || 0);
-                  playerRef.current?.seekTo(newTime);
-                  setProgress(parseFloat(e.target.value));
-              }}
-                style={{ width: '100%' }}
-              />
-            </div>
+                <div className={styles.volume_container} onClick={handleChangeVolumeState}>
+                  {volumeState == "high" ? <FontAwesomeIcon icon={faVolumeHigh} style={{ color: "#fff", fontSize: '22px' }} /> :
+                    volumeState == "low" ? <FontAwesomeIcon icon={faVolumeLow} style={{ color: "#fff", fontSize: '22px' }} /> :
+                      <FontAwesomeIcon className={styles.volume_muted} icon={faVolumeMute} style={{ color: "#fff", fontSize: '22px' }} />
+                  }
+                </div>
+                <input
+                  className={styles.volume_bar}
+                  type="range"
+                  min={0}
+                  max={1}
+                  value={volume}
+                  step="any"
+                  onChange={handleVolumeChange}
+                />
+              </div>
               <Button className={styles.control_btn} onClick={handleBackwardBtn}>
                 <FontAwesomeIcon icon={faBackward} style={{ fontSize: "24px" }} />
               </Button>

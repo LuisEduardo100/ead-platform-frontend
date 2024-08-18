@@ -86,26 +86,20 @@
     }
   }
 
+
   .playerWrapper {
     position: relative;
     max-width: 850px;
     background-color: black;
 
-    // &.fullscreen {
-    //   position: fixed;
-    //   top: 0;
-    //   left: 0;
-    //   width: 100vw;
-    //   height: 100vh;
-    //   z-index: 9999;
-
-    //   .player {
-    //     width: 100%;
-    //     position: relative;
-    //     z-index: -1;
-    //   }
-    // }
-
+    .divProgressBar {
+      &:hover {
+        .progress_bar[type="range"]::-webkit-slider-thumb {
+          width: 15px;
+          height: 15px;
+        }
+      }
+    }
 
     &:hover {
 
@@ -140,12 +134,11 @@
       opacity: 0;
       transition: opacity 280ms ease-in-out;
       background: transparent;
+      z-index: 10000;
     }
   }
 
   .progress_bar[type="range"] {
-    appearance: none;
-    background-color: #DEB66B;
     position: relative;
     z-index: 400;
     cursor: pointer;
@@ -155,24 +148,23 @@
 
   .progress_bar[type="range"]::-webkit-slider-thumb {
     appearance: none;
-    width: 25px;
     position: relative;
-    z-index: 400;
+    width: 0px;
     border-radius: 50%;
-    height: 25px;
-    background-color: #DEB66B;
+    height: 0px;
+    z-index: 400;
   }
 
   .video_player_control {
     position: absolute;
     display: flex;
+    align-items: center;
+    padding: 30px 20px 10px 20px;
     width: 100%;
-    min-height: 5vh;
+    min-height: 7vh;
     background: linear-gradient(to top, rgba(17, 17, 17, 0.788), rgba(236, 236, 236, 0));
     gap: 1.0rem;
-    padding: 12px 20px;
     bottom: 0px;
-    z-index: 10000;
     opacity: 0;
     transition: opacity 280ms ease-in-out;
 
@@ -190,6 +182,44 @@
   }
 }
 
+// volume 
+// .volume_bar[type="range"] {
+//   /* Trilha do slider */
+//   &::-webkit-slider-runnable-track {
+//   }
+
+//   /* Polegar do slider */
+//   &::-webkit-slider-thumb {
+//   }
+// }
+
+.div_volume_bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  &:hover {
+    .volume_bar {
+      width: 100px;
+      transform: scaleX(1);
+      cursor: pointer;
+
+    }
+  }
+
+  .volume_bar {
+    width: 0;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: width 150ms ease-in-out, transform 150ms ease-in-out;
+  }
+}
+
+.volume_container {
+  &:hover {
+    cursor: pointer;
+  }
+}
 
 
 @media(max-width: 991px) {

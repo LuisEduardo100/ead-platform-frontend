@@ -14,7 +14,7 @@ export default function FavoriteCourses() {
     <>
       <Container>
         <p className={styles.pStyle}>MINHA LISTA</p>
-        {data.data.courses.length >= 1 ? (
+        {data.data.courses?.length >= 1 ? (
           <SlideSection newestCourses={data.data.courses} />
         ) : (
           <p className="h6 text-center pt-3">
