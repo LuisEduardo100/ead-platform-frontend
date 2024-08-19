@@ -3,12 +3,14 @@ import styles from "./styles.module.scss";
 import { useEffect, useState } from "react";
 import { Button, Container } from "reactstrap";
 import { useRouter } from "next/navigation";
-import courseService, { CourseType, EpisodeType } from "../../../src/services/courseService";
+import courseService, { CourseType, EpisodeType, WatchStatus } from "../../../src/services/courseService";
 import PageSpinner from "../../../src/components/common/pageSpinner";
 import HeaderAuth from "../../../src/components/HomeAuth/header";
 import EpisodeList from "../../../src/components/Course";
 import Footer from "../../../src/components/common/footer";
 import Link from "next/link";
+import useSWR from "swr";
+import KeepWatchingService from "../../../src/services/keepWatchingService";
 
 type ParamsProps = {
   params: { id: number | string };
@@ -27,6 +29,9 @@ const getCourseId = async ({ params }: ParamsProps) => {
 
 export default function Course({ params }: ParamsProps) {
 
+
+
+
   const router = useRouter();
   const [loading, setLoading] = useState(true);
 
@@ -34,8 +39,8 @@ export default function Course({ params }: ParamsProps) {
 
   const [liked, setLiked] = useState(Boolean);
   const [favorited, setFavorited] = useState(Boolean);
-
   const courseId = params.id;
+
 
   const getCourse = async () => {
     const course = await getCourseId({ params });
@@ -43,10 +48,11 @@ export default function Course({ params }: ParamsProps) {
     setLiked(course.liked);
     setFavorited(course.favorited);
   };
-
   useEffect(() => {
     getCourse();
   }, [courseId]);
+
+
 
   const handleLikeCourse = async () => {
     if (liked === true) {
@@ -135,7 +141,8 @@ export default function Course({ params }: ParamsProps) {
               <strong>Não temos episódios ainda, volte outra hora! &#x1F606;&#x1F918;</strong>
             </p>
           ) : (
-            course?.Episodes?.map((episode) => <EpisodeList key={episode.id} episode={episode} course={course} />)
+            course?.Episodes?.map((episode) =>
+              <EpisodeList key={episode.id} episode={episode} course={course} />)
           )}
         </Container>
         <Footer />

@@ -229,7 +229,8 @@ export default function EpisodePlayer({ params, searchParams, }: {
                   const newTime = (parseFloat(e.target.value) / 100) * (playerRef.current?.getDuration() || 0);
                   playerRef.current?.seekTo(newTime);
                   setProgress(parseFloat(e.target.value));
-                }}
+                }
+              }
                 style={{ width: '100%' }}
               />
             </div>

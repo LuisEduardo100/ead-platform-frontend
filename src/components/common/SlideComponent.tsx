@@ -50,7 +50,7 @@ const SlideComponent = function ({ course }: props) {
                             }
                         },
                     }}>
-                    {course?.map((course) => (
+                    {course.map((course) => (
                         <SplideSlide key={course.id}>
                             <SlideCard course={course} />
                         </SplideSlide>

@@ -21,6 +21,7 @@ export type CourseType = {
 
 export type WatchStatus = {
     isWatching: boolean
+    episodeId: number
 }
 export type CourseTypeWithNoEps = {
     id: number;
