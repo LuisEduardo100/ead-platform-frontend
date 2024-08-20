@@ -1,6 +1,7 @@
 .fileAndButtons {
   display: flex;
   max-width: 850px;
+  width: 100%;
   background-color: #dddddd;
   padding: 15px 25px;
   gap: 12px;
@@ -8,9 +9,6 @@
   border-radius: 18px;
   flex: 1 0 500px;
 
-  .divSinopse {
-    flex: 1 0 650px;
-  }
 
   .pSinopse {
     text-align: left;
@@ -22,15 +20,6 @@
 .divFileUrl {
   display: flex;
   color: black;
-
-  .btn {
-    display: inline;
-    border: none;
-
-    &:hover {
-      background-color: transparent;
-    }
-  }
 
   .linkStyleFile {
     display: flex;
@@ -44,11 +33,7 @@
     filter: brightness(0) saturate(100%) invert(75%) sepia(52%) saturate(359%) hue-rotate(357deg) brightness(91%) contrast(90%);
   }
 
-  &:hover {
-    filter: brightness(90%);
-    transition: 0.2s;
-    scale: 104%;
-  }
+
 }
 
 .arrowImg {
@@ -62,13 +47,10 @@
 
 .mainDiv {
   display: flex;
-  padding: 50px 0px;
   align-items: center;
-  gap: 35px;
   flex-wrap: wrap;
   margin: 0 auto;
   max-width: 1200px;
-
   .duration_container {
     display: flex;
     align-items: center;
@@ -79,14 +61,16 @@
 
   .div_episode_list {
     max-width: 300px;
-    margin: 0 auto;
+    margin: 100px auto 0px auto;
 
     .progress {
       margin-bottom: 12px;
     }
   }
 
-
+.iframe{
+  pointer-events: none;
+}
   .playerWrapper {
     position: relative;
     max-width: 850px;

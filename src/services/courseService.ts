@@ -33,7 +33,7 @@ export type EpisodeFileType = {
     id: number;
     episodeId: EpisodeFileType;
     name: string;
-    fileUrl: string;
+    fileUrl: string[]
 }
 
 

@@ -7,7 +7,7 @@ import { Button, Container } from "reactstrap";
 import { useRouter } from "next/navigation";
 import ReactPlayer from "react-player";
 import classNames from 'classnames';
-import courseService, { CourseType, EpisodeType } from "../../../../src/services/courseService";
+import courseService, { CourseType, EpisodeFileType, EpisodeType } from "../../../../src/services/courseService";
 import watchEpisodeService from "../../../../src/services/episodeService";
 import PageSpinner from "../../../../src/components/common/pageSpinner";
 import HeaderGeneric from "../../../../src/components/common/headerGeneric";
@@ -18,6 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBackwardStep, faCompress, faExpand, faForward, faForwardStep, faPause, faPlay, faVolumeHigh, faVolumeLow, faVolumeMute } from "@fortawesome/free-solid-svg-icons";
 import { faBackward } from "@fortawesome/free-solid-svg-icons/faBackward";
 import EpisodeAdaptedList from "../../../../src/components/common/episodeListAdapted";
+import FileList from "../../../../src/components/common/filePage";
 
 export default function EpisodePlayer({ params, searchParams, }: {
   params: { id: number | string };
@@ -38,15 +39,23 @@ export default function EpisodePlayer({ params, searchParams, }: {
   const [playing, setPlaying] = useState(false)
   const [fullscreen, setFullscreen] = useState(false);
   const [progress, setProgress] = useState(0)
+
   const [volume, setVolume] = useState(1)
   const [volumeState, setVolumeState] = useState("high")
   const [changeVolumeState, setChangeVolumeState] = useState(true)
+  const [selectedFileUrl, setSelectedFileUrl] = useState<string | null>(null)
   const playerRef = useRef<ReactPlayer>(null);
 
-
+  const handleFileClick = (url: string) => {
+    if (url.endsWith('.pdf')) {
+      setSelectedFileUrl(url);
+    } else {
+      window.open(`${process.env.NEXT_PUBLIC_BASEURL}/${url}`, '_blank');
+    }
+  };
 
   const handleChangeVolumeState = () => {
-    if (changeVolumeState == true) {
+    if (changeVolumeState) {
       setVolume(1)
       setVolumeState("high")
     } else {
@@ -209,10 +218,10 @@ export default function EpisodePlayer({ params, searchParams, }: {
   }
 
   // Ajustes de constantes
-  const isWatched = course.watchStatus.some(epi => epi.episodeId === episodeId)
   const filteredEpisodes = course.Episodes?.filter((episode) => episode.id !== episodeId)
-  const hasFiles = getEpisodeFile?.Files && getEpisodeFile.Files.length > 0;
-  const file = hasFiles ? getEpisodeFile.Files[0] : null;
+  // const hasFiles = getEpisodeFile?.Files && getEpisodeFile.Files.length > 0;
+  const hasFiles = getEpisodeFile?.Files && getEpisodeFile.Files[0].fileUrl.length > 0;
+  const file = hasFiles ? getEpisodeFile.Files.filter(e => e.fileUrl) : null;
   const confirmNextVideo = episodeOrder + 1 == course.Episodes.length ? true : false
   const confirmLastVideo = episodeOrder == 0 ? true : false
 
@@ -221,7 +230,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
       <HeaderGeneric logoUrl="/home" btnContent={`Voltar para o curso`} btnUrl={`/courses/${courseId}`} />
       <main>
         <div className={styles.mainDiv}>
-              <div className={styles.playerWrapper} onClick={onClickPlayPause} >
+          <div className={styles.playerWrapper} onClick={onClickPlayPause} >
             <p className={styles.video_player_title}>{course.Episodes[episodeOrder].name}</p>
             <div className={styles.divProgressBar}>
               <input
@@ -235,7 +244,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
                   playerRef.current?.seekTo(newTime);
                   setProgress(parseFloat(e.target.value));
                 }
-              }
+                }
                 style={{ width: '100%' }}
               />
             </div>
@@ -323,7 +332,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
 
           <div className={styles.div_episode_list}>
             <div className={styles.progress}>
-              <h4>Meu progresso - {`${(( course.watchStatus.length/ course.Episodes?.length) * 100).toFixed(0)}%`}</h4>
+              <h4>Meu progresso - {`${((course.watchStatus.length / course.Episodes?.length) * 100).toFixed(0)}%`}</h4>
               <p>{`${course.watchStatus.length} de ${course.Episodes.length}`}</p>
             </div>
             {
@@ -338,24 +347,53 @@ export default function EpisodePlayer({ params, searchParams, }: {
           <div className={styles.fileAndButtons}>
             <div className={styles.divFileUrl}>
               {hasFiles ? (
-                <div className={styles.divFileUrl}>
-                  <Link
-                    className={styles.linkStyleFile}
-                    target="_blank"
-                    href={`${process.env.NEXT_PUBLIC_BASEURL}/${file?.fileUrl}`}
-                    passHref
-                  >
-                    <Button className={styles.btn} color="danger" outline>
-                      <img className={styles.pdfviewer} src="/pdfviewer.png" alt="pdfimg" />
-                    </Button>
-                    <p className={styles.nameFile}>{file?.name}</p>
-                  </Link>
-                </div>
+                <FileList files={getEpisodeFile.Files} onFileClick={handleFileClick} />
               ) : (
                 <p className={styles.pSemDownload}>Sem material para download.</p>
               )}
             </div>
-
+            {selectedFileUrl && (
+                <div
+                  style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    display: 'flex',
+                    zIndex: 100000000000000,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <iframe
+                    key={selectedFileUrl} // Força o re-render quando o URL muda
+                    src={`${process.env.NEXT_PUBLIC_BASEURL}/${selectedFileUrl}`}
+                    width="80%"
+                    height="80%"
+                    style={{
+                      border: 'none',
+                      position: 'relative',
+                    }}
+                  />
+                  <button
+                    onClick={() => setSelectedFileUrl(null)}
+                    style={{
+                      position: 'absolute',
+                      top: '10px',
+                      right: '10px',
+                      backgroundColor: '#fff',
+                      border: 'none',
+                      padding: '10px',
+                      cursor: 'pointer',
+                      zIndex: 1001,
+                    }}
+                  >
+                    Close
+                  </button>
+                </div>
+              )}
             {/* SINOPSE  */}
 
             <div className={styles.divSinopse}>

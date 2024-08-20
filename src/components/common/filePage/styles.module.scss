@@ -1,0 +1,18 @@
+.divFiles{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 25px;
+
+    .file{
+        background-color: #DEB66B;
+        padding: 4px 14px;
+        border-radius: 15px;
+        box-shadow: -2px 4px #183153;
+        border: 2px solid #183153;
+        &:hover{
+            cursor: pointer;
+            transform: scale(.9);
+        }
+    }
+}
