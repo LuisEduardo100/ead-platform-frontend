@@ -35,7 +35,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
   const [getEpisodeFile, setGetEpisodeFile] = useState<EpisodeType>()
   const [episodeTime, setEpisodeTime] = useState(0);
   const [isReady, setIsReady] = useState(false);
-  const [playing, setPlaying] = useState(true)
+  const [playing, setPlaying] = useState(false)
   const [fullscreen, setFullscreen] = useState(false);
   const [progress, setProgress] = useState(0)
   const [volume, setVolume] = useState(1)
@@ -193,6 +193,10 @@ export default function EpisodePlayer({ params, searchParams, }: {
     setPlaying(!playing)
   }
 
+  const onClickPlayPause = () => {
+    setPlaying(!playing)
+  }
+
   const handleForwardBtn = () => {
     if (playerRef.current) {
       playerRef.current.seekTo(playerRef.current.getCurrentTime() + 10);
@@ -205,6 +209,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
   }
 
   // Ajustes de constantes
+  const isWatched = course.watchStatus.some(epi => epi.episodeId === episodeId)
   const filteredEpisodes = course.Episodes?.filter((episode) => episode.id !== episodeId)
   const hasFiles = getEpisodeFile?.Files && getEpisodeFile.Files.length > 0;
   const file = hasFiles ? getEpisodeFile.Files[0] : null;
@@ -216,7 +221,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
       <HeaderGeneric logoUrl="/home" btnContent={`Voltar para o curso`} btnUrl={`/courses/${courseId}`} />
       <main>
         <div className={styles.mainDiv}>
-          <div className={styles.playerWrapper}>
+              <div className={styles.playerWrapper} onClick={onClickPlayPause} >
             <p className={styles.video_player_title}>{course.Episodes[episodeOrder].name}</p>
             <div className={styles.divProgressBar}>
               <input
@@ -318,8 +323,8 @@ export default function EpisodePlayer({ params, searchParams, }: {
 
           <div className={styles.div_episode_list}>
             <div className={styles.progress}>
-              <h4>Meu progresso - {`${Math.round(((episodeOrder + 1) / course.Episodes?.length) * 100)}%`}</h4>
-              <p>{`${episodeOrder + 1} de ${course.Episodes.length}`}</p>
+              <h4>Meu progresso - {`${(( course.watchStatus.length/ course.Episodes?.length) * 100).toFixed(0)}%`}</h4>
+              <p>{`${course.watchStatus.length} de ${course.Episodes.length}`}</p>
             </div>
             {
               course.Episodes?.map((episode) =>

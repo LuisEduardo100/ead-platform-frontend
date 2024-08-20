@@ -11,20 +11,22 @@ interface props {
 }
 
 export default function EpisodeAdaptedList({ episode, course }: props) {
+    const ul_watched = styles.ul_watched
+    const ul = styles.ul
     const router = useRouter()
 
     const handleEpisodePlayer = () => {
         router.push(`/courses/episodes/${episode.order - 1}?courseid=${course.id}&episodeid=${episode.id}`)
     }
 
+    const isWatched = course.watchStatus.some(status=> status.episodeId === episode.id)
     return (
         <div>
-            <div className={styles.episodeCard}>
-                <div className={styles.emptyDiv}></div>
-                <div className={styles.titleAndTime} onClick={() => handleEpisodePlayer()}>
-                    <p className={styles.episodeTitle}>{episode.name}</p>
-                </div>
-            </div>
+                <ul className={isWatched ? ul_watched : ul}> 
+                    <li className={styles.ul_item}>
+                      <p className={styles.episodeTitle} onClick={() => handleEpisodePlayer()}>{episode.name}</p>
+                    </li>
+                </ul>
         </div>
     );
 }
