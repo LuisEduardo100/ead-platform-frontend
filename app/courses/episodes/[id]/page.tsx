@@ -1,19 +1,14 @@
 "use client";
 import styles from "./styles.module.scss";
-import "./styles.module.scss";
-
 import { useEffect, useRef, useState } from "react";
-import { Button, Container } from "reactstrap";
+import { Button } from "reactstrap";
 import { useRouter } from "next/navigation";
 import ReactPlayer from "react-player";
-import classNames from 'classnames';
-import courseService, { CourseType, EpisodeFileType, EpisodeType } from "../../../../src/services/courseService";
+import courseService, { CourseType, EpisodeType } from "../../../../src/services/courseService";
 import watchEpisodeService from "../../../../src/services/episodeService";
 import PageSpinner from "../../../../src/components/common/pageSpinner";
 import HeaderGeneric from "../../../../src/components/common/headerGeneric";
 import episodeFileService from "../../../../src/services/episodeFileService";
-import Link from "next/link";
-import EpisodeList from "../../../../src/components/Course";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBackwardStep, faCompress, faExpand, faForward, faForwardStep, faPause, faPlay, faVolumeHigh, faVolumeLow, faVolumeMute } from "@fortawesome/free-solid-svg-icons";
 import { faBackward } from "@fortawesome/free-solid-svg-icons/faBackward";
@@ -44,7 +39,17 @@ export default function EpisodePlayer({ params, searchParams, }: {
   const [volumeState, setVolumeState] = useState("high")
   const [changeVolumeState, setChangeVolumeState] = useState(true)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string | null>(null)
+
   const playerRef = useRef<ReactPlayer>(null);
+  function updateProgress(percent: number) {
+    const circle = document.querySelector('.circle') as SVGPathElement;
+    const radius = 15.9155; // Raio do círculo
+    const circumference = 2 * Math.PI * radius;
+
+    const offset = circumference - (percent / 100) * circumference;
+    circle.style.strokeDasharray = `${circumference - offset}, ${circumference}`;
+  }
+
 
   const handleFileClick = (url: string) => {
     if (url.endsWith('.pdf')) {
@@ -53,6 +58,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
       window.open(`${process.env.NEXT_PUBLIC_BASEURL}/${url}`, '_blank');
     }
   };
+
 
   const handleChangeVolumeState = () => {
     if (changeVolumeState) {
@@ -162,6 +168,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
     }
   }
 
+
   // VIDEO PLAYER FUNCTIONALITY 
 
 
@@ -220,130 +227,129 @@ export default function EpisodePlayer({ params, searchParams, }: {
   // Ajustes de constantes
   const filteredEpisodes = course.Episodes?.filter((episode) => episode.id !== episodeId)
   // const hasFiles = getEpisodeFile?.Files && getEpisodeFile.Files.length > 0;
-  const hasFiles = getEpisodeFile?.Files && getEpisodeFile.Files[0].fileUrl.length > 0;
-  const file = hasFiles ? getEpisodeFile.Files.filter(e => e.fileUrl) : null;
+  const hasFiles = getEpisodeFile?.Files && getEpisodeFile.Files?.length != 0
   const confirmNextVideo = episodeOrder + 1 == course.Episodes.length ? true : false
   const confirmLastVideo = episodeOrder == 0 ? true : false
+
+
+  const episodesCompleted = course.watchStatus.length
+
+
+  const calculateProgress = () => {
+    const totalEpisodes = course.Episodes?.length || 0;
+    const watchedEpisodes = course.watchStatus.length;
+    const progressPercent = totalEpisodes > 0 ? (watchedEpisodes / totalEpisodes) * 100 : 0;
+
+    const radius = 15.9155;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (progressPercent / 100) * circumference;
+
+    return {
+      progressPercent,
+      strokeDasharray: `${circumference - offset}, ${circumference}`,
+    };
+  };
+  const { progressPercent, strokeDasharray } = calculateProgress();
 
   return (
     <>
       <HeaderGeneric logoUrl="/home" btnContent={`Voltar para o curso`} btnUrl={`/courses/${courseId}`} />
-      <main>
-        <div className={styles.mainDiv}>
-          <div className={styles.playerWrapper} onClick={onClickPlayPause} >
-            <p className={styles.video_player_title}>{course.Episodes[episodeOrder].name}</p>
-            <div className={styles.divProgressBar}>
+      <main className={styles.mainDiv}>
+        <div className={styles.playerWrapper} >
+          <p className={styles.video_player_title}>{course.Episodes[episodeOrder].name}</p>
+          <div className={styles.divProgressBar}>
+            <input
+              className={styles.progress_bar}
+              type="range"
+              min={0}
+              max={1}
+              step="any"
+              onChange={(e) => {
+                const newTime = (parseFloat(e.target.value) / 100) * (playerRef.current?.getDuration() || 0);
+                playerRef.current?.seekTo(newTime);
+                setProgress(parseFloat(e.target.value));
+              }
+              }
+              style={{ width: '100%' }}
+            />
+          </div>
+          <ReactPlayer
+            className={styles.player}
+            url={`${process.env.NEXT_PUBLIC_BASEURL}/episodes/stream?videoUrl=${course.Episodes[episodeOrder].videoUrl
+              }&token=${sessionStorage.getItem("vocenotadez-token")}`}
+            controls={false}
+            playing={playing}
+            ref={playerRef}
+            width={'100%'}
+            height={'100%'}
+            volume={volume}
+            muted={false}
+            onStart={() => handlePlayerTime()}
+            onProgress={(progress) => {
+              setEpisodeTime(progress.playedSeconds);
+
+            }}
+          />
+          <div className={styles.video_player_control}>
+            <Button className={styles.control_btn} onClick={handleLastEpisode} disabled={confirmLastVideo}>
+              <FontAwesomeIcon icon={faBackwardStep} style={{ fontSize: "24px" }} />
+            </Button>
+            <Button className={styles.control_btn} onClick={handlePlayPause}>
+              {
+                !(playing) ? (
+                  <div className="play-icon">
+                    <FontAwesomeIcon icon={faPlay} style={{ fontSize: '24px' }} />
+                  </div>
+                ) : (
+                  <div className="pause-icon">
+                    <FontAwesomeIcon icon={faPause} style={{ fontSize: '24px' }} />
+                  </div>
+                )
+              }
+            </Button>
+            <Button className={styles.control_btn} onClick={handleNextEpisode} disabled={confirmNextVideo}>
+              <FontAwesomeIcon icon={faForwardStep} style={{ fontSize: "24px" }} />
+            </Button>
+            <div className={styles.div_volume_bar}>
+              <div className={styles.volume_container} onClick={handleChangeVolumeState}>
+                {volumeState == "high" ? <FontAwesomeIcon icon={faVolumeHigh} style={{ color: "#fff", fontSize: '22px' }} /> :
+                  volumeState == "low" ? <FontAwesomeIcon icon={faVolumeLow} style={{ color: "#fff", fontSize: '22px' }} /> :
+                    <FontAwesomeIcon className={styles.volume_muted} icon={faVolumeMute} style={{ color: "#fff", fontSize: '22px' }} />
+                }
+              </div>
               <input
-                className={styles.progress_bar}
+                className={styles.volume_bar}
                 type="range"
                 min={0}
                 max={1}
+                value={volume}
                 step="any"
-                onChange={(e) => {
-                  const newTime = (parseFloat(e.target.value) / 100) * (playerRef.current?.getDuration() || 0);
-                  playerRef.current?.seekTo(newTime);
-                  setProgress(parseFloat(e.target.value));
-                }
-                }
-                style={{ width: '100%' }}
+                onChange={handleVolumeChange}
               />
             </div>
-            <ReactPlayer
-              className={styles.player}
-              url={`${process.env.NEXT_PUBLIC_BASEURL}/episodes/stream?videoUrl=${course.Episodes[episodeOrder].videoUrl
-                }&token=${sessionStorage.getItem("vocenotadez-token")}`}
-              controls={false}
-              playing={playing}
-              ref={playerRef}
-              width={'100%'}
-              height={'100%'}
-              volume={volume}
-              muted={false}
-              onStart={() => handlePlayerTime()}
-              onProgress={(progress) => {
-                setEpisodeTime(progress.playedSeconds);
-
-              }}
-            />
-            <div className={styles.video_player_control}>
-              <Button className={styles.control_btn} onClick={handleLastEpisode} disabled={confirmLastVideo}>
-                <FontAwesomeIcon icon={faBackwardStep} style={{ fontSize: "24px" }} />
-              </Button>
-              <Button className={styles.control_btn} onClick={handlePlayPause}>
-                {
-                  !(playing) ? (
-                    <div className="play-icon">
-                      <FontAwesomeIcon icon={faPlay} style={{ fontSize: '24px' }} />
-                    </div>
-                  ) : (
-                    <div className="pause-icon">
-                      <FontAwesomeIcon icon={faPause} style={{ fontSize: '24px' }} />
-                    </div>
-                  )
-                }
-              </Button>
-              <Button className={styles.control_btn} onClick={handleNextEpisode} disabled={confirmNextVideo}>
-                <FontAwesomeIcon icon={faForwardStep} style={{ fontSize: "24px" }} />
-              </Button>
-              <div className={styles.div_volume_bar}>
-                <div className={styles.volume_container} onClick={handleChangeVolumeState}>
-                  {volumeState == "high" ? <FontAwesomeIcon icon={faVolumeHigh} style={{ color: "#fff", fontSize: '22px' }} /> :
-                    volumeState == "low" ? <FontAwesomeIcon icon={faVolumeLow} style={{ color: "#fff", fontSize: '22px' }} /> :
-                      <FontAwesomeIcon className={styles.volume_muted} icon={faVolumeMute} style={{ color: "#fff", fontSize: '22px' }} />
-                  }
+            <Button className={styles.control_btn} onClick={handleBackwardBtn}>
+              <FontAwesomeIcon icon={faBackward} style={{ fontSize: "24px" }} />
+            </Button>
+            <Button className={styles.control_btn} onClick={handleForwardBtn}>
+              <FontAwesomeIcon icon={faForward} style={{ fontSize: "24px" }} />
+            </Button>
+            <div className={styles.duration_container}>
+              <span style={{ marginLeft: '10px' }}>
+                {formatTime(handleCurrentTime()!)} / {formatTime(handleDuration()!)}
+              </span>
+            </div>
+            <Button className={styles.control_btn} onClick={handleFullScreen}>
+              {fullscreen ?
+                <div className={styles.fullscren_on}>
+                  <FontAwesomeIcon icon={faCompress} style={{ fontSize: "24px" }} />
                 </div>
-                <input
-                  className={styles.volume_bar}
-                  type="range"
-                  min={0}
-                  max={1}
-                  value={volume}
-                  step="any"
-                  onChange={handleVolumeChange}
-                />
-              </div>
-              <Button className={styles.control_btn} onClick={handleBackwardBtn}>
-                <FontAwesomeIcon icon={faBackward} style={{ fontSize: "24px" }} />
-              </Button>
-              <Button className={styles.control_btn} onClick={handleForwardBtn}>
-                <FontAwesomeIcon icon={faForward} style={{ fontSize: "24px" }} />
-              </Button>
-              <div className={styles.duration_container}>
-                <span style={{ marginLeft: '10px' }}>
-                  {formatTime(handleCurrentTime()!)} / {formatTime(handleDuration()!)}
-                </span>
-              </div>
-              <Button className={styles.control_btn} onClick={handleFullScreen}>
-                {fullscreen ?
-                  <div className={styles.fullscren_on}>
-                    <FontAwesomeIcon icon={faCompress} style={{ fontSize: "24px" }} />
-                  </div>
-                  :
-                  <div className={styles.fullscren_off}>
-                    <FontAwesomeIcon icon={faExpand} style={{ fontSize: "24px" }} />
-                  </div>
-                }
-              </Button>
-            </div>
-
+                :
+                <div className={styles.fullscren_off}>
+                  <FontAwesomeIcon icon={faExpand} style={{ fontSize: "24px" }} />
+                </div>
+              }
+            </Button>
           </div>
-
-          {/* EPISODE LIST  */}
-
-          <div className={styles.div_episode_list}>
-            <div className={styles.progress}>
-              <h4>Meu progresso - {`${((course.watchStatus.length / course.Episodes?.length) * 100).toFixed(0)}%`}</h4>
-              <p>{`${course.watchStatus.length} de ${course.Episodes.length}`}</p>
-            </div>
-            {
-              course.Episodes?.map((episode) =>
-                <EpisodeAdaptedList key={episode.id} episode={episode} course={course} />
-              )
-            }
-          </div>
-
-          {/* FILE BUTTON  */}
-
           <div className={styles.fileAndButtons}>
             <div className={styles.divFileUrl}>
               {hasFiles ? (
@@ -353,54 +359,88 @@ export default function EpisodePlayer({ params, searchParams, }: {
               )}
             </div>
             {selectedFileUrl && (
-                <div
+              <div
+                style={{
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                  display: 'flex',
+                  zIndex: 1000,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <iframe
+                  key={selectedFileUrl} // Força o re-render quando o URL muda
+                  src={`${process.env.NEXT_PUBLIC_BASEURL}/${selectedFileUrl}`}
+                  width="80%"
+                  height="80%"
                   style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                    display: 'flex',
-                    zIndex: 100000000000000,
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    border: 'none',
+                    position: 'relative',
+                  }}
+                />
+                <button
+                  onClick={() => setSelectedFileUrl(null)}
+                  style={{
+                    position: 'absolute',
+                    top: '10px',
+                    right: '10px',
+                    backgroundColor: '#fff',
+                    border: 'none',
+                    padding: '10px',
+                    cursor: 'pointer',
+                    zIndex: 1001,
                   }}
                 >
-                  <iframe
-                    key={selectedFileUrl} // Força o re-render quando o URL muda
-                    src={`${process.env.NEXT_PUBLIC_BASEURL}/${selectedFileUrl}`}
-                    width="80%"
-                    height="80%"
-                    style={{
-                      border: 'none',
-                      position: 'relative',
-                    }}
-                  />
-                  <button
-                    onClick={() => setSelectedFileUrl(null)}
-                    style={{
-                      position: 'absolute',
-                      top: '10px',
-                      right: '10px',
-                      backgroundColor: '#fff',
-                      border: 'none',
-                      padding: '10px',
-                      cursor: 'pointer',
-                      zIndex: 1001,
-                    }}
-                  >
-                    Close
-                  </button>
-                </div>
-              )}
-            {/* SINOPSE  */}
-
+                  Close
+                </button>
+              </div>
+            )}
             <div className={styles.divSinopse}>
               <p className={styles.pSinopse}>{course.Episodes[episodeOrder].synopsis}</p>
             </div>
           </div>
         </div>
+        <div className={styles.episodeContent}>
+          <div className={styles.progress}>
+            <div className="d-flex align-items-center gap-2">
+              <div className={styles.progress_circle}>
+                <svg className={styles.svg} viewBox="0 0 36 36">
+                  <path
+                    className={styles.circle_bg}
+                    d="M18 2.0845
+          a 15.9155 15.9155 0 0 1 0 31.831
+          a 15.9155 15.9155 0 0 1 0 -31.831"
+                  />
+                  <path
+                    className={styles.circle}
+                    d="M18 2.0845
+          a 15.9155 15.9155 0 0 1 0 31.831
+          a 15.9155 15.9155 0 0 1 0 -31.831"
+                    style={{ strokeDasharray }}
+                  />
+                </svg>
+              </div>
+              <div>
+                <h4 className={styles.titulo}>Meu progresso - {`${progressPercent.toFixed(0)}%`}</h4>
+                <p className={styles.pQtdAulas}>{`${course.watchStatus.length} de ${course.Episodes.length} aulas`}</p>
+              </div>
+            </div>
+          </div>
+          <div className={styles.div_episode_list}>
+
+            {
+              course.Episodes?.map((episode) =>
+                <EpisodeAdaptedList key={episode.id} episode={episode} course={course} />
+              )
+            }
+          </div>
+        </div>
+
       </main>
     </>
   );

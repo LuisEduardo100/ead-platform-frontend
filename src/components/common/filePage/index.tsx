@@ -19,8 +19,8 @@ const FileList: React.FC<FileListProps> = ({ files, onFileClick }) => {
         <div>
             {files.map((file) => (
                 <div>
-                    <h4>Arquivos para download: </h4>
                     <div className={styles.divFiles}>
+                        <h4 className={styles.titulofile}>Material: </h4>
                         {file.fileUrl.map((url: any, index: any) => (
                             <div key={index} className={styles.file}>
                                 <a onClick={() => onFileClick(url)}>
@@ -28,7 +28,6 @@ const FileList: React.FC<FileListProps> = ({ files, onFileClick }) => {
                                     {`File ${index + 1}`}
                                 </a>
                             </div>
-
                         ))}
                     </div>
                 </div>

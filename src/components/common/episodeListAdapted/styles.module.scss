@@ -2,28 +2,32 @@
     font-size: 18px;
     font-weight: bold;
 }
-
-.ul{
-    list-style-type: circle;
-
-    width: 300px;
-    display: flex;
-    margin-left: 20px;
-    padding: 0px 0px 8px 0px;
-    align-items: center;
+.div_container{
+    border: 2px solid #183153;
+    padding: 0;
+    margin: 0;
     &:hover{
-        color: #DEB66B;
         cursor: pointer;
-            list-style-type: disc;
+        background-color: #DEB66B;
+        opacity: 0.75;
     }
 }
-
-.ul_watched{
-    @extend .ul;
-    list-style-type: disc;
-    color: #DEB66B;
-    &:hover {
-        color: #967b4a;
-
+.div_watched{
+    @extend .div_container;
+}
+.ul{
+    list-style-type: none;
+    width: 300px;
+    padding: 20px 0px 0px 20px;
+    display: flex;
+    align-items: center;
+    &:hover{
+        cursor: pointer;
     }
+}
+.ul_item{
+    display: flex;
+    align-items: center;
+    margin: auto 0;
+    gap: 12px;
 }

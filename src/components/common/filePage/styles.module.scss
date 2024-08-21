@@ -1,18 +1,26 @@
-.divFiles{
+.divFiles {
     display: flex;
-    align-items: center;
     flex-wrap: wrap;
-    gap: 25px;
+    align-items: center;
+    gap: 12px;
 
-    .file{
+    .file {
         background-color: #DEB66B;
         padding: 4px 14px;
         border-radius: 15px;
         box-shadow: -2px 4px #183153;
         border: 2px solid #183153;
-        &:hover{
+
+        &:hover {
+            opacity: 0.75;
+            filter: brightness(80%);
             cursor: pointer;
-            transform: scale(.9);
         }
     }
+}
+
+.titulofile {
+    font-weight: bold;
+    text-align: center;
+    margin: auto 0;
 }
