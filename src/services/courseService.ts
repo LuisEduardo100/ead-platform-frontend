@@ -9,7 +9,6 @@ export type EpisodeType = {
     secondsLong: number;
     Files: EpisodeFileType[];
 }
-
 export type CourseType = {
     id: number;
     name: string;
@@ -18,7 +17,20 @@ export type CourseType = {
     Episodes?: EpisodeType[];
     watchStatus: WatchStatus[]
 }
-
+export type CourseQuizzType = {
+    id: number
+    name: string
+    Quizzes: QuizzType[]
+}
+export type QuizzType = {
+    order: number
+    question: string
+    answers: string[]
+    fileUrl?: string
+    correctAnswer: number
+    serie: string
+    dificuldade: string
+}
 export type WatchStatus = {
     isWatching: boolean
     episodeId: number
@@ -38,6 +50,20 @@ export type EpisodeFileType = {
 
 
 const courseService = {
+    getQuizz: async (courseId: number | string) => {
+        const token = sessionStorage.getItem("vocenotadez-token")
+        try {
+            const response = await api.get(`/course/quizz/${courseId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response;
+        } catch (error: any) {
+            return error.response
+        }
+        
+    },
     getNewestCourses: async () => {
         const res = await api.get("/courses/newest").catch((error) => {
             return error.response

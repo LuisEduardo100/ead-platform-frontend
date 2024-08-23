@@ -22,10 +22,10 @@ const FileList: React.FC<FileListProps> = ({ files, onFileClick }) => {
                     <div className={styles.divFiles}>
                         <h4 className={styles.titulofile}>Material: </h4>
                         {file.fileUrl.map((url: any, index: any) => (
-                            <div key={index} className={styles.file}>
-                                <a onClick={() => onFileClick(url)}>
+                            <div key={index} className={styles.file} onClick={() => onFileClick(url)}>
+                                <a>
                                     <FontAwesomeIcon icon={faCloudArrowDown} style={{ color: '#183153', marginRight: '8px' }} />
-                                    {`File ${index + 1}`}
+                                    {url.endsWith('.pdf') ? `File ${index + 1}` : `Vídeo apoio`}
                                 </a>
                             </div>
                         ))}

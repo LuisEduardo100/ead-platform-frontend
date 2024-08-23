@@ -20,7 +20,12 @@ const episodeFileService = {
     },
     getEpisodeWithFile: async (episodeId: number | string) => {
         try {
-            const res = await api.get(`/episodes/${episodeId}`)
+            const token = sessionStorage.getItem("vocenotadez-token")
+            const res = await api.get(`/episodes/${episodeId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
             return res.data
         } catch (err: any) {
             return err.response

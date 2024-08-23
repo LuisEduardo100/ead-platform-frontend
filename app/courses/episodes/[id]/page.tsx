@@ -39,26 +39,17 @@ export default function EpisodePlayer({ params, searchParams, }: {
   const [volumeState, setVolumeState] = useState("high")
   const [changeVolumeState, setChangeVolumeState] = useState(true)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string | null>(null)
+  const [selectedVideoUrl, setSelectedVideoUrl] = useState<string | null>(null)
 
   const playerRef = useRef<ReactPlayer>(null);
-  function updateProgress(percent: number) {
-    const circle = document.querySelector('.circle') as SVGPathElement;
-    const radius = 15.9155; // Raio do círculo
-    const circumference = 2 * Math.PI * radius;
-
-    const offset = circumference - (percent / 100) * circumference;
-    circle.style.strokeDasharray = `${circumference - offset}, ${circumference}`;
-  }
-
 
   const handleFileClick = (url: string) => {
     if (url.endsWith('.pdf')) {
       setSelectedFileUrl(url);
     } else {
-      window.open(`${process.env.NEXT_PUBLIC_BASEURL}/${url}`, '_blank');
+      setSelectedFileUrl(url);
     }
   };
-
 
   const handleChangeVolumeState = () => {
     if (changeVolumeState) {
@@ -231,10 +222,6 @@ export default function EpisodePlayer({ params, searchParams, }: {
   const confirmNextVideo = episodeOrder + 1 == course.Episodes.length ? true : false
   const confirmLastVideo = episodeOrder == 0 ? true : false
 
-
-  const episodesCompleted = course.watchStatus.length
-
-
   const calculateProgress = () => {
     const totalEpisodes = course.Episodes?.length || 0;
     const watchedEpisodes = course.watchStatus.length;
@@ -359,7 +346,9 @@ export default function EpisodePlayer({ params, searchParams, }: {
               )}
             </div>
             {selectedFileUrl && (
-              <div
+              <div>
+                {selectedFileUrl.endsWith('.pdf') ? (
+                  <div
                 style={{
                   position: 'fixed',
                   top: 0,
@@ -373,31 +362,92 @@ export default function EpisodePlayer({ params, searchParams, }: {
                   alignItems: 'center',
                 }}
               >
-                <iframe
-                  key={selectedFileUrl} // Força o re-render quando o URL muda
-                  src={`${process.env.NEXT_PUBLIC_BASEURL}/${selectedFileUrl}`}
-                  width="80%"
-                  height="80%"
-                  style={{
-                    border: 'none',
-                    position: 'relative',
-                  }}
-                />
-                <button
-                  onClick={() => setSelectedFileUrl(null)}
-                  style={{
-                    position: 'absolute',
-                    top: '10px',
-                    right: '10px',
-                    backgroundColor: '#fff',
-                    border: 'none',
-                    padding: '10px',
-                    cursor: 'pointer',
-                    zIndex: 1001,
-                  }}
-                >
-                  Close
-                </button>
+                    <iframe
+                      key={selectedFileUrl} // Força o re-render quando o URL muda
+                      src={`${process.env.NEXT_PUBLIC_BASEURL}/${selectedFileUrl}`}
+                      width="80%"
+                      height="80%"
+                      allowFullScreen
+                      style={{
+                        border: 'none',
+                        position: 'relative',
+                      }}
+                    />
+                    <button
+                      onClick={() => setSelectedFileUrl(null)}
+                      style={{
+                        position: 'absolute',
+                        top: '10px',
+                        right: '10px',
+                        backgroundColor: '#fff',
+                        border: 'none',
+                        padding: '10px',
+                        cursor: 'pointer',
+                        zIndex: 1001,
+                      }}
+                    >
+                      Close
+                    </button>
+                    <button
+                      onClick={()=>{
+                        window.open(`${process.env.NEXT_PUBLIC_BASEURL}/${selectedFileUrl}`)
+                      }}
+                      style={{
+                        position: 'absolute',
+                        top: '10px',
+                        right: '80px',
+                        backgroundColor: '#fff',
+                        border: 'none',
+                        padding: '10px',
+                        cursor: 'pointer',
+                        zIndex: 1001,
+                      }}
+                    >
+                      Abrir em nova aba
+                    </button>
+                  </div>
+
+                ) : (
+                  <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    display: 'flex',
+                    zIndex: 1000,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                    <ReactPlayer
+                      url={`${process.env.NEXT_PUBLIC_BASEURL}/${selectedFileUrl}`}
+                      width="80%"
+                      height="60%"
+                      controls={true}
+                      style={{
+                        border: 'none',
+                        position: 'relative',
+                        margin: '0 auto'
+                      }}
+                    />
+                    <button
+                      onClick={() => setSelectedFileUrl(null)}
+                      style={{
+                        position: 'absolute',
+                        top: '10px',
+                        right: '10px',
+                        backgroundColor: '#fff',
+                        border: 'none',
+                        padding: '10px',
+                        cursor: 'pointer',
+                        zIndex: 1001,
+                      }}
+                    >
+                      Close
+                    </button>
+                  </div>
+                )}
               </div>
             )}
             <div className={styles.divSinopse}>
@@ -440,7 +490,6 @@ export default function EpisodePlayer({ params, searchParams, }: {
             }
           </div>
         </div>
-
       </main>
     </>
   );

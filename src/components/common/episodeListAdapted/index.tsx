@@ -24,11 +24,11 @@ export default function EpisodeAdaptedList({ episode, course }: props) {
 
     const isWatched = course.watchStatus.some(status=> status.episodeId === episode.id)
     return (
-        <div className={isWatched ? div_watched : div_container}>
+        <div className={isWatched ? div_watched : div_container} onClick={() => handleEpisodePlayer()}>
                 <ul className={styles.ul}> 
                     <li className={styles.ul_item}>
                         {isWatched ? <FontAwesomeIcon icon={faSquareCheck} style={{fontSize: '24px', color: '#183153'}}/> : <FontAwesomeIcon icon={faSquare} style={{fontSize: '24px', color: '#183153'}}/>}
-                      <p className={styles.episodeTitle} onClick={() => handleEpisodePlayer()}>{episode.name}</p>
+                      <p className={styles.episodeTitle} >{episode.name}</p>
                     </li>
                 </ul>
         </div>

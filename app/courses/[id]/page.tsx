@@ -3,14 +3,12 @@ import styles from "./styles.module.scss";
 import { useEffect, useState } from "react";
 import { Button, Container } from "reactstrap";
 import { useRouter } from "next/navigation";
-import courseService, { CourseType, EpisodeType, WatchStatus } from "../../../src/services/courseService";
+import courseService, { CourseQuizzType, CourseType, EpisodeType, WatchStatus } from "../../../src/services/courseService";
 import PageSpinner from "../../../src/components/common/pageSpinner";
 import HeaderAuth from "../../../src/components/HomeAuth/header";
 import EpisodeList from "../../../src/components/Course";
 import Footer from "../../../src/components/common/footer";
-import Link from "next/link";
-import useSWR from "swr";
-import KeepWatchingService from "../../../src/services/keepWatchingService";
+import QuizzList from "../../../src/components/common/quizzPage";
 
 type ParamsProps = {
   params: { id: number | string };
@@ -28,19 +26,17 @@ const getCourseId = async ({ params }: ParamsProps) => {
 };
 
 export default function Course({ params }: ParamsProps) {
-
-
-
-
   const router = useRouter();
   const [loading, setLoading] = useState(true);
 
   const [course, setCourse] = useState<CourseType>();
-
+  const [quizz, setQuizz] = useState<CourseQuizzType>();
   const [liked, setLiked] = useState(Boolean);
   const [favorited, setFavorited] = useState(Boolean);
-  const courseId = params.id;
+  const [firstEpisodeId, setFirstEpisodeId] = useState(0)
+  const [firstEpisodeOrder, setFirstEpisodeOrder] = useState(0)
 
+  const courseId = params.id;
 
   const getCourse = async () => {
     const course = await getCourseId({ params });
@@ -52,8 +48,7 @@ export default function Course({ params }: ParamsProps) {
     getCourse();
   }, [courseId]);
 
-
-
+ 
   const handleLikeCourse = async () => {
     if (liked === true) {
       await courseService.removeLike(courseId);
@@ -63,7 +58,30 @@ export default function Course({ params }: ParamsProps) {
       setLiked(true);
     }
   };
+  const getQuizz = async () => {
+    try {
+      const response = await courseService.getQuizz(courseId);
+  
+      if (!response) {
+        console.error("Erro em getQuizz na página de curso: quizz não encontrado.");
+        return;
+      }
+  
+      if (response.status === 200) {
+        setQuizz(response.data); // Certifique-se de acessar os dados corretos
+      } else {
+        console.error("Erro ao obter o quizz, status:", response.status);
+      }
+    } catch (error) {
+      console.error("Erro ao chamar getQuizz:", error);
+    }
+  };
+  
 
+  useEffect(() => {
+    getQuizz()
+  }, [courseId])
+  
   const handleFavCourse = async () => {
     if (favorited === true) {
       await courseService.removeFav(courseId);
@@ -83,11 +101,27 @@ export default function Course({ params }: ParamsProps) {
   }, []);
 
 
-  const FirstEpisodeOrder = course?.Episodes![0].order
-  const FirstEpisodeId = course?.Episodes![0].id
-  const handleFirstEpisode = () => {
-    router.push(`/courses/episodes/${FirstEpisodeOrder! - 1}?courseid=${course?.id}&episodeid=${FirstEpisodeId}`)
-  }
+  // if (course?.Episodes && course.Episodes.length > 0) {
+  //   const firstEpisode = course.Episodes[0];
+  
+  //   // Verifica se o primeiro episódio realmente existe e possui a propriedade 'order'
+  //   if (firstEpisode && firstEpisode.order !== undefined) {
+  //     const episodeOrder = firstEpisode.order;
+  //     setFirstEpisodeOrder(episodeOrder);
+  //   } else {
+  //     setFirstEpisodeOrder(0); // ou algum valor padrão
+  //   }
+  // }
+
+  // const handleFirstEpisode = () => {
+  //   if (course?.id !== undefined && firstEpisodeId !== undefined) {
+  //     router.push(`/courses/episodes/${firstEpisodeOrder! - 1}?courseid=${course.id}&episodeid=${firstEpisodeId}`);
+  //   } else {
+  //     // Lidar com o caso em que não há curso ou episódio disponível
+  //     console.error("Nenhum curso ou episódio disponível para navegação.");
+  //   }
+  // };
+
 
   if (loading) {
     return <PageSpinner />;
@@ -116,7 +150,7 @@ export default function Course({ params }: ParamsProps) {
               outline
               className={styles.courseBtn}
               disabled={course?.Episodes?.length === 0 ? true : false}
-              onClick={handleFirstEpisode}
+              // onClick={handleFirstEpisode}
             >
               ASSISTIR
               <img src="/buttonPlay.svg" alt="buttonImg" className={styles.buttonImg} />
@@ -145,6 +179,11 @@ export default function Course({ params }: ParamsProps) {
               <EpisodeList key={episode.id} episode={episode} course={course} />)
           )}
         </Container>
+        {quizz && quizz.Quizzes && quizz.Quizzes.length > 0 ? (
+          <QuizzList quizz={quizz.Quizzes} />
+        ) : (
+          <p>Não há quizzes disponíveis para este curso.</p>
+        )}
         <Footer />
       </main>
     </>
