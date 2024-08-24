@@ -17,9 +17,9 @@ export default function FavoriteCourses() {
         {data.data.courses?.length >= 1 ? (
           <SlideSection newestCourses={data.data.courses} />
         ) : (
-          <p className="h6 text-center pt-3">
+          <div className="text-center py-3">
             <p className={styles.p}>Você não tem nenhum curso na lista.</p>
-          </p>
+          </div>
         )}
       </Container>
     </>

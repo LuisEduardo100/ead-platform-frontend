@@ -39,7 +39,6 @@ export default function EpisodePlayer({ params, searchParams, }: {
   const [volumeState, setVolumeState] = useState("high")
   const [changeVolumeState, setChangeVolumeState] = useState(true)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string | null>(null)
-  const [selectedVideoUrl, setSelectedVideoUrl] = useState<string | null>(null)
 
   const playerRef = useRef<ReactPlayer>(null);
 

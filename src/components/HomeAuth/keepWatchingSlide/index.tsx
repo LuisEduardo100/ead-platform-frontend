@@ -32,7 +32,16 @@ export default function OnGoingCategory() {
     return (
         <Container>
             <p className={styles.pStyle}>CURSOS EM ANDAMENTO</p>
-            <SlideComponent course={data!} />
+            {data!.length > 0 ? (
+                <div>
+                    <SlideComponent course={data!} />
+                </div>
+            ) : (
+                <div className="text-center py-3">
+                    <p className={styles.p}>Comece seu aprendizado! &#128513;&#128581;&#8205;&#9794;&#65039;</p>
+                </div>
+            )}
+
         </Container>
     );
 }
