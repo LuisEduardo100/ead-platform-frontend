@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import courseService, { CourseQuizzType, CourseType } from "../../../src/services/courseService";
 import QuizzList from "../../../src/components/common/quizzPage";
-import PageSpinner from "../../../src/components/common/pageSpinner";
+import quizService from "../../../src/services/QuizService";
 
 type ParamsProps = {
   params: { id: number | string };
@@ -42,7 +42,7 @@ export default function Course({ params }: ParamsProps) {
  
   const getQuizz = async () => {
     try {
-      const response = await courseService.getQuizz(courseId);
+      const response = await quizService.getQuizz(courseId);
   
       if (!response) {
         console.error("Erro em getQuizz na página de curso: quizz não encontrado.");

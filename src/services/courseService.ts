@@ -50,20 +50,6 @@ export type EpisodeFileType = {
 
 
 const courseService = {
-    getQuizz: async (courseId: number | string) => {
-        const token = sessionStorage.getItem("vocenotadez-token")
-        try {
-            const response = await api.get(`/course/quizz/${courseId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            return response;
-        } catch (error: any) {
-            return error.response
-        }
-        
-    },
     getNewestCourses: async () => {
         const res = await api.get("/courses/newest").catch((error) => {
             return error.response

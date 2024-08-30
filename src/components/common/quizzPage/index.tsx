@@ -1,13 +1,29 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { QuizzType } from '../../../services/courseService'
+import courseService, { CourseType, QuizzType } from '../../../services/courseService'
 import styles from './styles.module.scss'
 import { faSquare, faTrophy } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
 import { Button } from 'reactstrap'
+import api from '../../../services/api'
+import quizService from '../../../services/QuizService'
+import { useRouter, useParams } from 'next/navigation'
 
 interface QuizzProps {
     quizz: QuizzType[]
 }
+type ParamsProps = {
+    params: { id: number | string };
+  };
+const getCourseId = async ({ params }: ParamsProps) => {
+    const courseId = params.id;
+  
+    if (typeof courseId !== "string") return;
+  
+    const res = await courseService.getEpisodes(courseId);
+    if (res.status === 200) {
+      return res.data;
+    }
+  };
 
 export default function QuizzList({ quizz }: QuizzProps) {
 
@@ -19,26 +35,72 @@ export default function QuizzList({ quizz }: QuizzProps) {
         Se não, o usuário consegue fazer o quizz
         Ao fazer, os dados são atualizados na tabela
     */
+    const router = useRouter()
     const [userAnswers, setUserAnswers] = useState<number[]>([]);
     const [quizzCompleted, setQuizzCompleted] = useState(false);
+    const [date, setDate] = useState(Date)
     const [score, setScore] = useState(0);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const activeQuestionIndex = userAnswers.length
+    const { id } = useParams();
+
+    const courseIdTeste = Array.isArray(id) ? id[0] : id;
+    const courseId = courseIdTeste ? parseInt(courseIdTeste, 10) : null;
+
+    const handleQuizResult = async () => {
+        try {
+            const res = await quizService.getQuizResults(courseId!); // Corrigido nome da função
+            if (res.status === 200 && res.data.result) {
+                setScore(res.data.result.score);
+                setQuizzCompleted(true);
+                setLoading(false);
+            } else {
+                setLoading(false);
+            }
+        } catch (err) {
+            setError('Erro ao carregar o resultado do quiz');
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        handleQuizResult();
+    }, [router]);
+
+    const handleSetQuizResult = async () => {
+        try {
+            if(!courseId){return error}
+            const res = await quizService.setQuizResults({ courseId, score }); 
+            if (res.status === 200) {
+                setQuizzCompleted(true);
+                return
+            }
+        } catch (err) {
+            setError('Aqui em handleSetQuizResult :Erro ao salvar o resultado do quiz');
+        }
+    }
+
 
     const handleRetry = () => {
         setScore(0)
         setUserAnswers([])
         setQuizzCompleted(false)
     }
+
     const handleAnswer = (questionIndex: number, selectedAnswer: number) => {
         setUserAnswers((prevAnswers: number[]) => {
             return [...prevAnswers, selectedAnswer]
         });
-        const correctAnswer = quizz[questionIndex].correctAnswer-1;
-        if (selectedAnswer === correctAnswer) {
-            setScore(score+1);
+        const correctAnswer = quizz[questionIndex].correctAnswer;
+        if (selectedAnswer + 1 === correctAnswer) {
+            setScore(score + 1);
+        }
+
+        if (questionIndex === quizz.length) {
+            handleSetQuizResult()
         }
     };
-
 
     const handleActualDate = () => {
         const date = new Date()
@@ -48,14 +110,12 @@ export default function QuizzList({ quizz }: QuizzProps) {
         </p>
     }
 
-
-
     const quizIsCompleted = quizz && activeQuestionIndex === quizz.length;
     useEffect(() => {
         if (quizIsCompleted) {
             setQuizzCompleted(true)
         }
-    }, [activeQuestionIndex])
+    }, [quizIsCompleted])
 
     const renderQuestions = () => {
         return (
@@ -93,7 +153,11 @@ export default function QuizzList({ quizz }: QuizzProps) {
     }
     return (
         <div>
-            {quizzCompleted ? (
+            {loading ? (
+                <p>Carregando...</p>
+            ) : error ? (
+                <p>{error}</p>
+            ) : quizzCompleted ? (
                 <div className='d-flex flex-column gap-3 align-items-center'>
                     <FontAwesomeIcon icon={faTrophy} style={{ fontSize: '64px' }} />
                     <h2>Você completou esse quizz!</h2>
@@ -102,9 +166,7 @@ export default function QuizzList({ quizz }: QuizzProps) {
                     <Button onClick={handleRetry}>Tentar novamente</Button>
                 </div>
             ) : (
-                <div>
-                    {renderQuestions()}
-                </div>
+                <div>{renderQuestions()}</div>
             )}
         </div>
     );
