@@ -50,9 +50,10 @@ export default function QuizzList({ quizz }: QuizzProps) {
 
     const handleQuizResult = async () => {
         try {
-            const res = await quizService.getQuizResults(courseId!); // Corrigido nome da função
+            const res = await quizService.getQuizResults(courseId!);
             if (res.status === 200 && res.data.result) {
                 setScore(res.data.result.score);
+                setDate(res.data.result.createdAt)
                 setQuizzCompleted(true);
                 setLoading(false);
             } else {
@@ -75,6 +76,8 @@ export default function QuizzList({ quizz }: QuizzProps) {
             if (res.status === 200) {
                 setQuizzCompleted(true);
                 return
+            } else {
+                console.error("Entrei aqui no else ")
             }
         } catch (err) {
             setError('Aqui em handleSetQuizResult :Erro ao salvar o resultado do quiz');
@@ -98,21 +101,42 @@ export default function QuizzList({ quizz }: QuizzProps) {
         }
 
         if (questionIndex === quizz.length) {
+            setQuizzCompleted(true)
             handleSetQuizResult()
         }
     };
 
     const handleActualDate = () => {
-        const date = new Date()
+        const dataInfo = date
+        
+        // Horas que foi terminado o quiz
+        const hora = new Date(dataInfo)
+        const optionsHora: Intl.DateTimeFormatOptions = {
+            hour: '2-digit',
+            minute: '2-digit'
+        }
+        const horaInfo = hora.toLocaleTimeString('pt-BR', optionsHora)
+        
+        // Dia da semana e data
+        const data = new Date(dataInfo)
+        const options: Intl.DateTimeFormatOptions = { 
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            weekday: 'long',
+        }
+        const dataFormatada = data.toLocaleDateString('pt-BR', options)
+
         return <p className='text-center'>
             Você terminou esse quiz em <br />
-            {`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}
+            {`${dataFormatada}, às ${horaInfo}`}
         </p>
     }
 
-    const quizIsCompleted = quizz && activeQuestionIndex === quizz.length;
+    const quizIsCompleted = activeQuestionIndex === quizz.length;
     useEffect(() => {
         if (quizIsCompleted) {
+            handleSetQuizResult()
             setQuizzCompleted(true)
         }
     }, [quizIsCompleted])
@@ -155,8 +179,6 @@ export default function QuizzList({ quizz }: QuizzProps) {
         <div>
             {loading ? (
                 <p>Carregando...</p>
-            ) : error ? (
-                <p>{error}</p>
             ) : quizzCompleted ? (
                 <div className='d-flex flex-column gap-3 align-items-center'>
                     <FontAwesomeIcon icon={faTrophy} style={{ fontSize: '64px' }} />
