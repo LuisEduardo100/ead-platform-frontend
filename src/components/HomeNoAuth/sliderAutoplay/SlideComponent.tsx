@@ -7,6 +7,7 @@ import { CourseType } from '../../services/courseService'
 import SlideCard from '../../common/slideCard';
 import styles from './styles.module.scss'
 // @ts-ignore
+
 export interface props {
     course: CourseType[]
 }

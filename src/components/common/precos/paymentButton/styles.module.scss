@@ -1,0 +1,13 @@
+.btnMatricula {
+    background: #CC202C;
+    border: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: -2px 4px black;
+
+        &:hover {
+            scale: 110%;
+            transition: 0.3s;
+            background-color: #CC202C;
+        }
+}

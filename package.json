@@ -15,6 +15,8 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@splidejs/react-splide": "^0.7.12",
     "@splidejs/splide": "^4.1.4",
+    "@stripe/react-stripe-js": "^2.8.0",
+    "@stripe/stripe-js": "^4.4.0",
     "@types/aos": "^3.0.4",
     "@videojs/themes": "^1.0.1",
     "aos": "^2.3.4",
@@ -31,6 +33,7 @@
     "react-player": "^2.16.0",
     "reactstrap": "^9.2.2",
     "sass": "^1.77.8",
+    "stripe": "^16.10.0",
     "swr": "^2.2.5"
   },
   "devDependencies": {

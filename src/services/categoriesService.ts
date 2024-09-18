@@ -15,19 +15,13 @@ export type CategoryType = {
 
 const categoriesService = {
     getCategories: async() => {
-        const token = sessionStorage.getItem('vocenotadez-token')
-        const res = await api.get('/categories', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).catch((error)=>{return error.response})
+        const res = await api.get('/categories').catch((error)=>{return error.response})
         if (Array.isArray(res.data.categories)) {
             return res.data.categories
         } else {
             console.error('Categorias não são um array:', res.data.categories);
             return [];
         }
-        // return res
     },
     getCourses: async(id: number) => {
         const token = sessionStorage.getItem('vocenotadez-token')
@@ -40,7 +34,7 @@ const categoriesService = {
     },
     getCategoriesForBranding: async() => {
         const res = await api.get('/categories').catch((error)=>{return error.response})
-        return res
+        return res.data.categories
     },
 }
 

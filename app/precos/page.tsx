@@ -8,18 +8,74 @@ import HeaderGeneric from "../../src/components/common/headerGeneric"
 import ListCategories from "../../src/components/HomeAuth/listCategories"
 import Footer from "../../src/components/common/footer"
 import ListCategoriesForBranding from "../../src/components/common/listCategoriesForBranding"
+import PaymentButton from "../../src/components/common/precos/paymentButton"
+import HeaderNoAuth from "../../src/components/HomeNoAuth/header"
+import { useRouter, useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
+import HeaderAuth from "../../src/components/HomeAuth/header"
+import { stripeService } from "../../src/services/stripeService"
 export default function PaginaPrecos() {
+    const [logged, setLogged] = useState(false)
+    const router = useRouter()
+    const [loading, setLoading] = useState(false)
+    const params = useSearchParams()
+    const [toastColor, setToastColor] = useState("");
+    const [toastIsOpen, setToastIsOpen] = useState(false);
+    const [toastMessage, setToastMessage] = useState("");
+
+    useEffect(() => {
+        if (sessionStorage.getItem("vocenotadez-token")) {
+            setLogged(true)
+            router.refresh()
+        }
+    }, [])
+
+    const handlePayment = async () => {
+        setLoading(true);
+
+        const registerSuccess = params.get("newuserbuy")
+        
+        if (registerSuccess == "true"){
+            router.push('/login?newuserbuy=true')
+        }
+
+        try {
+            const response = await stripeService.checkoutSessionLink();
+            const { url } = response;
+
+            if (url) {
+                location.href = url
+                setLoading(false);
+            }
+        } catch (error) {
+            console.error("Erro na requisição:", error);
+        }
+    };
+
+    useEffect(()=>{
+        const registerSuccess = params.get("newuser")
+        if (registerSuccess === "true"){
+            setToastColor("bg-success")
+            setToastIsOpen(true)
+            setTimeout(()=>{
+                setToastIsOpen(false)
+            }, 2500)
+
+            setToastMessage("Cadastrado com sucesso")
+        }
+    }, [params])
+
     return (<>
         <main className={styles.backgroundContainer}>
-            <HeaderGeneric logoUrl="/" btnUrl="/" btnContent="Voltar" />
+            {logged ? (
+                <HeaderAuth />
+            ) : (
+                <HeaderNoAuth />
+            )}
             <div className={styles.apresentation}>
                 <div className={styles.divAnuncio}>
                     <img className={styles.imgAnuncio} src="/anuncio-votanotadez.jpg" alt="anuncio" />
-                    <Link href="https://pay.kiwify.com.br/IEvYanX">
-                        <Button className={styles.btnMatricula}>
-                            Matricule-se
-                        </Button>
-                    </Link>
+                    <PaymentButton />
                 </div>
                 <div className={styles.wrapper}>
                     <p className={styles.pWrapper}>Conheça tudo o que o Nota Dez oferece a você!</p>
@@ -54,9 +110,9 @@ export default function PaginaPrecos() {
             </div>
             <div className={styles.separator}>
                 <p className={styles.pSeparator}>Materiais personalizados com teoria e exercícios!</p>
-                    <img className={styles.capa} src="/capa-ebooks/capaquimica1.png" alt="capa" />
-                    <img className={styles.capa} src="/capa-ebooks/capa-fisica-1.png" alt="capa-2" />
-                    <img className={styles.capa} src="/capa-ebooks/capa-matematica-1.png" alt="capa-2" />
+                <img className={styles.capa} src="/capa-ebooks/capaquimica1.png" alt="capa" />
+                <img className={styles.capa} src="/capa-ebooks/capa-fisica-1.png" alt="capa-2" />
+                <img className={styles.capa} src="/capa-ebooks/capa-matematica-1.png" alt="capa-2" />
 
             </div>
             <div className={styles.divTabela}>
@@ -93,11 +149,9 @@ export default function PaginaPrecos() {
                         </tr>
                     </tbody>
                 </table>
-                <Link href="https://pay.kiwify.com.br/IEvYanX">
-                    <Button className={styles.btnMatriculaPropaganda}>
-                        Matricule-se
-                    </Button>
-                </Link>
+                <Button className={styles.btnMatriculaPropaganda} onClick={handlePayment}>
+                    Matricule-se
+                </Button>
             </div>
             <div className={styles.separator}>
                 <p className={styles.pSeparator}>Materiais separados em níveis para uma melhor aprendizagem!</p>

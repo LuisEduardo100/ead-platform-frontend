@@ -2,7 +2,7 @@
 import styles from "./styles.module.scss";
 import { useEffect, useState } from "react";
 import { Button, Container } from "reactstrap";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import courseService, { CourseQuizzType, CourseType, EpisodeType, WatchStatus } from "../../../src/services/courseService";
 import PageSpinner from "../../../src/components/common/pageSpinner";
 import HeaderAuth from "../../../src/components/HomeAuth/header";
@@ -12,6 +12,7 @@ import QuizzList from "../../../src/components/common/quizzPage";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import quizService from "../../../src/services/QuizService";
+import ToastComponent from "../../../src/components/common/toastComponent";
 
 type ParamsProps = {
   params: { id: number | string };
@@ -38,7 +39,11 @@ export default function Course({ params }: ParamsProps) {
   const [favorited, setFavorited] = useState(Boolean);
   const [firstEpisodeId, setFirstEpisodeId] = useState(0)
   const [firstEpisodeOrder, setFirstEpisodeOrder] = useState(0)
+  const [toastColor, setToastColor] = useState("");
+  const [toastIsOpen, setToastIsOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
+  const paramsUrl = useSearchParams()
   const courseId = params.id;
 
   const getCourse = async () => {
@@ -112,12 +117,25 @@ export default function Course({ params }: ParamsProps) {
   }, [courseId])
 
   useEffect(() => {
+    const access = paramsUrl.get("access")
+
     if (!sessionStorage.getItem("vocenotadez-token")) {
       router.push("/login");
     } else {
       setLoading(false);
     }
+
+    if (access === "false"){
+      setToastIsOpen(true)
+      setToastColor('bg-danger')
+      setTimeout(() => {
+        setToastIsOpen(false)
+      }, 2500)
+      
+      setToastMessage("Acesso negado")
+    }
   }, []);
+
 
   if (loading) {
     return <PageSpinner />;
@@ -184,6 +202,7 @@ export default function Course({ params }: ParamsProps) {
           )}
         </Container>
         <Footer />
+        <ToastComponent isOpen={toastIsOpen} color={toastColor} message={toastMessage} />
       </main>
     </>
   );

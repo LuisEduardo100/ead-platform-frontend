@@ -12,46 +12,51 @@ import authService from '../../src/services/authService'
 const Login = function () {
     const router = useRouter()
     const params = useSearchParams()
+    const paramsUrl = useSearchParams()
     const [toastColor, setToastColor] = useState("");
     const [toastIsOpen, setToastIsOpen] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
 
 
-    useEffect(()=>{
-        if (sessionStorage.getItem("vocenotadez-token")){
+    useEffect(() => {
+        if (sessionStorage.getItem("vocenotadez-token")) {
             router.push("/home")
         }
     }, [])
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         const registerSuccess = params.get("success")
-        if (registerSuccess === "true"){
+        if (registerSuccess === "true") {
             setToastColor("bg-success")
             setToastIsOpen(true)
-            setTimeout(()=>{
+            setTimeout(() => {
                 setToastIsOpen(false)
             }, 2500)
 
             setToastMessage("Cadastrado com sucesso")
-        } 
+        }
     }, [params])
 
     const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
 
+        const registerSuccess = paramsUrl.get("newuserbuy")
+
         const formData = new FormData(event.currentTarget)
         const email = formData.get("email")!.toString()
         const password = formData.get("password")!.toString()
-        const params = {email, password}
+        const params = { email, password }
 
         const { status } = await authService.login(params)
 
-        if (status === 200) {
+        if (status === 200 && registerSuccess == 'true') {
+            router.push("/precos")
+        } else if (status === 200) {
             router.push("/home")
         } else {
             setToastColor("bg-danger")
             setToastIsOpen(true)
-            setTimeout(()=>{
+            setTimeout(() => {
                 setToastIsOpen(false)
             }, 2500)
 
@@ -91,7 +96,7 @@ const Login = function () {
                 </Form>
             </Container>
             <Footer />
-            <ToastComponent isOpen={toastIsOpen} color={toastColor} message={toastMessage}/>
+            <ToastComponent isOpen={toastIsOpen} color={toastColor} message={toastMessage} />
         </main>
 
     </>)

@@ -14,6 +14,7 @@ import { faBackwardStep, faCompress, faExpand, faForward, faForwardStep, faPause
 import { faBackward } from "@fortawesome/free-solid-svg-icons/faBackward";
 import EpisodeAdaptedList from "../../../../src/components/common/episodeListAdapted";
 import FileList from "../../../../src/components/common/filePage";
+import profileService from "../../../../src/services/profileService";
 
 export default function EpisodePlayer({ params, searchParams, }: {
   params: { id: number | string };
@@ -22,6 +23,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [course, setCourse] = useState<CourseType>();
+  const [accessType, setAccessType] = useState(false)
 
   const episodeOrder = parseFloat(params.id.toString() || "");
   const episodeId = parseFloat(searchParams?.episodeid?.toString() || "");
@@ -139,12 +141,26 @@ export default function EpisodePlayer({ params, searchParams, }: {
     getCourse();
   }, [courseId]);
   useEffect(() => {
+    if (courseId !== "1") {
+      profileService.fetchCurrent().then((user) => {
+        const hasFullAccess = user.hasFullAccess
+        setAccessType(user.hasFullAccess)
+
+        if (!hasFullAccess) {
+          router.push(`/courses/${courseId}?access=${hasFullAccess}`)
+        } else {
+          setLoading(false)
+        }
+      })
+    }
+
     if (!sessionStorage.getItem("vocenotadez-token")) {
       router.push("/login");
     } else {
       setLoading(false);
     }
-  }, []);
+
+  }, [courseId,]);
 
   if (loading) {
     return <PageSpinner />;
@@ -348,19 +364,19 @@ export default function EpisodePlayer({ params, searchParams, }: {
               <div>
                 {selectedFileUrl.endsWith('.pdf') ? (
                   <div
-                style={{
-                  position: 'fixed',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                  display: 'flex',
-                  zIndex: 1000,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
+                    style={{
+                      position: 'fixed',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                      display: 'flex',
+                      zIndex: 1000,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
                     <iframe
                       key={selectedFileUrl} // Força o re-render quando o URL muda
                       src={`${process.env.NEXT_PUBLIC_BASEURL}/${selectedFileUrl}`}
@@ -388,7 +404,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
                       Close
                     </button>
                     <button
-                      onClick={()=>{
+                      onClick={() => {
                         window.open(`${process.env.NEXT_PUBLIC_BASEURL}/${selectedFileUrl}`)
                       }}
                       style={{

@@ -6,11 +6,12 @@ import 'jsuites';
 import Footer from '../../src/components/common/footer';
 import { FormEvent, useEffect, useState } from 'react';
 import authService from '../../src/services/authService';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import ToastComponent from '../../src/components/common/toastComponent';
 
 const Register = function () {
     const router = useRouter();
+    const paramsUrl = useSearchParams()
     const [toastIsOpen, setToastIsOpen] = useState(false)
     const [toastMessage, setToastMessage] = useState("")
 
@@ -31,7 +32,7 @@ const Register = function () {
         const email = formData.get("email")!.toString();
         const password = formData.get("password")!.toString();
         const confirmPassword = formData.get("confirmPassword")!.toString();
-        const params = { firstName, lastName, phone, birth, email, password };
+        const params = {firstName, lastName, phone, birth, email, password};
 
         if (password != confirmPassword) {
             setToastIsOpen(true);
@@ -45,7 +46,10 @@ const Register = function () {
 
         const { data, status } = await authService.register(params);
 
-        if (status === 201) {
+        
+        if (status === 201 && paramsUrl.get('newuser') == 'true') {
+            router.push('/login?newuserbuy=true')
+        } else if(status==201) {
             router.push("/login?success=true");
         } else {
             setToastIsOpen(true);
