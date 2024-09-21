@@ -1,5 +1,5 @@
 .backgroundContainer {
-    background-color: #deb66b;
+    background-color: transparent;
     display: flex;
     justify-items: center;
     padding: 10px;
@@ -44,8 +44,8 @@
 .headerBtn {
     border-radius: 60px;
     background-color: rgba(255, 255, 255, 0);
-    border: 1px solid white;
-    color: white;
+    border: 1px solid black;
+    color: black;
     font-weight: 500;
     margin-right: 9px;
 

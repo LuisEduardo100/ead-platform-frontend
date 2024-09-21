@@ -34,16 +34,10 @@ const KeepWatchingService = {
                 const courses = await fetchCoursesByCategoryId(category.id);
                 for (const course of courses) {
                     const courseDetails = await fetchCourseById(course.id);
-                    let courseWatching = 0;
                     for (const watchStatus of courseDetails.watchStatus){
                         if (watchStatus.isWatching && courseDetails.watchStatus.length < courseDetails.Episodes.length) {
-                            courseWatching = 1
-                        } else {
-                            courseWatching = 0
+                            ongoingCourses.push(courseDetails)
                         }
-                    }
-                    if (courseWatching > 0) {
-                        ongoingCourses.push(courseDetails)
                     }
                 }
             }

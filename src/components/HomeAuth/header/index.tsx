@@ -57,13 +57,18 @@ const HeaderAuth = function () {
                         <img src="/logo-vocenotadez.png" alt="logoFooter" className={styles.imgLogo} />
                     </div>
                 </Link>
-                <div className="d-flex align-items-center">
-                    <p>Seu nível de acesso: {accessType ? 'Premium' : 'Free'}</p>
-                </div>
-                <div className='d-flex align-items-center gap-2'>
-                <Link href="/precos">
-                    <Button className={styles.btnPrecos}>PREÇOS</Button>
-                </Link>
+
+                <div className='d-flex align-items-center gap-2 position-relative'>
+                    {!accessType &&
+                        <div className={styles.divAccess}>
+                            <p>Plano gratuito</p>
+                        </div>
+                    }
+
+                    {!accessType &&
+                        <Link href="/precos">
+                            <Button className={styles.btnPrecos}>PREÇOS</Button>
+                        </Link>}
                     <Form onSubmit={handleSearch}>
                         <Input
                             name="search"
@@ -76,8 +81,9 @@ const HeaderAuth = function () {
                             }} />
                     </Form>
                     <img src="/iconSearch.svg" alt="searchIcon" className={styles.searchIcon} onClick={handleSearchClick} />
-                    <p className={styles.userProfile} onClick={handleOpenModal}>{initials}</p>
-                    
+                    <p className={styles.userProfile} onClick={handleOpenModal}>
+                        {initials}
+                    </p>
                 </div>
                 <Modal
                     isOpen={modalOpen}

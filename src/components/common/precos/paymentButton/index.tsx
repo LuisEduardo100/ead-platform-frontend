@@ -5,7 +5,10 @@ import { stripeService } from '../../../../services/stripeService';
 import { Button } from 'reactstrap';
 import PageSpinner from '../../pageSpinner';
 
-const PaymentButton = () => {
+type styleProps = {
+  bgColor: string
+}
+const PaymentButton = ({bgColor}: styleProps) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const params = useSearchParams()
@@ -19,7 +22,7 @@ const PaymentButton = () => {
     }
 
     if(!sessionStorage.getItem("vocenotadez-token")){
-      router.push('/register?newuser=true')
+      return router.push('/register?newuser=true')
     }
 
     try {
@@ -40,6 +43,7 @@ const PaymentButton = () => {
       className={styles.btnMatricula}
       onClick={handlePayment}
       disabled={loading}
+      style={{backgroundColor: bgColor}}
     >
       {loading ? <PageSpinner/> : 'Matricule-se'}
     </Button>

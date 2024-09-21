@@ -1,91 +1,161 @@
 // VIDEO PLAYER 
-.mainDiv{
+.video_container {
   display: flex;
-  width: 100%;
-  height: 100vh; 
+  justify-content: center;
+  align-items: flex-start;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  
+  @media (max-width: 768px) {
+    flex-direction: column; // Empilha o player e a lista de episódios em telas menores
+  }
 }
-.playerWrapper{
-  position: relative;
-  flex: 2;
-  background-color: #000;
-  position: relative;
-  min-width: 60%;
-  max-width: 100%;
-  height: 450px;
-}
-.video_player_title, .divProgressBar, .video_player_control{
-  position: absolute;
-}
-.video_player_title{
-  font-size: 24px;
-  color: white;
-  top: 0px;
-  background: linear-gradient(to bottom, black, rgba(255, 255, 255, 0));
-  width: 100%;
-  height: 10vh;
-  padding: 12px 0px 0px 20px;
-}
-.divProgressBar{
-  bottom: 42px;
-  padding: 0px 16px;
-  width: 100%;
-  z-index: 100;
-  .progress_bar{
-    &:hover{
-      cursor: pointer;
-    }
+
+.video_description_container {
+  width: 75vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  @media (max-width: 768px) {
+    width: 100vw; // O player ocupa toda a largura disponível em telas menores
+    height: 60vh; // Ajusta a altura do player em telas menores
   }
 
+  @media (max-width: 480px) {
+    height: 55vh; // Altura menor para telas muito pequenas
+  }
+
+  @media (max-width: 300px) {
+    height: 50vh; // Altura menor para dispositivos com largura até 300px
+  }
 }
-.video_player_control{
-  display: flex;
+
+.player_wrapper {
+  background-color: black;
+  position: relative;
   width: 100%;
-  align-items: center;
-  gap: 12px;
-  padding: 0px 8px 6px 8px;
+  max-width: 100%;
+  height: 70vh;
+  padding: 0;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    height: 100%; // Ajusta a altura em telas menores
+  }
+
+  @media (max-width: 300px) {
+    height: 50vh; // Menor altura para dispositivos de até 300px
+  }
+}
+
+.player {
+  object-fit: contain;
   width: 100%;
-  z-index: 100;
-  bottom: 0;
-  background: linear-gradient(to top, black, rgba(255, 255, 255, 0));
+  height: 100%;
+}
+
+.fileAndButtons {
+  height: 30vh;
+  background-color: rgba(0, 0, 0, 0.1);
+
+  .divFileUrl{
+    border-bottom: 2px solid black;
+    border-top: 2px solid black;
+    padding: 10px 16px;
+  }
+  @media (max-width: 768px) {
+    height: 40vh; // Aumenta a altura do container de arquivos em telas menores
+  }
+
+  @media (max-width: 300px) {
+    height: 50vh; // Usa metade da tela para a área de descrição e downloads
+  }
+}
+
+.divSinopse {
   
-  .control_btn{
-    background-color: transparent;
-    border: none;
-    &:hover{
-      background-color: transparent;
-      opacity: 0.75;
-    }
-  }
-  .div_volume_bar{
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .duration_container{
-    flex: 1;
-    color: white;
-    padding: 0;
-    margin: 0;
+  margin-top: 12px;
+  padding: 16px;
+  height: 30vh;
+  font-size: 14px; // Ajusta o tamanho da fonte para telas menores
+
+  @media (max-width: 300px) {
+    font-size: 12px; // Menor tamanho de fonte em dispositivos pequenos
+    padding: 10px; // Menos espaçamento para dispositivos pequenos
   }
 }
+
 // LISTA DE EPISÓDIOS + MEU PROGRESSO 
-.episodeContent{
+.episodeContent {
   background-color: #183153;
+  width: 25vw;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 768px) {
+    width: 100vw; // Usa toda a largura disponível em telas menores
+    height: 40vh; // Altura menor para a lista de episódios
+    flex: none;
+  }
+
+  @media (max-width: 480px) {
+    height: 45vh; // Aumenta a altura em telas muito pequenas
+  }
+
+  @media (max-width: 300px) {
+    height: 50vh; // Usa metade da tela em dispositivos com largura até 300px
+  }
 }
-.pQtdAulas{
+
+.titulo {
+  font-weight: bold;
+  font-size: 21px;
+
+  @media (max-width: 300px) {
+    font-size: 16px; // Reduz o tamanho da fonte para dispositivos pequenos
+  }
+}
+
+.pQtdAulas {
   font-size: 12px;
   color: rgba(223, 223, 223, 0.966);
+
+  @media (max-width: 300px) {
+    font-size: 10px; // Fonte menor para dispositivos pequenos
+  }
 }
+
+.div_episode_list {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #f7f7f7;
+
+  @media (max-width: 300px) {
+    padding: 8px; // Menos padding em dispositivos pequenos
+  }
+}
+
+// PROGRESS CIRCLE 
+
 .progress_radius{
   display: flex;
 }
 .progress{
-  border-bottom: 2px solid #deb66b;
+  border-bottom: 3px solid #deb66b;
   padding: 8px 0px 8px 16px;
   color: white;
   .titulo{
     font-weight: bold;
     font-size: 21px;
+  }
+
+  @media (max-width: 300px) {
+    padding: 4px 8px; // Reduz o padding em telas menores
   }
 }
 .progress_circle {
@@ -112,28 +182,17 @@
   stroke-dasharray: 100, 100;
   transition: stroke-dasharray 0.6s ease;
 }
-.div_episode_list{
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-width: 360px;
-  max-width: 450px;
-  height: 91.2vh;
-  overflow-y: auto; 
-  background-color: #f7f7f7;
-}
 
-// DESCRIÇÃO + DOWNLOAD LINKS
-.fileAndButtons{
-  background-color: rgba(0,0,0,0.2);
-  height: 51.2vh;
-}
-.divSinopse{
-  width: 40%;
-  margin-top: 12px;
-  padding: 16px
-}
-.divFileUrl{
-  border-bottom:  2px solid #183153;
-  padding: 10px 0px 10px 16px;
+// OUTROS AJUSTES GERAIS
+
+
+.mainDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  @media (max-width: 300px) {
+    align-items: flex-start; // Alinha o conteúdo ao topo em telas pequenas
+  }
 }

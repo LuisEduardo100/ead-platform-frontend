@@ -68,10 +68,8 @@ export default function EpisodeList({ episode, course }: props) {
                     </div>
                     <p className={styles.episodeTitle}>{episode.name}</p>
                 </div>
-                { isWatched ?              
-                <FontAwesomeIcon className={styles.checkItem} icon={faCircleCheckSolid} style={{ fontSize: '30px', color: '#183153' }} />
-                :
-                <FontAwesomeIcon className={styles.checkItem} icon={faCircleCheckRegular} style={{ fontSize: '30px', color: '#183153' }}/>
+                { isWatched &&             
+                <FontAwesomeIcon className={styles.checkItem} icon={faCircleCheckSolid} style={{ fontSize: '30px', color: '#183153' }}/>
                 }
                 {(hasFile) ? <Link target="_blank" className={styles.link_file} href={`${process.env.NEXT_PUBLIC_BASEURL}/${File?.fileUrl}`}>
                     <FontAwesomeIcon icon={faCloudArrowDown} style={{ color: '#183153' }} />

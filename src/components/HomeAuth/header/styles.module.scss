@@ -25,9 +25,10 @@
     height: 36.5px;
     margin-right: 9px;
     font-weight: bold;
-    background-color:rgba(255, 255, 255, 0);
-    border-color: white;
+    background-color: transparent;
+    border-color: black;
     font-size: 12px;
+    color: black;
     &:hover {
         background-color: #F0C36E;
         color: black;
@@ -35,6 +36,12 @@
         transition: 0.4s;
         font-weight: bolder;
     }
+}
+.divAccess{
+    background-color: green;
+    padding: 6.5px 12px;
+    border-radius: 6px;
+    color: white;
 }
 .userProfile {
     margin-left: 9px;
