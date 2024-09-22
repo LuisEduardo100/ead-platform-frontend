@@ -13,18 +13,22 @@ export default function UserForm() {
     const [toastIsOpen, setToastIsOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
+
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [profilePicture, setProfilePicture] = useState(""); // Placeholder para a imagem
+
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
     const [initialEmail, setInitialEmail] = useState("")
     const [createdAt, setCreatedAt] = useState("")
-
     const date = new Date(createdAt);
     const month = date.toLocaleDateString("pt-BR", { month: "long" });
 
     useEffect(() => {
         profileService.fetchCurrent().then((user) => {
+            setProfilePicture(user.profileImage)
             setFirstName(user.firstName);
             setLastName(user.lastName);
             setPhone(user.phone);
@@ -33,7 +37,6 @@ export default function UserForm() {
             setCreatedAt(user.createdAt);
         })
     }, [])
-
 
     const handleUserUpdate = async function (event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -52,7 +55,7 @@ export default function UserForm() {
             setColor("bg-success");
             setTimeout(() => setToastIsOpen(false), 2500);
 
-            if (email != initialEmail){
+            if (email != initialEmail) {
                 sessionStorage.clear()
                 router.push("/")
             }
@@ -63,14 +66,52 @@ export default function UserForm() {
             setTimeout(() => setToastIsOpen(false), 2500);
         }
     }
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files[0]) {
+            setSelectedFile(event.target.files[0]);
+        }
+    };
+
+    const handleUpload = async () => {
+        if (!selectedFile) return alert('Nenhum arquivo selecionado!');
+
+        try {
+            const updatedUser = await profileService.uploadProfilePicture(selectedFile);
+            if (updatedUser) alert('Foto de perfil atualizada com sucesso!');
+        } catch (error) {
+            console.error('Erro ao atualizar a foto de perfil:', error);
+            alert('Erro ao atualizar a foto de perfil.');
+        }
+    };
+
     return (<>
         <Form className={styles.forms} onSubmit={(event) => handleUserUpdate(event)}>
             <div className={styles.formName}>
-                <p className={styles.nameAbbreviation}>
-                    {firstName.slice(0, 1)}
-                    {lastName.slice(0, 1)}
-                </p>
+                {profilePicture !== null ?
+                    (
+                        <img
+                            src={`${process.env.NEXT_PUBLIC_BASEURL}/${profilePicture}`}
+                            alt="user picture"
+                            width={80}
+                            height={80}
+                            style={{ borderRadius: '50%', border: "2px solid black"}}
+                        />
+                    ) : (
+                        <p className={styles.nameAbbreviation}>
+                            {firstName.slice(0, 1)}
+                            {lastName.slice(0, 1)}
+                        </p>
+                    )
+                }
                 <p className={styles.userName}>{`${firstName} ${lastName}`}</p>
+            </div>
+            <div className={styles.div_foto_perfil}>
+                <p>UPLOAD SUA FOTO DE PERFIL</p>
+                <div>
+                    <Input className={styles.input_image} type="file" onChange={handleFileChange} />
+                    <Button className={styles.btn_upload_image} onClick={handleUpload}>Enviar foto</Button>
+                </div>
             </div>
             <div className={styles.memberTime}>
                 <img src="/logo-vocenotadez.png" alt="iconProfile" className={styles.memberTimeImg} />

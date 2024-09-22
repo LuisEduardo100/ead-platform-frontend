@@ -58,7 +58,12 @@
     align-items: center;
     cursor: pointer;
 }
-
+.imageProfile{
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+}
 .searchbar {
     background-color: transparent;
     width: 250px;

@@ -1,5 +1,5 @@
 .bgdiv{
-    background-color: #e6ba69;
+    background-color: transparent;
     padding: 10px;
 
 }
@@ -14,57 +14,31 @@
 .imgLogo {
     width: 100px;
 }
-
-.btnAssine {
-    width: 115px;
-    height: 36.5px;
-    font-size: 12px;
-    background-color: rgba(255, 255, 255, 0);
-    border: 1px solid white;
-    color: white;
-    font-weight: bold;
-    margin-right: 9px;
-
-    &:hover {
-        background-color: #F0C36E;
-        color: black;
-        border: none;
-        transition: 0.4s;
-        font-weight: bolder;
+.divBtn{
+    display: flex;
+    gap: 8px;
+}
+.btnAssine, .btnPrecos, .btnSouNotaDez{
+    border: 1px solid black;
+    color: black;
+    font-size: 0.8rem;
+    padding: 10px 12px;
+    font-weight: 600;
+    &:hover{
+        background-color: #deb66b;
     }
 }
-.btnPrecos{
-    width: 115px;
-    height: 36.5px;
-    margin-right: 9px;
-    font-weight: bold;
-    background-color:rgba(255, 255, 255, 0);
-    border-color: white;
-    font-size: 12px;
-    &:hover {
-        background-color: #F0C36E;
-        color: black;
-        border: none;
-        transition: 0.4s;
-        font-weight: bolder;
-    }
-}
-.btnSouNotaDez {
-    width: 115px;
-    height: 36.5px;
-    background-color: transparent;
+.btnSouNotaDez{
     border: none;
-    font-size: 12px;
-    font-weight: bold;
-
-    border: 1px solid white;
-    &:hover {
-        background-color: #F0C36E;
-        color: black;
-        border: none;
-        transition: 0.4s;
-        font-weight: bolder;
+    &:hover{
+        background: none;
+        background-color: transparent;
+        color: black
     }
+}
+
+.linkstyle{
+    text-decoration: none;
 }
 
 .fixingIconInMiddle {

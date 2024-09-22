@@ -13,6 +13,8 @@ const HeaderAuth = function () {
     const [initials, setInitials] = useState("")
     const [modalOpen, setModalOpen] = useState(false);
     const [accessType, setAccessType] = useState(false);
+    const [profilePicture, setProfilePicture] = useState("")
+
     const router = useRouter();
 
     const handleOpenModal = () => {
@@ -46,6 +48,7 @@ const HeaderAuth = function () {
             const lastNameInitial = user.lastName.slice(0, 1);
             setAccessType(user.hasFullAccess)
             setInitials(firstNameInitial + lastNameInitial);
+            setProfilePicture(user.profileImage)
         });
     }, [accessType]);
 
@@ -81,9 +84,18 @@ const HeaderAuth = function () {
                             }} />
                     </Form>
                     <img src="/iconSearch.svg" alt="searchIcon" className={styles.searchIcon} onClick={handleSearchClick} />
-                    <p className={styles.userProfile} onClick={handleOpenModal}>
-                        {initials}
-                    </p>
+                    {profilePicture !== "null" ? (
+                        <img
+                            src={`${process.env.NEXT_PUBLIC_BASEURL}/${profilePicture}`}
+                            alt="user picture"
+                            className={styles.imageProfile}
+                            onClick={handleOpenModal}
+                        />
+                    ) :
+                        (<p className={styles.userProfile} onClick={handleOpenModal}>
+                            {initials}
+                        </p>)
+                    }
                 </div>
                 <Modal
                     isOpen={modalOpen}

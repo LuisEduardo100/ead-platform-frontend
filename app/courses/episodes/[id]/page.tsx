@@ -14,7 +14,6 @@ import profileService from "../../../../src/services/profileService";
 
 import { Container } from "@mui/material";
 import Control from "../../../../src/components/common/videoControls";
-import screenfull from 'screenfull'
 
 let count = 0;
 

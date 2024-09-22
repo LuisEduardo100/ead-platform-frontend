@@ -49,7 +49,22 @@ const profileService = {
     searchUser: async () => {
         const res = await api.get("/users/current")
         return res
-    }
+    },
+    uploadProfilePicture: async (file: File) => {
+        const token = sessionStorage.getItem('vocenotadez-token');
+        const formData = new FormData();
+        formData.append('profilePicture', file);
+    
+        const res = await api.post('/users/current/profileImage', formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        }).catch((error) => {
+          return error.response;
+        }); 
+        return res.data;
+      },
 }
 
 export default profileService

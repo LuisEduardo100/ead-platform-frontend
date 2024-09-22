@@ -22,7 +22,12 @@ const Profile = function () {
                         <Button
                             outline
                             className={styles.renderFormBtn}
-                            style={{ color: form === "userForm" ? "#f0c36e" : "#727272" }}
+                            style={
+                                { 
+                                    color: form === "userForm" ? "black" : "#756f6f",
+                                    backgroundColor: form === "userForm" ? "#DEB66B" : "transparent"
+                                }
+                            }
                             onClick={() => {
                                 setForm("userForm");
                             }}
@@ -32,7 +37,12 @@ const Profile = function () {
                         <Button
                             outline
                             className={styles.renderFormBtn}
-                            style={{ color: form === "userForm" ? "#727272" : "#f0c36e" }}
+                            style={
+                                { 
+                                    color: form === "userForm" ? "#756f6f": "black",
+                                    backgroundColor: form === "userForm" ? "transparent" : "#DEB66B" 
+                                }
+                            }
                             onClick={() => {
                                 setForm("passwordForm");
                             }}
