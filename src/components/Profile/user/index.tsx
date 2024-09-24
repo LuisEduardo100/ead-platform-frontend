@@ -93,8 +93,8 @@ export default function UserForm() {
                         <img
                             src={`${process.env.NEXT_PUBLIC_BASEURL}/${profilePicture}`}
                             alt="user picture"
-                            width={80}
-                            height={80}
+                            width={150}
+                            height={150}
                             style={{ borderRadius: '50%', border: "2px solid black"}}
                         />
                     ) : (
