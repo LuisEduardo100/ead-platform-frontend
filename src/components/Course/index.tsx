@@ -57,10 +57,8 @@ export default function EpisodeList({ episode, course }: props) {
     
     const isWatched = course.watchStatus.some(status => status.episodeId === episode.id);
     return (
-
         <>
-        
-            <div className={styles.episodeCard} >
+            <div className={styles.episodeCard}>
                 <div className={styles.episodeTimeDiv} onClick={handleEpisodePlayer}>
                     <div className={styles.playIconAndTime}>
                         <FontAwesomeIcon icon={faCirclePlay} style={{ color: "#183153", fontSize: "30px" }} />
@@ -70,11 +68,6 @@ export default function EpisodeList({ episode, course }: props) {
                 </div>
                 { isWatched &&             
                 <FontAwesomeIcon className={styles.checkItem} icon={faCircleCheckSolid} style={{ fontSize: '30px', color: '#183153' }}/>
-                }
-                {(hasFile) ? <Link target="_blank" className={styles.link_file} href={`${process.env.NEXT_PUBLIC_BASEURL}/${File?.fileUrl}`}>
-                    <FontAwesomeIcon icon={faCloudArrowDown} style={{ color: '#183153' }} />
-                    <p className={styles.archives}>Roteiro</p>
-                </Link> : null
                 }
             </div>
         </>

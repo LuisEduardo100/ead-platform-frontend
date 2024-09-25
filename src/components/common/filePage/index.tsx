@@ -13,27 +13,22 @@ type FileListProps = {
     onFileClick: (url: string) => void
 };
 
-const FileList: React.FC<FileListProps> = ({ files, onFileClick }) => {
-
+export default function FileList({ files, onFileClick }: FileListProps) {
     return (
-        <div>
+        <div className={styles.divPai}>
+            <h4 className={styles.titulofile}>Material: </h4>
             {files.map((file) => (
-                <div>
                     <div className={styles.divFiles}>
-                        <h4 className={styles.titulofile}>Material: </h4>
                         {file.fileUrl.map((url: any, index: any) => (
                             <div key={index} className={styles.file} onClick={() => onFileClick(url)}>
                                 <a>
                                     <FontAwesomeIcon icon={faCloudArrowDown} style={{ color: '#183153', marginRight: '8px' }} />
-                                    {url.endsWith('.pdf') ? `File ${index + 1}` : `Vídeo apoio`}
+                                    {file.name}
                                 </a>
                             </div>
                         ))}
                     </div>
-                </div>
             ))}
         </div>
     );
 };
-
-export default FileList;
