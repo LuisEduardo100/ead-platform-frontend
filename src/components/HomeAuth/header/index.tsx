@@ -50,7 +50,7 @@ const HeaderAuth = function () {
             setInitials(firstNameInitial + lastNameInitial);
             setProfilePicture(user.profileImage)
         });
-    }, [accessType]);
+    }, []);
 
     return (<>
         <div id="next" className={styles.divbackground}>
@@ -84,7 +84,7 @@ const HeaderAuth = function () {
                             }} />
                     </Form>
                     <img src="/iconSearch.svg" alt="searchIcon" className={styles.searchIcon} onClick={handleSearchClick} />
-                    {profilePicture !== "null" ? (
+                    {profilePicture !== null ? (
                         <img
                             src={`${process.env.NEXT_PUBLIC_BASEURL}/${profilePicture}`}
                             alt="user picture"

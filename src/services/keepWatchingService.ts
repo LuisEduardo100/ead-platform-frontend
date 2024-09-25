@@ -29,15 +29,14 @@ const KeepWatchingService = {
         try {
             const categories: CategoryWithNoCourse[] = await categoriesService.getCategories();
             const ongoingCourses: any = [];
-
+            let isWatching = false;
             for (const category of categories) {
                 const courses = await fetchCoursesByCategoryId(category.id);
                 for (const course of courses) {
                     const courseDetails = await fetchCourseById(course.id);
-                    for (const watchStatus of courseDetails.watchStatus){
-                        if (watchStatus.isWatching && courseDetails.watchStatus.length < courseDetails.Episodes.length) {
-                            ongoingCourses.push(courseDetails)
-                        }
+                    
+                    if(courseDetails.watchStatus.length > 0 && courseDetails.watchStatus.length < courseDetails.Episodes.length){
+                        ongoingCourses.push(courseDetails)
                     }
                 }
             }

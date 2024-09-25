@@ -102,7 +102,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
     }
 
     if (!seeking) {
-      setVideoState({ ...videoState, ...state });
+      setVideoState({ ...videoState, ...state});
     }
   };
 
@@ -231,9 +231,6 @@ export default function EpisodePlayer({ params, searchParams, }: {
     }
   };
 
-  // const handleLastEpisode = () => {
-  //   router.push(`/courses/episodes/${episodeOrder - 1}?courseid=${course?.id}&episodeid=${episodeId - 1}`);
-  // };
   const handleNextEpisode = () => {
     router.push(`/courses/episodes/${episodeOrder + 1}?courseid=${course?.id}&episodeid=${episodeId + 1}`);
   };
@@ -278,7 +275,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
   // Ajustes de constantes
   const filteredEpisodes = course.Episodes?.filter((episode) => episode.id !== episodeId)
   const hasFiles = getEpisodeFile?.Files && getEpisodeFile.Files?.length != 0
-  const confirmNextVideo = episodeOrder + 1 == course.Episodes[episodeOrder+1]?.order ? true : false
+  const confirmNextVideo  = course.Episodes.length > 1 && episodeOrder < course.Episodes.length - 1
   const confirmLastVideo = episodeOrder == 0 ? true : false
 
   if (confirmNextVideo) {

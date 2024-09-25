@@ -18,7 +18,7 @@ const fetcher = async () => {
 export default function OnGoingCategory() {
     const { data, error } = useSWR('ongoingCourses', fetcher);
     const [loading, setLoading] = useState(true);
-
+    console.log(data)
     useEffect(() => {
         if (data || error) {
             setLoading(false);
