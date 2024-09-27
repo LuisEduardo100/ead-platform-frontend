@@ -7,6 +7,7 @@ import { FormEvent, useEffect, useState } from 'react'
 import ToastComponent from '../../src/components/common/toastComponent'
 import { useRouter, useSearchParams } from 'next/navigation'
 import authService from '../../src/services/authService'
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 
 const Login = function () {
@@ -16,7 +17,11 @@ const Login = function () {
     const [toastColor, setToastColor] = useState("");
     const [toastIsOpen, setToastIsOpen] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
+    const togglePasswordVisibility = () => {
+        setIsPasswordVisible(!isPasswordVisible)
+    }
 
     useEffect(() => {
         if (sessionStorage.getItem("vocenotadez-token")) {
@@ -83,14 +88,19 @@ const Login = function () {
                     </FormGroup>
                     <FormGroup>
                         <Label for="password">SENHA</Label>
-                        <Input
-                            id="password"
-                            name="password"
-                            type="password"
-                            required
-                            placeholder="Digite a sua senha"
-                            className={styles.input}
-                        />
+                        <div className={styles.password_wrapper}>
+                            <Input
+                                id="password"
+                                name="password"
+                                type= {isPasswordVisible ? 'text' : 'password'}
+                                required
+                                placeholder="Digite a sua senha"
+                                className={styles.input}
+                                />
+                                <span className={styles.visibility} onClick={togglePasswordVisibility}>
+                                    {isPasswordVisible ? <VisibilityOff/> : <Visibility/>}
+                                </span>
+                        </div>
                     </FormGroup>
                     <Button type="submit" className={styles.formBtn}>ENTRAR</Button>
                 </Form>

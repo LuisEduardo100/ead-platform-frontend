@@ -41,7 +41,20 @@
         scale: 110%;
     }
 }
-
+.password_wrapper{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    .visibility{
+        position: absolute;
+        right: 12px;
+        &:hover{
+            cursor: pointer;
+            opacity: 0.75;
+        }
+    }
+}
 .label {
     font-size: 14px;
     font-weight: bold;
@@ -51,8 +64,6 @@
 .input {
     box-shadow: -2px 4px black;
     border-color: #b59863d4;
-    background-color: #DEB66B;
-    color: #d6c095f2;
 
     &::placeholder {
         color: #000000b9;

@@ -8,13 +8,19 @@ import { FormEvent, useEffect, useState } from 'react';
 import authService from '../../src/services/authService';
 import { useRouter, useSearchParams } from 'next/navigation';
 import ToastComponent from '../../src/components/common/toastComponent';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const Register = function () {
     const router = useRouter();
     const paramsUrl = useSearchParams()
     const [toastIsOpen, setToastIsOpen] = useState(false)
     const [toastMessage, setToastMessage] = useState("")
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
+    const togglePasswordVisibility = () => {
+        setIsPasswordVisible(!isPasswordVisible)
+    }
+    
     useEffect(()=>{
         if (sessionStorage.getItem("vocenotadez-token")){
             router.push("/home")
@@ -132,19 +138,20 @@ const Register = function () {
                             />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="password" className={styles.label}>
-                                SENHA
-                            </Label>
+                        <Label for="password">SENHA</Label>
+                        <div className={styles.password_wrapper}>
                             <Input
                                 id="password"
                                 name="password"
-                                type="password"
-                                placeholder="Digite a sua senha (Min: 6 | Max: 20)"
+                                type= {isPasswordVisible ? 'text' : 'password'}
                                 required
-                                minLength={6}
-                                maxLength={20}
+                                placeholder="Digite a sua senha"
                                 className={styles.input}
-                            />
+                                />
+                                <span className={styles.visibility} onClick={togglePasswordVisibility}>
+                                    {isPasswordVisible ? <VisibilityOff/> : <Visibility/>}
+                                </span>
+                        </div>
                         </FormGroup>
                         <FormGroup>
                             <Label for="confirmPassword" className={styles.label}>
