@@ -29,7 +29,6 @@ const KeepWatchingService = {
         try {
             const categories: CategoryWithNoCourse[] = await categoriesService.getCategories();
             const ongoingCourses: any = [];
-            let isWatching = false;
             for (const category of categories) {
                 const courses = await fetchCoursesByCategoryId(category.id);
                 for (const course of courses) {

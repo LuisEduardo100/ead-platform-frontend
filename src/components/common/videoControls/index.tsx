@@ -60,6 +60,9 @@ const VolumeSlider = styled(Slider)({
         width: "80px",
     },
 
+    '@media (max-width: 406px)': {
+        display: "none",
+    },
     '@media (max-width: 300px)': {
         width: "60px",
         '&:hover': {
@@ -78,6 +81,7 @@ const IconBtn = styled(IconButton)({
     '@media (max-width: 300px)': {
         padding: "0px 4px",
     }
+    
 });
 
 const ControlContainer = styled('div')({

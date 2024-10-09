@@ -10,6 +10,13 @@
   @media (max-width: 768px) {
     flex-direction: column; // Empilha o player e a lista de episódios em telas menores
   }
+  
+  @media (max-width: 480px) {
+    height: auto; // Ajusta a altura para o conteúdo
+  }
+  @media(max-width: 402px) {
+    height: 150%;
+  }
 }
 
 .video_description_container {
@@ -25,7 +32,7 @@
   }
 
   @media (max-width: 480px) {
-    height: 55vh; // Altura menor para telas muito pequenas
+    height: 50vh; // Altura menor para telas muito pequenas
   }
 
   @media (max-width: 300px) {
@@ -38,23 +45,28 @@
   position: relative;
   width: 100%;
   max-width: 100%;
-  height: 70vh;
+  height: 100vh;
   padding: 0;
   margin: 0;
 
   @media (max-width: 768px) {
     height: 100%; // Ajusta a altura em telas menores
   }
-
+  @media (max-width: 402px) {
+    height: 150%; // Ajusta a altura em telas menores
+  }
   @media (max-width: 300px) {
     height: 50vh; // Menor altura para dispositivos de até 300px
   }
 }
 
 .player {
-  object-fit: contain;
+  
   width: 100%;
   height: 100%;
+  @media (max-width: 402px) {
+    height: 100vh; // Ajusta a altura em telas menores
+  }
 }
 
 .fileAndButtons {

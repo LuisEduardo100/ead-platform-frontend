@@ -18,7 +18,7 @@ export default function FileList({ files, onFileClick }: FileListProps) {
         <div className={styles.divPai}>
             <h4 className={styles.titulofile}>Material: </h4>
             {files.map((file) => (
-                    <div className={styles.divFiles}>
+                    <div key={file.id} className={styles.divFiles}>
                         {file.fileUrl.map((url: any, index: any) => (
                             <div key={index} className={styles.file} onClick={() => onFileClick(url)}>
                                 <a>

@@ -13,6 +13,20 @@ import { faBook } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import quizService from "../../../src/services/QuizService";
 import ToastComponent from "../../../src/components/common/toastComponent";
+import { IconButton, styled } from "@mui/material";
+import { ArrowBackIosNew } from "@mui/icons-material";
+
+const IconBtn = styled(IconButton)({
+  color: "#000",
+  padding: "0px 6px",
+  "&:hover": {
+      opacity: 0.80,
+  },
+
+  '@media (max-width: 300px)': {
+      padding: "0px 4px",
+  }
+});
 
 type ParamsProps = {
   params: { id: number | string };
@@ -56,6 +70,9 @@ export default function Course({ params }: ParamsProps) {
     getCourse();
   }, [courseId]);
 
+  const handleBackRouter = () => {
+      router.push('/home')
+  }
 
   const handleLikeCourse = async () => {
     if (liked === true) {
@@ -66,6 +83,7 @@ export default function Course({ params }: ParamsProps) {
       setLiked(true);
     }
   };
+
   const handleFavCourse = async () => {
     if (favorited === true) {
       await courseService.removeFav(courseId);
@@ -76,8 +94,6 @@ export default function Course({ params }: ParamsProps) {
     }
   };
   
-
-
   useEffect(()=>{
     if (course?.Episodes && course.Episodes.length > 0) {
       const firstEpisode = course.Episodes[0].id;
@@ -154,7 +170,12 @@ export default function Course({ params }: ParamsProps) {
           <HeaderAuth />
         </div>
         <Container className={styles.courseInfo}>
+          <div className="d-flex align-items-center">
+          <IconBtn onClick={handleBackRouter}>
+                        <ArrowBackIosNew fontSize="large" />
+                    </IconBtn>
           <p className={styles.courseTitle}>{course?.name}</p>
+          </div>
           <p className={styles.courseDescription}>{course?.synopsis}</p>
           <div className={styles.titleAndDescription} id={"titulo"}>
             <p className={styles.episodeDivision}>Episódios:&nbsp;&nbsp;{`${course?.Episodes?.length}`} </p>

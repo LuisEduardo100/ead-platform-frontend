@@ -1,7 +1,7 @@
 .title {
     font-size: 36px;
     font-weight: bold;
-    padding: 0px 0px 50px 0px;
+    padding: 0px 0px 4px 0px;
 }
 
 .renderFormBtn {
@@ -22,6 +22,11 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+}
+.divMinhaConta{
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
 }
 @media (max-width: 991px){
     .btnColumn{
