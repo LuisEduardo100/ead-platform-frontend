@@ -4,6 +4,7 @@ import styles from './styles.module.scss';
 import { stripeService } from '../../../../services/stripeService';
 import { Button } from 'reactstrap';
 import PageSpinner from '../../pageSpinner';
+import BtnSpinner from '../../btnSpinner';
 
 type styleProps = {
   bgColor: string
@@ -45,7 +46,7 @@ const PaymentButton = ({bgColor}: styleProps) => {
       disabled={loading}
       style={{backgroundColor: bgColor}}
     >
-      {loading ? <PageSpinner/> : 'Matricule-se'}
+      {loading ? <BtnSpinner/> : 'Matricule-se'}
     </Button>
   );
 };

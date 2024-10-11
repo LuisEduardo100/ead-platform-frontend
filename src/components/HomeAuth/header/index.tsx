@@ -70,7 +70,7 @@ const HeaderAuth = function () {
 
                     {!accessType &&
                         <Link href="/precos">
-                            <Button className={styles.btnPrecos}>PREÇOS</Button>
+                            <Button className={styles.btnPrecos}>MATRICULE-SE</Button>
                         </Link>}
                     <Form onSubmit={handleSearch}>
                         <Input
