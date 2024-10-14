@@ -7,34 +7,41 @@ import { Button } from 'reactstrap'
 import api from '../../../services/api'
 import quizService from '../../../services/QuizService'
 import { useRouter, useParams } from 'next/navigation'
+import { IconButton, styled } from '@mui/material'
+import { ArrowBackIosNew } from '@mui/icons-material'
 
 interface QuizzProps {
     quizz: QuizzType[]
 }
+
+const IconBtn = styled(IconButton)({
+    color: "#F8F9FA",
+    padding: "0px 6px",
+    "&:hover": {
+        opacity: 0.80,
+    },
+
+    '@media (max-width: 300px)': {
+        padding: "0px 4px",
+    }
+
+});
+
 type ParamsProps = {
     params: { id: number | string };
-  };
+};
 const getCourseId = async ({ params }: ParamsProps) => {
     const courseId = params.id;
-  
+
     if (typeof courseId !== "string") return;
-  
+
     const res = await courseService.getEpisodes(courseId);
     if (res.status === 200) {
-      return res.data;
+        return res.data;
     }
-  };
+};
 
 export default function QuizzList({ quizz }: QuizzProps) {
-
-    /*
-        Criar uma tabela no postgresql 
-        Pegar o userCurrent logado, correctAnswer no final do quizz e fazer um put nessa tabela
-        Fazer um get nessa tabela para conferir se o usuário atual logado bate com algum usuário de lá
-        Se sim, o usuário n vai conseguir fazer o quizz
-        Se não, o usuário consegue fazer o quizz
-        Ao fazer, os dados são atualizados na tabela
-    */
     const router = useRouter()
     const [userAnswers, setUserAnswers] = useState<number[]>([]);
     const [quizzCompleted, setQuizzCompleted] = useState(false);
@@ -71,8 +78,8 @@ export default function QuizzList({ quizz }: QuizzProps) {
 
     const handleSetQuizResult = async () => {
         try {
-            if(!courseId){return error}
-            const res = await quizService.setQuizResults({ courseId, score }); 
+            if (!courseId) { return error }
+            const res = await quizService.setQuizResults({ courseId, score });
             if (res.status === 200) {
                 setQuizzCompleted(true);
                 return
@@ -106,9 +113,12 @@ export default function QuizzList({ quizz }: QuizzProps) {
         }
     };
 
+    const routerPush = () => {
+        router.push('/home')
+    }
     const handleActualDate = () => {
         const dataInfo = date
-        
+
         // Horas que foi terminado o quiz
         const hora = new Date(dataInfo)
         const optionsHora: Intl.DateTimeFormatOptions = {
@@ -116,10 +126,10 @@ export default function QuizzList({ quizz }: QuizzProps) {
             minute: '2-digit'
         }
         const horaInfo = hora.toLocaleTimeString('pt-BR', optionsHora)
-        
+
         // Dia da semana e data
         const data = new Date(dataInfo)
-        const options: Intl.DateTimeFormatOptions = { 
+        const options: Intl.DateTimeFormatOptions = {
             year: 'numeric',
             month: '2-digit',
             day: '2-digit',
@@ -145,15 +155,22 @@ export default function QuizzList({ quizz }: QuizzProps) {
         return (
             <div className={styles.quizz}>
                 <div className={styles.question}>
+
                     <div className={styles.div_nivel}>
-                        <p className={styles.p_serie}>{quizz[activeQuestionIndex]?.serie}</p>
-                        {quizz[activeQuestionIndex]?.dificuldade === "Médio" ? (
-                            <p className={styles.p_dificuldade_media}>{quizz[activeQuestionIndex]?.dificuldade}</p>
-                        ) : quizz[activeQuestionIndex]?.dificuldade === "Difícil" ? (
-                            <p className={styles.p_dificuldade_dificil}>{quizz[activeQuestionIndex]?.dificuldade}</p>
-                        ) : (
-                            <p className={styles.p_dificuldade_facil}>{quizz[activeQuestionIndex]?.dificuldade}</p>
-                        )}
+                        <IconBtn onClick={routerPush}>
+                            <ArrowBackIosNew style={{ fontSize: '48px' }} />
+                        </IconBtn>
+                        <div className='d-flex gap-2'>
+                            <p className={styles.p_serie}>{quizz[activeQuestionIndex]?.serie}</p>
+
+                            {quizz[activeQuestionIndex]?.dificuldade === "Médio" ? (
+                                <p className={styles.p_dificuldade_media}>{quizz[activeQuestionIndex]?.dificuldade}</p>
+                            ) : quizz[activeQuestionIndex]?.dificuldade === "Difícil" ? (
+                                <p className={styles.p_dificuldade_dificil}>{quizz[activeQuestionIndex]?.dificuldade}</p>
+                            ) : (
+                                <p className={styles.p_dificuldade_facil}>{quizz[activeQuestionIndex]?.dificuldade}</p>
+                            )}
+                        </div>
                     </div>
                     <h2 className={styles.question_title}>{`${activeQuestionIndex + 1}/${quizz.length}`} - {quizz[activeQuestionIndex]?.question}</h2>
                     <div className={styles.div_image}>
