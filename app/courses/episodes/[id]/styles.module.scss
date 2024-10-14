@@ -1,42 +1,43 @@
-// VIDEO PLAYER 
+/* CONTAINER DO VÍDEO */
 .video_container {
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: flex-start;
   width: 100vw;
-  height: 100vh;
+  height: 100vh; /* Mantém altura completa */
   overflow: hidden;
-  
+
   @media (max-width: 768px) {
-    flex-direction: column; // Empilha o player e a lista de episódios em telas menores
+    flex-direction: column; /* Empilha o player e a lista em telas menores */
+    height: auto; /* Ajusta a altura ao conteúdo */
   }
-  
+
   @media (max-width: 480px) {
-    height: auto; // Ajusta a altura para o conteúdo
-  }
-  @media(max-width: 402px) {
-    height: 150%;
+    height: auto;
   }
 }
 
+/* PLAYER E DESCRIÇÃO */
 .video_description_container {
   width: 75vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  overflow-y: auto; /* Habilita scroll se necessário */
 
   @media (max-width: 768px) {
-    width: 100vw; // O player ocupa toda a largura disponível em telas menores
-    height: 60vh; // Ajusta a altura do player em telas menores
+    width: 100vw; /* O player ocupa toda a largura disponível */
+    height: 60vh; /* Ajusta a altura do player em telas menores */
   }
 
   @media (max-width: 480px) {
-    height: 50vh; // Altura menor para telas muito pequenas
+    height: auto; /* Ajusta altura para telas muito pequenas */
   }
 
   @media (max-width: 300px) {
-    height: 50vh; // Altura menor para dispositivos com largura até 300px
+    height: auto;
   }
 }
 
@@ -44,31 +45,29 @@
   background-color: black;
   position: relative;
   width: 100%;
-  max-width: 100%;
-  height: 100vh;
+  height: 70vh; /* Ajusta altura para dar espaço à descrição */
   padding: 0;
   margin: 0;
 
   @media (max-width: 768px) {
-    height: 100%; // Ajusta a altura em telas menores
+    height: 50vh; /* Ajusta altura para telas menores */
   }
-  @media (max-width: 402px) {
-    height: 150%; // Ajusta a altura em telas menores
+
+  @media (max-width: 480px) {
+    height: 40vh;
   }
+
   @media (max-width: 300px) {
-    height: 50vh; // Menor altura para dispositivos de até 300px
+    height: 35vh;
   }
 }
 
 .player {
-  
   width: 100%;
   height: 100%;
-  @media (max-width: 402px) {
-    height: 100vh; // Ajusta a altura em telas menores
-  }
 }
 
+/* SEÇÃO DE DESCRIÇÃO */
 .fileAndButtons {
   height: 30vh;
   background-color: rgba(0, 0, 0, 0.1);
@@ -88,15 +87,14 @@
 }
 
 .divSinopse {
-  
   margin-top: 12px;
   padding: 16px;
-  height: 30vh;
-  font-size: 14px; // Ajusta o tamanho da fonte para telas menores
+  height: auto;
+  font-size: 14px; /* Ajusta o tamanho da fonte */
 
   @media (max-width: 300px) {
-    font-size: 12px; // Menor tamanho de fonte em dispositivos pequenos
-    padding: 10px; // Menos espaçamento para dispositivos pequenos
+    font-size: 12px;
+    padding: 10px;
   }
 }
 
