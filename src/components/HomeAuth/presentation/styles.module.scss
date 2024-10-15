@@ -2,20 +2,24 @@
     padding-top: 40px;
 
     .title {
-        font-size: 48px;
-        font-weight: bolder;
-        line-height: 55px;
+        font-size: 90px;
+        font-family: "Bebas Neue", sans-serif;
+        font-weight: bold;
+        line-height: 90px;
         width: 750px;
-        color: black;
+        color: #D42428;
+        text-transform: uppercase;
+        text-shadow: 3.5px 6px #7D7D7D;
     }
 
     .description {
-        width: 650px;
+        width: 600px;
         font-size: 20px;
+        font-family: "Quicksand", sans-serif;
+        font-weight: bold;
         padding: 15px 0px;
-        color: black;
+        color: #4C4D4C;
 
-        font-weight: 500;
     }
 
     .linkStyle {
@@ -97,7 +101,7 @@
         }
 
         .title {
-            font-size: 40px;
+            font-size: 80px;
         }
 
         .button {
@@ -127,7 +131,7 @@
         }
 
         .title {
-            font-size: 32px;
+            font-size: 70px;
         }
     }
 }
@@ -135,8 +139,8 @@
 @media (max-width: 314px) {
     .containerStyle {
         .title {
-            font-size: 26px;
-            line-height: 40px;
+            font-size: 60px;
+            line-height: 55px;
         }
     }
 }

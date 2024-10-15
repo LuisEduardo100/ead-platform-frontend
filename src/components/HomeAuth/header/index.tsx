@@ -62,16 +62,23 @@ const HeaderAuth = function () {
                 </Link>
 
                 <div className='d-flex align-items-center gap-2 position-relative'>
-                    {!accessType &&
-                        <div className={styles.divAccess}>
-                            <p>Plano gratuito</p>
+                    {!accessType ?
+                        <div className="d-flex gap-2">
+                            <div className={styles.divAccess}>
+                                <p>PLANO GRATUITO</p>
+                            </div>
+                            <Link href="/precos">
+                                <Button className={styles.btnPrecos}>MATRICULE-SE</Button>
+                            </Link>
+                        </div>
+                        :
+                        <div>
+                            <div className={`${styles.divAccess} ${styles.premium}`}>
+                                <p>PLANO COMPLETO</p>
+                            </div>
                         </div>
                     }
 
-                    {!accessType &&
-                        <Link href="/precos">
-                            <Button className={styles.btnPrecos}>MATRICULE-SE</Button>
-                        </Link>}
                     <Form onSubmit={handleSearch}>
                         <Input
                             name="search"

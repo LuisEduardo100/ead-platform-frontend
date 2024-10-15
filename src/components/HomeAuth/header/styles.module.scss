@@ -39,9 +39,15 @@
 }
 .divAccess{
     background-color: green;
-    padding: 6.5px 12px;
+    padding: 9px 16px;
+    font-size: 14px;
+    text-align: center;
     border-radius: 6px;
     color: white;
+}
+.premium {
+    background-color: #D42428;
+    font-weight: 600;
 }
 .userProfile {
     margin-left: 9px;
@@ -65,7 +71,6 @@
     cursor: pointer;
 }
 .searchbar {
-    background-color: transparent;
     width: 250px;
     border-color: black;
 
