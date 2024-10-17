@@ -61,7 +61,7 @@ const HeaderAuth = function () {
                     </div>
                 </Link>
 
-                <div className='d-flex align-items-center gap-2 position-relative'>
+                <div className='d-flex align-items-center justify-content-center gap-2 position-relative flex-wrap-reverse'>
                     {!accessType ?
                         <div className="d-flex gap-2">
                             <div className={styles.divAccess}>
@@ -79,18 +79,20 @@ const HeaderAuth = function () {
                         </div>
                     }
 
-                    <Form onSubmit={handleSearch}>
-                        <Input
-                            name="search"
-                            id="search"
-                            placeholder="Buscar cursos"
-                            className={styles.searchbar}
-                            value={searchName}
-                            onChange={(event) => {
-                                setSearchName(event.currentTarget.value.toLowerCase())
-                            }} />
-                    </Form>
-                    <img src="/iconSearch.svg" alt="searchIcon" className={styles.searchIcon} onClick={handleSearchClick} />
+                    <div className="d-flex">
+                        <Form onSubmit={handleSearch}>
+                            <Input
+                                name="search"
+                                id="search"
+                                placeholder="Buscar cursos"
+                                className={styles.searchbar}
+                                value={searchName}
+                                onChange={(event) => {
+                                    setSearchName(event.currentTarget.value.toLowerCase())
+                                }} />
+                        </Form>
+                        <img src="/iconSearch.svg" alt="searchIcon" className={styles.searchIcon} onClick={handleSearchClick} />
+                    </div>
                     {profilePicture !== null || '' ? (
                         <img
                             src={`${process.env.NEXT_PUBLIC_BASEURL}/${profilePicture}`}

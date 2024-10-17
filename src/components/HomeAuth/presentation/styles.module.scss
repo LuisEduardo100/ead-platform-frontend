@@ -30,15 +30,26 @@
         display: block;
     }
 
+    .divButton {
+        width: 180px;
+
+        &:hover{
+            .pAssistirAgora {
+                animation: pulsate 0.6s ease-out; /* Animação infinita de pulse */
+                animation-iteration-count: infinite;
+            }
+        }
+      
+    }
     .button {
-        color: black;
-        padding: 6px 12px;
-        width: 285px;
-        margin-top: 20px;
-        font-size: 23px;
+        color: #D42428;
+        padding: 0px 36px;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 36px;
         display: flex;
-        align-items: center;
+        gap: 6px;
         font-weight: bold;
+        align-items: center;
         border: 2px solid black;
         .imgBtn {
             width: 20px;
@@ -48,21 +59,42 @@
         }
 
         &:hover {
-            font-size: 25px;
+            transform: scale(1.1);
+            transition: transform 0.3s ease-in-out;
             background-color: #deb66b;
-            color: black;
             border: none;
-            transition: 0.4s;
             font-weight: bolder;
 
-            .imgBtn {
-                filter: invert(0%) sepia(92%) saturate(31%) hue-rotate(76deg) brightness(91%) contrast(306%);
-            }
-
-            transition: 0.4;
         }
     }
+
+    .pAssistirAgora{
+        font-family: "Chewy", system-ui;
+        text-align: left;
+        margin-bottom: 5px;
+        font-size: 22px;
+        .redoAssistirAgora{
+            transform: scaleX(-1);
+            rotate: 55deg;
+        }
+
+    }
+   
 }
+
+
+@keyframes pulsate {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+     100% {
+        transform: scale(1);
+    }
+}
+
 
 @media (max-width: 991px) {
     .containerStyle {
@@ -104,10 +136,6 @@
             font-size: 80px;
         }
 
-        .button {
-            font-size: 18px;
-            width: 200px;
-        }
     }
 }
 
@@ -133,8 +161,18 @@
         .title {
             font-size: 70px;
         }
+
     }
 }
+@media (max-width: 375px) {
+    .containerStyle {
+        .title {
+            font-size: 60px;
+            line-height: 55px;
+        }
+    }
+}
+
 
 @media (max-width: 314px) {
     .containerStyle {

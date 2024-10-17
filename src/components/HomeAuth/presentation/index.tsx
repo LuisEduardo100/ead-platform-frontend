@@ -6,6 +6,7 @@ import PageSpinner from '../../common/pageSpinner';
 import HeaderAuth from '../header';
 import { Button, Container } from 'reactstrap';
 import Link from 'next/link';
+import { PlayArrow, Reply } from '@mui/icons-material';
 
 export default function HomeAuthPresentation() {
     const { data, error } = useSWR('/featured', courseService.getFeaturedCourses)
@@ -20,7 +21,7 @@ export default function HomeAuthPresentation() {
                         backgroundImage: `linear-gradient(to bottom, #dadada04, #E8E8E8), url(${process.env.NEXT_PUBLIC_BASEURL}/${course.thumbnailUrl})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
-                        height: "650px",
+                        height: "690px",
                     }}
                     >
                         <HeaderAuth />
@@ -28,12 +29,14 @@ export default function HomeAuthPresentation() {
                             <p className={styles.title}>{course.name}</p>
                             <p className={styles.description}>{course.synopsis}</p>
                             <Link legacyBehavior href={`/courses/${course.id}`}>
-                                <a className={styles.linkStyle}>
+                                <div className={styles.divButton}>
+                                    <p className={styles.pAssistirAgora}>Assita agora  <Reply className={styles.redoAssistirAgora} /></p>
                                     <Button outline color="light" className={styles.button}>
-                                        ASSISTA AGORA
-                                        <img src="/buttonPlay.svg" alt="playBtnImg" className={styles.imgBtn}></img>
+                                        PLAY
+                                        <PlayArrow style={{ fontSize: '42px' }} />
                                     </Button>
-                                </a>
+                                </div>
+
                             </Link>
                         </Container>
                     </div>
