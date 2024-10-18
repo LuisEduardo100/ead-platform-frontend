@@ -1,14 +1,14 @@
 .searchCard {
     width: 300px;
-    border: 1px solid #DEB66B;
+    border: 2px solid #4C4D4C;;
     transition: 0.4s;
     cursor: pointer;
     margin-left: 12px;
     overflow: hidden;
     text-overflow: clip;
-  
+
     &:hover {
-      border-color: #6b4c12;
+      transform: scale(1.1);
     }
   }
   .linkStyle{
@@ -16,11 +16,18 @@
   }
   .searchCardDescription{
     text-decoration: none;
-    color: black;
-
+    text-align: justify;
+    color: #4C4D4C;
+    font-size: 0.9rem;
+    height: 150px;
+    overflow-y: scroll;
     width: 260px;
     margin: 0 auto;
     padding: 0px 10px 20px 10px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+
+    scrollbar-width: none;
   }
   .searchCardImg {
     width: 100%;
@@ -30,6 +37,9 @@
   .searchCardTitle {
     color: black;
     font-weight: bold;
+    font-family: 'Bebas neue', sans-serif;
+    letter-spacing: 2px;
+    font-size: 1.1rem;
     padding: 8px 16px;
     text-transform: uppercase;
   }

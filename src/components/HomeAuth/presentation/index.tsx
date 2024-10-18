@@ -18,7 +18,7 @@ export default function HomeAuthPresentation() {
             data.data.map((course: CourseType) => (
                 <>
                     <div style={{
-                        backgroundImage: `linear-gradient(to bottom, #dadada04, #E8E8E8), url(${process.env.NEXT_PUBLIC_BASEURL}/${course.thumbnailUrl})`,
+                        backgroundImage: `linear-gradient(to bottom, #dadada04, #E8E8E8), url(${process.env.NEXT_PUBLIC_BASEURL}/${course.featuredImage})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         height: "690px",

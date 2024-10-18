@@ -20,11 +20,11 @@ const IconBtn = styled(IconButton)({
   color: "#000",
   padding: "0px 6px",
   "&:hover": {
-      opacity: 0.80,
+    opacity: 0.80,
   },
 
   '@media (max-width: 300px)': {
-      padding: "0px 4px",
+    padding: "0px 4px",
   }
 });
 
@@ -71,7 +71,7 @@ export default function Course({ params }: ParamsProps) {
   }, [courseId]);
 
   const handleBackRouter = () => {
-      router.push('/home')
+    router.push('/home')
   }
 
   const handleLikeCourse = async () => {
@@ -93,8 +93,8 @@ export default function Course({ params }: ParamsProps) {
       setFavorited(true);
     }
   };
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     if (course?.Episodes && course.Episodes.length > 0) {
       const firstEpisode = course.Episodes[0].id;
       const episodeOrder = course.Episodes[0].order
@@ -102,14 +102,14 @@ export default function Course({ params }: ParamsProps) {
       setFirstEpisodeId(firstEpisode)
     }
   }, [course])
-  
-  const handleQuizzPage = () =>{
+
+  const handleQuizzPage = () => {
     router.push(`/quizz/${courseId}`)
   }
   const handleFirstEpisode = () => {
-      router.push(`/courses/episodes/${firstEpisodeOrder! - 1}?courseid=${course?.id}&episodeid=${firstEpisodeId}`);
+    router.push(`/courses/episodes/${firstEpisodeOrder! - 1}?courseid=${course?.id}&episodeid=${firstEpisodeId}`);
   };
-  
+
   const getQuizz = async () => {
     try {
       const response = await quizService.getQuizz(courseId);
@@ -122,7 +122,7 @@ export default function Course({ params }: ParamsProps) {
       if (response.status === 200) {
         setQuizz(response.data);
         return
-      } 
+      }
     } catch (error) {
       console.error("Erro ao chamar getQuizz:", error);
     }
@@ -141,13 +141,13 @@ export default function Course({ params }: ParamsProps) {
       setLoading(false);
     }
 
-    if (access === "false"){
+    if (access === "false") {
       setToastIsOpen(true)
       setToastColor('bg-danger')
       setTimeout(() => {
         setToastIsOpen(false)
       }, 2500)
-      
+
       setToastMessage("Acesso negado")
     }
   }, []);
@@ -171,15 +171,25 @@ export default function Course({ params }: ParamsProps) {
         </div>
         <Container className={styles.courseInfo}>
           <div className="d-flex align-items-center">
-          <IconBtn onClick={handleBackRouter}>
-                        <ArrowBackIosNew fontSize="large" />
-                    </IconBtn>
-          <p className={styles.courseTitle}>{course?.name}</p>
+            <IconBtn onClick={handleBackRouter}>
+              <ArrowBackIosNew style={{fontSize: '32px', marginRight: '5px'}}/>
+            </IconBtn>
+            <p className={styles.courseTitle}>{course?.name}</p>
+            <div className={styles.interactions}>
+              {liked === true ? (
+                <img src="/course/iconLiked.svg" alt="likedImage" className={styles.interactionImagesTrue} onClick={() => handleLikeCourse()} />
+              ) : (
+                <img src="/course/iconLike.svg" alt="likeImage" className={styles.interactionImages} onClick={() => handleLikeCourse()} />
+              )}
+              {favorited === true ? (
+                <img onClick={() => handleFavCourse()} src="/course/iconFavorited.svg" alt="favorited" className={styles.interactionImagesTrue} />
+              ) : (
+                <img onClick={() => handleFavCourse()} src="/course/iconAddFav.svg" alt="addFav" className={styles.interactionImages} />
+              )}
+            </div>
           </div>
           <p className={styles.courseDescription}>{course?.synopsis}</p>
-          <div className={styles.titleAndDescription} id={"titulo"}>
-            <p className={styles.episodeDivision}>Episódios:&nbsp;&nbsp;{`${course?.Episodes?.length}`} </p>
-          </div>
+            <p className={styles.episodesLength}>Episódios:&nbsp;&nbsp;{`${course?.Episodes?.length}`} </p>
           <div className={styles.divBtnImg}>
             <Button
               outline
@@ -195,21 +205,9 @@ export default function Course({ params }: ParamsProps) {
               className={styles.courseBtnExer}
               onClick={handleQuizzPage}
             >
-              <FontAwesomeIcon icon={faBook} style={{marginRight: '10px'}}/>
-              EXERÍCIOS 
+              <FontAwesomeIcon icon={faBook} style={{ marginRight: '10px' }} />
+              EXERCÍCIOS
             </Button>
-            <div className={styles.interactions}>
-              {liked === true ? (
-                <img src="/course/iconLiked.svg" alt="likedImage" className={styles.interactionImagesTrue} onClick={() => handleLikeCourse()} />
-              ) : (
-                <img src="/course/iconLike.svg" alt="likeImage" className={styles.interactionImages} onClick={() => handleLikeCourse()} />
-              )}
-              {favorited === true ? (
-                <img onClick={() => handleFavCourse()} src="/course/iconFavorited.svg" alt="favorited" className={styles.interactionImagesTrue} />
-              ) : (
-                <img onClick={() => handleFavCourse()} src="/course/iconAddFav.svg" alt="addFav" className={styles.interactionImages} />
-              )}
-            </div>
           </div>
         </Container>
         <Container className={styles.episodeInfo}>

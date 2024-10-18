@@ -14,6 +14,7 @@ export type CourseType = {
     name: string;
     featuredName: string;
     thumbnailUrl: string;
+    featuredImage: string;
     synopsis: string;
     Episodes?: EpisodeType[];
     watchStatus: WatchStatus[]

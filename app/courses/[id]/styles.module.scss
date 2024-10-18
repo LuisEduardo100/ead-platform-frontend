@@ -1,18 +1,18 @@
 .courseInfo{
     display: flex;
     flex-direction: column;
-    padding-top: 10px;
+    margin-top: -50px;
 
 }
 .interactionImages {
     filter: brightness(0) saturate(100%) invert(0%) sepia(2%) saturate(7436%) hue-rotate(124deg) brightness(103%) contrast(99%);
-    width: 25px;
+    width: 35px;
     &:hover{
         opacity: 0.75;
     }
 }
 .interactionImagesTrue{
-    width: 25px;
+    width: 35px;
     &:hover{
         opacity: 0.75;
     }
@@ -20,10 +20,8 @@
 .interactions {
     display: flex;
     gap: 10px;
-    margin: 20px 0px 0px 10px;
     cursor: pointer;
     padding: 11px 20px;
-    border: 1px solid black;
     border-radius: 5px;
 }
 .divBtnImg{
@@ -38,6 +36,8 @@
     width: 190px;
     margin-top: 20px;
     margin-left: 10px;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2.5px;
     font-size: 24px;
     font-weight: bold;
     color: #deb66b;
@@ -49,7 +49,6 @@
     }
 
     &:hover {
-        font-size: 26px;
         background-color: #F0C36E;
         color: black;
         border: none;
@@ -63,13 +62,24 @@
         transition: 0.4;
     }
 }
-
+.episodesLength {
+    font-family: 'Bebas neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2.0px;
+    font-weight: bold;
+    margin-top: 10px;
+}
 .courseTitle{
     font-size: 42px;
     font-weight: bold;
+    font-family: "Bebas Neue", sans-serif;
+    letter-spacing: 2.0px;
 }
 .courseDescription{
     width: 680px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    color: #4C4D4C
 }
 
 .episodeInfo{
@@ -82,14 +92,10 @@
     background-color: #BBBBBB;
     height: 100%;
     border-radius: 30px;
+    text-align: center;
 
 }
-.titleAndDescription{
-    display: flex;
-    align-items: center;
-    gap: 10px;
 
-}
 
 @media (max-width: 767px){
     .courseInfo{
