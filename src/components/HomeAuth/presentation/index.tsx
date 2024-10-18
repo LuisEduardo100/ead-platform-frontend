@@ -26,7 +26,7 @@ export default function HomeAuthPresentation() {
                     >
                         <HeaderAuth />
                         <Container className={styles.containerStyle}>
-                            <p className={styles.title}>{course.name}</p>
+                            <p className={styles.title}>{course.featuredName}</p>
                             <p className={styles.description}>{course.synopsis}</p>
                             <Link legacyBehavior href={`/courses/${course.id}`}>
                                 <div className={styles.divButton}>

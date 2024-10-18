@@ -12,6 +12,7 @@ export type EpisodeType = {
 export type CourseType = {
     id: number;
     name: string;
+    featuredName: string;
     thumbnailUrl: string;
     synopsis: string;
     Episodes?: EpisodeType[];
@@ -38,6 +39,7 @@ export type WatchStatus = {
 export type CourseTypeWithNoEps = {
     id: number;
     name: string;
+    featuredName: string;
     thumbnailUrl: string;
     synopsis: string;
 }
@@ -58,8 +60,7 @@ const courseService = {
     },
     getFeaturedCourses: async () => {
         const token = sessionStorage.getItem("vocenotadez-token")
-        const res = await api // talvez tenha que ter interrogação no final 'featured?'
-            .get('/courses/featured', {
+        const res = await api.get('/courses/featured', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
