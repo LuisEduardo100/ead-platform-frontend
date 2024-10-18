@@ -55,7 +55,7 @@ export default function SearchComponents({ searchParams }: { searchParams: { nam
             <main>
                 <section className={styles.mainContent}>
                     {searchResult.length >= 1 ? (
-                        <Container className="d-flex flex-wrap justify-content-center gap-5 py-4">
+                        <Container className="d-flex flex-wrap justify-content-center gap-1 py-4">
                             {searchResult?.map((course) => (
                                 <SearchCard key={course.id} course={course} />
                             ))}

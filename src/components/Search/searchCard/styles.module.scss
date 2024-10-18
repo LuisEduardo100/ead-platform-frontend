@@ -26,7 +26,6 @@
     padding: 0px 10px 20px 10px;
     font-family: 'Quicksand', sans-serif;
     font-weight: bold;
-
     scrollbar-width: none;
   }
   .searchCardImg {
@@ -41,7 +40,11 @@
     letter-spacing: 2px;
     font-size: 1.1rem;
     padding: 8px 16px;
+    max-height: 40px;
     text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   
   @media (max-width: 350px){
