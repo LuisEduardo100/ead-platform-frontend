@@ -88,7 +88,7 @@ export default function UserForm() {
     return (<>
         <Form className={styles.forms} onSubmit={(event) => handleUserUpdate(event)}>
             <div className={styles.formName}>
-                {profilePicture !== null ?
+                {profilePicture ?
                     (
                         <img
                             src={`${process.env.NEXT_PUBLIC_BASEURL}/${profilePicture}`}

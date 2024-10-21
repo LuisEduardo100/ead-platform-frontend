@@ -67,11 +67,11 @@ const HeaderAuth = function () {
 
                 <div className='d-flex align-items-center justify-content-center gap-2 position-relative flex-wrap-reverse'>
                     {!accessType ?
-                        <div className="d-flex gap-2">
+                        <div className="d-flex align-items-center gap-2">
                             <div className={styles.divAccess}>
                                 <p>PLANO GRATUITO</p>
                             </div>
-                            <Link href="/precos">
+                            <Link href="/precos" style={{marginRight: '5px'}}>
                                 <Button className={styles.btnPrecos}>MATRICULE-SE</Button>
                             </Link>
                         </div>
@@ -91,7 +91,8 @@ const HeaderAuth = function () {
                                 transform: expanded ? 'scaleX(1)' : 'scaleX(0)',  // Controla a escala
                                 transition: 'width 0.3s ease-in-out, transform 0.3s ease-in-out',  // Suaviza a transição
                                 transformOrigin: 'right',  // O ponto de origem da escala é à esquerda
-                                overflow: 'hidden',  // Evita que o conteúdo transborde
+                                overflow: 'hidden',  // Evita que o conteúdo transborde 
+                                userSelect: 'none'
                             }}
                             placeholder={expanded ? 'Pesquise um curso' : ''}
                             value={searchName}
@@ -106,7 +107,7 @@ const HeaderAuth = function () {
                             />
                         )}
                     </Form>
-                    {profilePicture !== null || '' ? (
+                    {profilePicture ? (
                         <img
                             src={`${process.env.NEXT_PUBLIC_BASEURL}/${profilePicture}`}
                             alt="user picture"
