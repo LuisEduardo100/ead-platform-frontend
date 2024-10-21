@@ -21,7 +21,7 @@ export default function HomeAuthPresentation() {
                         backgroundImage: `linear-gradient(to bottom, #dadada04, #E8E8E8), url(${process.env.NEXT_PUBLIC_BASEURL}/${course.featuredImage})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
-                        height: "690px",
+                        height: "700px",
                     }}
                     >
                         <HeaderAuth />

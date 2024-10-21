@@ -13,13 +13,6 @@
     width: 160px;
 }
 
-.searchIcon {
-    width: 22px;
-    margin-left: 9px;
-    margin-right: 10px;
-    cursor: pointer;
-    filter: brightness(0) saturate(100%) invert(0%) sepia(97%) saturate(0%) hue-rotate(154deg) brightness(94%) contrast(102%);
-}
 .btnPrecos{
     width: 130px;
     height: 36.5px;
@@ -40,6 +33,7 @@
 .divAccess{
     background-color: green;
     padding: 9px 16px;
+    margin-right: 15px;
     font-size: 14px;
     text-align: center;
     border-radius: 6px;
@@ -69,14 +63,6 @@
     width: 45px;
     border-radius: 50%;
     cursor: pointer;
-}
-.searchbar {
-    width: 250px;
-    border-color: black;
-
-    &::placeholder {
-        color: black;
-    }
 }
 
 .nav {
@@ -125,6 +111,25 @@
     left: 0;
     bottom: 0;
     background-color: transparent;
+}
+
+.formSearch{
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    .searchbar {
+        border-radius: 20px;
+        margin-left: 50px;
+    }
+    .searchIcon {   
+        font-size: 2.2rem;
+        position: absolute;
+        right: 2%;
+        &:hover {
+            cursor: pointer;
+        }
+    }
 }
 
 @media (min-width: 1610px) and (max-width: 2000px) {

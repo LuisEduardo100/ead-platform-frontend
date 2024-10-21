@@ -6,6 +6,7 @@ import { Button, Container, Form, Input } from 'reactstrap'
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import profileService from "../../../services/profileService";
+import { Close, Search, SearchOutlined } from "@mui/icons-material";
 
 const HeaderAuth = function () {
     // Modal.setAppElement('#next')
@@ -14,7 +15,7 @@ const HeaderAuth = function () {
     const [modalOpen, setModalOpen] = useState(false);
     const [accessType, setAccessType] = useState(false);
     const [profilePicture, setProfilePicture] = useState("")
-
+    const [expanded, setExpanded] = useState(false)
     const router = useRouter();
 
     const handleOpenModal = () => {
@@ -37,11 +38,14 @@ const HeaderAuth = function () {
         setSearchName("");
     };
 
+    const handleOpenSearch = () => {
+        setExpanded(!expanded)
+    };
+
     const handleSearchClick = () => {
         router.push(`/search?name=${searchName}`);
         setSearchName("");
-    };
-
+    }
     useEffect(() => {
         profileService.fetchCurrent().then((user) => {
             const firstNameInitial = user.firstName.slice(0, 1);
@@ -78,21 +82,30 @@ const HeaderAuth = function () {
                             </div>
                         </div>
                     }
-
-                    <div className="d-flex">
-                        <Form onSubmit={handleSearch}>
-                            <Input
-                                name="search"
-                                id="search"
-                                placeholder="Buscar cursos"
-                                className={styles.searchbar}
-                                value={searchName}
-                                onChange={(event) => {
-                                    setSearchName(event.currentTarget.value.toLowerCase())
-                                }} />
-                        </Form>
-                        <img src="/iconSearch.svg" alt="searchIcon" className={styles.searchIcon} onClick={handleSearchClick} />
-                    </div>
+                    <Form className={styles.formSearch} onSubmit={handleSearch}>
+                        <Input
+                            name="search"
+                            id="search"
+                            style={{
+                                width: expanded ? '300px' : '0px',  // Expande a largura suavemente
+                                transform: expanded ? 'scaleX(1)' : 'scaleX(0)',  // Controla a escala
+                                transition: 'width 0.3s ease-in-out, transform 0.3s ease-in-out',  // Suaviza a transição
+                                transformOrigin: 'right',  // O ponto de origem da escala é à esquerda
+                                overflow: 'hidden',  // Evita que o conteúdo transborde
+                            }}
+                            placeholder={expanded ? 'Pesquise um curso' : ''}
+                            value={searchName}
+                            onChange={(event) => {
+                                setSearchName(event.currentTarget.value.toLowerCase())
+                            }} />
+                        {expanded ? (
+                            <Close className={styles.searchIcon} onClick={handleOpenSearch} onDoubleClick={handleSearchClick} />
+                        ) : (
+                            <SearchOutlined 
+                                className={styles.searchIcon} onClick={handleOpenSearch} onDoubleClick={handleSearchClick}
+                            />
+                        )}
+                    </Form>
                     {profilePicture !== null || '' ? (
                         <img
                             src={`${process.env.NEXT_PUBLIC_BASEURL}/${profilePicture}`}
