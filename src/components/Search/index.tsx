@@ -12,7 +12,7 @@ import profileService from "../../services/profileService";
 import HeaderNoAuth from "../HomeNoAuth/header";
 import HeaderGeneric from "../common/headerGeneric";
 
-export default function SearchComponents({ searchParams }: { searchParams: { name: string } }) {
+export default function SearchComponents({ searchParams, selectedYear, onYearChange }: { searchParams: { name: string }, selectedYear:  string, onYearChange: (year: string) => void }) {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
     const [searchResult, setSearchResult] = useState<CourseType[]>([]);
@@ -50,12 +50,12 @@ export default function SearchComponents({ searchParams }: { searchParams: { nam
     return (
         <>
             <div className={styles.header}>
-                {searchUser != null ? (<HeaderAuth />) : (<HeaderGeneric logoUrl="/" btnUrl="/" btnContent="Voltar"/>)}
+                {searchUser != null ? (<HeaderAuth selectedYear={selectedYear} onYearChange={onYearChange}/>) : (<HeaderGeneric logoUrl="/" btnUrl="/" btnContent="Voltar"/>)}
             </div>
             <main>
                 <section className={styles.mainContent}>
                     {searchResult.length >= 1 ? (
-                        <Container className="d-flex flex-wrap justify-content-center gap-1 py-4">
+                        <Container className="d-flex flex-wrap justify-content-center gap-2 py-4">
                             {searchResult?.map((course) => (
                                 <SearchCard key={course.id} course={course} />
                             ))}

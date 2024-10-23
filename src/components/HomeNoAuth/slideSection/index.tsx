@@ -12,7 +12,7 @@ export interface props {
 export default function SlideSection ({ newestCourses, selectedYear }: props){
     return (
       <>
-        <Container fluid className="d-flex flex-column align-items-center pb-3">
+        <Container>
           <SlideComponent course={newestCourses} serie={selectedYear}/>
         </Container>
       </>

@@ -16,7 +16,7 @@ const SlideComponent = function ({ course, serie }: props) {
 
     let slideCount = 0;
 
-    if (course && course.length > 4) {
+    if (filteredCourses && filteredCourses.length > 4) {
         slideCount = 4;
     } else if (course) {
         slideCount = filteredCourses.length;
@@ -24,28 +24,27 @@ const SlideComponent = function ({ course, serie }: props) {
 
     return (
         <>
-            <div className="d-flex flex-column align-items-center py-3">
+            <div className="d-flex flex-column py-2">
                 <Splide
                     options={{
-                        type: "loop",
                         perPage: slideCount,
                         perMove: 1,
                         width: slideCount * 325,
                         pagination: false,
-                        arrows: course?.length > 4 ? true : false,
-                        drag: course?.length > 4 ? true : false,
+                        arrows: filteredCourses?.length > 4 ? true : false,
+                        drag: filteredCourses?.length > 4 ? true : false,
                         breakpoints: {
                             1200: {
                                 perPage: slideCount >= 2 ? 2 : 1,
                                 width: slideCount >= 2 ? 640 : 300,
-                                arrows: course?.length > 2 ? true : false,
-                                drag: course?.length > 2 ? true : false,
+                                arrows: filteredCourses?.length > 2 ? true : false,
+                                drag: filteredCourses?.length > 2 ? true : false,
                             },
                             640: {
                                 perPage: 1,
                                 width: 320,
-                                arrows: course?.length > 1 ? true : false,
-                                drag: course?.length > 1 ? true : false,
+                                arrows: filteredCourses?.length > 1 ? true : false,
+                                drag: filteredCourses?.length > 1 ? true : false,
                             },
                             300: {
                                 width: 300,

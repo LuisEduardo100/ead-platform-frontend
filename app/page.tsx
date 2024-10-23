@@ -21,7 +21,7 @@ const HomeNoAuth = () => {
           <HeaderNoAuth />
           <PresentationSection />
         </div>
-        <div className={styles.divPresentation} data-aos="fade-right" data-aos-duration="1000" data-aos-easing="ease-in-sine">
+        <div className={styles.divPresentation} data-aos="fade-right" data-aos-duration="800" data-aos-easing="ease-in-sine">
           <HomeSlide />
         </div>
         <div className={styles.footer1}>

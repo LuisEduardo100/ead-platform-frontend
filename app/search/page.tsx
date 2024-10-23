@@ -7,12 +7,12 @@ export const generateMetadata = async ({ searchParams }: { searchParams: { name:
   };
 };
 
-export default async function Search({ searchParams }: { searchParams: { name: string } }) {
+export default async function Search({ searchParams, selectedYear, onYearChange}: { searchParams: { name: string }, selectedYear: string, onYearChange: (year:string) => void }) {
 
   return (
     <>
       <main>
-        <SearchComponents searchParams={searchParams} />
+        <SearchComponents selectedYear={selectedYear} onYearChange={onYearChange} searchParams={searchParams} />
       </main>
     </>
   );

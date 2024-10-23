@@ -7,13 +7,16 @@ import HeaderAuth from '../header';
 import { Button, Container } from 'reactstrap';
 import Link from 'next/link';
 import { PlayArrow, Reply } from '@mui/icons-material';
+import Aos from 'aos';
+import { useEffect } from 'react';
 
 
 export default function HomeAuthPresentation({ selectedYear, onYearChange }: { selectedYear: string, onYearChange: (year: string) => void }) {
     const { data, error } = useSWR('/featured', courseService.getFeaturedCourses)
+    console.log("DATA TO BE FILTERED: ", data?.data)
     const filteredFeaturedCourses = data?.data?.filter((course: CourseType) => course.serie === selectedYear);
-    console.log("FEATURED FILTERED", filteredFeaturedCourses)
-    console.log("Data homeAuth", data)
+    console.log("DATA FILTERED: ", filteredFeaturedCourses)
+
     if (error) return error
     if (!data) return <PageSpinner />
     return <>
@@ -24,10 +27,10 @@ export default function HomeAuthPresentation({ selectedYear, onYearChange }: { s
                         backgroundImage: `linear-gradient(to bottom, #dadada04, #E8E8E8), url(${process.env.NEXT_PUBLIC_BASEURL}/${course.featuredImage})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
-                        height: "800px",
+                        height: "750px",
                     }}
                     >
-                        <HeaderAuth selectedYear={selectedYear} onYearChange={onYearChange}/>
+                        <HeaderAuth selectedYear={selectedYear} onYearChange={onYearChange} />
                         <Container className={styles.containerStyle}>
                             <p className={styles.title}>{course.featuredName}</p>
                             <p className={styles.description}>{course.synopsis}</p>

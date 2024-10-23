@@ -2,16 +2,16 @@ import useSWR from "swr"
 import categoriesService from "../../../../services/categoriesService"
 import PageSpinner from "../../../common/pageSpinner"
 import styles from '../styles.module.scss'
-import SlideSection from "../../../HomeNoAuth/slideSection"
 import SlideComponent from "../../../common/SlideComponent"
+import { Container } from "reactstrap"
 interface props {
     categoryId: number
     categoryName: string
     selectedYear: string
 }
 
-export default function ListCategoriesSlide ({categoryId, categoryName, selectedYear}: props){
-    const { data, error } = useSWR(`/categories/${categoryId}`, ()=>
+export default function ListCategoriesSlide({ categoryId, categoryName, selectedYear }: props) {
+    const { data, error } = useSWR(`/categories/${categoryId}`, () =>
         categoriesService.getCourses(categoryId)
     )
 
@@ -20,6 +20,8 @@ export default function ListCategoriesSlide ({categoryId, categoryName, selected
 
     return (<>
         <p className={styles.pStyle}>{categoryName}</p>
-        <SlideComponent course={data.data.Courses} serie={selectedYear}/>
+        <Container>
+            <SlideComponent course={data.data.Courses} serie={selectedYear} />
+        </Container>
     </>)
 }
