@@ -8,16 +8,18 @@ import { CourseType } from '../../services/courseService'
 import SlideCard from './slideCard'
 export interface props {
     course: CourseType[]
+    serie: string
 }
 
-const SlideComponent = function ({ course }: props) {
+const SlideComponent = function ({ course, serie }: props) {
+    const filteredCourses = course.filter(course => course.serie === serie);
 
     let slideCount = 0;
 
     if (course && course.length > 4) {
         slideCount = 4;
     } else if (course) {
-        slideCount = course.length;
+        slideCount = filteredCourses.length;
     }
 
     return (
@@ -50,11 +52,13 @@ const SlideComponent = function ({ course }: props) {
                             }
                         },
                     }}>
-                    {course.map((course) => (
-                        <SplideSlide key={course.id}>
-                            <SlideCard course={course} />
-                        </SplideSlide>
-                    ))}
+                    {filteredCourses
+                        .map(course => (                          
+                            <SplideSlide key={course.id}>
+                                <SlideCard course={course} />
+                            </SplideSlide>
+                        ))
+                    }
                 </Splide>
             </div>
         </>

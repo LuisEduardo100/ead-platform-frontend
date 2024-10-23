@@ -15,7 +15,7 @@ const fetcher = async () => {
     return courses;
 };
 
-export default function OnGoingCategory() {
+export default function OnGoingCategory({ selectedYear }: { selectedYear: string }) {
     const { data, error } = useSWR('ongoingCourses', fetcher);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
@@ -29,18 +29,13 @@ export default function OnGoingCategory() {
     if (error) return error.message;
 
     return (
+        data!.length > 0 && (
         <Container>
             <p className={styles.pStyle}>CURSOS EM ANDAMENTO</p>
-            {data!.length > 0 ? (
                 <div>
-                    <SlideComponent course={data!} />
+                    <SlideComponent course={data!} serie={selectedYear} />
                 </div>
-            ) : (
-                <div className="text-center py-3">
-                    <p className={styles.p}>Comece seu aprendizado! &#128513;&#128581;&#8205;&#9794;&#65039;</p>
-                </div>
-            )}
-
         </Container>
+        )
     );
 }

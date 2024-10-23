@@ -13,11 +13,12 @@ export type CourseType = {
     id: number;
     name: string;
     featuredName: string;
+    synopsis: string;
+    serie: string;
     thumbnailUrl: string;
     featuredImage: string;
-    synopsis: string;
     Episodes?: EpisodeType[];
-    watchStatus: WatchStatus[]
+    watchStatus?: WatchStatus[]
 }
 export type CourseQuizzType = {
     id: number
@@ -40,6 +41,7 @@ export type WatchStatus = {
 export type CourseTypeWithNoEps = {
     id: number;
     name: string;
+    serie: string;
     featuredName: string;
     thumbnailUrl: string;
     synopsis: string;

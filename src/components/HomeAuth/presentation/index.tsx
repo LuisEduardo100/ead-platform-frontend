@@ -8,23 +8,26 @@ import { Button, Container } from 'reactstrap';
 import Link from 'next/link';
 import { PlayArrow, Reply } from '@mui/icons-material';
 
-export default function HomeAuthPresentation() {
-    const { data, error } = useSWR('/featured', courseService.getFeaturedCourses)
 
+export default function HomeAuthPresentation({ selectedYear, onYearChange }: { selectedYear: string, onYearChange: (year: string) => void }) {
+    const { data, error } = useSWR('/featured', courseService.getFeaturedCourses)
+    const filteredFeaturedCourses = data?.data?.filter((course: CourseType) => course.serie === selectedYear);
+    console.log("FEATURED FILTERED", filteredFeaturedCourses)
+    console.log("Data homeAuth", data)
     if (error) return error
     if (!data) return <PageSpinner />
     return <>
         {
-            data.data.map((course: CourseType) => (
+            filteredFeaturedCourses.map((course: CourseType) => (
                 <>
                     <div style={{
                         backgroundImage: `linear-gradient(to bottom, #dadada04, #E8E8E8), url(${process.env.NEXT_PUBLIC_BASEURL}/${course.featuredImage})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
-                        height: "700px",
+                        height: "800px",
                     }}
                     >
-                        <HeaderAuth />
+                        <HeaderAuth selectedYear={selectedYear} onYearChange={onYearChange}/>
                         <Container className={styles.containerStyle}>
                             <p className={styles.title}>{course.featuredName}</p>
                             <p className={styles.description}>{course.synopsis}</p>
@@ -36,7 +39,6 @@ export default function HomeAuthPresentation() {
                                         <PlayArrow style={{ fontSize: '42px' }} />
                                     </Button>
                                 </div>
-
                             </Link>
                         </Container>
                     </div>

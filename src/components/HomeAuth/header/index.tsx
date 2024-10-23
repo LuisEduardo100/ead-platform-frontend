@@ -7,8 +7,9 @@ import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import profileService from "../../../services/profileService";
 import { Close, Search, SearchOutlined } from "@mui/icons-material";
+import YearSelect from "../selectBox";
 
-const HeaderAuth = function () {
+const HeaderAuth = function ({ selectedYear, onYearChange }: { selectedYear: string, onYearChange: (year: string) => void }) {
     // Modal.setAppElement('#next')
     const [searchName, setSearchName] = useState("")
     const [initials, setInitials] = useState("")
@@ -64,14 +65,13 @@ const HeaderAuth = function () {
                         <img src="/logo-vocenotadez.png" alt="logoFooter" className={styles.imgLogo} />
                     </div>
                 </Link>
-
                 <div className='d-flex align-items-center justify-content-center gap-2 position-relative flex-wrap-reverse'>
                     {!accessType ?
                         <div className="d-flex align-items-center gap-2">
                             <div className={styles.divAccess}>
                                 <p>PLANO GRATUITO</p>
                             </div>
-                            <Link href="/precos" style={{marginRight: '5px'}}>
+                            <Link href="/precos" style={{ marginRight: '4px' }}>
                                 <Button className={styles.btnPrecos}>MATRICULE-SE</Button>
                             </Link>
                         </div>
@@ -81,7 +81,10 @@ const HeaderAuth = function () {
                                 <p>PLANO COMPLETO</p>
                             </div>
                         </div>
+
                     }
+                     <YearSelect selectedYear={selectedYear} onYearChange={onYearChange} />
+
                     <Form className={styles.formSearch} onSubmit={handleSearch}>
                         <Input
                             name="search"
@@ -102,7 +105,7 @@ const HeaderAuth = function () {
                         {expanded ? (
                             <Close className={styles.searchIcon} onClick={handleOpenSearch} onDoubleClick={handleSearchClick} />
                         ) : (
-                            <SearchOutlined 
+                            <SearchOutlined
                                 className={styles.searchIcon} onClick={handleOpenSearch} onDoubleClick={handleSearchClick}
                             />
                         )}

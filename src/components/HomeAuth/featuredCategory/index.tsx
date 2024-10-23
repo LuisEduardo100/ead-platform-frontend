@@ -6,7 +6,7 @@ import PageSpinner from '../../common/pageSpinner'
 import SlideSection from '../../HomeNoAuth/slideSection'
 import { Container } from 'reactstrap'
 
-export default function FeaturedCategory() {
+export default function FeaturedCategory({ selectedYear }: { selectedYear: string }) {
     const { data, error } = useSWR("/featured", courseService.getFeaturedCourses)
     if (error) return error
     if (!data) return <PageSpinner />
@@ -14,7 +14,7 @@ export default function FeaturedCategory() {
     return (<>
         <Container>
             <p className={styles.pStyle}>DESTAQUE</p>
-            <SlideSection newestCourses={data.data}></SlideSection>
+            <SlideSection newestCourses={data.data} selectedYear={selectedYear}></SlideSection>
         </Container>
     </>)
 }

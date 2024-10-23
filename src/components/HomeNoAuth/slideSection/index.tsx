@@ -6,13 +6,14 @@ import Link from "next/link";
 
 export interface props {
 	newestCourses: CourseType[]
+  selectedYear: string
 }
 
-export default function SlideSection ({ newestCourses }: props){
+export default function SlideSection ({ newestCourses, selectedYear }: props){
     return (
       <>
         <Container fluid className="d-flex flex-column align-items-center pb-3">
-          <SlideComponent course={newestCourses} />
+          <SlideComponent course={newestCourses} serie={selectedYear}/>
         </Container>
       </>
     );

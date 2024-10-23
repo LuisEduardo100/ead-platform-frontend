@@ -5,7 +5,7 @@ import courseService from "../../../services/courseService";
 import SlideSection from "../../HomeNoAuth/slideSection";
 import styles from './styles.module.scss'
 import { Container } from "reactstrap";
-export default function NewestCategory() {
+export default function NewestCategory({ selectedYear }: { selectedYear: string }) {
     const { data, error } = useSWR('/newest', courseService.getNewestCourses)
 
     if (error) return error
@@ -13,7 +13,7 @@ export default function NewestCategory() {
     return (<>
         <Container>
             <p className={styles.pStyle}>LANÇAMENTOS</p>
-            <SlideSection newestCourses={data.data} />
+            <SlideSection newestCourses={data.data} selectedYear={selectedYear}/>
         </Container>
     </>)
 }

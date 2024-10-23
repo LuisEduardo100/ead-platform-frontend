@@ -5,7 +5,7 @@ import categoriesService, { CategoryType } from '../../../services/categoriesSer
 import ListCategoriesSlide from './listCategoriesSlide'
 import { Container } from 'reactstrap'
 
-export default function ListCategories() {
+export default function ListCategories({ selectedYear }: { selectedYear: string }) {
     const { data, error } = useSWR("/categories", categoriesService.getCategories)
     if (error) return error
     if (!data) return <PageSpinner />
@@ -13,7 +13,7 @@ export default function ListCategories() {
     return (<>
         {data?.map((category: CategoryType) => (
             <Container key={category.id}>
-                <ListCategoriesSlide key={category.id} categoryId={category.id} categoryName={category.name.toUpperCase()}/>
+                <ListCategoriesSlide key={category.id} selectedYear={selectedYear} categoryId={category.id} categoryName={category.name.toUpperCase()}/>
             </Container>
         ))}
     </>)

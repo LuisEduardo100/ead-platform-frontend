@@ -7,9 +7,10 @@ import SlideComponent from "../../../common/SlideComponent"
 interface props {
     categoryId: number
     categoryName: string
+    selectedYear: string
 }
 
-export default function ListCategoriesSlide ({categoryId, categoryName}: props){
+export default function ListCategoriesSlide ({categoryId, categoryName, selectedYear}: props){
     const { data, error } = useSWR(`/categories/${categoryId}`, ()=>
         categoriesService.getCourses(categoryId)
     )
@@ -19,6 +20,6 @@ export default function ListCategoriesSlide ({categoryId, categoryName}: props){
 
     return (<>
         <p className={styles.pStyle}>{categoryName}</p>
-        <SlideComponent course={data.data.Courses}/>
+        <SlideComponent course={data.data.Courses} serie={selectedYear}/>
     </>)
 }
