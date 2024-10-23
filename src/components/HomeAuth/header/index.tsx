@@ -18,7 +18,8 @@ const HeaderAuth = function ({ selectedYear, onYearChange }: { selectedYear: str
     const [profilePicture, setProfilePicture] = useState("")
     const [expanded, setExpanded] = useState(false)
     const router = useRouter();
-
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
     const handleOpenModal = () => {
         setModalOpen(true)
     }
@@ -47,6 +48,32 @@ const HeaderAuth = function ({ selectedYear, onYearChange }: { selectedYear: str
         router.push(`/search?name=${searchName}`);
         setSearchName("");
     }
+    const handleScroll = () => {
+        if (timer) {
+            clearTimeout(timer);
+        }
+
+        const newTimer = setTimeout(() => {
+            if (window.scrollY > 0) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        }, 50); // 1 segundo
+
+        setTimer(newTimer);
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            if (timer) {
+                clearTimeout(timer);
+            }
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [timer]);
+
     useEffect(() => {
         profileService.fetchCurrent().then((user) => {
             const firstNameInitial = user.firstName.slice(0, 1);
@@ -58,14 +85,15 @@ const HeaderAuth = function ({ selectedYear, onYearChange }: { selectedYear: str
     }, []);
 
     return (<>
-        <div id="next" className={styles.divbackground}>
+        <div className={`${styles.header} ${isScrolled ? styles.fixed : ''}`}>
             <Container className={styles.nav}>
                 <Link className={styles.linkStyle} href="/home">
                     <div className={styles.divLogo}>
                         <img src="/logo-vocenotadez.png" alt="logoFooter" className={styles.imgLogo} />
                     </div>
                 </Link>
-                <div className='d-flex align-items-center justify-content-center gap-2 position-relative flex-wrap-reverse'>
+                <div className='d-flex align-items-center justify-content-center gap-3 position-relative flex-wrap-reverse'>
+                    <YearSelect selectedYear={selectedYear} onYearChange={onYearChange} />
                     {!accessType ?
                         <div className="d-flex align-items-center gap-2">
                             <div className={styles.divAccess}>
@@ -83,19 +111,20 @@ const HeaderAuth = function ({ selectedYear, onYearChange }: { selectedYear: str
                         </div>
 
                     }
-                     <YearSelect selectedYear={selectedYear} onYearChange={onYearChange} />
+
 
                     <Form className={styles.formSearch} onSubmit={handleSearch}>
                         <Input
                             name="search"
                             id="search"
+                            className={styles.inputSearch}
                             style={{
                                 width: expanded ? '300px' : '0px',  // Expande a largura suavemente
                                 transform: expanded ? 'scaleX(1)' : 'scaleX(0)',  // Controla a escala
                                 transition: 'width 0.3s ease-in-out, transform 0.3s ease-in-out',  // Suaviza a transição
                                 transformOrigin: 'right',  // O ponto de origem da escala é à esquerda
                                 overflow: 'hidden',  // Evita que o conteúdo transborde 
-                                userSelect: 'none'
+                                userSelect: 'none',
                             }}
                             placeholder={expanded ? 'Pesquise um curso' : ''}
                             value={searchName}

@@ -95,7 +95,7 @@ export default function UserForm() {
                             alt="user picture"
                             width={150}
                             height={150}
-                            style={{ borderRadius: '50%', border: "2px solid black"}}
+                            style={{ borderRadius: '50%'}}
                         />
                     ) : (
                         <p className={styles.nameAbbreviation}>

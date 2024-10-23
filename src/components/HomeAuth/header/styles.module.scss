@@ -9,11 +9,12 @@
     justify-content: center;
     justify-items: center;
 }
+
 .imgLogo {
     width: 160px;
 }
 
-.btnPrecos{
+.btnPrecos {
     width: 130px;
     height: 36.5px;
     margin-right: 9px;
@@ -22,6 +23,7 @@
     border-color: black;
     font-size: 12px;
     color: black;
+
     &:hover {
         background-color: #F0C36E;
         color: black;
@@ -30,7 +32,17 @@
         font-weight: bolder;
     }
 }
-.divAccess{
+
+.inputSearch {
+    outline: none;
+
+    &:focus {
+        outline: none; // Certifique-se de que ao clicar também não apareça
+        box-shadow: none; // Remove qualquer sombra que possa aparecer
+    }
+}
+
+.divAccess {
     background-color: green;
     padding: 8px 16px;
     margin-right: 10px;
@@ -40,9 +52,11 @@
     color: white;
     font-weight: 600;
 }
+
 .premium {
     background-color: #D42428;
 }
+
 .userProfile {
     margin-left: 9px;
     background-color: #DEB66B;
@@ -58,7 +72,8 @@
     align-items: center;
     cursor: pointer;
 }
-.imageProfile{
+
+.imageProfile {
     height: 45px;
     width: 45px;
     border-radius: 50%;
@@ -68,6 +83,43 @@
 .nav {
     display: flex;
     justify-content: space-between;
+    padding: 10px;
+}
+.header {
+    position: relative; // Posição normal antes de rolar
+    width: 100%;
+    transition: all 0.3s ease-in-out; // Transição suave para quando ele ficar fixo
+    z-index: 1000;
+
+    &.fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: white; // Cor de fundo opcional para header fixo
+      animation: fadeIn 0.3s ease-in-out; // Suave aparecimento após o scroll
+  
+      background: rgba(184, 219, 235, 0.2); // Fundo semi-transparente
+      backdrop-filter: blur(10px); // Aplica o desfoque
+
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .modal {
@@ -113,15 +165,16 @@
     background-color: transparent;
 }
 
-.formSearch{
+.formSearch {
     display: flex;
     align-items: center;
     position: relative;
 
-    .searchIcon {   
+    .searchIcon {
         font-size: 2.2rem;
         position: absolute;
         right: 2%;
+
         &:hover {
             cursor: pointer;
         }
@@ -133,11 +186,13 @@
         right: 10.5%;
     }
 }
+
 @media (min-width: 2000px) and (max-width: 2671px) {
     .modal {
         right: 18.5%;
     }
 }
+
 @media (min-width: 2671px) and (max-width: 3500px) {
     .modal {
         right: 25.5%;

@@ -9,7 +9,6 @@ const YearSelect = ({ selectedYear, onYearChange }: { selectedYear: string, onYe
 
   return (
     <div className={styles.selectBoxContainer}>
-      <label className={styles.label} htmlFor="yearSelect">Selecione o ano:</label>
       <select
         id="yearSelect"
         value={selectedYear}

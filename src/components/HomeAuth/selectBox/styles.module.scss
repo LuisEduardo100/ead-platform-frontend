@@ -1,25 +1,15 @@
-// components/YearSelect.module.scss
-.selectBoxContainer {
-    margin: 20px;
-  }
-  
-  .label {
-    font-size: 16px;
-    margin-right: 10px;
-  }
-  
-  .selectBox {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #fff;
-    color: #333;
-    outline: none;
-    cursor: pointer;
-  
-    &:focus {
-      border-color: #0070f3;
-    }
-  }
-  
+
+
+.selectBox {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
+  padding: 8px 18px;
+  font-size: 1rem;
+  border-radius: 6px;
+  background-color: #D42428;
+  color: white;
+  outline: none;
+  cursor: pointer;
+
+
+}
