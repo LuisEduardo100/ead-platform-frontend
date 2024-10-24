@@ -13,6 +13,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 const Register = function () {
     const router = useRouter();
     const paramsUrl = useSearchParams()
+    const [selectedYear, setSelectedYear] = useState("6º ano"); // Estado para armazenar a série selecionada
     const [toastIsOpen, setToastIsOpen] = useState(false)
     const [toastMessage, setToastMessage] = useState("")
     const [isPasswordVisible, setIsPasswordVisible] = useState(false)
@@ -20,9 +21,9 @@ const Register = function () {
     const togglePasswordVisibility = () => {
         setIsPasswordVisible(!isPasswordVisible)
     }
-    
-    useEffect(()=>{
-        if (sessionStorage.getItem("vocenotadez-token")){
+
+    useEffect(() => {
+        if (sessionStorage.getItem("vocenotadez-token")) {
             router.push("/home")
         }
     }, [])
@@ -33,12 +34,13 @@ const Register = function () {
         const formData = new FormData(event.currentTarget);
         const firstName = formData.get("firstName")!.toString();
         const lastName = formData.get("lastName")!.toString();
+        const serie = formData.get("serie")!.toString();
         const phone = formData.get("phone")!.toString();
         const birth = formData.get("birth")!.toString();
         const email = formData.get("email")!.toString();
         const password = formData.get("password")!.toString();
         const confirmPassword = formData.get("confirmPassword")!.toString();
-        const params = {firstName, lastName, phone, birth, email, password};
+        const params = { firstName, lastName, serie, phone, birth, email, password };
 
         if (password != confirmPassword) {
             setToastIsOpen(true);
@@ -52,10 +54,10 @@ const Register = function () {
 
         const { data, status } = await authService.register(params);
 
-        
+
         if (status === 201 && paramsUrl.get('newuser') == 'true') {
             router.push('/login?newuserbuy=true')
-        } else if(status==201) {
+        } else if (status == 201) {
             router.push("/login?success=true");
         } else {
             setToastIsOpen(true);
@@ -138,20 +140,20 @@ const Register = function () {
                             />
                         </FormGroup>
                         <FormGroup>
-                        <Label for="password">SENHA</Label>
-                        <div className={styles.password_wrapper}>
-                            <Input
-                                id="password"
-                                name="password"
-                                type= {isPasswordVisible ? 'text' : 'password'}
-                                required
-                                placeholder="Digite a sua senha"
-                                className={styles.input}
+                            <Label for="password">SENHA</Label>
+                            <div className={styles.password_wrapper}>
+                                <Input
+                                    id="password"
+                                    name="password"
+                                    type={isPasswordVisible ? 'text' : 'password'}
+                                    required
+                                    placeholder="Digite a sua senha"
+                                    className={styles.input}
                                 />
                                 <span className={styles.visibility} onClick={togglePasswordVisibility}>
-                                    {isPasswordVisible ? <VisibilityOff/> : <Visibility/>}
+                                    {isPasswordVisible ? <VisibilityOff /> : <Visibility />}
                                 </span>
-                        </div>
+                            </div>
                         </FormGroup>
                         <FormGroup>
                             <Label for="confirmPassword" className={styles.label}>
@@ -167,6 +169,57 @@ const Register = function () {
                                 maxLength={20}
                                 className={styles.input}
                             />
+                        </FormGroup>
+                            <legend className={styles.label}>ESCOLHA SUA SÉRIE</legend>
+                        <FormGroup className={styles.radioGroup} tag="fieldset">
+                            <FormGroup check>
+                                <Label className={styles.radioLabel} check>
+                                    <Input
+                                        type="radio"
+                                        name="serie"
+                                        value="6º ano"
+                                        className={styles.radioInput}
+                                        required
+                                    />{' '}
+                                    6º ano
+                                </Label>
+                            </FormGroup>
+                            <FormGroup check>
+                                <Label className={styles.radioLabel} check>
+                                    <Input
+                                        type="radio"
+                                        name="serie"
+                                        value="7º ano"
+                                        className={styles.radioInput}
+                                        required
+                                    />{' '}
+                                    7º ano
+                                </Label>
+                            </FormGroup>
+                            <FormGroup check>
+                                <Label className={styles.radioLabel} check>
+                                    <Input
+                                        type="radio"
+                                        name="serie"
+                                        value="8º ano"
+                                        className={styles.radioInput}
+                                        required
+                                    />{' '}
+                                    8º ano
+                                </Label>
+                            </FormGroup>
+                            <FormGroup check>
+                                <Label className={styles.radioLabel} check>
+                                    <Input
+                                        type="radio"
+                                        name="serie"
+                                        className={styles.radioInput}
+                                        value="9º ano"
+                                        required
+                                    />{' '}
+                                    9º ano
+                                </Label>
+                            </FormGroup>
                         </FormGroup>
                         <Button type="submit" outline className={styles.formBtn}>
                             CADASTRAR

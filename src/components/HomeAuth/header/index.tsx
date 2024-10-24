@@ -132,7 +132,12 @@ const HeaderAuth = function ({ selectedYear, onYearChange }: { selectedYear: str
                                 setSearchName(event.currentTarget.value.toLowerCase())
                             }} />
                         {expanded ? (
-                            <Close className={styles.searchIcon} onClick={handleOpenSearch} onDoubleClick={handleSearchClick} />
+                            <div className={styles.divSearchBtnsExpanded}>
+                                <SearchOutlined
+                                    className={styles.searchIcon2} onClick={handleSearchClick}
+                                />
+                                <Close className={styles.searchIcon} onClick={handleOpenSearch} onDoubleClick={handleSearchClick} />
+                            </div>
                         ) : (
                             <SearchOutlined
                                 className={styles.searchIcon} onClick={handleOpenSearch} onDoubleClick={handleSearchClick}

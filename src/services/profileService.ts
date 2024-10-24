@@ -1,8 +1,10 @@
 import api from './api'
 
+
 interface UserParams {
     firstName: string;
     lastName: string;
+    serie: string;
     phone: string;
     email: string;
     createdAt: string;

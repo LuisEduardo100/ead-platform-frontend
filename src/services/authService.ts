@@ -3,6 +3,7 @@ import api from './api'
 interface RegisterParams {
     firstName: string;
     lastName: string;
+    serie: string;
     phone: string;
     birth: string;
     email: string;

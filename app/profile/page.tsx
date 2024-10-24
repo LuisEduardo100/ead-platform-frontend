@@ -22,7 +22,7 @@ const IconBtn = styled(IconButton)({
     }
 });
 
-const Profile = function () {
+const Profile = function ({ selectedYear, onYearChange }: { selectedYear: string, onYearChange: (year: string) => void }) {
     const [form, setForm] = useState("userForm")
     const router = useRouter()
     const handleBackRouter = () => {
@@ -32,7 +32,7 @@ const Profile = function () {
     return (<>
         <main>
             <div className={styles.header}>
-                <HeaderAuth />
+                <HeaderAuth  selectedYear={selectedYear} onYearChange={onYearChange}/>
             </div>
             <Container className="py-5">
                 <div className={styles.divMinhaConta}>

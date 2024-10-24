@@ -19,6 +19,8 @@ export default function UserForm() {
 
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
+    const [serie, setSerie] = useState("")
+
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
     const [initialEmail, setInitialEmail] = useState("")
@@ -32,9 +34,11 @@ export default function UserForm() {
             setFirstName(user.firstName);
             setLastName(user.lastName);
             setPhone(user.phone);
+            setSerie(user.serie)
             setEmail(user.email);
             setInitialEmail(user.email);
             setCreatedAt(user.createdAt);
+
         })
     }, [])
 
@@ -44,6 +48,7 @@ export default function UserForm() {
         const res = await profileService.userUpdate({
             firstName,
             lastName,
+            serie,
             phone,
             email,
             createdAt
@@ -95,7 +100,7 @@ export default function UserForm() {
                             alt="user picture"
                             width={150}
                             height={150}
-                            style={{ borderRadius: '50%'}}
+                            style={{ borderRadius: '50%' }}
                         />
                     ) : (
                         <p className={styles.nameAbbreviation}>
@@ -185,7 +190,23 @@ export default function UserForm() {
                         onChange={(event) => { setEmail(event.target.value) }}
                     />
                 </FormGroup>
-
+                <FormGroup className={styles.selectWrapper}>
+                    <Label for="serie" className={styles.selectLabel}>ESCOLHA SUA SÉRIE</Label>
+                    <Input
+                        type="select"
+                        name="serie"
+                        value={serie}
+                        id="serie"
+                        required
+                        className={styles.selectInput}
+                        onChange={(event) => { setSerie(event.target.value) }}
+                    >
+                        <option value="6º ano">6º ano</option>
+                        <option value="7º ano">7º ano</option>
+                        <option value="8º ano">8º ano</option>
+                        <option value="9º ano">9º ano</option>
+                    </Input>
+                </FormGroup>
                 <Button className={styles.formBtn} type="submit">
                     Salvar Alterações
                 </Button>
