@@ -146,6 +146,11 @@ const courseService = {
         return res;
         
     },
+    getSearchGeneral: async (name: string) => {
+        const res = await api.get(`/courses/gsearch?name=${name}`).catch((error) => { return "Erro aqui"+error.message });
+        return res;
+        
+    },
     getEpisodes: async (id: number | string) => {
         const token = sessionStorage.getItem("vocenotadez-token")
 

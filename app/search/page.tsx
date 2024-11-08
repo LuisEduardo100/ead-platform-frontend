@@ -3,8 +3,8 @@ import SearchComponents from "../../src/components/Search";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-export const generateMetadata = async ({ searchParams, selectedYear }: { searchParams: { name: string }, selectedYear: string }): Promise<Metadata> => {
-  const searchTitle = searchParams.name ? `"${searchParams.name}"` : `Todos os cursos do ${selectedYear}`;
+export const generateMetadata = async ({ searchParams }: { searchParams: { name: string, serie: string}}): Promise<Metadata> => {
+  const searchTitle = searchParams.name ? `"${searchParams.name}"` : `Todos os cursos do ${searchParams.serie}`;
   return {
     title: `Você Nota Dez - ${searchTitle}`,
   };
