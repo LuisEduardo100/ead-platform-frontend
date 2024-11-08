@@ -140,9 +140,11 @@ const courseService = {
         }).catch((error) => { return error.message })
         return res
     },
-    getSearch: async (name: string) => {
-        const res = await api.get(`/courses/search?name=${name}`).catch((error) => { return error.message })
-        return res
+    getSearch: async (name: string, year: string) => {
+        const query = name ? `/courses/search?name=${name}&serie=${year}` : `/courses/search?name=&serie=${year}`;
+        const res = await api.get(query).catch((error) => { return "Erro aqui"+error.message });
+        return res;
+        
     },
     getEpisodes: async (id: number | string) => {
         const token = sessionStorage.getItem("vocenotadez-token")

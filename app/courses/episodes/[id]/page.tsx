@@ -14,6 +14,7 @@ import profileService from "../../../../src/services/profileService";
 
 import { Container } from "@mui/material";
 import Control from "../../../../src/components/common/videoControls";
+import { useYear } from "../../../../src/components/HomeAuth/selectBox/yearProvider";
 
 let count = 0;
 
@@ -287,8 +288,8 @@ export default function EpisodePlayer({ params, searchParams, }: {
 
   const calculateProgress = () => {
     const totalEpisodes = course.Episodes?.length || 0;
-    const watchedEpisodes = course.watchStatus.length;
-    const progressPercent = totalEpisodes > 0 ? (watchedEpisodes / totalEpisodes) * 100 : 0;
+    const watchedEpisodes = course.watchStatus?.length;
+    const progressPercent = totalEpisodes > 0 ? (watchedEpisodes! / totalEpisodes) * 100 : 0;
 
     const radius = 15.9155;
     const circumference = 2 * Math.PI * radius;
@@ -490,7 +491,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
                 </div>
                 <div>
                   <h4 className={styles.titulo}>Meu progresso - {`${progressPercent.toFixed(0)}%`}</h4>
-                  <p className={styles.pQtdAulas}>{`${course.watchStatus.length} de ${course.Episodes.length} aulas`}</p>
+                  <p className={styles.pQtdAulas}>{`${course.watchStatus?.length} de ${course.Episodes.length} aulas`}</p>
                 </div>
               </div>
             </div>

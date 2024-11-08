@@ -11,38 +11,42 @@ import Footer from "../common/footer";
 import profileService from "../../services/profileService";
 import HeaderNoAuth from "../HomeNoAuth/header";
 import HeaderGeneric from "../common/headerGeneric";
+import { useYear } from "../HomeAuth/selectBox/yearProvider";
 
-export default function SearchComponents({ searchParams, selectedYear, onYearChange }: { searchParams: { name: string }, selectedYear:  string, onYearChange: (year: string) => void }) {
+export default function SearchComponents({ searchParams}: { searchParams: { name: string, serie: string }}) {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
     const [searchResult, setSearchResult] = useState<CourseType[]>([]);
     const [searchUser, SetSearchUser] = useState("")
-    const searchName = searchParams.name;
+    const searchName = searchParams.name || "";
+    const { selectedYear, onYearChange } = useYear();
 
     const searchCourses = async function () {
-        if (typeof searchName === "string") {
-            const res = await courseService.getSearch(searchName);
-            setSearchResult(res.data.courses);
+        setLoading(true);
+        try {
+            const res = await courseService.getSearch(searchName, selectedYear); 
+            //@ts-ignore
+            setSearchResult(res.data.rows);
+        } catch (error) {
+            console.error("Erro ao buscar cursos:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
     useEffect(() => {
         profileService.fetchCurrent().then((user) => {
-            const email = user.email
-            SetSearchUser(email);
+            SetSearchUser(user.email);
         });
     }, []);
-
-    useEffect(() => {
-        
-    }, [])
+    
     useEffect(() => {
         searchCourses();
-    }, [searchName]);
-
+    }, [searchName, selectedYear]);
+    
 
     if (loading) {
-        if (searchResult != null){
+        if (searchResult != null) {
             setLoading(false)
         }
         return <PageSpinner />;
@@ -50,7 +54,11 @@ export default function SearchComponents({ searchParams, selectedYear, onYearCha
     return (
         <>
             <div className={styles.header}>
-                {searchUser != null ? (<HeaderAuth selectedYear={selectedYear} onYearChange={onYearChange}/>) : (<HeaderGeneric logoUrl="/" btnUrl="/" btnContent="Voltar"/>)}
+                {searchUser != null ?
+                    (<HeaderAuth selectedYear={selectedYear} onYearChange={onYearChange} />)
+                    :
+                    (<HeaderGeneric logoUrl="/" btnUrl="/" btnContent="Voltar" />
+                )}
             </div>
             <main>
                 <section className={styles.mainContent}>

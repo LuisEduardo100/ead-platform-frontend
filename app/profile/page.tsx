@@ -4,11 +4,14 @@ import HeaderAuth from "../../src/components/HomeAuth/header"
 import UserForm from "../../src/components/Profile/user"
 import styles from '../styles/profile.module.scss'
 import Footer from "../../src/components/common/footer"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import PasswordForm from "../../src/components/Profile/password"
 import { IconButton, styled } from "@mui/material"
 import { ArrowBackIosNew } from "@mui/icons-material"
 import { useRouter } from "next/navigation"
+import profileService from "../../src/services/profileService"
+import PageSpinner from "../../src/components/common/pageSpinner"
+import { useYear } from "../../src/components/HomeAuth/selectBox/yearProvider"
 
 const IconBtn = styled(IconButton)({
     color: "#000",
@@ -22,17 +25,41 @@ const IconBtn = styled(IconButton)({
     }
 });
 
-const Profile = function ({ selectedYear, onYearChange }: { selectedYear: string, onYearChange: (year: string) => void }) {
+
+const Profile = function () {
+    const { selectedYear, onYearChange } = useYear();
     const [form, setForm] = useState("userForm")
     const router = useRouter()
     const handleBackRouter = () => {
         router.push('/home')
     }
 
+    const [loading, setLoading] = useState(true)
+
+    
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const data = await profileService.fetchCurrent();
+                if (data?.serie) {
+                    onYearChange(data.serie);
+                }
+            } catch (error) {
+                console.error("Erro ao buscar os dados do usuário:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchUserData()
+    }, [])
+
+    if (loading) {
+        return <PageSpinner />
+    }
     return (<>
         <main>
             <div className={styles.header}>
-                <HeaderAuth  selectedYear={selectedYear} onYearChange={onYearChange}/>
+                <HeaderAuth selectedYear={selectedYear} onYearChange={onYearChange} />
             </div>
             <Container className="py-5">
                 <div className={styles.divMinhaConta}>

@@ -20,6 +20,7 @@ const HeaderAuth = function ({ selectedYear, onYearChange }: { selectedYear: str
     const router = useRouter();
     const [isScrolled, setIsScrolled] = useState(false);
     const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+
     const handleOpenModal = () => {
         setModalOpen(true)
     }
@@ -36,18 +37,18 @@ const HeaderAuth = function ({ selectedYear, onYearChange }: { selectedYear: str
     const handleSearch = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        router.push(`/search?name=${searchName}`);
+        router.push(`/search?name=${searchName}&serie=${selectedYear}`);
         setSearchName("");
     };
-
+    
+    const handleSearchClick = () => {
+        router.push(`/search?name=${searchName}&serie=${selectedYear}`);
+        setSearchName("");
+    }
     const handleOpenSearch = () => {
         setExpanded(!expanded)
     };
 
-    const handleSearchClick = () => {
-        router.push(`/search?name=${searchName}`);
-        setSearchName("");
-    }
     const handleScroll = () => {
         if (timer) {
             clearTimeout(timer);

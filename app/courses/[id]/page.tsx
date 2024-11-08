@@ -15,6 +15,8 @@ import quizService from "../../../src/services/QuizService";
 import ToastComponent from "../../../src/components/common/toastComponent";
 import { IconButton, styled } from "@mui/material";
 import { ArrowBackIosNew } from "@mui/icons-material";
+import profileService from "../../../src/services/profileService";
+import { useYear } from "../../../src/components/HomeAuth/selectBox/yearProvider";
 
 const IconBtn = styled(IconButton)({
   color: "#000",
@@ -48,7 +50,6 @@ export default function Course({ params }: ParamsProps) {
   const [loading, setLoading] = useState(true);
 
   const [course, setCourse] = useState<CourseType>();
-  const [quizz, setQuizz] = useState<CourseQuizzType>();
   const [liked, setLiked] = useState(Boolean);
   const [favorited, setFavorited] = useState(Boolean);
   const [firstEpisodeId, setFirstEpisodeId] = useState(0)
@@ -56,6 +57,10 @@ export default function Course({ params }: ParamsProps) {
   const [toastColor, setToastColor] = useState("");
   const [toastIsOpen, setToastIsOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
+  const { selectedYear, onYearChange } = useYear();
+
+
+
 
   const paramsUrl = useSearchParams()
   const courseId = params.id;
@@ -103,34 +108,9 @@ export default function Course({ params }: ParamsProps) {
     }
   }, [course])
 
-  const handleQuizzPage = () => {
-    router.push(`/quizz/${courseId}`)
-  }
   const handleFirstEpisode = () => {
     router.push(`/courses/episodes/${firstEpisodeOrder! - 1}?courseid=${course?.id}&episodeid=${firstEpisodeId}`);
   };
-
-  const getQuizz = async () => {
-    try {
-      const response = await quizService.getQuizz(courseId);
-
-      if (!response) {
-        console.error("Erro em getQuizz na página de curso: quizz não encontrado.");
-        return;
-      }
-
-      if (response.status === 200) {
-        setQuizz(response.data);
-        return
-      }
-    } catch (error) {
-      console.error("Erro ao chamar getQuizz:", error);
-    }
-  };
-
-  useEffect(() => {
-    getQuizz()
-  }, [courseId])
 
   useEffect(() => {
     const access = paramsUrl.get("access")
@@ -167,7 +147,7 @@ export default function Course({ params }: ParamsProps) {
             backgroundPosition: "center",
             height: "600px",
           }}>
-          <HeaderAuth />
+          <HeaderAuth selectedYear={selectedYear} onYearChange={onYearChange} />
         </div>
         <Container className={styles.courseInfo}>
           <div className="d-flex align-items-center">
@@ -199,14 +179,6 @@ export default function Course({ params }: ParamsProps) {
             >
               ASSISTIR
               <img src="/buttonPlay.svg" alt="buttonImg" className={styles.buttonImg} />
-            </Button>
-            <Button
-              outline
-              className={styles.courseBtnExer}
-              onClick={handleQuizzPage}
-            >
-              <FontAwesomeIcon icon={faBook} style={{ marginRight: '10px' }} />
-              EXERCÍCIOS
             </Button>
           </div>
         </Container>

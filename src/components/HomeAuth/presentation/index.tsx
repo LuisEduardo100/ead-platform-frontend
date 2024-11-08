@@ -11,11 +11,10 @@ import Aos from 'aos';
 import { useEffect } from 'react';
 
 
-export default function HomeAuthPresentation({ selectedYear, onYearChange }: { selectedYear: string, onYearChange: (year: string) => void }) {
+export default function 
+HomeAuthPresentation({ selectedYear, onYearChange }: { selectedYear: string, onYearChange: (year: string) => void }) {
     const { data, error } = useSWR('/featured', courseService.getFeaturedCourses)
-    console.log("DATA TO BE FILTERED: ", data?.data)
     const filteredFeaturedCourses = data?.data?.filter((course: CourseType) => course.serie === selectedYear);
-    console.log("DATA FILTERED: ", filteredFeaturedCourses)
 
     if (error) return error
     if (!data) return <PageSpinner />

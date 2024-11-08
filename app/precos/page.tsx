@@ -8,10 +8,9 @@ import PaymentButton from "../../src/components/common/precos/paymentButton"
 import HeaderNoAuth from "../../src/components/HomeNoAuth/header"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
-import HeaderAuth from "../../src/components/HomeAuth/header"
 import { stripeService } from "../../src/services/stripeService"
 import HeaderGeneric from "../../src/components/common/headerGeneric"
-export default function PaginaPrecos({ selectedYear, onYearChange }: { selectedYear: string, onYearChange: (year: string) => void }) {
+export default function PaginaPrecos() {
     const [logged, setLogged] = useState(false)
     const router = useRouter()
     const [loading, setLoading] = useState(false)

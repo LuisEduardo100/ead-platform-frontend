@@ -38,7 +38,6 @@ export default function UserForm() {
             setEmail(user.email);
             setInitialEmail(user.email);
             setCreatedAt(user.createdAt);
-
         })
     }, [])
 

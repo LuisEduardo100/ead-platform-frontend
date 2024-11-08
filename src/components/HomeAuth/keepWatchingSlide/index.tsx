@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import styles from './styles.module.scss';
 import PageSpinner from '../../common/pageSpinner';
-import SlideSection from '../../HomeNoAuth/slideSection';
 import { Container } from 'reactstrap';
 import KeepWatchingService from '../../../services/keepWatchingService';
 import { CourseType } from '../../../services/courseService';

@@ -1,12 +1,37 @@
+import profileService from '../../../services/profileService';
+import PageSpinner from '../../common/pageSpinner';
 import styles from './styles.module.scss'
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 const YearSelect = ({ selectedYear, onYearChange }: { selectedYear: string, onYearChange: (year: string) => void }) => {
 
-  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    onYearChange(event.target.value);  // Chama a função para atualizar o estado do ano no componente pai
+  const [loading, setLoading] = useState(true);
+
+  const fetchUserData = async () => {
+    try {
+      const data = await profileService.fetchCurrent();
+      if (data?.serie) {
+        onYearChange(data.serie);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar os dados do usuário:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
+  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    onYearChange(event.target.value);
+  };
+
+  useEffect(() => {
+    fetchUserData()
+  }, [])
+
+
+  if (loading) {
+    return <PageSpinner />
+  }
   return (
     <div className={styles.selectBoxContainer}>
       <select
