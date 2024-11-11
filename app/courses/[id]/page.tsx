@@ -8,14 +8,9 @@ import PageSpinner from "../../../src/components/common/pageSpinner";
 import HeaderAuth from "../../../src/components/HomeAuth/header";
 import EpisodeList from "../../../src/components/Course";
 import Footer from "../../../src/components/common/footer";
-import QuizzList from "../../../src/components/common/quizzPage";
-import { faBook } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import quizService from "../../../src/services/QuizService";
 import ToastComponent from "../../../src/components/common/toastComponent";
 import { IconButton, styled } from "@mui/material";
 import { ArrowBackIosNew } from "@mui/icons-material";
-import profileService from "../../../src/services/profileService";
 import { useYear } from "../../../src/components/HomeAuth/selectBox/yearProvider";
 
 const IconBtn = styled(IconButton)({

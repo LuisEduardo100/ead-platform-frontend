@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleCheck as faCircleCheckSolid, faCirclePlay, faCloudArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { faCircleCheck as faCircleCheckRegular } from '@fortawesome/free-regular-svg-icons';
+import FileList from '../common/filePageToEpisode'
+import FileListToCourse from '../common/filePageToCourse'
 
 interface props {
     episode: EpisodeType
@@ -54,8 +56,8 @@ export default function EpisodeList({ episode, course }: props) {
 
         return result;
     };
-    
-    const isWatched = course.watchStatus.some(status => status.episodeId === episode.id);
+
+    const isWatched = course.watchStatus?.some(status => status.episodeId === episode.id);
     return (
         <>
             <div className={styles.episodeCard}>
@@ -66,9 +68,16 @@ export default function EpisodeList({ episode, course }: props) {
                     </div>
                     <p className={styles.episodeTitle}>{episode.name}</p>
                 </div>
-                { isWatched &&             
-                <FontAwesomeIcon className={styles.checkItem} icon={faCircleCheckSolid} style={{ fontSize: '30px', color: '#183153' }}/>
+                {isWatched &&
+                    <FontAwesomeIcon className={styles.checkItem} icon={faCircleCheckSolid} style={{ fontSize: '30px', color: '#183153' }} />
                 }
+                <div className={styles.divFileUrl}>
+                    {hasFile ? (
+                        <FileListToCourse files={getEpisodeFile.Files}/>
+                    ) : (
+                        <p className={styles.pSemDownload}>Sem material para download.</p>
+                    )}
+                </div>
             </div>
         </>
     );

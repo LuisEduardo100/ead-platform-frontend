@@ -3,8 +3,6 @@
     padding: 20px 0px;
     width: 600px;
     display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
     flex-direction: column;
     height: 120px;
     border-radius: 20px;
@@ -12,7 +10,11 @@
     position: relative;
     border: 2px solid #183153;
 }
-
+.divFileUrl {
+    position: absolute;
+    left: 12px;
+    bottom: 0;
+}
 .episodeTitle {
     font-size: 16px;
     font-weight: bold;

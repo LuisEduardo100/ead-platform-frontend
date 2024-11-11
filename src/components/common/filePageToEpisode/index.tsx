@@ -13,7 +13,7 @@ type FileListProps = {
     onFileClick: (url: string) => void
 };
 
-export default function FileList({ files, onFileClick }: FileListProps) {
+export default function FileListToEpisode({ files, onFileClick }: FileListProps) {
     return (
         <div className={styles.divPai}>
             <h4 className={styles.titulofile}>Material: </h4>

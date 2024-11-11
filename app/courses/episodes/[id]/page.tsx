@@ -9,12 +9,13 @@ import PageSpinner from "../../../../src/components/common/pageSpinner";
 import HeaderGeneric from "../../../../src/components/common/headerGeneric";
 import episodeFileService from "../../../../src/services/episodeFileService";
 import EpisodeAdaptedList from "../../../../src/components/common/episodeListAdapted";
-import FileList from "../../../../src/components/common/filePage";
+import FileList from "../../../../src/components/common/filePageToEpisode";
 import profileService from "../../../../src/services/profileService";
 
 import { Container } from "@mui/material";
 import Control from "../../../../src/components/common/videoControls";
 import { useYear } from "../../../../src/components/HomeAuth/selectBox/yearProvider";
+import FileListToEpisode from "../../../../src/components/common/filePageToEpisode";
 
 let count = 0;
 
@@ -195,8 +196,6 @@ export default function EpisodePlayer({ params, searchParams, }: {
     setVideoState({ ...videoState, playbackRate: newvalue })
   }
 
-  // ////////////////////////////////////////////////////////////////// //
-
   const handleFileClick = (url: string) => {
     if (url.endsWith('.pdf')) {
       setSelectedFileUrl(url);
@@ -354,7 +353,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
             <div className={styles.fileAndButtons}>
               <div className={styles.divFileUrl}>
                 {hasFiles ? (
-                  <FileList files={getEpisodeFile.Files} onFileClick={handleFileClick} />
+                  <FileListToEpisode files={getEpisodeFile.Files} onFileClick={handleFileClick} />
                 ) : (
                   <p className={styles.pSemDownload}>Sem material para download.</p>
                 )}

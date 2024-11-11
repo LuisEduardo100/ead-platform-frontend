@@ -1,0 +1,39 @@
+.divPai {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    gap: 8px;
+}
+
+.select {
+    width: 200px;
+    text-align: left;
+    padding: 8px;
+    border: none;
+    background-color: transparent;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    appearance: none;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.downloadIcon {
+    cursor: pointer;
+}
+
+.option {
+    width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.fileName {
+    font-size: 2rem;;
+}
