@@ -1,26 +1,46 @@
-.divPai{
+.divPai {
     display: flex;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 12px;
+    font-size: 0.8rem;
+    width: 100%;
 }
+
 .divFiles {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 12px;
+    width: 200px;
+}
 
-    .file {
-        background-color: #DEB66B;
-        padding: 4px 14px;
-        border-radius: 15px;
-        box-shadow: -2px 4px #183153;
-        border: 2px solid #183153;
+.file {
+    background-color: #DEB66B;
+    padding: 4px 14px;
+    border-radius: 15px;
+    box-shadow: -2px 4px #183153;
+    border: 2px solid #183153;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-        &:hover {
-            opacity: 0.75;
-            filter: brightness(80%);
-            cursor: pointer;
-        }
+    &:hover {
+        opacity: 0.75;
+        filter: brightness(80%);
+        cursor: pointer;
     }
+}
+
+.link {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    color: #183153;
+    max-width: 180px; /* Ajuste a largura conforme necessário */
+    display: inline-block;
 }
 
 .titulofile {
