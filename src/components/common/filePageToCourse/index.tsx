@@ -2,6 +2,7 @@
 import styles from './styles.module.scss'
 import { EpisodeFileType } from '../../../services/courseService'
 import { Download } from '@mui/icons-material';
+import { useRef } from 'react';
 
 
 type FileListProps = {
@@ -9,6 +10,7 @@ type FileListProps = {
 };
 
 export default function FileListToCourse({ files }: FileListProps) {
+
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const url = event.target.value;
         if (url) {
@@ -20,25 +22,38 @@ export default function FileListToCourse({ files }: FileListProps) {
             document.body.removeChild(link);
         }
     };
+
+
+    const selectRef = useRef<HTMLSelectElement>(null);
+
+    const handleIconClick = () => {
+
+        setTimeout(() => {
+            if (selectRef.current) {
+                selectRef.current.showPicker();  // Abre o dropdown
+            }
+
+        }, 50)
+    };
     return (
-        <div className={styles.divPai}>
-                <label className={styles.downloadIcon} htmlFor='select'>
-                    <Download style={{ fontSize: '24px', color: '#183153' }} />
-                </label>
-                <select id='select' className={styles.select} onChange={handleSelectChange} defaultValue="">
-                    <option value="" disabled>
-                        Material dessa aula
-                    </option>
-                    {files.map((file) =>
-                        file.fileUrl
-                            .filter((url: string) => url.endsWith('.pdf'))
-                            .map((url: string, index: number) => (
-                                <option className={styles.option} key={index} value={url}>
-                                    {file.name}
-                                </option>
-                            ))
-                    )}
-                </select>
+        <div onClick={handleIconClick} className={styles.divPai}>
+            <label htmlFor='select' className={styles.downloadIcon} >
+                <Download style={{ fontSize: '24px', color: '#183153' }} />
+            </label>
+            <select ref={selectRef} id='select' className={styles.select} onChange={handleSelectChange} defaultValue="">
+                <option value="" disabled>
+                    Material dessa aula
+                </option>
+                {files.map((file) =>
+                    file.fileUrl
+                        .filter((url: string) => url.endsWith('.pdf'))
+                        .map((url: string, index: number) => (
+                            <option className={styles.option} key={index} value={url}>
+                                {file.name}
+                            </option>
+                        ))
+                )}
+            </select>
         </div>
     );
 }

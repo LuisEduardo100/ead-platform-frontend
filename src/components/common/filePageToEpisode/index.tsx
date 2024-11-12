@@ -4,7 +4,7 @@ import styles from './styles.module.scss'
 import Link from 'next/link'
 import { Button } from 'reactstrap'
 import courseService, { CourseType, EpisodeFileType, EpisodeType } from '../../../services/courseService'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { Download, Slideshow, VideoCall, VideoFile } from '@mui/icons-material'
@@ -15,6 +15,7 @@ type FileListProps = {
 };
 
 export default function FileListToEpisode({ files, onFileClick }: FileListProps) {
+
     return (
         <div className={styles.divPai}>
             <h4 className={styles.titulofile}>Material: </h4>
