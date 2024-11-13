@@ -6,17 +6,22 @@
     color: black;
 }
 
-.searchbar {
-    width: 500px;
+.form {
+    display: flex;
+    align-items: center;
+    position: relative;
 }
-
-.searchIcon {
-    width: 22px;
-    margin-left: 9px;
-
-    &:hover {
-        cursor: pointer;
-    }
+.searchbar{
+    width: 750px;
+    height: 45px;
+    border: none;
+    border-radius: 20px;
+}
+.searchIcon{
+    position: absolute;
+    bottom: 5.5px;
+    right: 14px;
+    cursor: pointer;
 }
 
 @media(max-width: 613px) {

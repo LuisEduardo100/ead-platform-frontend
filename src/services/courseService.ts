@@ -6,6 +6,7 @@ export type EpisodeType = {
     synopsis: string;
     order: number;
     videoUrl: string;
+    quizz: QuizzType[]
     secondsLong: number;
     Files: EpisodeFileType[];
 }

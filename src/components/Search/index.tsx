@@ -12,6 +12,7 @@ import profileService from "../../services/profileService";
 import HeaderNoAuth from "../HomeNoAuth/header";
 import HeaderGeneric from "../common/headerGeneric";
 import { useYear } from "../HomeAuth/selectBox/yearProvider";
+import { SearchOutlined } from "@mui/icons-material";
 
 export default function SearchComponents({ searchParams }: { searchParams: { name: string, serie: string } }) {
     const router = useRouter();
@@ -102,25 +103,22 @@ export default function SearchComponents({ searchParams }: { searchParams: { nam
                 {!searchUser && (
                     <Container className="py-5">
                         <Row>
-                            <Col md className="d-flex justify-content-center pt-4">
-                                <Form onSubmit={nhandleSearch}>
-                                    <Input
-                                        name="search"
-                                        id="search"
-                                        placeholder="Buscar cursos"
-                                        className={styles.searchbar}
-                                        value={SearchName}
-                                        onChange={(event) => {
-                                            setSearchName(event.currentTarget.value.toLowerCase());
-                                        }}
-                                    />
-                                </Form>
-                                <img
-                                    src="/iconSearch.svg"
-                                    alt="searchIcon"
-                                    className={styles.searchIcon}
-                                    onClick={nhandleSearchClick}
-                                />
+                            <Col md className="d-flex justify-content-center">
+                               <Form className={styles.form} onSubmit={nhandleSearch}>
+                            <Input
+                                name="search"
+                                id="search"
+                                placeholder="Buscar cursos"
+                                className={styles.searchbar}
+                                value={SearchName}
+                                onChange={(event) => {
+                                    setSearchName(event.currentTarget.value.toLowerCase());
+                                }}
+                            />
+                            <div>
+                                <SearchOutlined className={styles.searchIcon} fontSize='large' onClick={nhandleSearchClick}/>
+                            </div>
+                        </Form>
                             </Col>
                         </Row>
                     </Container>

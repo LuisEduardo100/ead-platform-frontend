@@ -1,29 +1,16 @@
 import api from "./api";
 
 type QuizResultParams = {
-    courseId: number;
+    episodeId: number;
     score: number;
   };
 const quizService = {
-    getQuizz: async (courseId: number | string) => {
-        const token = sessionStorage.getItem("vocenotadez-token")
-        try {
-            const response = await api.get(`/course/quizz/${courseId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            return response;
-        } catch (error: any) {
-            return error.response
-        }
-        
-    },
-    getQuizResults: async(courseIdP: number | string) =>{
-        const courseId = Number(courseIdP)
+    getQuizResults: async({episodeId}: QuizResultParams) =>{
+        const courseId = episodeId
+
         try {
             const token = sessionStorage.getItem("vocenotadez-token")
-            const res = await api.get(`/courses/${courseId}/quizzREsult`, {
+            const res = await api.get(`episodes/${episodeId}/quizzResult`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -33,11 +20,11 @@ const quizService = {
             return error.response
         }
     },
-    setQuizResults: async({courseId, score}: QuizResultParams) =>{
+    setQuizResults: async({episodeId, score}: QuizResultParams) =>{
         try {
             const token = sessionStorage.getItem("vocenotadez-token")
             const res = await api.post(
-                `/courses/${courseId}/quizzResult`,
+                `/episodes/${episodeId}/quizzResult`,
                 { score },
                 { 
                     headers: {

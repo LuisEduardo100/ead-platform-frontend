@@ -6,16 +6,13 @@ import ReactPlayer from "react-player";
 import courseService, { CourseType, EpisodeType } from "../../../../src/services/courseService";
 import watchEpisodeService from "../../../../src/services/episodeService";
 import PageSpinner from "../../../../src/components/common/pageSpinner";
-import HeaderGeneric from "../../../../src/components/common/headerGeneric";
 import episodeFileService from "../../../../src/services/episodeFileService";
 import EpisodeAdaptedList from "../../../../src/components/common/episodeListAdapted";
-import FileList from "../../../../src/components/common/filePageToEpisode";
 import profileService from "../../../../src/services/profileService";
-
-import { Container } from "@mui/material";
 import Control from "../../../../src/components/common/videoControls";
-import { useYear } from "../../../../src/components/HomeAuth/selectBox/yearProvider";
 import FileListToEpisode from "../../../../src/components/common/filePageToEpisode";
+import QuizzButton from "../../../../src/components/Quizz/quizzButton";
+import { Button } from "reactstrap";
 
 let count = 0;
 
@@ -34,6 +31,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
 
   const [getEpisodeTime, setGetEpisodeTime] = useState(0);
   const [getEpisodeFile, setGetEpisodeFile] = useState<EpisodeType>()
+  const [getQuizzByEp, setQuizzByEp] = useState<EpisodeType>()
   const [episodeTime, setEpisodeTime] = useState(0);
   const [isReady, setIsReady] = useState(false);
 
@@ -197,12 +195,8 @@ export default function EpisodePlayer({ params, searchParams, }: {
   }
 
   const handleFileClick = (url: string) => {
-    if (url.endsWith('.pdf')) {
       setSelectedFileUrl(url);
-    } else {
-      setSelectedFileUrl(url);
-    }
-  };
+  }
 
 
   const handleEpisodeFile = async () => {
@@ -218,8 +212,21 @@ export default function EpisodePlayer({ params, searchParams, }: {
     }
   };
 
+  const handleEpisodeQuizz = async () => {
+    try {
+      const res = await episodeFileService.getEpisodeWithQuizz(episodeId);
+      if (res) {
+        setQuizzByEp(res);
+      } else {
+        console.error('No files found in the response.');
+      }
+    } catch (error) {
+      console.error('Error fetching episode file:', error);
+    }
+  };
 
   useEffect(() => {
+    handleEpisodeQuizz()
     handleEpisodeFile();
   }, [episodeId]);
 
@@ -237,6 +244,10 @@ export default function EpisodePlayer({ params, searchParams, }: {
 
   const routerPushToCourse = () => {
     router.push(`/courses/${courseId}`)
+  }
+
+  const goToQuizzPage = () => {
+    router.push(`/courses/episodes/${episodeOrder}/quizz`)
   }
 
   useEffect(() => {
@@ -273,11 +284,9 @@ export default function EpisodePlayer({ params, searchParams, }: {
 
 
   // Ajustes de constantes
-  const filteredEpisodes = course.Episodes?.filter((episode) => episode.id !== episodeId)
   const hasFiles = getEpisodeFile?.Files && getEpisodeFile.Files?.length != 0
   const confirmNextVideo  = course.Episodes.length > 1 && episodeOrder < course.Episodes.length - 1
-  const confirmLastVideo = episodeOrder == 0 ? true : false
-
+  const hasQuizz = getQuizzByEp?.quizz && getQuizzByEp.quizz?.length != 0
   if (confirmNextVideo) {
     if (Math.round(episodeTime) === course.Episodes[episodeOrder].secondsLong) {
       handleNextEpisode();
@@ -357,6 +366,9 @@ export default function EpisodePlayer({ params, searchParams, }: {
                 ) : (
                   <p className={styles.pSemDownload}>Sem material para download.</p>
                 )}
+                <Button onClick={goToQuizzPage}>
+                  <p>Pratique com exercício!</p>
+                </Button>
               </div>
               <div className={styles.divSinopse}>
                 <p className={styles.pSinopse}>{course.Episodes[episodeOrder].synopsis}</p>

@@ -23,14 +23,22 @@
     text-align: center;
 
 }
+.form {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
 .searchbar{
-    width: 800px;
-    margin-top: 245px;
+    width: 750px;
+    height: 45px;
+    border: none;
+    border-radius: 20px;
+    margin-top: 280px;
 }
 .searchIcon{
-    margin-top: 245px;
-    width: 22px;
-    margin-left: 9px;
+    position: absolute;
+    bottom: 5.5px;
+    right: 14px;
     cursor: pointer;
 }
 @media (max-width: 1399px){

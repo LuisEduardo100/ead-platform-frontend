@@ -1,41 +1,112 @@
-.footer{
+.footer {
     display: flex;
+    margin: 0 auto;
     align-items: center;
-    justify-content: space-between;
-    padding: 0px 10px;
+    justify-content: space-evenly;
+    padding: 80px 0px 50px 0px;
     flex-wrap: wrap;
     margin-top: 54px;
-    min-height: 16vh;
+    max-width: 1300px;
+    border-bottom: 2px solid #FFD558;
 }
-.pFooter{
+
+.quemsomos {
+    width: 330px;
+    height: 200px;
+    padding: 30px;
+
+    .quemsomos_title {
+        font-weight: bolder;
+    }
+
+    .quemsomos_p {
+        font-weight: 500;
+        padding: 20px 0px 0px 0px;
+        width: 350px;
+        line-height: 18px;
+        font-size: 1.2rem;
+    }
+}
+
+.contato {
+    padding: 30px;
+    width: 330px;
+    height: 200px;
+
+    .contato_info {
+        display: flex;
+        align-items: center;
+        padding: 8px 0px 0px 0px;
+        gap: 6px;
+        font-size: 1.2rem; 
+        text-decoration: none;
+
+        .contato_info_p {
+            font-weight: 500;
+            color: black;
+        }
+    }
+
+    .contato_title {
+        font-weight: bolder;
+    }
+}
+.logo_media {
+    color: #FFD558;
+}
+.pFooter {
     font-weight: bold;
     font-size: 16px;
     text-align: center;
     color: black;
-    
+    padding: 10px;
 }
 
-.media{
+.media {
     padding: 12px;
 }
-.imgLogo{
-    width: 122px;
-    
+
+.logo_div {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .logo_p {
+        width: 100%;
+        text-align: center;
+        margin: 0 auto;
+    }
 }
-.imgFooter{
+
+.imgLogo {
+    width: 200px;
+}
+
+.imgFooter {
     width: 42px;
     margin-right: 10px;
     box-shadow: 1px 0.5px rgb(116, 116, 116);
     border-radius: 50%;
-    &:hover{
+
+    &:hover {
         scale: 108%;
         transition: 0.3s;
         transform: translateX(2px) translateY(-2px);
 
     }
 }
-@media (max-width: 353px){
-    .footer{
+
+@media (max-width: 700px) {
+.quemsomos {
+    .quemsomos_p {
+        width: 95%;
+    }
+}
+}
+@media (max-width: 353px) {
+    .footer {
         justify-content: center;
     }
 }

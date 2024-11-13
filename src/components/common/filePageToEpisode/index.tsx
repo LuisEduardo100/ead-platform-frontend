@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation'
 import styles from './styles.module.scss'
 import Link from 'next/link'
 import { Button } from 'reactstrap'
-import courseService, { CourseType, EpisodeFileType, EpisodeType } from '../../../services/courseService'
+import courseService, { CourseType, EpisodeFileType, EpisodeType, QuizzType } from '../../../services/courseService'
 import { useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudArrowDown } from '@fortawesome/free-solid-svg-icons'
@@ -34,6 +34,7 @@ export default function FileListToEpisode({ files, onFileClick }: FileListProps)
                             }
                         </div>
                     ))}
+
                 </div>
             ))}
         </div>

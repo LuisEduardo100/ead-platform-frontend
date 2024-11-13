@@ -78,11 +78,11 @@
     padding: 10px 16px;
   }
   @media (max-width: 768px) {
-    height: 40vh; // Aumenta a altura do container de arquivos em telas menores
+    height: 40vh;
   }
 
   @media (max-width: 300px) {
-    height: 50vh; // Usa metade da tela para a área de descrição e downloads
+    height: 50vh; 
   }
 }
 
@@ -90,7 +90,7 @@
   margin-top: 12px;
   padding: 16px;
   height: auto;
-  font-size: 14px; /* Ajusta o tamanho da fonte */
+  font-size: 14px; 
 
   @media (max-width: 300px) {
     font-size: 12px;
