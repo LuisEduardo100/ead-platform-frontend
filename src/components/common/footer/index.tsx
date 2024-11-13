@@ -27,7 +27,7 @@ const Footer = function () {
                     <Email className={styles.logo_media} fontSize='small' />
                     <p className={styles.contato_info_p}>somosnotadez@gmail.com</p>
                 </Link>
-                <Link href={'mailto:somosnotadez@gmail.com'} target="_blank" className={styles.contato_info}>
+                <Link href={'https://instagram.com/vocenotadez'} target="_blank" className={styles.contato_info}>
                     <Instagram className={styles.logo_media} fontSize='small' />
                     <p className={styles.contato_info_p}>@vocenotadez</p>
                 </Link>
