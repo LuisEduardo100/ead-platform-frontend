@@ -10,6 +10,7 @@ import Footer from '../../src/components/common/footer'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useYear } from '../../src/components/HomeAuth/selectBox/yearProvider';
+import FooterAuth from '../../src/components/HomeAuth/footerAuth';
 
 const HomeAuth = function () {
     const {selectedYear, onYearChange} = useYear()
@@ -23,14 +24,14 @@ const HomeAuth = function () {
         <>
             <main>
                 <HomeAuthPresentation selectedYear={selectedYear} onYearChange={onYearChange} />
-                <div data-aos="fade-right" data-aos-duration="500" data-aos-offset="300">
+                <div className='pb-5'data-aos="fade-right" data-aos-duration="500" data-aos-offset="300">
                     <OnGoingCategory selectedYear={selectedYear} />
                     <NewestCategory selectedYear={selectedYear} />
                     <FavoriteCourses selectedYear={selectedYear} />
                     <FeaturedCategory selectedYear={selectedYear} />
                     <ListCategories selectedYear={selectedYear} />
                 </div>
-                <Footer />
+                <FooterAuth />
             </main>
         </>
     );

@@ -7,7 +7,6 @@
     flex-wrap: wrap;
     margin-top: 54px;
     max-width: 1300px;
-    border-bottom: 2px solid #FFD558;
 }
 
 .quemsomos {
@@ -60,6 +59,8 @@
     text-align: center;
     color: black;
     padding: 10px;
+    border-top: 2px solid #FFD558;
+
 }
 
 .media {
@@ -89,7 +90,6 @@
     margin-right: 10px;
     box-shadow: 1px 0.5px rgb(116, 116, 116);
     border-radius: 50%;
-
     &:hover {
         scale: 108%;
         transition: 0.3s;
