@@ -26,6 +26,9 @@ const authService = {
   
       return res;
     },
+    // forgotPassword: async ({email} : LoginParams) => {
+    //   const res = await api.post("/users/forgotPassword")
+    // },
     login: async (params: LoginParams) => {
       const res = await api.post("/auth/login", params).catch((error) => {
         if (error.response.status === 400 || error.response.status === 401) {

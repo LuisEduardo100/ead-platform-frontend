@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Questões",
+  title: "Recuperação de senha",
 };
 
 export default function RootLayout({

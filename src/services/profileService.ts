@@ -1,7 +1,7 @@
 import api from './api'
 
 
-interface UserParams {
+export interface UserParams {
     firstName: string;
     lastName: string;
     serie: string;
@@ -11,6 +11,10 @@ interface UserParams {
 }
 interface PasswordParams {
     currentPassword: string;
+    newPassword: string;
+}
+
+interface RecoverPasswordParams {
     newPassword: string;
 }
 
@@ -38,6 +42,16 @@ const profileService = {
         })
         return res.status
     },
+    recoverPassword: async (params: RecoverPasswordParams, token: string) => {
+        const res = await api.post("/users/current/recoverPassword", {
+            newPassword: params.newPassword,
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return res;
+    },
     passwordUpdate: async (params: PasswordParams) => {
         const token = sessionStorage.getItem('vocenotadez-token')
 
@@ -56,17 +70,17 @@ const profileService = {
         const token = sessionStorage.getItem('vocenotadez-token');
         const formData = new FormData();
         formData.append('profilePicture', file);
-    
+
         const res = await api.post('/users/current/profileImage', formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'multipart/form-data',
-          },
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data',
+            },
         }).catch((error) => {
-          return error.response;
-        }); 
+            return error.response;
+        });
         return res.data;
-      },
+    },
 }
 
 export default profileService

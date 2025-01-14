@@ -21,26 +21,31 @@
     box-shadow: -8px 10px;
 }
 
+.formPasswordGroup {
+    position: relative;
+}
+.forgotPassword {
+    position: absolute;
+    bottom: -33px;
+    text-decoration: none;
+    color: black;
+}
+
 .formBtn {
     display: block;
-    margin: 50px auto 0 auto;
+    margin: 60px auto 0 auto;
     width: 180px;
     border-radius: 8px;
-    border: 1px solid #F0C36E;
     color: black;
-    font-size: 20px;
-    font-weight: 500;
+    font-weight: bolder;
+    font-size: 1.5rem;
     background-color: #F0C36E;
     box-shadow: -2px 4px black;
 
     &:hover {
         background-color: #F0C36E;
         color: black;
-        font-weight: bolder;
         transition: 0.3s;
-
-        font-size: 22px;
-        scale: 110%;
     }
 }
 

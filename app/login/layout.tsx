@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "NOTA DEZ - Login",
+  title: "Acesse sua conta",
 };
 
 export default function RootLayout({

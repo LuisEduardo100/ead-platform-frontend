@@ -8,6 +8,7 @@ import ToastComponent from '../../src/components/common/toastComponent'
 import { useRouter, useSearchParams } from 'next/navigation'
 import authService from '../../src/services/authService'
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import Link from 'next/link';
 
 
 const Login = function () {
@@ -86,7 +87,7 @@ const Login = function () {
                             className={styles.input}
                         />
                     </FormGroup>
-                    <FormGroup>
+                    <FormGroup className={styles.formPasswordGroup}>
                         <Label for="password">SENHA</Label>
                         <div className={styles.password_wrapper}>
                             <Input
@@ -101,6 +102,7 @@ const Login = function () {
                                     {isPasswordVisible ? <VisibilityOff/> : <Visibility/>}
                                 </span>
                         </div>
+                        <Link href={'/resetPassword'} target="_blank" className={styles.forgotPassword}>Esqueceu sua senha?</Link>
                     </FormGroup>
                     <Button type="submit" className={styles.formBtn}>ENTRAR</Button>
                 </Form>

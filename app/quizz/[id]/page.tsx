@@ -3,7 +3,6 @@ import styles from "./styles.module.scss";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import courseService, { CourseQuizzType, CourseType } from "../../../src/services/courseService";
-import QuizzList from "../../../src/components/common/quizzPage";
 import quizService from "../../../src/services/QuizService";
 import profileService from "../../../src/services/profileService";
 import ToastComponent from "../../../src/components/common/toastComponent";
