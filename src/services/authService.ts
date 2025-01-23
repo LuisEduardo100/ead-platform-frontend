@@ -42,6 +42,21 @@ const authService = {
       }
       
       return res
+    },
+    confirmEmail: async (token: string) => {
+      try {
+        const res = await api.post(`/confirmEmail?token=${token}`); // Passe o token como parte do corpo da requisição
+        return res; // Retorna a resposta da API
+      } catch (error: any) {
+        if (error.response) { // Verifica se a resposta do erro existe
+          if (error.response.status === 400 || error.response.status === 401) {
+            return error.response; // Retorna a resposta de erro para o frontend
+          }
+        }
+        // Caso o erro não tenha sido uma resposta HTTP, você pode registrar e lançar o erro
+        console.error('Erro ao confirmar email:', error);
+        throw error; // Relança o erro para o frontend lidar
+      }
     }
   };
   

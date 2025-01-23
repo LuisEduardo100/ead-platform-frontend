@@ -10,6 +10,11 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import ToastComponent from '../../src/components/common/toastComponent';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
+const validatePasswordStrength = (password: string): boolean => {
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+};
+
 const Register = function () {
     const router = useRouter();
     const paramsUrl = useSearchParams()
@@ -17,6 +22,7 @@ const Register = function () {
     const [toastIsOpen, setToastIsOpen] = useState(false)
     const [toastMessage, setToastMessage] = useState("")
     const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+    const [color, setColor] = useState("");
 
     const togglePasswordVisibility = () => {
         setIsPasswordVisible(!isPasswordVisible)
@@ -52,13 +58,32 @@ const Register = function () {
             return;
         }
 
+        if (!validatePasswordStrength(password)) {
+            setToastIsOpen(true);
+            setToastMessage("A senha deve conter pelo menos 8 caracteres, incluindo letras, números e caracteres especiais (@, $, !, %¨, *, ?, &)");
+            setColor("bg-danger");
+            setTimeout(() => setToastIsOpen(false), 900 * 3);
+            return
+        }
+
         const { data, status } = await authService.register(params);
 
-
         if (status === 201 && paramsUrl.get('newuser') == 'true') {
-            router.push('/login?newuserbuy=true')
+            setToastIsOpen(true);
+            setToastMessage("Cadastro realizado! Verifique seu email para confirmar a conta.");
+            setColor("bg-success")
+            setTimeout(() => {
+                setToastIsOpen(false);
+            }, 2500);
+            setTimeout(() => router.push('/login?newuserbuy=true'), 3500)
         } else if (status == 201) {
-            router.push("/login?success=true");
+            setToastIsOpen(true);
+            setToastMessage("Cadastro realizado! Verifique seu email para confirmar a conta.");
+            setColor("bg-success")
+            setTimeout(() => {
+                setToastIsOpen(false);
+            }, 2500);
+            setTimeout(() => router.push("/login?success=true"), 4000)
         } else {
             setToastIsOpen(true);
             setTimeout(() => {
@@ -66,6 +91,7 @@ const Register = function () {
             }, 2500);
             setToastMessage(data.message);
         }
+
     }
 
     return (
@@ -165,12 +191,12 @@ const Register = function () {
                                 type="password"
                                 placeholder="Confirme a sua senha"
                                 required
-                                minLength={6}
-                                maxLength={20}
+                                // minLength={6}
+                                // maxLength={20}
                                 className={styles.input}
                             />
                         </FormGroup>
-                            <legend className={styles.label}>ESCOLHA SUA SÉRIE</legend>
+                        <legend className={styles.label}>ESCOLHA SUA SÉRIE</legend>
                         <FormGroup className={styles.radioGroup} tag="fieldset">
                             <FormGroup check>
                                 <Label className={styles.radioLabel} check>
@@ -224,10 +250,10 @@ const Register = function () {
                         <Button type="submit" outline className={styles.formBtn}>
                             CADASTRAR
                         </Button>
+                        <ToastComponent color={color} isOpen={toastIsOpen} message={toastMessage} />
                     </Form>
                 </Container>
                 <Footer />
-                <ToastComponent color="bg-danger" isOpen={toastIsOpen} message={toastMessage} />
             </main>
         </>
     )

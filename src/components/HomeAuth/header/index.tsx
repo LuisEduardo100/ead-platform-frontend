@@ -6,11 +6,14 @@ import { Button, Container, Form, Input } from 'reactstrap'
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import profileService from "../../../services/profileService";
-import { Close, Search, SearchOutlined } from "@mui/icons-material";
+import { AccountCircle, Close, Search, SearchOutlined } from "@mui/icons-material";
 import YearSelect from "../selectBox";
+import { useYear } from "../selectBox/yearProvider";
+import Menuhamburger from "../../common/menu";
 
-const HeaderAuth = function ({ selectedYear, onYearChange }: { selectedYear: string, onYearChange: (year: string) => void }) {
+export default function HeaderAuth() {
     // Modal.setAppElement('#next')
+    const { selectedYear, onYearChange } = useYear()
     const [searchName, setSearchName] = useState("")
     const [initials, setInitials] = useState("")
     const [modalOpen, setModalOpen] = useState(false);
@@ -18,11 +21,9 @@ const HeaderAuth = function ({ selectedYear, onYearChange }: { selectedYear: str
     const [profilePicture, setProfilePicture] = useState("")
     const [expanded, setExpanded] = useState(false)
     const router = useRouter();
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
     const handleOpenModal = () => {
-        setModalOpen(true)
+        setModalOpen(!modalOpen)
     }
 
     const handleCloseModal = () => {
@@ -40,40 +41,15 @@ const HeaderAuth = function ({ selectedYear, onYearChange }: { selectedYear: str
         router.push(`/search?name=${searchName}&serie=${selectedYear}`);
         setSearchName("");
     };
-    
+
     const handleSearchClick = () => {
         router.push(`/search?name=${searchName}&serie=${selectedYear}`);
         setSearchName("");
     }
+
     const handleOpenSearch = () => {
         setExpanded(!expanded)
     };
-
-    const handleScroll = () => {
-        if (timer) {
-            clearTimeout(timer);
-        }
-
-        const newTimer = setTimeout(() => {
-            if (window.scrollY > 0) {
-                setIsScrolled(true);
-            } else {
-                setIsScrolled(false);
-            }
-        }, 50); // 1 segundo
-
-        setTimer(newTimer);
-    };
-
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-            if (timer) {
-                clearTimeout(timer);
-            }
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [timer]);
 
     useEffect(() => {
         profileService.fetchCurrent().then((user) => {
@@ -85,16 +61,17 @@ const HeaderAuth = function ({ selectedYear, onYearChange }: { selectedYear: str
         });
     }, []);
 
-    return (<>
-        <div className={`${styles.header} ${isScrolled ? styles.fixed : ''}`}>
+    return (
+        <div className={`${styles.header}`}>
             <Container className={styles.nav}>
-                <Link className={styles.linkStyle} href="/home">
-                    <div className={styles.divLogo}>
-                        <img src="/logo-vocenotadez.png" alt="logoFooter" className={styles.imgLogo} />
-                    </div>
-                </Link>
-                <div className='d-flex align-items-center justify-content-center gap-3 position-relative flex-wrap-reverse'>
+                <Menuhamburger/>
+                <div className='d-flex align-items-center justify-content-center gap-2 position-relative flex-wrap-reverse'>
                     <YearSelect selectedYear={selectedYear} onYearChange={onYearChange} />
+                    <Link href="/apostilas">
+                        <Button className={styles.apostilasBtn}>
+                            APOSTILAS
+                        </Button>
+                    </Link>
                     {!accessType ?
                         <div className="d-flex align-items-center gap-2">
                             <div className={styles.divAccess}>
@@ -105,29 +82,27 @@ const HeaderAuth = function ({ selectedYear, onYearChange }: { selectedYear: str
                             </Link>
                         </div>
                         :
-                        <div>
-                            <div className={`${styles.divAccess} ${styles.premium}`}>
-                                <p>PLANO COMPLETO</p>
-                            </div>
+                        <div className={`${styles.divAccess} ${styles.premium}`}>
+                            <p>PLANO COMPLETO</p>
                         </div>
-
                     }
-
-
                     <Form className={styles.formSearch} onSubmit={handleSearch}>
                         <Input
                             name="search"
                             id="search"
                             className={styles.inputSearch}
                             style={{
-                                width: expanded ? '300px' : '0px',  // Expande a largura suavemente
+                                borderRadius: '20px',
+                                width: expanded ? '350px' : '0',  // Expande a largura suavemente
                                 transform: expanded ? 'scaleX(1)' : 'scaleX(0)',  // Controla a escala
                                 transition: 'width 0.3s ease-in-out, transform 0.3s ease-in-out',  // Suaviza a transição
                                 transformOrigin: 'right',  // O ponto de origem da escala é à esquerda
                                 overflow: 'hidden',  // Evita que o conteúdo transborde 
                                 userSelect: 'none',
+                                paddingLeft: '60px',
+                                paddingRight: '50px'
                             }}
-                            placeholder={expanded ? 'Pesquise um curso' : ''}
+                            placeholder={expanded ? 'Buscar curso' : ''}
                             value={searchName}
                             onChange={(event) => {
                                 setSearchName(event.currentTarget.value.toLowerCase())
@@ -135,13 +110,19 @@ const HeaderAuth = function ({ selectedYear, onYearChange }: { selectedYear: str
                         {expanded ? (
                             <div className={styles.divSearchBtnsExpanded}>
                                 <SearchOutlined
-                                    className={styles.searchIcon2} onClick={handleSearchClick}
+                                    className={`${styles.searchIcon} ${styles.expanded}`}
+                                    onClick={handleSearchClick}
                                 />
-                                <Close className={styles.searchIcon} onClick={handleOpenSearch} onDoubleClick={handleSearchClick} />
+                                <Close
+                                    className={styles.closeIcon}
+                                    onClick={handleOpenSearch}
+                                />
                             </div>
                         ) : (
                             <SearchOutlined
-                                className={styles.searchIcon} onClick={handleOpenSearch} onDoubleClick={handleSearchClick}
+                                className={styles.searchIcon}
+                                onClick={handleOpenSearch}
+                                onDoubleClick={handleSearchClick}
                             />
                         )}
                     </Form>
@@ -153,9 +134,8 @@ const HeaderAuth = function ({ selectedYear, onYearChange }: { selectedYear: str
                             onClick={handleOpenModal}
                         />
                     ) :
-                        (<p className={styles.userProfile} onClick={handleOpenModal}>
-                            {initials}
-                        </p>)
+                    (<AccountCircle className={styles.userProfile} fontSize="small" onClick={handleOpenModal}/>)
+                        
                     }
                 </div>
                 <Modal
@@ -168,10 +148,8 @@ const HeaderAuth = function ({ selectedYear, onYearChange }: { selectedYear: str
                     <Link href="/profile" className={styles.modalLink}>Meus Dados</Link>
                     <p className={styles.modalLink} onClick={handleLogout}>Sair</p>
                 </Modal>
-
             </Container>
         </div>
-    </>)
+    )
 }
 
-export default HeaderAuth

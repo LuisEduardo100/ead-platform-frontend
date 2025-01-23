@@ -3,7 +3,7 @@ import useSWR from 'swr'
 import styles from './styles.module.scss'
 import courseService from '../../../services/courseService'
 import PageSpinner from '../../common/pageSpinner'
-import SlideSection from '../../HomeNoAuth/slideSection'
+import SlideSection from '../../HomeNoAuth/slideSectionSelectedYear'
 import { Container } from 'reactstrap'
 
 export default function FeaturedCategory({ selectedYear }: { selectedYear: string }) {

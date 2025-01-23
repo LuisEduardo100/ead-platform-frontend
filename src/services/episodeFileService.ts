@@ -1,3 +1,4 @@
+import { headers } from "next/headers"
 import api from "./api"
 import { EpisodeType } from "./courseService"
 
@@ -42,6 +43,20 @@ const episodeFileService = {
             return res.data
         } catch (err: any) {
             return err.response
+        }
+    },
+    getAllFiles: async () => {
+        try {
+            const token = sessionStorage.getItem("vocenotadez-token")
+            const res = await api.get('apostilas', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            return res
+        } catch (error: any) {
+            console.error("Erro ao buscar apostilas", error)
+            throw error
         }
     }
 }

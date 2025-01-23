@@ -12,6 +12,7 @@ import ToastComponent from "../../../src/components/common/toastComponent";
 import { IconButton, styled } from "@mui/material";
 import { ArrowBackIosNew } from "@mui/icons-material";
 import { useYear } from "../../../src/components/HomeAuth/selectBox/yearProvider";
+import FooterAuth from "../../../src/components/HomeAuth/footerAuth";
 
 const IconBtn = styled(IconButton)({
   color: "#000",
@@ -187,7 +188,7 @@ export default function Course({ params }: ParamsProps) {
               <EpisodeList key={episode.id} episode={episode} course={course} />)
           )}
         </Container>
-        <Footer />
+        <FooterAuth />
         <ToastComponent isOpen={toastIsOpen} color={toastColor} message={toastMessage} />
       </main>
     </>

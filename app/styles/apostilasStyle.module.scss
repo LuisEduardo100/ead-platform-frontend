@@ -1,0 +1,60 @@
+.h1Title {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 2rem;
+}
+
+.ulDiv {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    .liDiv {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        padding: 1rem;
+        border: 1px solid #adadad;
+        width: 250px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &:hover {
+            opacity: .75;
+            background-color: #adadadb0;
+            cursor: pointer;
+        }
+
+        &.selected {
+            background-color: #C2E7FF;
+        }
+
+        .buttonStyle {
+            background-color: transparent;
+            border: none;
+            display: inline-block;
+            text-decoration: none;
+            color: #000;
+            margin-left: 0.5rem;
+            max-width: 100%;
+            overflow: hidden;
+
+            .fileName {
+                margin-top: 5.5px;
+                display: inline-block;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: calc(100% - 10px);
+
+                &:hover {
+                    overflow: visible;
+                    white-space: normal;
+                }
+            }
+        }
+    }
+}

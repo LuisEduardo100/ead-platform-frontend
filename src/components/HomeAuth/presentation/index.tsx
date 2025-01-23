@@ -7,15 +7,15 @@ import HeaderAuth from '../header';
 import { Button, Container } from 'reactstrap';
 import Link from 'next/link';
 import { PlayArrow, Reply } from '@mui/icons-material';
-import Aos from 'aos';
-import { useEffect } from 'react';
+import { useYear } from '../selectBox/yearProvider';
 
 
 export default function 
-HomeAuthPresentation({ selectedYear, onYearChange }: { selectedYear: string, onYearChange: (year: string) => void }) {
+HomeAuthPresentation() {
     const { data, error } = useSWR('/featured', courseService.getFeaturedCourses)
+    const { selectedYear, onYearChange } = useYear()
     const filteredFeaturedCourses = data?.data?.filter((course: CourseType) => course.serie === selectedYear);
-
+    
     if (error) return error
     if (!data) return <PageSpinner />
     return <>
@@ -29,7 +29,7 @@ HomeAuthPresentation({ selectedYear, onYearChange }: { selectedYear: string, onY
                         height: "750px",
                     }}
                     >
-                        <HeaderAuth selectedYear={selectedYear} onYearChange={onYearChange} />
+                        <HeaderAuth/>
                         <Container className={styles.containerStyle}>
                             <p className={styles.title}>{course.featuredName}</p>
                             <p className={styles.description}>{course.synopsis}</p>

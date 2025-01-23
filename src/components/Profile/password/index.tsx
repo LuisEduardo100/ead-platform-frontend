@@ -7,6 +7,11 @@ import { useRouter } from "next/navigation";
 import profileService from "../../../services/profileService";
 import ToastComponent from "../../common/toastComponent";
 
+const validatePasswordStrength = (password: string): boolean => {
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+};
+
 export default function PasswordForm() {
     const [color, setColor] = useState("");
     const [toastIsOpen, setToastIsOpen] = useState(false);
@@ -40,9 +45,17 @@ export default function PasswordForm() {
             setErrorMessage("Senha antiga e nova antiga são iguais!");
             setColor("bg-danger");
             setTimeout(() => setToastIsOpen(false), 700 * 3);
-
             return;
         }
+
+        if (!validatePasswordStrength(newPassword)) {
+            setToastIsOpen(true);
+            setErrorMessage("A senha deve conter pelo menos 8 caracteres, incluindo letras, números e caracteres especiais (@, $, !, %¨, *, ?, &)");
+            setColor("bg-danger");
+            setTimeout(() => setToastIsOpen(false), 900 * 3);
+            return
+        }
+
         const { status } = await profileService.passwordUpdate({
             currentPassword,
             newPassword,
@@ -56,7 +69,6 @@ export default function PasswordForm() {
                 sessionStorage.clear();
                 router.push("/");
             }
-
             setCurrentPassword("");
             setNewPassword("");
             setConfirmPassword("");

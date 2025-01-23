@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./styles/globals.scss";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { YearProvider } from "../src/components/HomeAuth/selectBox/yearProvider";
+import { MenuProvider } from "../src/components/common/menu/menuProvider";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,9 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <YearProvider> 
-          {children}
-        </YearProvider>
+        <MenuProvider>
+          <YearProvider>
+            {children}
+          </YearProvider>
+        </MenuProvider>
       </body>
     </html>
   );

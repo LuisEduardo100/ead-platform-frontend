@@ -6,14 +6,15 @@ import OnGoingCategory from '../../src/components/HomeAuth/keepWatchingSlide'
 import ListCategories from '../../src/components/HomeAuth/listCategories'
 import NewestCategory from '../../src/components/HomeAuth/newestCategory'
 import HomeAuthPresentation from '../../src/components/HomeAuth/presentation'
-import Footer from '../../src/components/common/footer'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useYear } from '../../src/components/HomeAuth/selectBox/yearProvider';
 import FooterAuth from '../../src/components/HomeAuth/footerAuth';
-
+import { useMenu } from '../../src/components/common/menu/menuProvider';
+import styles from './styles.module.scss'
 const HomeAuth = function () {
     const {selectedYear, onYearChange} = useYear()
+    const { isMenuOpen } = useMenu();
 
     useEffect(() => {
         AOS.init(); 
@@ -22,8 +23,8 @@ const HomeAuth = function () {
 
     return (
         <>
-            <main>
-                <HomeAuthPresentation selectedYear={selectedYear} onYearChange={onYearChange} />
+            <main className={`${styles.main} ${isMenuOpen ? styles.menuOpen : ""}`}>
+                <HomeAuthPresentation/>
                 <div className='pb-5'data-aos="fade-right" data-aos-duration="500" data-aos-offset="300">
                     <OnGoingCategory selectedYear={selectedYear} />
                     <NewestCategory selectedYear={selectedYear} />

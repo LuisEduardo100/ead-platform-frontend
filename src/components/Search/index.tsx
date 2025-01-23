@@ -9,7 +9,6 @@ import PageSpinner from "../common/pageSpinner";
 import HeaderAuth from "../HomeAuth/header";
 import Footer from "../common/footer";
 import profileService from "../../services/profileService";
-import HeaderNoAuth from "../HomeNoAuth/header";
 import HeaderGeneric from "../common/headerGeneric";
 import { useYear } from "../HomeAuth/selectBox/yearProvider";
 import { SearchOutlined } from "@mui/icons-material";

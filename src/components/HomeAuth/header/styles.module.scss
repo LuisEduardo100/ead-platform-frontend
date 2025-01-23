@@ -36,12 +36,23 @@
     outline: none;
 
     &:focus {
-        outline: none; 
-        box-shadow: none; 
+        outline: none;
+        box-shadow: none;
     }
 }
 
 .divAccess {
+    background-color: green;
+    padding: 8px 16px;
+    margin-right: 10px;
+    font-size: 0.9rem;
+    text-align: center;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+}
+
+.apostilasBtn {
     background-color: green;
     padding: 8px 16px;
     margin-right: 10px;
@@ -58,14 +69,12 @@
 
 .userProfile {
     margin-left: 9px;
-    background-color: #DEB66B;
     color: black;
     border-radius: 50%;
     justify-content: center;
     font-weight: bold;
     min-height: 45px;
     min-width: 45px;
-    text-transform: uppercase;
     font-size: 24px;
     display: flex;
     align-items: center;
@@ -84,6 +93,7 @@
     justify-content: space-between;
     padding: 10px;
 }
+
 .header {
     position: relative; // Posição normal antes de rolar
     width: 100%;
@@ -91,26 +101,28 @@
     z-index: 1000;
 
     &.fixed {
-      position: fixed;
-      top: 0;
-      left: 0;
-      background-color: white; // Cor de fundo opcional para header fixo
-      animation: fadeIn 0.3s ease-in-out; // Suave aparecimento após o scroll
-  
-      background: rgba(184, 219, 235, 0.2); // Fundo semi-transparente
-      backdrop-filter: blur(10px); // Aplica o desfoque
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: white; // Cor de fundo opcional para header fixo
+        animation: fadeIn 0.3s ease-in-out; // Suave aparecimento após o scroll
+
+        background: rgba(184, 219, 235, 0.2); // Fundo semi-transparente
+        backdrop-filter: blur(10px); // Aplica o desfoque
 
     }
-  }
-  
-  @keyframes fadeIn {
+}
+
+@keyframes fadeIn {
     from {
-      opacity: 0;
+        opacity: 0;
     }
+
     to {
-      opacity: 1;
+        opacity: 1;
     }
-  }
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -168,7 +180,6 @@
     display: flex;
     align-items: center;
     position: relative;
-
     .searchIcon {
         font-size: 2.2rem;
         position: absolute;
@@ -177,23 +188,43 @@
         &:hover {
             cursor: pointer;
         }
+
+        &.expanded {
+            width: 55px;
+            display: flex;
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+            left: 0%; // Quando expandido, move para a esquerda
+            right: auto;
+
+            &:hover {
+                background-color: #e6e6e6;
+            }
+        }
+
     }
-    .searchIcon2 {
+
+    .closeIcon {
+        width: 50px;
         font-size: 2.2rem;
         position: absolute;
-        right: 13%;
+        right: 0%;
 
         &:hover {
             cursor: pointer;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+            background-color: #e6e6e6;
         }
-        
     }
 }
 
 .divSearchBtnsExpanded {
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
+
 @media (min-width: 1610px) and (max-width: 2000px) {
     .modal {
         right: 10.5%;

@@ -8,7 +8,7 @@ export type EpisodeType = {
     videoUrl: string;
     quizz: QuizzType[]
     secondsLong: number;
-    Files: EpisodeFileType[];
+    files: EpisodeFileType[];
 }
 export type CourseType = {
     id: number;
@@ -51,9 +51,8 @@ export type EpisodeFileType = {
     id: number;
     episodeId: EpisodeFileType;
     name: string;
-    fileUrl: string[]
+    url: string[]
 }
-
 
 const courseService = {
     getNewestCourses: async () => {

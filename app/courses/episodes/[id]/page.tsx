@@ -246,10 +246,6 @@ export default function EpisodePlayer({ params, searchParams, }: {
     router.push(`/courses/${courseId}`)
   }
 
-  const goToQuizzPage = () => {
-    router.push(`/courses/episodes/${episodeOrder}/quizz`)
-  }
-
   useEffect(() => {
     getCourse();
   }, [courseId]);
@@ -366,9 +362,6 @@ export default function EpisodePlayer({ params, searchParams, }: {
                 ) : (
                   <p className={styles.pSemDownload}>Sem material para download.</p>
                 )}
-                <Button onClick={goToQuizzPage}>
-                  <p>Pratique com exercício!</p>
-                </Button>
               </div>
               <div className={styles.divSinopse}>
                 <p className={styles.pSinopse}>{course.Episodes[episodeOrder].synopsis}</p>

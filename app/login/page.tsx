@@ -53,21 +53,35 @@ const Login = function () {
         const password = formData.get("password")!.toString()
         const params = { email, password }
 
-        const { status } = await authService.login(params)
+        try {
+            const response = await authService.login(params);
+            console.log("Login response:", response);
 
-        if (status === 200 && registerSuccess == 'true') {
-            router.push("/precos")
-        } else if (status === 200) {
-            router.push("/home")
-        } else {
-            setToastColor("bg-danger")
-            setToastIsOpen(true)
-            setTimeout(() => {
-                setToastIsOpen(false)
-            }, 2500)
+            const { status } = response;
 
-            setToastMessage("Email ou senha incorretos")
+            if (status === 200 && registerSuccess === "true") {
+                router.push("/precos");
+            } else if (status === 200) {
+                router.push("/home");
+            } else if (status === 401) {
+                setToastColor("bg-danger")
+                setToastIsOpen(true)
+                setToastMessage("Acesso negado. Confirmação de email necessária.")
+                setTimeout(() => {
+                    setToastIsOpen(false);
+                }, 2500);
+            } else {
+                setToastColor("bg-danger")
+                setToastIsOpen(true)
+                setToastMessage("Email ou senha incorretos.")
+                setTimeout(() => {
+                    setToastIsOpen(false);
+                }, 2500);
+            }
+        } catch (error: any) {
+            return error.message
         }
+
     }
     return (<>
         <main className={styles.main}>
@@ -93,14 +107,14 @@ const Login = function () {
                             <Input
                                 id="password"
                                 name="password"
-                                type= {isPasswordVisible ? 'text' : 'password'}
+                                type={isPasswordVisible ? 'text' : 'password'}
                                 required
                                 placeholder="Digite a sua senha"
                                 className={styles.input}
-                                />
-                                <span className={styles.visibility} onClick={togglePasswordVisibility}>
-                                    {isPasswordVisible ? <VisibilityOff/> : <Visibility/>}
-                                </span>
+                            />
+                            <span className={styles.visibility} onClick={togglePasswordVisibility}>
+                                {isPasswordVisible ? <VisibilityOff /> : <Visibility />}
+                            </span>
                         </div>
                         <Link href={'/resetPassword'} target="_blank" className={styles.forgotPassword}>Esqueceu sua senha?</Link>
                     </FormGroup>
