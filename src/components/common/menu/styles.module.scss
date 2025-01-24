@@ -37,7 +37,7 @@ $menu-hover-color: #007bff;
             }
             .divLogo {
                 .imgLogo {
-                    width: 180px;
+                    width: 160px;
                     transition: width 0.5s 
                 }
             }
@@ -54,7 +54,7 @@ $menu-hover-color: #007bff;
         transform: translateX(-100%);
         transition: transform 0.3s ease-in-out;
         z-index: 1000;
-        padding: 200px 0px 0px 0px;
+        padding: 110px 0px 0px 0px;
         &.visible {
             transform: translateX(0);
         }
@@ -65,13 +65,22 @@ $menu-hover-color: #007bff;
 
         nav {
             ul {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
                 list-style: none;
                 padding: 0;
-                margin: 0;
+                margin: 0 auto;
 
                 li {
-                    padding: 15px;
-
+                    display: flex;
+                    align-items: center;
+                    padding: 15px 25px;
+                    
+                    &:hover {
+                        background-color: #ccc;
+                        cursor: pointer;
+                    }
                     a {
                         text-decoration: none;
                         color: $menu-text-color;

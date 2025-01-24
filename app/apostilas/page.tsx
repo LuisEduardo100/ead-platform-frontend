@@ -1,19 +1,19 @@
 'use client'
 import { useEffect, useState } from "react";
 import episodeFileService from "../../src/services/episodeFileService";
-import Link from "next/link";
 import { CategoryType } from "../../src/services/categoriesService";
-import { useYear } from "../../src/components/HomeAuth/selectBox/yearProvider";
 import HeaderAuth from "../../src/components/HomeAuth/header";
 import { Button, Container } from "reactstrap";
 import HandoutNavigation from "../../src/components/common/navigationHandouts";
 import styles from '../styles/apostilasStyle.module.scss'
 import { useRouter } from "next/navigation";
 import { Folder } from "@mui/icons-material";
+import { useMenu } from "../../src/components/common/menu/menuProvider";
 export default function ApostilaPage() {
     const [apostilas, setApostilas] = useState([])
     const router = useRouter()
     const [selected, setSelected] = useState<number | string>();
+    const { isMenuOpen } = useMenu();
 
     useEffect(() => {
         const getAllApostila = async () => {
@@ -53,8 +53,8 @@ export default function ApostilaPage() {
     };
 
     return (
-        <main>
-            <HeaderAuth/>
+        <main className={`${styles.main} ${isMenuOpen ? styles.menuOpen : ""}`}>
+            <HeaderAuth />
             <Container className='py-4'>
                 <HandoutNavigation serie={null} topic={null} />
                 <ul className={styles.ulDiv}>

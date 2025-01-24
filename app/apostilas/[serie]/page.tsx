@@ -1,16 +1,15 @@
 'use client'
 import { useParams, useRouter } from 'next/navigation'; // Captura parâmetros da rota
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { CategoryType } from '../../../src/services/categoriesService';
 import episodeFileService from '../../../src/services/episodeFileService';
 import { CourseType } from '../../../src/services/courseService';
-import { useYear } from '../../../src/components/HomeAuth/selectBox/yearProvider';
 import HandoutNavigation from '../../../src/components/common/navigationHandouts';
 import { Button, Container } from 'reactstrap';
 import HeaderAuth from '../../../src/components/HomeAuth/header';
 import styles from '../../styles/serieStyle.module.scss';
 import { Folder } from '@mui/icons-material';
+import { useMenu } from '../../../src/components/common/menu/menuProvider';
 
 export default function SeriePage() {
     const { serie } = useParams(); // Captura o parâmetro da rota dinâmica
@@ -18,6 +17,7 @@ export default function SeriePage() {
     const [data, setData] = useState<CategoryType[]>([]); // Dados completos
     const router = useRouter()
     const [selected, setSelected] = useState<number | string>(); // Mover o estado para fora do map
+    const {isMenuOpen} = useMenu()
 
     useEffect(() => {
         const getAllApostila = async () => {
@@ -62,7 +62,7 @@ export default function SeriePage() {
         setSelected(courseId);
     };
     return (
-        <main>
+        <main className={`${styles.main} ${isMenuOpen ? styles.menuOpen : ""}`}>
             <HeaderAuth/>
             <Container className='py-4'>
                 <HandoutNavigation serie={decodeURIComponent(String(serie))} topic={null} />

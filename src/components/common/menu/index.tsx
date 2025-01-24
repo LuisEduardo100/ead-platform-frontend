@@ -1,19 +1,22 @@
 'use client';
-import { Menu, Close } from '@mui/icons-material';
+import { Menu, Close, Home, VideoLibrary, LibraryBooks, Help } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 import { Button } from 'reactstrap';
 import styles from './styles.module.scss';
 import { useMenu } from './menuProvider';
 import Link from 'next/link';
+import { useYear } from '../../HomeAuth/selectBox/yearProvider';
+import YearSelect from '../../HomeAuth/selectBox';
+import profileService from '../../../services/profileService';
+import { useRouter } from 'next/navigation';
 
 export default function Menuhamburger() {
     const { isMenuOpen, toggleMenu, setIsMenuOpen } = useMenu() // Usa o contexto para controlar o estado do menu
-    const [isLargeScreen, setIsLargeScreen] = useState(false);
-
+    const { selectedYear, onYearChange } = useYear()
+    const router = useRouter()
     useEffect(() => {
         const handleResize = () => {
-            const isLarge = window.innerWidth >= 1321;
-            setIsLargeScreen(isLarge);
+            const isLarge = window.innerWidth >= 1442;
 
             // Se for tela grande, o menu deve estar visível.
             if (isLarge) {
@@ -32,7 +35,23 @@ export default function Menuhamburger() {
         return () => window.removeEventListener('resize', handleResize);
     }, [setIsMenuOpen]); // Adiciona dependência para evitar problemas com closures
 
-    return (
+    const handlePushHome = () => {
+        router.push('/home')
+    }
+
+    const handlePushCourses = () => {
+        router.push('')
+    }
+
+    const handlePushHandouts = () => {
+        router.push('/apostilas')
+    }
+
+    const handlePushSupport = () => {
+        router.push('')
+    }
+
+    return (<>
         <div className={styles.menuContainer}>
             {/* Botão de menu visível sempre */}
             <div className={styles.menuLogo}>
@@ -53,22 +72,28 @@ export default function Menuhamburger() {
             >
                 <nav>
                     <ul>
-                        {/* NÃO VAI TER PLANO COMPLETO - 
-                        CASO O USUÁRIO N ESTIVER CADASTRADO
-                        VOU COLOCAR O BOTÃO MATRICULE-SE */}
-                        <li><a href="#">Série</a></li>
-                        <li><a href="#">Início</a></li>
-                        <li><a href="#">Apostilas</a></li>
-                        <li><a href="#">Inscrições</a></li>
-                        <li><a href="#">Histórico</a></li>
-                        <li><a href="#">Playlists</a></li>
-                        <li><a href="#">Seus vídeos</a></li>
-                        <li><a href="#">Seus cursos</a></li>
-                        <li><a href="#">Assistir mais tarde</a></li>
-                        <li><a href="#">Vídeos com 'Gostei'</a></li>
+                        <div style={{ padding: '15px 0px', textAlign: 'center' }}>
+                            <YearSelect selectedYear={selectedYear} onYearChange={onYearChange} />
+                        </div>
+                        <li onClick={handlePushHome}>
+                            <Home fontSize='large' style={{ marginRight: '10px' }} />
+                            Início
+                        </li>
+                        <li onClick={handlePushCourses}>
+                            <VideoLibrary fontSize='large' style={{ marginRight: '10px' }} />
+                            Todos os cursos
+                        </li>
+                        <li onClick={handlePushHandouts}>
+                            <LibraryBooks fontSize='large' style={{ marginRight: '10px' }} />
+                           Apostilas
+                        </li>
+                        <li onClick={handlePushSupport}>
+                            <Help fontSize='large' style={{ marginRight: '10px' }} />
+                            Suporte
+                        </li>
                     </ul>
                 </nav>
             </div>
         </div>
-    );
+    </>);
 }

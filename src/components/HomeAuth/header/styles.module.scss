@@ -1,6 +1,5 @@
 .divbackground {
     background-color: transparent;
-    padding: 10px;
 }
 
 .divLogo {
@@ -33,8 +32,11 @@
 }
 
 .inputSearch {
-    outline: none;
-
+    width: 550px;
+    height: 40px;
+    border: 2px solid #ccc;
+    border-radius: 20px;
+    padding-right: 50px;
     &:focus {
         outline: none;
         box-shadow: none;
@@ -88,29 +90,12 @@
     cursor: pointer;
 }
 
-.nav {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-}
-
 .header {
-    position: relative; // Posição normal antes de rolar
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
-    transition: all 0.3s ease-in-out; // Transição suave para quando ele ficar fixo
-    z-index: 1000;
-
-    &.fixed {
-        position: fixed;
-        top: 0;
-        left: 0;
-        background-color: white; // Cor de fundo opcional para header fixo
-        animation: fadeIn 0.3s ease-in-out; // Suave aparecimento após o scroll
-
-        background: rgba(184, 219, 235, 0.2); // Fundo semi-transparente
-        backdrop-filter: blur(10px); // Aplica o desfoque
-
-    }
+    padding: 10px 60px;
 }
 
 @keyframes fadeIn {
@@ -187,42 +172,12 @@
 
         &:hover {
             cursor: pointer;
-        }
-
-        &.expanded {
-            width: 55px;
-            display: flex;
-            border-top-left-radius: 20px;
-            border-bottom-left-radius: 20px;
-            left: 0%; // Quando expandido, move para a esquerda
-            right: auto;
-
-            &:hover {
-                background-color: #e6e6e6;
-            }
+            background-color: #ccccccbd;
+            border-radius: 50%;
         }
 
     }
 
-    .closeIcon {
-        width: 50px;
-        font-size: 2.2rem;
-        position: absolute;
-        right: 0%;
-
-        &:hover {
-            cursor: pointer;
-            border-top-right-radius: 20px;
-            border-bottom-right-radius: 20px;
-            background-color: #e6e6e6;
-        }
-    }
-}
-
-.divSearchBtnsExpanded {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 @media (min-width: 1610px) and (max-width: 2000px) {

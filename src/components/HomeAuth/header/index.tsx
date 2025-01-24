@@ -63,92 +63,49 @@ export default function HeaderAuth() {
 
     return (
         <div className={`${styles.header}`}>
-            <Container className={styles.nav}>
-                <Menuhamburger/>
-                <div className='d-flex align-items-center justify-content-center gap-2 position-relative flex-wrap-reverse'>
-                    <YearSelect selectedYear={selectedYear} onYearChange={onYearChange} />
-                    <Link href="/apostilas">
-                        <Button className={styles.apostilasBtn}>
-                            APOSTILAS
-                        </Button>
+            <Menuhamburger />
+            <Form className={styles.formSearch} onSubmit={handleSearch}>
+                <Input
+                    name="search"
+                    id="search"
+                    className={styles.inputSearch}
+                    placeholder='Buscar curso'
+                    value={searchName}
+                    onChange={(event) => {
+                        setSearchName(event.currentTarget.value.toLowerCase())
+                    }} />
+                <SearchOutlined
+                    className={`${styles.searchIcon} ${styles.expanded}`}
+                    onClick={handleSearchClick}
+                />
+            </Form>
+            <div>
+                {!accessType &&
+                    <Link href="/precos" style={{ marginRight: '4px' }}>
+                        <Button className={styles.btnPrecos}>MATRICULE-SE</Button>
                     </Link>
-                    {!accessType ?
-                        <div className="d-flex align-items-center gap-2">
-                            <div className={styles.divAccess}>
-                                <p>PLANO GRATUITO</p>
-                            </div>
-                            <Link href="/precos" style={{ marginRight: '4px' }}>
-                                <Button className={styles.btnPrecos}>MATRICULE-SE</Button>
-                            </Link>
-                        </div>
-                        :
-                        <div className={`${styles.divAccess} ${styles.premium}`}>
-                            <p>PLANO COMPLETO</p>
-                        </div>
-                    }
-                    <Form className={styles.formSearch} onSubmit={handleSearch}>
-                        <Input
-                            name="search"
-                            id="search"
-                            className={styles.inputSearch}
-                            style={{
-                                borderRadius: '20px',
-                                width: expanded ? '350px' : '0',  // Expande a largura suavemente
-                                transform: expanded ? 'scaleX(1)' : 'scaleX(0)',  // Controla a escala
-                                transition: 'width 0.3s ease-in-out, transform 0.3s ease-in-out',  // Suaviza a transição
-                                transformOrigin: 'right',  // O ponto de origem da escala é à esquerda
-                                overflow: 'hidden',  // Evita que o conteúdo transborde 
-                                userSelect: 'none',
-                                paddingLeft: '60px',
-                                paddingRight: '50px'
-                            }}
-                            placeholder={expanded ? 'Buscar curso' : ''}
-                            value={searchName}
-                            onChange={(event) => {
-                                setSearchName(event.currentTarget.value.toLowerCase())
-                            }} />
-                        {expanded ? (
-                            <div className={styles.divSearchBtnsExpanded}>
-                                <SearchOutlined
-                                    className={`${styles.searchIcon} ${styles.expanded}`}
-                                    onClick={handleSearchClick}
-                                />
-                                <Close
-                                    className={styles.closeIcon}
-                                    onClick={handleOpenSearch}
-                                />
-                            </div>
-                        ) : (
-                            <SearchOutlined
-                                className={styles.searchIcon}
-                                onClick={handleOpenSearch}
-                                onDoubleClick={handleSearchClick}
-                            />
-                        )}
-                    </Form>
-                    {profilePicture ? (
-                        <img
-                            src={`${process.env.NEXT_PUBLIC_BASEURL}/${profilePicture}`}
-                            alt="user picture"
-                            className={styles.imageProfile}
-                            onClick={handleOpenModal}
-                        />
-                    ) :
-                    (<AccountCircle className={styles.userProfile} fontSize="small" onClick={handleOpenModal}/>)
-                        
-                    }
-                </div>
-                <Modal
-                    isOpen={modalOpen}
-                    onRequestClose={handleCloseModal}
-                    shouldCloseOnEsc={true}
-                    className={styles.modal}
-                    overlayClassName={styles.overlayModal}
-                >
-                    <Link href="/profile" className={styles.modalLink}>Meus Dados</Link>
-                    <p className={styles.modalLink} onClick={handleLogout}>Sair</p>
-                </Modal>
-            </Container>
+                }
+                {profilePicture ? (
+                    <img
+                        src={`${process.env.NEXT_PUBLIC_BASEURL}/${profilePicture}`}
+                        alt="user picture"
+                        className={styles.imageProfile}
+                        onClick={handleOpenModal}
+                    />
+                ) :
+                    (<AccountCircle className={styles.userProfile} fontSize="small" onClick={handleOpenModal} />)
+                }
+            </div>
+            <Modal
+                isOpen={modalOpen}
+                onRequestClose={handleCloseModal}
+                shouldCloseOnEsc={true}
+                className={styles.modal}
+                overlayClassName={styles.overlayModal}
+            >
+                <Link href="/profile" className={styles.modalLink}>Meus Dados</Link>
+                <p className={styles.modalLink} onClick={handleLogout}>Sair</p>
+            </Modal>
         </div>
     )
 }

@@ -11,11 +11,12 @@ import { Container } from 'reactstrap';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import HandoutNavigation from '../../../../src/components/common/navigationHandouts';
 import { useYear } from '../../../../src/components/HomeAuth/selectBox/yearProvider';
+import { useMenu } from '../../../../src/components/common/menu/menuProvider';
 export default function TopicPage() {
     const { topic } = useParams(); // Obtém o parâmetro da URL dinâmica
     const [files, setFiles] = useState<EpisodeFileType[]>([]); // Estado para armazenar arquivos
     const [course, setCourse] = useState<CourseType>(); // Estado para armazenar arquivos
-    
+    const {isMenuOpen} = useMenu()
     useEffect(() => {
         const getFiles = async () => {
             try {
@@ -54,7 +55,7 @@ export default function TopicPage() {
     }, [topic]);
 
     return (
-        <main>
+        <main className={`${styles.main} ${isMenuOpen ? styles.menuOpen : ""}`}>
             <HeaderAuth/>
             <Container className='py-4'>
                 <HandoutNavigation topic={String(course?.name)} serie={String(course?.serie)} />
