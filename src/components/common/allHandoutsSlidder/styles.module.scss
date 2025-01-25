@@ -1,0 +1,100 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.noSearchText {
+    display: flex;
+    justify-content: center;
+    font-size: 32px;
+    padding-top: 50px;
+    color: black;
+}
+
+.slideItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 1rem;
+    border: 1px solid #adadad;
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:hover {
+        opacity: .75;
+        background-color: #adadadb0;
+        cursor: pointer;
+    }
+}
+
+.iconAndLink {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.linkStyle {
+    text-decoration: none;
+    color: #000;
+    margin-left: 0.5rem;
+    max-width: 100%;
+    overflow: visible;
+
+    .fileName {
+            display: inline-block;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 180px; /* Limita o tamanho do texto */
+                position: relative; /* Necessário para a tooltip */
+                z-index: 1000;
+                /* Tooltip */
+                &::after {
+                    content: attr(data-fullname); /* Mostra o nome completo */
+                    position: absolute;
+                    top: 100%; /* Aparece abaixo do texto */
+                    left: 0;
+                    background-color: rgba(0, 0, 0, 0.8);
+                    color: #fff;
+                    padding: 0.3rem 0.5rem;
+                    border-radius: 4px;
+                    font-size: 0.85rem;
+                    white-space: nowrap;
+                    opacity: 0;
+                    pointer-events: none;
+                    transform: translateY(5px);
+                    transition: opacity 0.3s ease, transform 0.3s ease;
+                    z-index: 1000;
+                }
+
+                &:hover::after {
+                    opacity: 1;
+                    pointer-events: auto;
+                    transform: translateY(0);
+                }
+    }
+}
+
+.fileDetails1 {
+    display: inline;
+    font-size: 0.9rem;
+    color: #555;
+    width: 110px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.fileDetails2 {
+    display: inline;
+    font-size: 0.9rem;
+    color: #555;
+    width: 110px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

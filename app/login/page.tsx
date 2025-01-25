@@ -48,7 +48,6 @@ const Login = function () {
         event.preventDefault()
 
         const registerSuccess = paramsUrl.get("newuserbuy")
-
         const formData = new FormData(event.currentTarget)
         const email = formData.get("email")!.toString()
         const password = formData.get("password")!.toString()

@@ -14,6 +14,8 @@ import { SearchOutlined } from "@mui/icons-material";
 import { useMenu } from "../common/menu/menuProvider";
 import SlideComponentSearch from "../common/SlideComponentSearch";
 import FooterAuth from "../HomeAuth/footerAuth";
+import AllHandouts from "../common/allHandouts";
+import AllHandoutsSlidder from "../common/allHandoutsSlidder";
 
 export default function SearchComponents(
     { searchParams }: {
@@ -119,7 +121,7 @@ export default function SearchComponents(
 
                 <section className={styles.mainContent}>
                     {searchResult.length >= 1 ? (
-                        <div style={{padding: '20px 50px'}}>
+                        <div style={{ padding: '20px 50px' }}>
                             <p
                                 style={{
                                     fontSize: '1.4rem',
@@ -128,11 +130,12 @@ export default function SearchComponents(
                             <SlideComponentSearch course={searchResult} />
                         </div>
                     ) : (
-                        <p className={styles.noSearchText}>Nenhum resultado encontrado!</p>
+                        <p className={styles.noSearchText}>Nenhum curso encontrado</p>
                     )}
+                    <AllHandoutsSlidder searchTerm={searchName} />
                 </section>
             </main>
-            {searchUser ? <FooterAuth/> : <Footer/>}
+            {searchUser ? <FooterAuth /> : <Footer />}
         </>
     );
 }

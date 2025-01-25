@@ -15,7 +15,7 @@ HomeAuthPresentation() {
     const { data, error } = useSWR('/featured', courseService.getFeaturedCourses)
     const { selectedYear, onYearChange } = useYear()
     const filteredFeaturedCourses = data?.data?.filter((course: CourseType) => course.serie === selectedYear);
-    
+    console.log(filteredFeaturedCourses)
     if (error) return error
     if (!data) return <PageSpinner />
     return <>
