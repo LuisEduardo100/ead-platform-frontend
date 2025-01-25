@@ -3,18 +3,19 @@ import { useEffect, useState } from "react";
 import episodeFileService from "../../src/services/episodeFileService";
 import { CategoryType } from "../../src/services/categoriesService";
 import HeaderAuth from "../../src/components/HomeAuth/header";
-import { Button, Container } from "reactstrap";
+import { Button, Container, Input } from "reactstrap";
 import HandoutNavigation from "../../src/components/common/navigationHandouts";
 import styles from '../styles/apostilasStyle.module.scss'
 import { useRouter } from "next/navigation";
-import { Folder } from "@mui/icons-material";
+import { Folder, SearchOutlined } from "@mui/icons-material";
 import { useMenu } from "../../src/components/common/menu/menuProvider";
+import AllHandouts from "../../src/components/common/allHandouts";
 export default function ApostilaPage() {
     const [apostilas, setApostilas] = useState([])
     const router = useRouter()
     const [selected, setSelected] = useState<number | string>();
     const { isMenuOpen } = useMenu();
-
+    const [searchTerm, setSearchTerm] = useState("");
     useEffect(() => {
         const getAllApostila = async () => {
             try {
@@ -55,7 +56,7 @@ export default function ApostilaPage() {
     return (
         <main className={`${styles.main} ${isMenuOpen ? styles.menuOpen : ""}`}>
             <HeaderAuth />
-            <Container className='py-4'>
+            <div className={styles.mainContent}>
                 <HandoutNavigation serie={null} topic={null} />
                 <ul className={styles.ulDiv}>
                     {uniqueSeries().map(serie => (
@@ -66,11 +67,24 @@ export default function ApostilaPage() {
                             onDoubleClick={() => handleNavigation(serie)}
                         >
                             <Folder fontSize='large' />
-                            <Button className={styles.buttonStyle} href={`/apostilas/${serie}`}>{serie}</Button>
+                            <Button className={styles.buttonStyle}>{serie}</Button>
                         </li>
                     ))}
                 </ul>
-            </Container>
+                <div>
+                    <div className={styles.containerHeader}>
+                        <p>Todas as apostilas</p>
+                        <Input
+                            type="text"
+                            placeholder="Pesquisar"
+                            className={styles.inputSearch}
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.currentTarget.value)}
+                        />
+                    </div>
+                    <AllHandouts searchTerm={searchTerm} />
+                </div>
+            </div>
         </main>
     );
 }

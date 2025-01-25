@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation"
 import profileService from "../../src/services/profileService"
 import PageSpinner from "../../src/components/common/pageSpinner"
 import { useYear } from "../../src/components/HomeAuth/selectBox/yearProvider"
+import { useMenu } from "../../src/components/common/menu/menuProvider"
 
 const IconBtn = styled(IconButton)({
     color: "#000",
@@ -29,6 +30,8 @@ const IconBtn = styled(IconButton)({
 const Profile = function () {
     const { selectedYear, onYearChange } = useYear();
     const [form, setForm] = useState("userForm")
+    const { isMenuOpen } = useMenu();
+
     const router = useRouter()
     const handleBackRouter = () => {
         router.push('/home')
@@ -36,7 +39,7 @@ const Profile = function () {
 
     const [loading, setLoading] = useState(true)
 
-    
+
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -57,9 +60,9 @@ const Profile = function () {
         return <PageSpinner />
     }
     return (<>
-        <main>
+        <main className={`${styles.main} ${isMenuOpen ? styles.menuOpen : ""}`}>
             <div className={styles.header}>
-                <HeaderAuth selectedYear={selectedYear} onYearChange={onYearChange} />
+                <HeaderAuth />
             </div>
             <Container className="py-5">
                 <div className={styles.divMinhaConta}>

@@ -9,6 +9,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import authService from '../../src/services/authService'
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Link from 'next/link';
+import FooterAuth from '../../src/components/HomeAuth/footerAuth';
 
 
 const Login = function () {
@@ -119,12 +120,11 @@ const Login = function () {
                         <Link href={'/resetPassword'} target="_blank" className={styles.forgotPassword}>Esqueceu sua senha?</Link>
                     </FormGroup>
                     <Button type="submit" className={styles.formBtn}>ENTRAR</Button>
+                    <ToastComponent isOpen={toastIsOpen} color={toastColor} message={toastMessage} />
                 </Form>
             </Container>
-            <Footer />
-            <ToastComponent isOpen={toastIsOpen} color={toastColor} message={toastMessage} />
+            <FooterAuth />
         </main>
-
     </>)
 }
 

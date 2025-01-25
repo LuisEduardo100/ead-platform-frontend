@@ -3,12 +3,13 @@ import styles from '../styles/register.module.scss'
 import HeaderGeneric from '../../src/components/common/headerGeneric'
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap'
 import 'jsuites';
-import Footer from '../../src/components/common/footer';
 import { FormEvent, useEffect, useState } from 'react';
 import authService from '../../src/services/authService';
 import { useRouter, useSearchParams } from 'next/navigation';
 import ToastComponent from '../../src/components/common/toastComponent';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useMenu } from '../../src/components/common/menu/menuProvider';
+import FooterAuth from '../../src/components/HomeAuth/footerAuth';
 
 const validatePasswordStrength = (password: string): boolean => {
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -23,7 +24,7 @@ const Register = function () {
     const [toastMessage, setToastMessage] = useState("")
     const [isPasswordVisible, setIsPasswordVisible] = useState(false)
     const [color, setColor] = useState("");
-
+    const {isMenuOpen} = useMenu()
     const togglePasswordVisibility = () => {
         setIsPasswordVisible(!isPasswordVisible)
     }
@@ -96,7 +97,7 @@ const Register = function () {
 
     return (
         <>
-            <main className={styles.main}>
+            <main className={`${styles.main} ${isMenuOpen ? styles.menuOpen : ""}`}>
                 <HeaderGeneric logoUrl='/' btnUrl='/login' btnContent='JÁ SOU NOTA DEZ' />
                 <Container className="py-5">
                     <p className={styles.formTitle}>Bem-vindo(a) ao Você Nota Dez!</p>
@@ -253,7 +254,7 @@ const Register = function () {
                         <ToastComponent color={color} isOpen={toastIsOpen} message={toastMessage} />
                     </Form>
                 </Container>
-                <Footer />
+                <FooterAuth />
             </main>
         </>
     )

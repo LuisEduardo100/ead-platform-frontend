@@ -52,6 +52,8 @@ export type EpisodeFileType = {
     episodeId: EpisodeFileType;
     name: string;
     url: string[]
+    course: string
+    serie: string
 }
 
 const courseService = {

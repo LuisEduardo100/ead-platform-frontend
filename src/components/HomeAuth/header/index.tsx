@@ -10,18 +10,17 @@ import { AccountCircle, Close, Search, SearchOutlined } from "@mui/icons-materia
 import YearSelect from "../selectBox";
 import { useYear } from "../selectBox/yearProvider";
 import Menuhamburger from "../../common/menu";
+import { useMenu } from "../../common/menu/menuProvider";
 
 export default function HeaderAuth() {
     // Modal.setAppElement('#next')
     const { selectedYear, onYearChange } = useYear()
     const [searchName, setSearchName] = useState("")
-    const [initials, setInitials] = useState("")
     const [modalOpen, setModalOpen] = useState(false);
     const [accessType, setAccessType] = useState(false);
     const [profilePicture, setProfilePicture] = useState("")
-    const [expanded, setExpanded] = useState(false)
     const router = useRouter();
-
+    const {isMenuOpen} = useMenu()
     const handleOpenModal = () => {
         setModalOpen(!modalOpen)
     }
@@ -47,16 +46,9 @@ export default function HeaderAuth() {
         setSearchName("");
     }
 
-    const handleOpenSearch = () => {
-        setExpanded(!expanded)
-    };
-
     useEffect(() => {
         profileService.fetchCurrent().then((user) => {
-            const firstNameInitial = user.firstName.slice(0, 1);
-            const lastNameInitial = user.lastName.slice(0, 1);
             setAccessType(user.hasFullAccess)
-            setInitials(firstNameInitial + lastNameInitial);
             setProfilePicture(user.profileImage)
         });
     }, []);
@@ -64,6 +56,7 @@ export default function HeaderAuth() {
     return (
         <div className={`${styles.header}`}>
             <Menuhamburger />
+            {isMenuOpen && <div className={styles.divSpace}></div>}
             <Form className={styles.formSearch} onSubmit={handleSearch}>
                 <Input
                     name="search"
@@ -75,7 +68,7 @@ export default function HeaderAuth() {
                         setSearchName(event.currentTarget.value.toLowerCase())
                     }} />
                 <SearchOutlined
-                    className={`${styles.searchIcon} ${styles.expanded}`}
+                    className={`${styles.searchIcon}`}
                     onClick={handleSearchClick}
                 />
             </Form>

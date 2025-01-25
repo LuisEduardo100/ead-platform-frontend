@@ -7,10 +7,8 @@ import { CategoryType } from '../../../../src/services/categoriesService';
 import Link from 'next/link';
 import styles from '../../../styles/topicStyle.module.scss'
 import HeaderAuth from '../../../../src/components/HomeAuth/header';
-import { Container } from 'reactstrap';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import HandoutNavigation from '../../../../src/components/common/navigationHandouts';
-import { useYear } from '../../../../src/components/HomeAuth/selectBox/yearProvider';
 import { useMenu } from '../../../../src/components/common/menu/menuProvider';
 export default function TopicPage() {
     const { topic } = useParams(); // Obtém o parâmetro da URL dinâmica
@@ -57,7 +55,7 @@ export default function TopicPage() {
     return (
         <main className={`${styles.main} ${isMenuOpen ? styles.menuOpen : ""}`}>
             <HeaderAuth/>
-            <Container className='py-4'>
+            <div className={styles.mainContent}>
                 <HandoutNavigation topic={String(course?.name)} serie={String(course?.serie)} />
                 <ul className={styles.ulDiv}>
                     {files.length > 0 ? (
@@ -77,7 +75,7 @@ export default function TopicPage() {
                         <li>Nenhum arquivo encontrado</li>
                     )}
                 </ul>
-            </Container>
+            </div>
         </main>
     );
 }

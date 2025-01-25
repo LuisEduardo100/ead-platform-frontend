@@ -36,7 +36,7 @@ export default function HandoutNavigation({ serie, topic }: props) {
     }
 
     return (
-        <Container className={styles.containerHeader}>
+        <div className={styles.containerHeader}>
             <IconBtn onClick={handleHome}>
                 <Home fontSize="large" />
             </IconBtn>
@@ -46,6 +46,6 @@ export default function HandoutNavigation({ serie, topic }: props) {
             {serie && <Link className={styles.link} href={`/apostilas/${serie}`}>{serie}</Link>}
             {topic && <Separation>&gt;</Separation>}
             {topic && <Link className={styles.link} href=''>{topic}</Link>}
-        </Container>
+        </div>
     )
 };

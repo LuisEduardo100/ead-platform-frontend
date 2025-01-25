@@ -4,6 +4,16 @@
     margin-top: -50px;
 
 }
+.main {
+    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+    margin-left: 0;
+    width: 100%;
+
+    &.menuOpen {
+        margin-left: 250px; // Largura do menu
+        width: calc(100% - 250px); // Ajuste a largura restante
+    }
+}
 .interactionImages {
     filter: brightness(0) saturate(100%) invert(0%) sepia(2%) saturate(7436%) hue-rotate(124deg) brightness(103%) contrast(99%);
     width: 35px;

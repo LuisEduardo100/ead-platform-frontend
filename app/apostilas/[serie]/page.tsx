@@ -17,7 +17,7 @@ export default function SeriePage() {
     const [data, setData] = useState<CategoryType[]>([]); // Dados completos
     const router = useRouter()
     const [selected, setSelected] = useState<number | string>(); // Mover o estado para fora do map
-    const {isMenuOpen} = useMenu()
+    const { isMenuOpen } = useMenu()
 
     useEffect(() => {
         const getAllApostila = async () => {
@@ -63,10 +63,10 @@ export default function SeriePage() {
     };
     return (
         <main className={`${styles.main} ${isMenuOpen ? styles.menuOpen : ""}`}>
-            <HeaderAuth/>
-            <Container className='py-4'>
+            <HeaderAuth />
+            <div className={styles.mainContent}>
                 <HandoutNavigation serie={decodeURIComponent(String(serie))} topic={null} />
-               <ul className={styles.ulDiv}>
+                <ul className={styles.ulDiv}>
                     {courses.map(course => (
                         <li
                             key={course?.id}
@@ -79,7 +79,8 @@ export default function SeriePage() {
                         </li>
                     ))}
                 </ul>
-            </Container>
+      
+            </div>
         </main>
     );
 }

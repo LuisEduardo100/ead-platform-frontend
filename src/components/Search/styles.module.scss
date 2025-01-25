@@ -5,7 +5,16 @@
     padding-top: 50px;
     color: black;
 }
+.main {
+    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+    margin-left: 0;
+    width: 100%;
 
+    &.menuOpen {
+        margin-left: 250px; // Largura do menu
+        width: calc(100% - 250px); // Ajuste a largura restante
+    }
+}
 .form {
     display: flex;
     align-items: center;

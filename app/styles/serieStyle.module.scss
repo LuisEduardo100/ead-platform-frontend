@@ -12,7 +12,12 @@
         margin-left: 250px; // Largura do menu
         width: calc(100% - 250px); // Ajuste a largura restante
     }
+
+    .mainContent {
+        padding: 20px 50px;
+    }
 }
+
 .ulDiv {
     list-style: none;
     padding: 0;

@@ -7,10 +7,13 @@
     transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
     margin-left: 0;
     width: 100%;
-
     &.menuOpen {
         margin-left: 250px; // Largura do menu
         width: calc(100% - 250px); // Ajuste a largura restante
+    }
+
+    .mainContent {
+        padding: 20px 50px;
     }
 }
 .ulDiv {
@@ -50,7 +53,7 @@
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                max-width: calc(100% - 10px);
+                max-width: 100%; // Ajuste aqui para garantir que o texto não exceda o contêiner
 
                 &:hover {
                     overflow: visible;

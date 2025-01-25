@@ -3,7 +3,16 @@
     font-weight: bold;
     padding: 0px 0px 4px 0px;
 }
+.main {
+    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+    margin-left: 0;
+    width: 100%;
 
+    &.menuOpen {
+        margin-left: 250px; // Largura do menu
+        width: calc(100% - 250px); // Ajuste a largura restante
+    }
+}
 .renderFormBtn {
     display: block;
     width: 200px;

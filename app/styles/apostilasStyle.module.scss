@@ -7,10 +7,40 @@
     transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
     margin-left: 0;
     width: 100%;
-
     &.menuOpen {
         margin-left: 250px; // Largura do menu
         width: calc(100% - 250px); // Ajuste a largura restante
+    }
+
+    .mainContent {
+        padding: 20px 50px;
+    }
+}
+.containerHeader{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #a8a8a8;
+    padding: 10px;
+    p {
+        text-transform: uppercase;
+        text-decoration: none;
+        font-size: 2rem;
+        color: rgb(44, 44, 44);
+    
+    }
+}
+.inputSearch {
+    width: 260px;
+    height: 40px;
+    border: 2px solid #ccc;
+    border-radius: 20px;
+    padding-right: 50px;
+    &:focus {
+        outline: none;
+        box-shadow: none;
     }
 }
 .ulDiv {

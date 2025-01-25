@@ -13,6 +13,7 @@ import { IconButton, styled } from "@mui/material";
 import { ArrowBackIosNew } from "@mui/icons-material";
 import { useYear } from "../../../src/components/HomeAuth/selectBox/yearProvider";
 import FooterAuth from "../../../src/components/HomeAuth/footerAuth";
+import { useMenu } from "../../../src/components/common/menu/menuProvider";
 
 const IconBtn = styled(IconButton)({
   color: "#000",
@@ -44,7 +45,7 @@ const getCourseId = async ({ params }: ParamsProps) => {
 export default function Course({ params }: ParamsProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-
+  const {isMenuOpen} = useMenu()
   const [course, setCourse] = useState<CourseType>();
   const [liked, setLiked] = useState(Boolean);
   const [favorited, setFavorited] = useState(Boolean);
@@ -53,10 +54,6 @@ export default function Course({ params }: ParamsProps) {
   const [toastColor, setToastColor] = useState("");
   const [toastIsOpen, setToastIsOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
-  const { selectedYear, onYearChange } = useYear();
-
-
-
 
   const paramsUrl = useSearchParams()
   const courseId = params.id;
@@ -135,7 +132,7 @@ export default function Course({ params }: ParamsProps) {
 
   return (
     <>
-      <main>
+      <main className={`${styles.main} ${isMenuOpen ? styles.menuOpen : ""}`}>
         <div
           style={{
             backgroundImage: `linear-gradient(to bottom, #dadada04, #E8E8E8), url(${process.env.NEXT_PUBLIC_BASEURL}/${course?.thumbnailUrl})`,
@@ -143,7 +140,7 @@ export default function Course({ params }: ParamsProps) {
             backgroundPosition: "center",
             height: "600px",
           }}>
-          <HeaderAuth selectedYear={selectedYear} onYearChange={onYearChange} />
+          <HeaderAuth/>
         </div>
         <Container className={styles.courseInfo}>
           <div className="d-flex align-items-center">

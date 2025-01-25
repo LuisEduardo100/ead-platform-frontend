@@ -12,14 +12,18 @@ import profileService from "../../services/profileService";
 import HeaderGeneric from "../common/headerGeneric";
 import { useYear } from "../HomeAuth/selectBox/yearProvider";
 import { SearchOutlined } from "@mui/icons-material";
+import { useMenu } from "../common/menu/menuProvider";
 
-export default function SearchComponents({ searchParams }: { searchParams: { name: string, serie: string } }) {
+export default function 
+
+SearchComponents({ searchParams }: { searchParams: { name: string, serie: string } }) {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
     const [searchResult, setSearchResult] = useState<CourseType[]>([]);
     const [searchUser, SetSearchUser] = useState(false)
     const searchName = searchParams.name || "";
     const { selectedYear, onYearChange } = useYear();
+    const {isMenuOpen} = useMenu()
 
     const [SearchName, setSearchName] = useState("")
 
@@ -93,12 +97,12 @@ export default function SearchComponents({ searchParams }: { searchParams: { nam
         <>
             <div className={styles.header}>
                 {searchUser ?
-                    (<HeaderAuth selectedYear={selectedYear} onYearChange={onYearChange} />)
+                    (<HeaderAuth />)
                     :
                     (<HeaderGeneric logoUrl="/" btnUrl="/" btnContent="Voltar" />
                     )}
             </div>
-            <main>
+            <main className={`${styles.main} ${isMenuOpen ? styles.menuOpen : ""}`}>
                 {!searchUser && (
                     <Container className="py-5">
                         <Row>
