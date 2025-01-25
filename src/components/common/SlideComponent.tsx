@@ -29,8 +29,8 @@ const SlideComponent = function ({ course, serie }: props) {
                     options={{
                         perPage: slideCount,
                         perMove: 1,
-                        width: slideCount * 325,
-                        pagination: false,
+                        width: slideCount * 300,
+                        pagination: true,
                         arrows: filteredCourses?.length > 4 ? true : false,
                         drag: filteredCourses?.length > 4 ? true : false,
                         breakpoints: {

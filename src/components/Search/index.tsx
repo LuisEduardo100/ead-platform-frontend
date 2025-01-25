@@ -1,43 +1,46 @@
 "use client";
 import styles from "./styles.module.scss";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Container, Form, Input, Row } from "reactstrap";
-import SearchCard from "./searchCard/SearchCard";
-import { useRouter } from "next/navigation";
 import courseService, { CourseType } from "../../services/courseService";
 import PageSpinner from "../common/pageSpinner";
 import HeaderAuth from "../HomeAuth/header";
+import { useRouter } from 'next/navigation'
 import Footer from "../common/footer";
 import profileService from "../../services/profileService";
 import HeaderGeneric from "../common/headerGeneric";
 import { useYear } from "../HomeAuth/selectBox/yearProvider";
 import { SearchOutlined } from "@mui/icons-material";
 import { useMenu } from "../common/menu/menuProvider";
+import SlideComponentSearch from "../common/SlideComponentSearch";
+import FooterAuth from "../HomeAuth/footerAuth";
 
-export default function 
-
-SearchComponents({ searchParams }: { searchParams: { name: string, serie: string } }) {
+export default function SearchComponents(
+    { searchParams }: {
+        searchParams: { name: string, serie: string }
+    }) {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
     const [searchResult, setSearchResult] = useState<CourseType[]>([]);
     const [searchUser, SetSearchUser] = useState(false)
     const searchName = searchParams.name || "";
     const { selectedYear, onYearChange } = useYear();
-    const {isMenuOpen} = useMenu()
-
+    const { isMenuOpen } = useMenu()
     const [SearchName, setSearchName] = useState("")
 
-    const nhandleSearch = async (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-
-        router.push(`/search?name=${SearchName}`);
+    const nhandleSearch = async () => {
+        router.push(`/search?name=${SearchName}&serie=${selectedYear}`);
         setSearchName("");
     };
 
     const nhandleSearchClick = () => {
-        router.push(`/search?name=${SearchName}`);
+        router.push(`/search?name=${SearchName}&serie=${selectedYear}`);
         setSearchName("");
     };
+
+    useEffect(() => {
+        router.push(`/search?name=${searchName}&serie=${selectedYear}`);
+    }, [selectedYear, searchName]);
 
     useEffect(() => {
         profileService.fetchCurrent().then((user) => {
@@ -49,41 +52,28 @@ SearchComponents({ searchParams }: { searchParams: { name: string, serie: string
         });
     }, []);
 
-    const searchCourses = async function () {
-        setLoading(true);
-
-        try {
-            const res = await courseService.getSearch(searchName, selectedYear);
-            //@ts-ignore
-            setSearchResult(res.data.rows);
-        } catch (error) {
-            console.error("Erro ao buscar cursos:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const searchCoursesGeneral = async function () {
-        setLoading(true);
-
-        try {
-            const res = await courseService.getSearchGeneral(searchName);
-            //@ts-ignore
-            setSearchResult(res.data.courses);
-        } catch (error) {
-            console.error("Erro ao buscar cursos:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
     useEffect(() => {
-        if (searchUser) {
-            searchCourses();
-        } else {
-            searchCoursesGeneral()
-        }
-        console.log(searchUser)
+        const fetchCourses = async () => {
+            setLoading(true);
+
+            try {
+                if (searchUser) {
+                    const res = await courseService.getSearch(searchName, selectedYear);
+                    //@ts-ignore
+                    setSearchResult(res.data.rows);
+                } else {
+                    const res = await courseService.getSearchGeneral(searchName);
+                    //@ts-ignore
+                    setSearchResult(res.data.courses);
+                }
+            } catch (error) {
+                console.error("Erro ao buscar cursos:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCourses();
     }, [searchName, selectedYear, searchUser]);
 
 
@@ -107,21 +97,21 @@ SearchComponents({ searchParams }: { searchParams: { name: string, serie: string
                     <Container className="py-5">
                         <Row>
                             <Col md className="d-flex justify-content-center">
-                               <Form className={styles.form} onSubmit={nhandleSearch}>
-                            <Input
-                                name="search"
-                                id="search"
-                                placeholder="Buscar cursos"
-                                className={styles.searchbar}
-                                value={SearchName}
-                                onChange={(event) => {
-                                    setSearchName(event.currentTarget.value.toLowerCase());
-                                }}
-                            />
-                            <div>
-                                <SearchOutlined className={styles.searchIcon} fontSize='large' onClick={nhandleSearchClick}/>
-                            </div>
-                        </Form>
+                                <Form className={styles.form} onSubmit={nhandleSearch}>
+                                    <Input
+                                        name="search"
+                                        id="search"
+                                        placeholder="Buscar cursos"
+                                        className={styles.searchbar}
+                                        value={SearchName}
+                                        onChange={(event) => {
+                                            setSearchName(event.currentTarget.value.toLowerCase());
+                                        }}
+                                    />
+                                    <div>
+                                        <SearchOutlined className={styles.searchIcon} fontSize='large' onClick={nhandleSearchClick} />
+                                    </div>
+                                </Form>
                             </Col>
                         </Row>
                     </Container>
@@ -129,17 +119,20 @@ SearchComponents({ searchParams }: { searchParams: { name: string, serie: string
 
                 <section className={styles.mainContent}>
                     {searchResult.length >= 1 ? (
-                        <Container className="d-flex flex-wrap justify-content-center gap-2 py-4">
-                            {searchResult?.map((course) => (
-                                <SearchCard key={course.id} course={course} />
-                            ))}
-                        </Container>
+                        <div style={{padding: '20px 50px'}}>
+                            <p
+                                style={{
+                                    fontSize: '1.4rem',
+                                }}
+                            >CURSOS</p>
+                            <SlideComponentSearch course={searchResult} />
+                        </div>
                     ) : (
                         <p className={styles.noSearchText}>Nenhum resultado encontrado!</p>
                     )}
                 </section>
             </main>
-            <Footer />
+            {searchUser ? <FooterAuth/> : <Footer/>}
         </>
     );
 }
