@@ -12,25 +12,37 @@ import { useYear } from '../../src/components/HomeAuth/selectBox/yearProvider';
 import FooterAuth from '../../src/components/HomeAuth/footerAuth';
 import { useMenu } from '../../src/components/common/menu/menuProvider';
 import styles from './styles.module.scss'
+import { useRouter } from 'next/navigation';
+import PageSpinner from '../../src/components/common/pageSpinner';
 const HomeAuth = function () {
-    const {selectedYear, onYearChange} = useYear()
+    const router = useRouter()
     const { isMenuOpen } = useMenu();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        AOS.init(); 
+        AOS.init();
         AOS.refresh();
-    }, []); 
+    }, []);
 
+    useEffect(() => {
+        if (!sessionStorage.getItem("vocenotadez-token")) {
+            router.push("/login");
+        } else {
+            setLoading(false);
+        }
+    }, [])
+
+    if (loading) return <PageSpinner/>
     return (
         <>
             <main className={`${styles.main} ${isMenuOpen ? styles.menuOpen : ""}`}>
-                <HomeAuthPresentation/>
-                <div className='pb-5'data-aos="fade-right" data-aos-duration="500" data-aos-offset="300">
-                    <OnGoingCategory selectedYear={selectedYear} />
-                    <NewestCategory selectedYear={selectedYear} />
-                    <FavoriteCourses selectedYear={selectedYear} />
-                    <FeaturedCategory selectedYear={selectedYear} />
-                    <ListCategories selectedYear={selectedYear} />
+                <HomeAuthPresentation />
+                <div className='pb-5' data-aos="fade-right" data-aos-duration="500" data-aos-offset="300">
+                    {/* <OnGoingCategory selectedYear={selectedYear} /> */}
+                    <NewestCategory />
+                    <FavoriteCourses />
+                    <FeaturedCategory />
+                    <ListCategories />
                 </div>
                 <FooterAuth />
             </main>

@@ -1,3 +1,4 @@
+import '@splidejs/splide/dist/css/splide.min.css';
 // @ts-ignore
 import '@splidejs/react-splide/css'
 // @ts-ignore
@@ -44,7 +45,7 @@ export default function SlideComponentSearch({ course }: props) {
                         perMove: 1,
                         gap: '1rem',
                         width: `calc(${slidesPerPage} * ${slideWidth}px + ${(slidesPerPage - 1) * 16}px)`,
-                        pagination: false,
+                        pagination: true,
                         arrows: course.length > 1,
                         drag: course.length > 1,
                         breakpoints: {

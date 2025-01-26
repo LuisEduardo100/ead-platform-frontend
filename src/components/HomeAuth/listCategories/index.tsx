@@ -5,16 +5,25 @@ import categoriesService, { CategoryType } from '../../../services/categoriesSer
 import ListCategoriesSlide from './listCategoriesSlide'
 import { Container } from 'reactstrap'
 import styles from './styles.module.scss'
-export default function ListCategories({ selectedYear }: { selectedYear: string }) {
+import { useYear } from '../selectBox/yearProvider'
+import { useEffect, useState } from 'react'
+export default function ListCategories() {
+    const {selectedYear, onYearChange} = useYear()
+    const [loading, setLoading] = useState(true)
     const { data, error } = useSWR("/categories", categoriesService.getCategories)
+    
+    useEffect(() => {
+        if (selectedYear) setLoading(false)
+    }, [selectedYear])
+
     if (error) return error
-    if (!data) return <PageSpinner />
+    if (!data || loading) return <PageSpinner />
 
     return (<>
         {data?.map((category: CategoryType) => (
-            <Container className={styles.containerList} key={category.id}>
+            <div style={{padding: '20px 50px'}} key={category.id}>
                 <ListCategoriesSlide key={category.id} selectedYear={selectedYear} categoryId={category.id} categoryName={category.name.toUpperCase()}/>
-            </Container>
+            </div>
         ))}
     </>)
 }

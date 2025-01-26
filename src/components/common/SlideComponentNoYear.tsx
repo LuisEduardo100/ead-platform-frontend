@@ -6,6 +6,7 @@ import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { CourseType } from '../../services/courseService'
 // @ts-ignore
 import SlideCard from './slideCard'
+
 export interface props {
     course: CourseType[]
 }
@@ -27,7 +28,7 @@ const SlideComponentNoYear = function ({ course }: props) {
                         perPage: slideCount,
                         perMove: 1,
                         width: slideCount * 325,
-                        pagination: false,
+                        pagination: true,
                         arrows: course?.length > 4 ? true : false,
                         drag: course?.length > 4 ? true : false,
                         breakpoints: {

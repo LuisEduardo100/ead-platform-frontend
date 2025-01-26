@@ -8,14 +8,16 @@ import { Button, Container } from 'reactstrap';
 import Link from 'next/link';
 import { PlayArrow, Reply } from '@mui/icons-material';
 import { useYear } from '../selectBox/yearProvider';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 
-export default function 
-HomeAuthPresentation() {
+export default function HomeAuthPresentation() {
+    const router = useRouter()
     const { data, error } = useSWR('/featured', courseService.getFeaturedCourses)
     const { selectedYear, onYearChange } = useYear()
     const filteredFeaturedCourses = data?.data?.filter((course: CourseType) => course.serie === selectedYear);
-    console.log(filteredFeaturedCourses)
+
     if (error) return error
     if (!data) return <PageSpinner />
     return <>
@@ -29,8 +31,8 @@ HomeAuthPresentation() {
                         height: "750px",
                     }}
                     >
-                        <HeaderAuth/>
-                        <Container className={styles.containerStyle}>
+                        <HeaderAuth />
+                        <div className={styles.containerStyle}>
                             <p className={styles.title}>{course.featuredName}</p>
                             <p className={styles.description}>{course.synopsis}</p>
                             <Link legacyBehavior href={`/courses/${course.id}`}>
@@ -42,7 +44,7 @@ HomeAuthPresentation() {
                                     </Button>
                                 </div>
                             </Link>
-                        </Container>
+                        </div>
                     </div>
                 </>
             ))[0]}

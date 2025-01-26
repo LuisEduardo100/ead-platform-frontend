@@ -7,7 +7,6 @@ import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import profileService from "../../../services/profileService";
 import { AccountCircle, Close, Search, SearchOutlined } from "@mui/icons-material";
-import YearSelect from "../selectBox";
 import { useYear } from "../selectBox/yearProvider";
 import Menuhamburger from "../../common/menu";
 import { useMenu } from "../../common/menu/menuProvider";
