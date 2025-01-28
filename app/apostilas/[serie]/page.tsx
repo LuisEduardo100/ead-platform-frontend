@@ -49,7 +49,6 @@ export default function SeriePage() {
             .flatMap((category: CategoryType) => category.courses || []) // Obtem todos os cursos
             .filter(course => course?.serie === decodedSerie); // Filtra pela série da URL
 
-        const sortedCourses = filteredCourses.sort((a, b) => a?.name.localeCompare(b?.name))
 
         setCourses(filteredCourses); // Atualiza os cursos filtrados
     }, [serie, data]); // Executa quando "serie" ou "data" mudar

@@ -16,6 +16,7 @@ export default function ApostilaPage() {
     const [selected, setSelected] = useState<number | string>();
     const { isMenuOpen } = useMenu();
     const [searchTerm, setSearchTerm] = useState("");
+    
     useEffect(() => {
         const getAllApostila = async () => {
             try {

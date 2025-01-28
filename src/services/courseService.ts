@@ -8,6 +8,16 @@ export type EpisodeType = {
     videoUrl: string;
     quizz: QuizzType[]
     secondsLong: number;
+    Files: EpisodeFileType[];
+}
+export type EpisodeTypeAdapted = {
+    id: number;
+    name: string;
+    synopsis: string;
+    order: number;
+    videoUrl: string;
+    quizz: QuizzType[]
+    secondsLong: number;
     files: EpisodeFileType[];
 }
 export type CourseType = {

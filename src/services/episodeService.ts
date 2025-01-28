@@ -1,4 +1,5 @@
 import api from './api'
+
 interface watchTimeParams {
   episodeId: number;
   seconds: number;

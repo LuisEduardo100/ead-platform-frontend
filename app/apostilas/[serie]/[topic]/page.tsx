@@ -2,7 +2,7 @@
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import episodeFileService from '../../../../src/services/episodeFileService';
-import { CourseType, EpisodeFileType, EpisodeType } from '../../../../src/services/courseService';
+import { CourseType, EpisodeFileType, EpisodeType, EpisodeTypeAdapted } from '../../../../src/services/courseService';
 import { CategoryType } from '../../../../src/services/categoriesService';
 import Link from 'next/link';
 import styles from '../../../styles/topicStyle.module.scss'
@@ -40,7 +40,7 @@ export default function TopicPage() {
 
                 console.log("Curso encontrado:", course);
                 setCourse(course)
-                const allFiles = course.episodes.flatMap((episode: EpisodeType) => episode.files || []);
+                const allFiles = course.episodes.flatMap((episode: EpisodeTypeAdapted) => episode.files || []);
                 console.log("Arquivos encontrados:", allFiles);
 
                 setFiles(allFiles);
