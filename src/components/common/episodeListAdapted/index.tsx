@@ -1,9 +1,7 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import styles from './styles.module.scss'
-import Link from 'next/link'
-import { Button } from 'reactstrap'
-import courseService, { CourseType, EpisodeType } from '../../../services/courseService'
+import  { CourseType, EpisodeType } from '../../../services/courseService'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquareCheck } from '@fortawesome/free-solid-svg-icons'
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
@@ -23,7 +21,7 @@ export default function EpisodeAdaptedList({ episode, course }: props) {
     }
 
     const isWatched = course?.watchStatus?.some(status=> status.episodeId === episode.id)
-    
+
     return (
         <div className={isWatched ? div_watched : div_container} onClick={() => handleEpisodePlayer()}>
                 <ul className={styles.ul}> 

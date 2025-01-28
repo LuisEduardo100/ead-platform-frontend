@@ -12,15 +12,11 @@ export default function UserForm() {
     const [color, setColor] = useState("");
     const [toastIsOpen, setToastIsOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-
-
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [profilePicture, setProfilePicture] = useState(""); // Placeholder para a imagem
-
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [serie, setSerie] = useState("")
-
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
     const [initialEmail, setInitialEmail] = useState("")

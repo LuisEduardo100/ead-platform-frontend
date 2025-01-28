@@ -62,9 +62,19 @@ export type EpisodeFileType = {
     episodeId: EpisodeFileType;
     name: string;
     url: string[]
+    fileUrl: string[] // conferir se da erro em outras paginas
     course: string
     serie: string
 }
+export type EpisodeFileTypeAdapted = {
+    id: number;
+    episodeId: EpisodeFileType;
+    name: string;
+    fileUrl: string[]
+    course: string
+    serie: string
+}
+
 
 const courseService = {
     getNewestCourses: async () => {

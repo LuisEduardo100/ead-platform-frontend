@@ -1,16 +1,10 @@
 'use client'
-import { useRouter } from 'next/navigation'
 import styles from './styles.module.scss'
-import Link from 'next/link'
-import { Button } from 'reactstrap'
-import courseService, { CourseType, EpisodeFileType, EpisodeType, QuizzType } from '../../../services/courseService'
-import { useRef, useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCloudArrowDown } from '@fortawesome/free-solid-svg-icons'
-import { Download, Slideshow, VideoCall, VideoFile } from '@mui/icons-material'
+import { EpisodeFileTypeAdapted } from '../../../services/courseService'
+import { Download, VideoFile } from '@mui/icons-material'
 
 type FileListProps = {
-    files: EpisodeFileType[];
+    files: EpisodeFileTypeAdapted[];
     onFileClick: (url: string) => void
 };
 

@@ -1,13 +1,12 @@
 'use client';
 import { Menu, Close, Home, VideoLibrary, LibraryBooks, Help } from '@mui/icons-material';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Button } from 'reactstrap';
 import styles from './styles.module.scss';
 import { useMenu } from './menuProvider';
 import Link from 'next/link';
 import { useYear } from '../../HomeAuth/selectBox/yearProvider';
 import YearSelect from '../../HomeAuth/selectBox';
-import profileService from '../../../services/profileService';
 import { useRouter } from 'next/navigation';
 
 export default function Menuhamburger() {

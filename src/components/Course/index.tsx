@@ -2,13 +2,10 @@
 import { useRouter } from 'next/navigation'
 import { CourseType, EpisodeType, WatchStatus } from '../../services/courseService'
 import styles from './styles.module.scss'
-import Link from 'next/link'
 import episodeFileService from '../../services/episodeFileService'
 import { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleCheck as faCircleCheckSolid, faCirclePlay, faCloudArrowDown } from '@fortawesome/free-solid-svg-icons'
-import { faCircleCheck as faCircleCheckRegular } from '@fortawesome/free-regular-svg-icons';
-import FileList from '../common/filePageToEpisode'
 import FileListToCourse from '../common/filePageToCourse'
 
 interface props {
