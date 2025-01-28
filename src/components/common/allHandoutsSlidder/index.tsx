@@ -5,7 +5,7 @@ import episodeFileService from "../../../services/episodeFileService";
 import { CategoryType } from "../../../services/categoriesService";
 import Link from "next/link";
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import { EpisodeFileType, EpisodeType } from '../../../services/courseService';
+import { EpisodeFileType, EpisodeTypeAdapted } from '../../../services/courseService';
 // @ts-ignore
 import '@splidejs/react-splide/css'
 // @ts-ignore
@@ -48,7 +48,7 @@ export default function AllHandoutsSlidder({ searchTerm }: { searchTerm: string 
                 const extractedHandouts = response.data.flatMap((category: CategoryType) =>
                     category?.courses?.flatMap((course) =>
                         //@ts-ignore
-                        course.episodes.flatMap((episode: EpisodeType) =>
+                        course.episodes.flatMap((episode: EpisodeTypeAdapted) =>
                             episode.files.flatMap((file) =>
                                 file.url.map((url) => ({
                                     name: file.name || "Arquivo sem nome",
