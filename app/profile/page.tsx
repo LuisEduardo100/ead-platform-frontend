@@ -54,7 +54,7 @@ const Profile = function () {
             }
         };
         fetchUserData()
-    }, [])
+    }, [onYearChange])
 
     if (loading) {
         return <PageSpinner />

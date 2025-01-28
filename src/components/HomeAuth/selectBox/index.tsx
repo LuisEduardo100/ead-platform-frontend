@@ -26,7 +26,7 @@ const YearSelect = ({ selectedYear, onYearChange }: { selectedYear: string, onYe
 
   useEffect(() => {
     fetchUserData()
-  }, [])
+  }, [fetchUserData])
 
 
   if (loading) {

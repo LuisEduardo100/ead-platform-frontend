@@ -29,7 +29,7 @@ const Login = function () {
         if (sessionStorage.getItem("vocenotadez-token")) {
             router.push("/home")
         }
-    }, [])
+    }, [router])
 
     useEffect(() => {
         const registerSuccess = params.get("success")

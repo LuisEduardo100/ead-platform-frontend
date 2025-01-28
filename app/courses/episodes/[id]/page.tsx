@@ -270,7 +270,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
       setLoading(false);
     }
 
-  }, [courseId,]);
+  }, [courseId]);
 
   if (loading) {
     return <PageSpinner />;

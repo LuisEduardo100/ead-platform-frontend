@@ -4,7 +4,7 @@ import HeaderNoAuth from "../../src/components/HomeNoAuth/header";
 import styles from '../styles/changePassword.module.scss'
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { FormEvent, useEffect, useState } from "react";
-import profileService, { UserParams } from "../../src/services/profileService";
+import profileService from "../../src/services/profileService";
 import { useRouter, useSearchParams } from "next/navigation";
 import ToastComponent from "../../src/components/common/toastComponent";
 
