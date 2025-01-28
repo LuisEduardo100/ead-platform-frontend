@@ -22,7 +22,8 @@ export default function EpisodeAdaptedList({ episode, course }: props) {
         router.push(`/courses/episodes/${episode.order - 1}?courseid=${course.id}&episodeid=${episode.id}`)
     }
 
-    const isWatched = course.watchStatus.some(status=> status.episodeId === episode.id)
+    const isWatched = course?.watchStatus?.some(status=> status.episodeId === episode.id)
+    
     return (
         <div className={isWatched ? div_watched : div_container} onClick={() => handleEpisodePlayer()}>
                 <ul className={styles.ul}> 
