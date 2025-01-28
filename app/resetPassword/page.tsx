@@ -7,7 +7,7 @@ import { FormEvent, useState } from "react";
 import recoverPasswordEmail from "../../src/services/sendEmail";
 import ToastComponent from "../../src/components/common/toastComponent";
 
-export default function resetPassword() {
+export default function ResetPassword() {
     const [toastColor, setToastColor] = useState("");
     const [toastIsOpen, setToastIsOpen] = useState(false);
     const [toastMessage, setToastMessage] = useState("");

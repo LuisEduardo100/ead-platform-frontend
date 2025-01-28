@@ -10,6 +10,8 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { stripeService } from "../../src/services/stripeService"
 import HeaderGeneric from "../../src/components/common/headerGeneric"
+import Image from "next/image"
+
 export default function PaginaPrecos() {
     const [logged, setLogged] = useState(false)
     const router = useRouter()
@@ -70,7 +72,7 @@ export default function PaginaPrecos() {
             )}
             <div className={styles.apresentation}>
                 <div className={styles.divAnuncio}>
-                    <img className={styles.imgAnuncio} src="/anuncio-votanotadez.jpg" alt="anuncio" />
+                    <Image className={styles.imgAnuncio} src="/anuncio-votanotadez.jpg" alt="anuncio" width={400} height={700}/>
                     <PaymentButton bgColor="#CC202C"/>
                 </div>
                 <div className={styles.wrapper}>
@@ -86,13 +88,13 @@ export default function PaginaPrecos() {
                         <p className={styles.pWrapper}>Fale conosco em nossas redes sociais: </p>
 
                         <Link href="https://www.tiktok.com/@vocenotadez">
-                            <img src="/tiktokImg.png" alt="logoTiktok" className={styles.imgFooter} />
+                            <Image src="/tiktokImg.png" alt="logoTiktok" className={styles.imgFooter} width={45} height={45} quality={100}/>
                         </Link>
                         <Link href="https://www.instagram.com/vocenotadez/">
-                            <img src="/instagramImg.png" alt="logoInsta" className={styles.imgFooter} />
+                            <Image src="/instagramImg.png" alt="logoInsta" className={styles.imgFooter} width={45} height={45} quality={100}/>
                         </Link>
                         <Link href="https://wa.me/85994174205">
-                            <img src="/zapImg.png" alt="logoZap" className={styles.imgFooter} />
+                            <Image src="/zapImg.png" alt="logoZap" className={styles.imgFooter} width={45} height={45} quality={100}/>
                         </Link>
                     </div>
                 </div>
@@ -101,14 +103,14 @@ export default function PaginaPrecos() {
             <div className={styles.duvidas}>
                 <p className={styles.pWrapper}>Dúvidas? Fale conosco! </p>
                 <Link href="https://wa.me/85994174205">
-                    <img src="/zapImg.png" alt="logoZap" className={styles.imgDuvidas} />
+                    <Image src="/zapImg.png" alt="logoZap" className={styles.imgDuvidas} width={62} height={62} quality={100}/>
                 </Link>
             </div>
             <div className={styles.separator}>
                 <p className={styles.pSeparator}>Materiais personalizados com teoria e exercícios!</p>
-                <img className={styles.capa} src="/capa-ebooks/capaquimica1.png" alt="capa" />
-                <img className={styles.capa} src="/capa-ebooks/capa-fisica-1.png" alt="capa-2" />
-                <img className={styles.capa} src="/capa-ebooks/capa-matematica-1.png" alt="capa-2" />
+                <Image className={styles.capa} src="/capa-ebooks/capaquimica1.png" alt="capa" width={200} height={300} quality={100}/>
+                <Image className={styles.capa} src="/capa-ebooks/capa-fisica-1.png" alt="capa-2" width={200} height={300} quality={100}/>
+                <Image className={styles.capa} src="/capa-ebooks/capa-matematica-1.png" alt="capa-2" width={200} height={300} quality={100}/>
 
             </div>
             <div className={styles.divTabela}>
@@ -124,23 +126,23 @@ export default function PaginaPrecos() {
                     </thead>
                     <tbody className={styles.tbody}>
                         <tr className={styles.trDiv}>
-                            <img className={styles.checkImg} src="/check-img.png" alt="checked" />
+                            <Image className={styles.checkImg} src="/check-img.png" alt="checked" width={20} height={20}/>
                             <td className={styles.tdP}>Curso completo do básico ao avançado de Matemática, Química, Física;</td>
                         </tr>
                         <tr className={styles.trDiv}>
-                            <img className={styles.checkImg} src="/check-img.png" alt="checked" />
+                            <Image className={styles.checkImg} src="/check-img.png" alt="checked" width={20} height={20}/>
                             <td className={styles.tdP}>Reforço personalizado de acordo com a necessidade do seu filho;</td>
                         </tr >
                         <tr className={styles.trDiv}>
-                            <img className={styles.checkImg} src="/check-img.png" alt="checked" />
+                            <Image className={styles.checkImg} src="/check-img.png" alt="checked" width={20} height={20}/>
                             <td className={styles.tdP}>Materiais teóricos e práticos para reforçar sua aprendizagem;</td>
                         </tr>
                         <tr className={styles.trDiv}>
-                            <img className={styles.checkImg} src="/check-img.png" alt="checked" />
+                            <Image className={styles.checkImg} src="/check-img.png" alt="checked" width={20} height={20}/>
                             <td className={styles.tdP}>Suporte humanizado, buscando solucionar seus problemas com a maior qualidade e eficiência possível;</td>
                         </tr>
                         <tr className={styles.trDiv}>
-                            <img className={styles.checkImg} src="/check-img.png" alt="checked" />
+                            <Image className={styles.checkImg} src="/check-img.png" alt="checked" width={20} height={20}/>
                             <td className={styles.tdP}>Vamos até sua casa com professores especializados na matéria que você deseja ser Nota Dez!</td>
                         </tr>
                     </tbody>
@@ -150,9 +152,9 @@ export default function PaginaPrecos() {
             <div className={styles.separator}>
                 <p className={styles.pSeparator}>Materiais separados em níveis para uma melhor aprendizagem!</p>
 
-                <img className={styles.capa} src="/capa-ebooks/capa-fisica-2.png" alt="capa" />
-                <img className={styles.capa} src="/capa-ebooks/capa-quimica-3.png" alt="capa-2" />
-                <img className={styles.capa} src="/capa-ebooks/capa-matematica-3.png" alt="capa-2" />
+                <Image className={styles.capa} src="/capa-ebooks/capa-fisica-2.png" alt="capa" width={100} height={300} quality={100}/>
+                <Image className={styles.capa} src="/capa-ebooks/capa-quimica-3.png" alt="capa-2" width={100} height={300} quality={100}/>
+                <Image className={styles.capa} src="/capa-ebooks/capa-matematica-3.png" alt="capa-2" width={100} height={300} quality={100}/>
             </div>
             <Footer />
         </main>

@@ -14,7 +14,6 @@ import { SearchOutlined } from "@mui/icons-material";
 import { useMenu } from "../common/menu/menuProvider";
 import SlideComponentSearch from "../common/SlideComponentSearch";
 import FooterAuth from "../HomeAuth/footerAuth";
-import AllHandouts from "../common/allHandouts";
 import AllHandoutsSlidder from "../common/allHandoutsSlidder";
 
 export default function SearchComponents(

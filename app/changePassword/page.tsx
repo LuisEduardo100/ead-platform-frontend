@@ -13,7 +13,7 @@ const validatePasswordStrength = (password: string): boolean => {
     return passwordRegex.test(password);
 };
 
-export default function passwordReset() {
+export default function ChangePassword() {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false)
     const [color, setColor] = useState("");
     const [toastIsOpen, setToastIsOpen] = useState(false);
