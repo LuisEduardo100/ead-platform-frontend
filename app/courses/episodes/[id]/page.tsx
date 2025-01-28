@@ -13,7 +13,7 @@ import Control from "../../../../src/components/common/videoControls";
 import FileListToEpisode from "../../../../src/components/common/filePageToEpisode";
 
 let count = 0;
-type EpisodeType = {
+type EpisodeTypeAdapted = {
   id: number;
   name: string;
   synopsis: string;
@@ -38,8 +38,8 @@ export default function EpisodePlayer({ params, searchParams, }: {
   const courseId = searchParams?.courseid?.toString() || "";
 
   const [getEpisodeTime, setGetEpisodeTime] = useState(0);
-  const [getEpisodeFile, setGetEpisodeFile] = useState<EpisodeType>()
-  const [getQuizzByEp, setQuizzByEp] = useState<EpisodeType>()
+  const [getEpisodeFile, setGetEpisodeFile] = useState<EpisodeTypeAdapted>()
+  const [getQuizzByEp, setQuizzByEp] = useState<EpisodeTypeAdapted>()
   const [episodeTime, setEpisodeTime] = useState(0);
   const [isReady, setIsReady] = useState(false);
 
