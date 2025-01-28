@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import ReactPlayer from "react-player";
-import courseService, { CourseType, EpisodeType } from "../../../../src/services/courseService";
+import courseService, { CourseType, EpisodeFileType, QuizzType } from "../../../../src/services/courseService";
 import watchEpisodeService from "../../../../src/services/episodeService";
 import PageSpinner from "../../../../src/components/common/pageSpinner";
 import episodeFileService from "../../../../src/services/episodeFileService";
@@ -11,10 +11,18 @@ import EpisodeAdaptedList from "../../../../src/components/common/episodeListAda
 import profileService from "../../../../src/services/profileService";
 import Control from "../../../../src/components/common/videoControls";
 import FileListToEpisode from "../../../../src/components/common/filePageToEpisode";
-import QuizzButton from "../../../../src/components/Quizz/quizzButton";
-import { Button } from "reactstrap";
 
 let count = 0;
+type EpisodeType = {
+  id: number;
+  name: string;
+  synopsis: string;
+  order: number;
+  videoUrl: string;
+  quizz: QuizzType[];
+  secondsLong: number;
+  Files: EpisodeFileType[];
+}
 
 export default function EpisodePlayer({ params, searchParams, }: {
   params: { id: number | string };
