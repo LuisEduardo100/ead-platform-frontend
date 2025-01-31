@@ -19,7 +19,6 @@ const validatePasswordStrength = (password: string): boolean => {
 const Register = function () {
     const router = useRouter();
     const paramsUrl = useSearchParams()
-    const [selectedYear, setSelectedYear] = useState("6º ano"); // Estado para armazenar a série selecionada
     const [toastIsOpen, setToastIsOpen] = useState(false)
     const [toastMessage, setToastMessage] = useState("")
     const [isPasswordVisible, setIsPasswordVisible] = useState(false)

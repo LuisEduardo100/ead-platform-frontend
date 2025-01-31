@@ -10,6 +10,7 @@ import { AccountCircle, Close, Search, SearchOutlined } from "@mui/icons-materia
 import { useYear } from "../selectBox/yearProvider";
 import Menuhamburger from "../../common/menu";
 import { useMenu } from "../../common/menu/menuProvider";
+import Image from "next/image";
 
 export default function HeaderAuth() {
     // Modal.setAppElement('#next')
@@ -71,18 +72,20 @@ export default function HeaderAuth() {
                     onClick={handleSearchClick}
                 />
             </Form>
-            <div>
+            <div className="divProfile">
                 {!accessType &&
                     <Link href="/precos" style={{ marginRight: '4px' }}>
                         <Button className={styles.btnPrecos}>MATRICULE-SE</Button>
                     </Link>
                 }
                 {profilePicture ? (
-                    <img
+                    <Image
                         src={`${process.env.NEXT_PUBLIC_BASEURL}/${profilePicture}`}
                         alt="user picture"
                         className={styles.imageProfile}
                         onClick={handleOpenModal}
+                        width={45}
+                        height={45}
                     />
                 ) :
                     (<AccountCircle className={styles.userProfile} fontSize="small" onClick={handleOpenModal} />)

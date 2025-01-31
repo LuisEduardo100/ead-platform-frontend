@@ -56,32 +56,46 @@ const Login = function () {
         try {
             const response = await authService.login(params);
             console.log("Login response:", response);
+    
+            const { status, data } = response;
+            
+            console.log("DATA: " + data)
+            console.log("status: " + status)
 
-            const { status } = response;
-
-            if (status === 200 && registerSuccess === "true") {
-                router.push("/precos");
-            } else if (status === 200) {
-                router.push("/home");
+            if (status === 200) {
+                if (registerSuccess === "true") {
+                    router.push("/precos");
+                } else {
+                    router.push("/home");
+                }
             } else if (status === 401) {
-                setToastColor("bg-danger")
-                setToastIsOpen(true)
-                setToastMessage("Acesso negado. Confirmação de email necessária.")
-                setTimeout(() => {
+                if (data?.message?.toLowerCase().includes("confirme seu email para acessar a conta!")) {
+                    setToastMessage("Acesso negado. Confirmação de email necessária.");
+                } else {
+                    setToastMessage("Email ou senha incorretos.");
+                }
+                setToastColor("bg-danger");
+                setToastIsOpen(true);
+                setTimeout(() => { 
                     setToastIsOpen(false);
                 }, 2500);
             } else {
-                setToastColor("bg-danger")
-                setToastIsOpen(true)
-                setToastMessage("Email ou senha incorretos.")
+                setToastColor("bg-danger");
+                setToastIsOpen(true);
+                setToastMessage("Ocorreu um erro ao tentar fazer login.");
                 setTimeout(() => {
                     setToastIsOpen(false);
                 }, 2500);
             }
         } catch (error: any) {
-            return error.message
+            console.error("Login error:", error);
+            setToastColor("bg-danger");
+            setToastIsOpen(true);
+            setToastMessage("Erro ao conectar ao servidor. Tente novamente.");
+            setTimeout(() => {
+                setToastIsOpen(false);
+            }, 2500);
         }
-
     }
     return (<>
         <main className={styles.main}>

@@ -1,13 +1,20 @@
+// Variáveis globais atualizadas
 $menu-width: 250px;
 $menu-bg: #f8f9fa;
 $menu-text-color: #333;
 $menu-hover-color: #007bff;
+$menu-item-hover-bg: #d1d1d1;
+$menu-transition: 0.3s ease-in-out;
+$dropdown-bg: #f8f9fa;;
+$dropdown-text-color: #000;
 
+// Estrutura principal do container
 .menuContainer {
     display: flex;
     align-items: center;
     position: relative;
 
+    // Botão do hamburger
     .menuButton {
         background: none;
         border: none;
@@ -26,6 +33,7 @@ $menu-hover-color: #007bff;
         }
     }
 
+    // Estilos do logo
     .menuLogo {
         .linkStyle {
             &.newLogo {
@@ -35,14 +43,15 @@ $menu-hover-color: #007bff;
                 z-index: 2000;
                 transition: right 1s ease, left 0.5s ease;
             }
-            .divLogo {
-                .imgLogo {
-                    width: 160px;
-                    transition: width 0.5s 
-                }
+
+            .divLogo .imgLogo {
+                width: 160px;
+                transition: width 0.5s;
             }
         }
     }
+
+    // Menu lateral principal
     .menu {
         position: fixed;
         top: 0;
@@ -50,11 +59,12 @@ $menu-hover-color: #007bff;
         height: 100%;
         width: $menu-width;
         background-color: $menu-bg;
-        overflow-y: auto;
+        overflow: visible;
         transform: translateX(-100%);
-        transition: transform 0.3s ease-in-out;
+        transition: transform $menu-transition;
         z-index: 1000;
-        padding: 110px 0px 0px 0px;
+        padding-top: 110px;
+
         &.visible {
             transform: translateX(0);
         }
@@ -63,35 +73,86 @@ $menu-hover-color: #007bff;
             transform: translateX(-100%);
         }
 
-        nav {
-            ul {
+        .nav ul {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 0 auto;
+
+            li {
                 display: flex;
-                flex-direction: column;
-                justify-content: center;
-                list-style: none;
-                padding: 0;
-                margin: 0 auto;
+                align-items: center;
+                
+                padding: 15px 25px;
+                cursor: pointer;
 
-                li {
-                    display: flex;
-                    align-items: center;
-                    padding: 15px 25px;
-                    
+                &:hover {
+                    background-color: #ccc;
+                }
+
+                a {
+                    text-decoration: none;
+                    color: $menu-text-color;
+                    font-size: 16px;
+
                     &:hover {
-                        background-color: #ccc;
-                        cursor: pointer;
-                    }
-                    a {
-                        text-decoration: none;
-                        color: $menu-text-color;
-                        font-size: 16px;
-
-                        &:hover {
-                            color: $menu-hover-color;
-                        }
+                        color: $menu-hover-color;
                     }
                 }
             }
         }
+    }
+}
+
+// Estilos específicos do dropdown
+.menuItemWithDropdown {
+    position: relative;
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+    background-color: transparent;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $menu-item-hover-bg;
+    }
+
+    .dropdownMenu {
+        position: absolute;
+        top: 166%; // Alinhamento vertical central
+        left: 100%;
+        transform: translateY(-50%);
+        background: $dropdown-bg;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        min-width: 160px;
+        z-index: 2001;
+        list-style: none;
+        padding: 10px 0;
+
+        @media (max-width: 768px) {
+            margin-left: 0;
+            margin-right: 12px;
+        }
+        .dropdownItem {
+            padding: 12px 20px;
+            color: $dropdown-text-color;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-align: left;
+
+            &:hover {
+                background: lighten($dropdown-bg, 5%);
+            }
+        }
+    }
+}
+
+// Adicionar media query para mobile
+@media (max-width: 768px) {
+    .dropdownMenu {
+        left: auto !important;
+        right: 0;
     }
 }

@@ -1,15 +1,48 @@
-
-
-.selectBox {
-  font-family: 'Quicksand', sans-serif;
-  font-weight: bold;
-  padding: 8px 18px;
-  font-size: 1rem;
-  border-radius: 6px;
-  background-color: #D42428;
-  color: white;
-  outline: none;
+.menuItemWithDropdown {
+  position: relative; /* Permite que o dropdown seja posicionado corretamente */
+  width: 100%; /* Faz o item ocupar todo o espaço do li */
+  padding: 15px 0px;
+  text-align: center;
+  background-color: transparent;
   cursor: pointer;
+}
 
+.menuItemWithDropdown:hover {
+  background-color: #d1d1d1; /* Cinza claro quando hover */
+}
 
+.selectBoxContainer {
+  display: inline-block;
+  width: 100%;
+  text-align: left;
+}
+
+.selectedOption {
+  background-color: transparent;
+  padding: 10px;
+  color: black;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  min-width: 120px; /* Garante que tenha um tamanho fixo */
+  z-index: 10000; /* Garante que fique sobre outros elementos */
+}
+
+.dropdownItem {
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.dropdownItem:hover {
+  background-color: #f0f0f0;
+}
+.menuItemWithDropdown:hover .dropdownMenu {
+  display: block;
 }
