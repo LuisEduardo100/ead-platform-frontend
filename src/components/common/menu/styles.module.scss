@@ -149,10 +149,3 @@ $dropdown-text-color: #000;
     }
 }
 
-// Adicionar media query para mobile
-@media (max-width: 768px) {
-    .dropdownMenu {
-        left: auto !important;
-        right: 0;
-    }
-}

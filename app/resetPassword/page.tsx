@@ -6,6 +6,7 @@ import { Email } from "@mui/icons-material";
 import { FormEvent, useState } from "react";
 import recoverPasswordEmail from "../../src/services/sendEmail";
 import ToastComponent from "../../src/components/common/toastComponent";
+import emailSettings from "../../src/services/sendEmail";
 
 export default function ResetPassword() {
     const [toastColor, setToastColor] = useState("");
@@ -18,7 +19,7 @@ export default function ResetPassword() {
         const formData = new FormData(event.currentTarget)
         const email = formData.get("email")!.toString()
 
-        const res = await recoverPasswordEmail(email); // Chamada para o serviço
+        const res = await emailSettings.recoverPasswordEmail(email); // Chamada para o serviço
 
         if (!res) {
             setToastIsOpen(true);
