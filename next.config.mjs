@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['localhost']
+        domains: [process.env.NEXT_PUBLIC_BASEURL]
     },
     experimental: {
         missingSuspenseWithCSRBailout: false,

@@ -5,7 +5,7 @@ $menu-text-color: #333;
 $menu-hover-color: #007bff;
 $menu-item-hover-bg: #d1d1d1;
 $menu-transition: 0.3s ease-in-out;
-$dropdown-bg: #f8f9fa;;
+$dropdown-bg: #f8f9fa;
 $dropdown-text-color: #000;
 
 // Estrutura principal do container
@@ -84,23 +84,14 @@ $dropdown-text-color: #000;
             li {
                 display: flex;
                 align-items: center;
-                
+                transition: background 0.3s;
                 padding: 15px 25px;
                 cursor: pointer;
 
                 &:hover {
-                    background-color: #ccc;
+                    background: lighten($dropdown-bg, 5%);
                 }
 
-                a {
-                    text-decoration: none;
-                    color: $menu-text-color;
-                    font-size: 16px;
-
-                    &:hover {
-                        color: $menu-hover-color;
-                    }
-                }
             }
         }
     }
@@ -135,6 +126,7 @@ $dropdown-text-color: #000;
             margin-left: 0;
             margin-right: 12px;
         }
+
         .dropdownItem {
             padding: 12px 20px;
             color: $dropdown-text-color;
@@ -148,4 +140,3 @@ $dropdown-text-color: #000;
         }
     }
 }
-
