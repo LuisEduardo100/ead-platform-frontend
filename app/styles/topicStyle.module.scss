@@ -3,10 +3,12 @@
     text-transform: uppercase;
     font-size: 2rem;
 }
+
 .main {
     transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
     margin-left: 0;
     width: 100%;
+
     &.menuOpen {
         margin-left: 250px; // Largura do menu
         width: calc(100% - 250px); // Ajuste a largura restante
@@ -16,36 +18,59 @@
         padding: 20px 50px;
     }
 }
+
 .ulDiv {
     list-style: none;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 25px;
+
+    .liDiv:hover .nameTip {
+        opacity: 1;
+    }
+
     .liDiv {
         display: flex;
-        justify-content: flex-start;
+        flex-direction: column;
         align-items: center;
         padding: 1rem;
-        border: 1px solid #adadad;
         width: 250px;
+        height: 400px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        position: relative;
 
         &:hover {
+            overflow: visible;
             opacity: .75;
-            background-color: #adadadb0;
             cursor: pointer;
         }
 
+        .nameTip {
+            position: absolute;
+            top: 90%;
+            padding: 5px 10px;
+            z-index: 10000;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            color: black;
+            transition: opacity 0.2s ease-in-out;
+            opacity: 0;
+            font-size: 0.8rem;
+        }
+
         .linkStyle {
-            display: inline-block;
             text-decoration: none;
             color: #000;
-            margin-left: 0.5rem;
             max-width: 100%;
-            overflow: hidden;
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transform: translateY(-16px);
 
             .fileName {
                 margin-top: 5.5px;
@@ -54,11 +79,6 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 max-width: 100%; // Ajuste aqui para garantir que o texto não exceda o contêiner
-
-                &:hover {
-                    overflow: visible;
-                    white-space: normal;
-                }
             }
         }
     }

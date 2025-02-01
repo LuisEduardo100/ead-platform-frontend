@@ -65,7 +65,7 @@ export default function Menuhamburger() {
                 <nav className={styles.nav}>
                     <ul>
                         <li onClick={handlePushHome}>
-                            <Home fontSize='large' style={{ marginRight: '10px' }} />
+                            <Home fontSize='large' style={{ marginRight: '16px' }} />
                             Início
                         </li>
                         <li 
@@ -73,7 +73,7 @@ export default function Menuhamburger() {
                             onMouseEnter={() => setShowDropdown(true)} 
                             onMouseLeave={() => setShowDropdown(false)}
                         >
-                            <School fontSize='large' style={{ marginRight: '10px' }} />
+                            <School fontSize='large' style={{ marginRight: '16px' }} />
                             {selectedYear}
                             {showDropdown && (
                                 <ul className={styles.dropdownMenu}>
@@ -93,15 +93,15 @@ export default function Menuhamburger() {
                             )}
                         </li>
                         <li onClick={handlePushCourses}>
-                            <VideoLibrary fontSize='large' style={{ marginRight: '10px' }} />
+                            <VideoLibrary fontSize='large' style={{ marginRight: '16px' }} />
                             Todos os cursos
                         </li>
                         <li onClick={handlePushHandouts}>
-                            <LibraryBooks fontSize='large' style={{ marginRight: '10px' }} />
+                            <LibraryBooks fontSize='large' style={{ marginRight: '16px' }} />
                             Apostilas
                         </li>
                         <li onClick={handlePushSupport}>
-                            <Help fontSize='large' style={{ marginRight: '10px' }} />
+                            <Help fontSize='large' style={{ marginRight: '16px' }} />
                             Suporte
                         </li>
                     </ul>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import * as pdfjs from 'pdfjs-dist';
 import Image from 'next/image';
+import BtnSpinner from '../btnSpinner';
 
 export default function PdfThumbnail({ url }: { url: string }) {
   const [thumbnail, setThumbnail] = useState<string | null>(null);
@@ -45,10 +46,14 @@ export default function PdfThumbnail({ url }: { url: string }) {
     <Image
       src={thumbnail}
       alt="PDF Thumbnail"
-      width={190}
-      height={280}
+      width={250}
+      height={360}
+      quality={100}
+      style={{
+        borderRadius: '20px'
+      }}
     />
   ) : (
-    <div>Loading...</div>
+    <BtnSpinner/>
   );
 }

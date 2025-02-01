@@ -56,7 +56,6 @@ export default function HeaderAuth() {
     return (
         <div className={`${styles.header}`}>
             <Menuhamburger />
-            {isMenuOpen && (window.innerWidth <= 1442) && <div className={styles.divSpace}></div>}
             <Form className={styles.formSearch} onSubmit={handleSearch}>
                 <Input
                     name="search"
