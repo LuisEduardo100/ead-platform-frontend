@@ -82,6 +82,5 @@ export default function AllHandouts({ searchTerm }: { searchTerm: string }) {
                 <p style={{textAlign: 'center'}}>Nenhum arquivo encontrado.</p>
             )}
         </div>
-
     </>)
 }

@@ -10,11 +10,12 @@ import HeaderAuth from '../../../../src/components/HomeAuth/header';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import HandoutNavigation from '../../../../src/components/common/navigationHandouts';
 import { useMenu } from '../../../../src/components/common/menu/menuProvider';
+import PdfThumbnail from '../../../../src/components/common/pdfThumbnail';
 export default function TopicPage() {
     const { topic } = useParams(); // Obtém o parâmetro da URL dinâmica
     const [files, setFiles] = useState<EpisodeFileType[]>([]); // Estado para armazenar arquivos
     const [course, setCourse] = useState<CourseType>(); // Estado para armazenar arquivos
-    const {isMenuOpen} = useMenu()
+    const { isMenuOpen } = useMenu()
     useEffect(() => {
         const getFiles = async () => {
             try {
@@ -54,18 +55,21 @@ export default function TopicPage() {
 
     return (
         <main className={`${styles.main} ${isMenuOpen ? styles.menuOpen : ""}`}>
-            <HeaderAuth/>
+            <HeaderAuth />
             <div className={styles.mainContent}>
                 <HandoutNavigation topic={String(course?.name)} serie={String(course?.serie)} />
                 <ul className={styles.ulDiv}>
                     {files.length > 0 ? (
                         files.map((file) => (
                             <li className={styles.liDiv} key={file.id}>
-                                <PictureAsPdfIcon style={{ color: '#D42428' }} fontSize='large' />
+                                {/* <PictureAsPdfIcon style={{ color: '#D42428' }} fontSize='large' /> */}
                                 {file.url && file.url.length > 0 ? (
-                                    <Link className={styles.linkStyle} href={`${process.env.NEXT_PUBLIC_BASEURL}/${file.url[0]}`} target="_blank" rel="noopener noreferrer">
-                                        <span className={styles.fileName}>{file.name}</span>
-                                    </Link>
+                                    <>
+                                        {<PdfThumbnail url={`${process.env.NEXT_PUBLIC_BASEURL}/${file.url[0]}`}/>}
+                                        <Link className={styles.linkStyle} href={`${process.env.NEXT_PUBLIC_BASEURL}/${file.url[0]}`} target="_blank" rel="noopener noreferrer">
+                                            <span className={styles.fileName}>{file.name}</span>
+                                        </Link>
+                                    </>
                                 ) : (
                                     <div>URL não disponível</div>
                                 )}
