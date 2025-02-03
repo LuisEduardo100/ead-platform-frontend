@@ -98,7 +98,7 @@ export default function HeaderAuth() {
                     style={{
                         content: {
                             position: 'absolute',
-                            top: '10%', // Posiciona o modal abaixo da divProfile
+                            top: '12%', // Posiciona o modal abaixo da divProfile
                             right: '3%', // Alinha o modal à direita da divProfile
                         }
                     }}

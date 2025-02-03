@@ -24,7 +24,7 @@ const getSlideCount = (availableWidth: number, totalSlides: number): number => {
     if (availableWidth >= 1800) return Math.min(totalSlides, 5);
     if (availableWidth >= 1500) return Math.min(totalSlides, 4);
     if (availableWidth >= 1200) return Math.min(totalSlides, 4);
-    if (availableWidth >= 900) return Math.min(totalSlides, 3);
+    if (availableWidth >= 900) return Math.min(totalSlides, 2);
     if (availableWidth >= 750) return Math.min(totalSlides, 2);
     return 1; // Mobile
 };
@@ -87,7 +87,7 @@ export default function SlideComponentSearch({ course }: Props) {
                             perPage: Math.min(course.length, 4),
                         },
                         900: {
-                            perPage: 3,
+                            perPage: 2,
                         },
                         750: {
                             perPage: 2,

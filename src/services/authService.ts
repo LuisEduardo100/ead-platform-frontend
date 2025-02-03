@@ -19,11 +19,11 @@ const authService = {
     register: async (params: RegisterParams) => {
       const res = await api.post("/auth/register", params).catch((error) => {
         if (error.response.status === 400) {
-          return error.response;
+          return "ERRO AQUI EM POST REGISTER"+error.response;
         }
         return error;
       });
-  
+      console.log(res)
       return res;
     },
     // forgotPassword: async ({email} : LoginParams) => {

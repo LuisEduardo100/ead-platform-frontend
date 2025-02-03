@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   icons: "/favicon.png",
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -22,11 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <MenuProvider>
-          <YearProvider>
-            {children}
-          </YearProvider>
-        </MenuProvider>
+          <MenuProvider>
+            <YearProvider>
+              {children}
+            </YearProvider>
+          </MenuProvider>
       </body>
     </html>
   );

@@ -1,7 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: [process.env.NEXT_PUBLIC_URL]
+        remotePatterns: [
+            {
+                protocol: 'http',
+                hostname: 'localhost',
+                port: '4040', // Adicione a porta usada localmente
+                pathname: '**' // Permite todos os caminhos
+            },
+            {
+                protocol: 'https',
+                hostname: new URL(process.env.NEXT_PUBLIC_BASEURL).hostname,
+                pathname: '/images/**'
+            }
+        ]
     },
     experimental: {
         missingSuspenseWithCSRBailout: false,

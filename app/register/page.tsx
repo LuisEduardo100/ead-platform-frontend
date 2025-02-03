@@ -10,6 +10,8 @@ import ToastComponent from '../../src/components/common/toastComponent';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useMenu } from '../../src/components/common/menu/menuProvider';
 import FooterAuth from '../../src/components/HomeAuth/footerAuth';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import BtnSpinner from '../../src/components/common/btnSpinner';
 
 const validatePasswordStrength = (password: string): boolean => {
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -19,11 +21,13 @@ const validatePasswordStrength = (password: string): boolean => {
 const Register = function () {
     const router = useRouter();
     const paramsUrl = useSearchParams()
+    const [loading, setLoading] = useState(false);
     const [toastIsOpen, setToastIsOpen] = useState(false)
     const [toastMessage, setToastMessage] = useState("")
     const [isPasswordVisible, setIsPasswordVisible] = useState(false)
     const [color, setColor] = useState("");
-    const {isMenuOpen} = useMenu()
+    const { isMenuOpen } = useMenu()
+
     const togglePasswordVisibility = () => {
         setIsPasswordVisible(!isPasswordVisible)
     }
@@ -34,10 +38,61 @@ const Register = function () {
         }
     }, [])
 
+    const { executeRecaptcha } = useGoogleReCaptcha();
+
+    useEffect(() => {
+        if (executeRecaptcha) {
+          executeRecaptcha('register') // Pré-carrega o script
+        }
+      }, [executeRecaptcha])
+
     const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        const formElement = event.currentTarget;
 
-        const formData = new FormData(event.currentTarget);
+        setLoading(true);
+
+        if (!(event.currentTarget instanceof HTMLFormElement)) {
+            setToastIsOpen(true)
+            setToastMessage("Erro no formulário de registro")
+            setColor("bg-danger")
+            setLoading(false)
+            return
+          }
+
+        if (!executeRecaptcha) {
+            setToastIsOpen(true);
+            setToastMessage("reCAPTCHA não está disponível no momento.");
+            setColor("bg-danger");
+            setTimeout(() => setToastIsOpen(false), 2500);
+            setLoading(false);
+            return
+        }
+
+        let recaptchaToken: string;
+        try {
+          recaptchaToken = await executeRecaptcha('register');
+        } catch (error) {
+            console.log(error)
+          setToastIsOpen(true);
+          setToastMessage("Falha ao executar reCAPTCHA.");
+          setColor("bg-danger");
+          setTimeout(() => setToastIsOpen(false), 2500);
+          setLoading(false);
+          return;
+        }
+
+        console.log("EVENT:"+event.currentTarget)
+        const formData = new FormData(formElement);
+
+        if (!formData) {
+            setToastIsOpen(true)
+            setToastMessage("Dados do formulário inválidos")
+            setColor("bg-danger")
+            setLoading(false)
+            return
+          }
+          
         const firstName = formData.get("firstName")!.toString();
         const lastName = formData.get("lastName")!.toString();
         const serie = formData.get("serie")!.toString();
@@ -46,7 +101,7 @@ const Register = function () {
         const email = formData.get("email")!.toString();
         const password = formData.get("password")!.toString();
         const confirmPassword = formData.get("confirmPassword")!.toString();
-        const params = { firstName, lastName, serie, phone, birth, email, password };
+        const params = { firstName, lastName, serie, phone, birth, email, password, token: recaptchaToken };
 
         if (password != confirmPassword) {
             setToastIsOpen(true);
@@ -67,7 +122,8 @@ const Register = function () {
         }
 
         const { data, status } = await authService.register(params);
-
+        console.log(data)
+        console.log(status)
         if (status === 201 && paramsUrl.get('newuser') == 'true') {
             setToastIsOpen(true);
             setToastMessage("Cadastro realizado! Verifique seu email para confirmar a conta.");
@@ -100,7 +156,7 @@ const Register = function () {
                 <HeaderGeneric logoUrl='/' btnUrl='/login' btnContent='JÁ SOU NOTA DEZ' />
                 <Container className="py-5">
                     <p className={styles.formTitle}>Bem-vindo(a) ao Você Nota Dez!</p>
-                    <Form className={styles.form} onSubmit={handleRegister} >
+                    <Form tag='form' className={styles.form} onSubmit={handleRegister} >
                         <p className="text-center py-2"><strong>Crie a sua conta</strong> </p>
                         <FormGroup>
                             <Label for="firstName" className={styles.label}>NOME</Label>
@@ -112,6 +168,7 @@ const Register = function () {
                                 required
                                 maxLength={20}
                                 className={styles.inputName}
+                                autoComplete='first-name' 
                             />
                         </FormGroup>
                         <FormGroup>
@@ -248,7 +305,7 @@ const Register = function () {
                             </FormGroup>
                         </FormGroup>
                         <Button type="submit" outline className={styles.formBtn}>
-                            CADASTRAR
+                            {loading ? <BtnSpinner/> : 'CADASTRAR'}
                         </Button>
                         <ToastComponent color={color} isOpen={toastIsOpen} message={toastMessage} />
                     </Form>
