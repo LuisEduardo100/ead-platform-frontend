@@ -6,7 +6,7 @@ import { Button, Container, Form, Input } from 'reactstrap'
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import profileService from "../../../services/profileService";
-import { AccountCircle, Close, Search, SearchOutlined } from "@mui/icons-material";
+import { AccountCircle, Close, Logout, Save, Search, SearchOutlined } from "@mui/icons-material";
 import { useYear } from "../selectBox/yearProvider";
 import Menuhamburger from "../../common/menu";
 import { useMenu } from "../../common/menu/menuProvider";
@@ -20,7 +20,7 @@ export default function HeaderAuth() {
     const [accessType, setAccessType] = useState(false);
     const [profilePicture, setProfilePicture] = useState("")
     const router = useRouter();
-    const {isMenuOpen} = useMenu()
+    const { isMenuOpen } = useMenu()
     const handleOpenModal = () => {
         setModalOpen(!modalOpen)
     }
@@ -89,17 +89,30 @@ export default function HeaderAuth() {
                 ) :
                     (<AccountCircle className={styles.userProfile} fontSize="small" onClick={handleOpenModal} />)
                 }
+                <Modal
+                    isOpen={modalOpen}
+                    onRequestClose={handleCloseModal}
+                    shouldCloseOnEsc={true}
+                    className={styles.modal}
+                    overlayClassName={styles.overlayModal}
+                    style={{
+                        content: {
+                            position: 'absolute',
+                            top: '10%', // Posiciona o modal abaixo da divProfile
+                            right: '3%', // Alinha o modal à direita da divProfile
+                        }
+                    }}
+                >
+                    <Link href="/profile" className={styles.modalLink}>
+                        <Save fontSize="medium" style={{ marginRight: '10px' }} />
+                        Meus Dados
+                    </Link>
+                    <p className={styles.modalLink} onClick={handleLogout}>
+                        <Logout fontSize="medium" style={{ marginRight: '10px'}} />
+                        Sair
+                    </p>
+                </Modal>
             </div>
-            <Modal
-                isOpen={modalOpen}
-                onRequestClose={handleCloseModal}
-                shouldCloseOnEsc={true}
-                className={styles.modal}
-                overlayClassName={styles.overlayModal}
-            >
-                <Link href="/profile" className={styles.modalLink}>Meus Dados</Link>
-                <p className={styles.modalLink} onClick={handleLogout}>Sair</p>
-            </Modal>
         </div>
     )
 }

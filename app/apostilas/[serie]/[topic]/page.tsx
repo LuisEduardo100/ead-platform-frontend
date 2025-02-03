@@ -64,8 +64,13 @@ export default function TopicPage() {
                             <li className={styles.liDiv} key={file.id}>
                                 {file.url && file.url.length > 0 ? (
                                     <>
-                                        <Link className={styles.linkStyle} href={`${process.env.NEXT_PUBLIC_BASEURL}/${file.url[0]}`} target="_blank" rel="noopener noreferrer">
-                                        {<PdfThumbnail url={`${process.env.NEXT_PUBLIC_BASEURL}/${file.url[0]}`} />}
+                                        <Link
+                                            className={styles.linkStyle}
+                                            href={`${process.env.NEXT_PUBLIC_BASEURL}/${file.url[0]}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            <PdfThumbnail url={`${process.env.NEXT_PUBLIC_BASEURL}/${file.url[0]}`} />
                                             <span className={styles.fileName}>{file.name}</span>
                                         </Link>
                                         <span className={styles.nameTip}>{file.name}</span>

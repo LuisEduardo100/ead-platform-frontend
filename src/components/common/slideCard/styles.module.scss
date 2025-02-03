@@ -11,11 +11,9 @@
 
 }
 
-
-
 .imgBox {
+  max-width: 300px;
   width: 100%;
-
   &:hover {
     .imgBtn {
       opacity: 1;
@@ -35,11 +33,12 @@
 }
 
 .linkStyle {
+  width: 300px;
   text-decoration: none;
   position: relative;
   background-color: white;
   overflow: visible;
-
+  
   .imgBtn {
     width: 40px;
     padding: 0;

@@ -11,6 +11,7 @@ import '@splidejs/react-splide/css'
 // @ts-ignore
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { useYear } from '../../HomeAuth/selectBox/yearProvider';
+import PdfThumbnail from '../pdfThumbnail';
 
 export default function AllHandoutsSlidder({ searchTerm }: { searchTerm: string }) {
     const [pdfFiles, setPdfFiles] = useState<EpisodeFileType[]>([]);
@@ -131,32 +132,30 @@ export default function AllHandoutsSlidder({ searchTerm }: { searchTerm: string 
                         }}
                     >
                         {filteredFiles.map((file, index) => (
-                            <SplideSlide className='d-flex justify-content-flex-start' key={index}>
+                            <SplideSlide key={index}>
                                 <div className={styles.slideItem}>
                                     <div className={styles.iconAndLink}>
-                                        <PictureAsPdfIcon style={{ color: '#D42428' }} fontSize="large" />
                                         <Link
                                             className={styles.linkStyle}
                                             href={`${process.env.NEXT_PUBLIC_BASEURL}/${file.url}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                         >
-                                            <span
-                                                className={styles.fileName}
-                                                data-fullname={file.name} // Adiciona o nome completo para a tooltip
-                                            >
-                                                {file.name}
-                                            </span>
+                                            <PdfThumbnail url={`${process.env.NEXT_PUBLIC_BASEURL}/${file.url}`} />
                                         </Link>
                                     </div>
-                                    <div style={{ width: '250px', display: 'flex', gap: '16px' }}>
-                                        <p className={styles.fileDetails1}>
-                                            {file.course}
-                                        </p>
-                                        <p className={styles.fileDetails2}>
-                                            {file.serie}
-                                        </p>
-                                    </div>
+                                    <span
+                                        style={{
+                                            textAlign: 'center',
+                                            margin: '0 auto',
+                                            overflow: 'hidden',
+                                            whiteSpace: 'nowrap',
+                                            textOverflow: 'ellipsis',
+                                            maxWidth: '100%'
+                                        }}
+                                    >
+                                        {file.name}
+                                    </span>
                                 </div>
                             </SplideSlide>
                         ))}

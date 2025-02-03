@@ -1,3 +1,5 @@
+$menu-meusdados-hoverbg: #d1d1d1;
+
 .divbackground {
     background-color: transparent;
 }
@@ -37,6 +39,7 @@
     border: 2px solid #ccc;
     border-radius: 20px;
     padding-right: 50px;
+
     &:focus {
         outline: none;
         box-shadow: none;
@@ -82,9 +85,7 @@
     align-items: center;
     cursor: pointer;
 }
-.divProfile {
-    display: flex;
-}
+
 
 .imageProfile {
     height: 45px;
@@ -101,67 +102,34 @@
     height: 105.77px;
     padding: 10px 60px;
 }
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
+.divProfile {
+    position: relative; // Torna a divProfile um ponto de referência para o modal
+    display: flex;
 }
 
 .modal {
     position: absolute;
-    width: 180px;
-    height: 80px;
-    top: 85px;
-    right: 6.2%;
-    background-color: #DEB66B;
-    outline: none;
-    border-radius: 5px;
-    box-shadow: 8px 6px rgba(0, 0, 0, 0.486);
-
-
+    background-color: white;
+    border-radius: 4px;
     // Conteúdo do modal
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0px 24px;
 }
 
 .modalLink {
-    color: white;
-    margin: 5px 0px;
-    font-weight: bold;
+    color: black;
     cursor: pointer;
     text-decoration: none;
-    text-transform: uppercase;
-
+    padding: 10px 24px;
+    margin-bottom: 0px;
+    transition: background 0.4s;
     &:hover {
-        color: black;
-        font-size: 18px;
-        transition: 0.3s;
+        background-color: lighten($menu-meusdados-hoverbg, 5%)
     }
 }
 
 .overlayModal {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
     background-color: transparent;
 }
 
@@ -181,80 +149,32 @@
         }
 
     }
-
 }
 
-@media (min-width: 1610px) and (max-width: 2000px) {
-    .modal {
-        right: 10.5%;
-    }
+
+@media only screen and (max-width: 950px) {
+    .inputSearch {
+        width: 400px;
+    }    
 }
 
-@media (min-width: 2000px) and (max-width: 2671px) {
-    .modal {
-        right: 18.5%;
-    }
+@media only screen and (max-width: 850px) {
+    .inputSearch {
+        width: 320px;
+    }    
 }
 
-@media (min-width: 2671px) and (max-width: 3500px) {
-    .modal {
-        right: 25.5%;
-    }
-}
+@media only screen and (max-width: 730px) {
 
-@media (max-width: 991px) {
-    .tituloNav {
-        font-size: 30px;
+    .header {
+        
     }
-
-    .modal {
-        right: 14%;
-    }
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-    .modal {
-        right: 10%;
-    }
-}
-
-@media (min-width: 367px) and (max-width: 767px) {
-    .modal {
-        top: 170px;
-        right: 10%;
-    }
-
-    .tituloNav {
-        font-size: 24px;
-    }
-
-    .nav {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 15px;
-    }
-}
-
-@media (max-width: 366px) {
-    .nav {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 15px;
-        width: 95%;
-    }
-
-    .divLogo {
+    .inputSearch {
         display: none;
-    }
+        width: 0;
 
-    .modal {
-        right: 3%;
-    }
+        .searchIconIcon {
 
-    .searchbar {
-        width: 95%;
-    }
-
+        }
+    }    
 }

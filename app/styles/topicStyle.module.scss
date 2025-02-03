@@ -31,12 +31,13 @@
     }
 
     .liDiv {
+        border-radius: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
         padding: 1rem;
         width: 250px;
-        height: 400px;
+        height: 100%;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -45,6 +46,7 @@
         &:hover {
             overflow: visible;
             opacity: .75;
+            background-color: #adadadb0;
             cursor: pointer;
         }
 
@@ -70,7 +72,6 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            transform: translateY(-16px);
 
             .fileName {
                 margin-top: 5.5px;

@@ -17,9 +17,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
     padding: 1rem;
-    border: 1px solid #adadad;
     width: 250px;
     white-space: nowrap;
     overflow: hidden;
@@ -27,7 +25,6 @@
 
     &:hover {
         opacity: .75;
-        background-color: #adadadb0;
         cursor: pointer;
     }
 }
@@ -35,6 +32,7 @@
 .iconAndLink {
     display: flex;
     align-items: center;
+    justify-content: center;
     margin-bottom: 0.5rem;
 }
 

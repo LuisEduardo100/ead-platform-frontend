@@ -6,6 +6,7 @@ import profileService from "../../../services/profileService";
 import 'jsuites'
 import ToastComponent from "../../common/toastComponent";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function UserForm() {
     const router = useRouter()
@@ -90,7 +91,7 @@ export default function UserForm() {
             <div className={styles.formName}>
                 {profilePicture ?
                     (
-                        <img
+                        <Image
                             src={`${process.env.NEXT_PUBLIC_BASEURL}/${profilePicture}`}
                             alt="user picture"
                             width={150}

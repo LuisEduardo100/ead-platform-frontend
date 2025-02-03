@@ -11,7 +11,6 @@ export default function PdfThumbnail({ url }: { url: string }) {
   useEffect(() => {
     const loadPdf = async () => {
       try {
-        // Garante que o worker está correto
         pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
 
         const response = await fetch(url);
@@ -21,17 +20,26 @@ export default function PdfThumbnail({ url }: { url: string }) {
         const pdf = await loadingTask.promise;
         const page = await pdf.getPage(1);
 
-        // Configuração do canvas
-        const viewport = page.getViewport({ scale: 0.5 });
+        // 🔹 Definimos um novo viewport com escala ajustada
+        const scale = 0.39; // Aumentamos um pouco a escala para melhor qualidade
+        const viewport = page.getViewport({ scale });
+
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d')!;
 
+        const targetHeight = 200; // 🔹 Altura visível desejada
+        const offsetY = viewport.height * 0.0001// 🔹 Move a imagem para baixo
+
         canvas.width = viewport.width;
-        canvas.height = viewport.height;
+        canvas.height = targetHeight;
 
-        await page.render({ canvasContext: context, viewport }).promise;
+        // 🔹 Ajustamos a posição para capturar a área certa
+        await page.render({
+          canvasContext: context,
+          viewport,
+          transform: [1, 0, 0, 1, 0, -offsetY], // 🔹 Move a imagem para baixo
+        }).promise;
 
-        // Converte o canvas para imagem base64
         setThumbnail(canvas.toDataURL());
       } catch (error) {
         console.error('Erro ao carregar PDF:', error);
@@ -43,17 +51,30 @@ export default function PdfThumbnail({ url }: { url: string }) {
   }, [url]);
 
   return thumbnail ? (
-    <Image
-      src={thumbnail}
-      alt="PDF Thumbnail"
-      width={250}
-      height={360}
-      quality={100}
+    <div
       style={{
-        borderRadius: '20px'
+        height: '200px',  // Garante a altura fixa
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '20px',
+        overflow: 'hidden',
       }}
-    />
+    >
+      <Image
+        src={thumbnail}
+        alt="PDF Thumbnail"
+        width={250}
+        height={200}
+        quality={100}
+        style={{
+          objectFit: 'cover'
+        }}
+      />
+    </div>
+
   ) : (
-    <BtnSpinner/>
+    <BtnSpinner />
   );
 }
