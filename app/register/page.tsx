@@ -71,7 +71,6 @@ const Register = function () {
         try {
             recaptchaToken = await executeRecaptcha('register');
         } catch (error) {
-            console.log(error)
             setToastIsOpen(true);
             setToastMessage("Falha ao executar reCAPTCHA.");
             setColor("bg-danger");
@@ -128,8 +127,7 @@ const Register = function () {
         }
 
         const { data, status } = await authService.register(params);
-        console.log(data)
-        console.log(status)
+
         if (status === 201 && paramsUrl.get('newuser') == 'true') {
             setToastIsOpen(true);
             setToastMessage("Cadastro realizado! Verifique seu email para confirmar a conta.");

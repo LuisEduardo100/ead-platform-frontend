@@ -8,7 +8,6 @@ import NewestCategory from '../../src/components/HomeAuth/newestCategory'
 import HomeAuthPresentation from '../../src/components/HomeAuth/presentation'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { useYear } from '../../src/components/HomeAuth/selectBox/yearProvider';
 import FooterAuth from '../../src/components/HomeAuth/footerAuth';
 import { useMenu } from '../../src/components/common/menu/menuProvider';
 import styles from './styles.module.scss'

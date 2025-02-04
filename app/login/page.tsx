@@ -55,13 +55,9 @@ const Login = function () {
 
         try {
             const response = await authService.login(params);
-            console.log("Login response:", response);
     
             const { status, data } = response;
             
-            console.log("DATA: " + data)
-            console.log("status: " + status)
-
             if (status === 200) {
                 if (registerSuccess === "true") {
                     router.push("/precos");

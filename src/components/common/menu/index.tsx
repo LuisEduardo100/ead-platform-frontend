@@ -32,22 +32,6 @@ export default function Menuhamburger() {
         return () => window.removeEventListener('resize', handleResize);
     }, [setIsMenuOpen]);
 
-    const handlePushHome = () => {
-        router.push('/home')
-    }
-
-    const handlePushCourses = () => {
-        router.push('')
-    }
-
-    const handlePushHandouts = () => {
-        router.push('/apostilas')
-    }
-
-    const handlePushSupport = () => {
-        router.push('')
-    }
-
     return (<>
         <div className={styles.menuContainer}>
             <div className={styles.menuLogo}>
@@ -64,13 +48,13 @@ export default function Menuhamburger() {
             >
                 <nav className={styles.nav}>
                     <ul>
-                        <li onClick={handlePushHome}>
+                        <li onClick={() => router.push('/home')}>
                             <Home fontSize='large' style={{ marginRight: '16px' }} />
                             Início
                         </li>
-                        <li 
-                            className={styles.menuItemWithDropdown} 
-                            onMouseEnter={() => setShowDropdown(true)} 
+                        <li
+                            className={styles.menuItemWithDropdown}
+                            onMouseEnter={() => setShowDropdown(true)}
                             onMouseLeave={() => setShowDropdown(false)}
                         >
                             <School fontSize='large' style={{ marginRight: '16px' }} />
@@ -78,10 +62,10 @@ export default function Menuhamburger() {
                             {showDropdown && (
                                 <ul className={styles.dropdownMenu}>
                                     {["6º ano", "7º ano", "8º ano", "9º ano"].map((year) => (
-                                        <li 
-                                            key={year} 
-                                            className={styles.dropdownItem} 
-                                            onClick={() => { 
+                                        <li
+                                            key={year}
+                                            className={styles.dropdownItem}
+                                            onClick={() => {
                                                 onYearChange(year);
                                                 setShowDropdown(false);
                                             }}
@@ -92,17 +76,26 @@ export default function Menuhamburger() {
                                 </ul>
                             )}
                         </li>
-                        <li onClick={handlePushCourses}>
+                        <li onClick={() => router.push(`/todos-os-cursos?categoria=Matematica`)}>
                             <VideoLibrary fontSize='large' style={{ marginRight: '16px' }} />
                             Todos os cursos
                         </li>
-                        <li onClick={handlePushHandouts}>
+                        <li onClick={() => router.push('/apostilas')}>
                             <LibraryBooks fontSize='large' style={{ marginRight: '16px' }} />
                             Apostilas
                         </li>
-                        <li onClick={handlePushSupport}>
-                            <Help fontSize='large' style={{ marginRight: '16px' }} />
+                        <li>
+                            <Link 
+                                href={'https://wa.me/558594123487?text=Olá, gostaria de tirar uma dúvida.'}
+                                style={{
+                                    textDecoration: 'none',
+                                    color: 'inherit'
+                                }}
+                                target='_blank'
+                            >
+                                <Help fontSize='large' style={{ marginRight: '16px' }} />
                             Suporte
+                            </Link>
                         </li>
                     </ul>
                 </nav>
