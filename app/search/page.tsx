@@ -9,7 +9,7 @@ export const generateMetadata = async ({ searchParams }: { searchParams: { name:
 };
 
 export default async function Search({ searchParams }: { searchParams: { name: string, serie: string } }) {
-
+  
   return (
     <>
       <main>

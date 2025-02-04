@@ -42,7 +42,6 @@ export default function PdfThumbnail({ url }: { url: string }) {
 
         setThumbnail(canvas.toDataURL());
       } catch (error) {
-        console.error('Erro ao carregar PDF:', error);
         setThumbnail(null);
       }
     };

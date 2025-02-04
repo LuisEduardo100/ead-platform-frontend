@@ -18,6 +18,11 @@ const validatePasswordStrength = (password: string): boolean => {
     return passwordRegex.test(password);
 };
 
+const isValidEmail = (email: string): boolean => {
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+};
+
 const Register = function () {
     const router = useRouter();
     const paramsUrl = useSearchParams()
@@ -40,16 +45,9 @@ const Register = function () {
 
     const { executeRecaptcha } = useGoogleReCaptcha();
 
-    useEffect(() => {
-        if (executeRecaptcha) {
-          executeRecaptcha('register') // Pré-carrega o script
-        }
-      }, [executeRecaptcha])
-
     const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formElement = event.currentTarget;
-
         setLoading(true);
 
         if (!(event.currentTarget instanceof HTMLFormElement)) {
@@ -58,7 +56,7 @@ const Register = function () {
             setColor("bg-danger")
             setLoading(false)
             return
-          }
+        }
 
         if (!executeRecaptcha) {
             setToastIsOpen(true);
@@ -71,18 +69,17 @@ const Register = function () {
 
         let recaptchaToken: string;
         try {
-          recaptchaToken = await executeRecaptcha('register');
+            recaptchaToken = await executeRecaptcha('register');
         } catch (error) {
             console.log(error)
-          setToastIsOpen(true);
-          setToastMessage("Falha ao executar reCAPTCHA.");
-          setColor("bg-danger");
-          setTimeout(() => setToastIsOpen(false), 2500);
-          setLoading(false);
-          return;
+            setToastIsOpen(true);
+            setToastMessage("Falha ao executar reCAPTCHA.");
+            setColor("bg-danger");
+            setTimeout(() => setToastIsOpen(false), 2500);
+            setLoading(false);
+            return;
         }
 
-        console.log("EVENT:"+event.currentTarget)
         const formData = new FormData(formElement);
 
         if (!formData) {
@@ -91,14 +88,23 @@ const Register = function () {
             setColor("bg-danger")
             setLoading(false)
             return
-          }
-          
+        }
+
         const firstName = formData.get("firstName")!.toString();
         const lastName = formData.get("lastName")!.toString();
         const serie = formData.get("serie")!.toString();
         const phone = formData.get("phone")!.toString();
         const birth = formData.get("birth")!.toString();
         const email = formData.get("email")!.toString();
+
+        if (!isValidEmail(email)) {
+            setToastIsOpen(true);
+            setToastMessage("Por favor, insira um email válido.");
+            setColor("bg-danger");
+            setLoading(false);
+            return;
+        }
+
         const password = formData.get("password")!.toString();
         const confirmPassword = formData.get("confirmPassword")!.toString();
         const params = { firstName, lastName, serie, phone, birth, email, password, token: recaptchaToken };
@@ -168,7 +174,7 @@ const Register = function () {
                                 required
                                 maxLength={20}
                                 className={styles.inputName}
-                                autoComplete='first-name' 
+                                autoComplete='first-name'
                             />
                         </FormGroup>
                         <FormGroup>
@@ -305,7 +311,7 @@ const Register = function () {
                             </FormGroup>
                         </FormGroup>
                         <Button type="submit" outline className={styles.formBtn}>
-                            {loading ? <BtnSpinner/> : 'CADASTRAR'}
+                            {loading ? <BtnSpinner /> : 'CADASTRAR'}
                         </Button>
                         <ToastComponent color={color} isOpen={toastIsOpen} message={toastMessage} />
                     </Form>

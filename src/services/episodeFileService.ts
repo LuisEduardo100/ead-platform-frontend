@@ -47,15 +47,9 @@ const episodeFileService = {
     },
     getAllFiles: async () => {
         try {
-            const token = sessionStorage.getItem("vocenotadez-token")
-            const res = await api.get('apostilas', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
+            const res = await api.get('/apostilas')
             return res
         } catch (error: any) {
-            console.error("Erro ao buscar apostilas", error)
             throw error
         }
     }

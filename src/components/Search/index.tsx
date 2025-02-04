@@ -17,9 +17,7 @@ import FooterAuth from "../HomeAuth/footerAuth";
 import AllHandoutsSlidder from "../common/allHandoutsSlidder";
 
 export default function SearchComponents(
-    { searchParams }: {
-        searchParams: { name: string, serie: string }
-    }) {
+    { searchParams }: {searchParams: { name: string, serie: string }}) {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
     const [searchResult, setSearchResult] = useState<CourseType[]>([]);
@@ -46,17 +44,16 @@ export default function SearchComponents(
     useEffect(() => {
         profileService.fetchCurrent().then((user) => {
             if (user.email != null || "") {
-                SetSearchUser(true); // Se email estiver presente, usuário está logado
+                SetSearchUser(true);
             }
         }).catch(() => {
-            SetSearchUser(false); // Em caso de erro, define como não logado
+            SetSearchUser(false);
         });
     }, []);
 
     useEffect(() => {
         const fetchCourses = async () => {
             setLoading(true);
-
             try {
                 if (searchUser) {
                     const res = await courseService.getSearch(searchName, selectedYear);
@@ -68,7 +65,7 @@ export default function SearchComponents(
                     setSearchResult(res.data.courses);
                 }
             } catch (error) {
-                console.error("Erro ao buscar cursos:", error);
+                throw error
             } finally {
                 setLoading(false);
             }
@@ -109,9 +106,7 @@ export default function SearchComponents(
                                             setSearchName(event.currentTarget.value.toLowerCase());
                                         }}
                                     />
-                                    <div>
-                                        <SearchOutlined className={styles.searchIcon} fontSize='large' onClick={nhandleSearchClick} />
-                                    </div>
+                                    <SearchOutlined className={styles.searchIcon} fontSize='large' onClick={nhandleSearchClick} />
                                 </Form>
                             </Col>
                         </Row>

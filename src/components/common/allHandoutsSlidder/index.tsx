@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import episodeFileService from "../../../services/episodeFileService";
 import { CategoryType } from "../../../services/categoriesService";
 import Link from "next/link";
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { EpisodeFileType, EpisodeTypeAdapted } from '../../../services/courseService';
 // @ts-ignore
 import '@splidejs/react-splide/css'
@@ -12,6 +11,7 @@ import '@splidejs/react-splide/css'
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { useYear } from '../../HomeAuth/selectBox/yearProvider';
 import PdfThumbnail from '../pdfThumbnail';
+import PageSpinner from '../pageSpinner';
 
 export default function AllHandoutsSlidder({ searchTerm }: { searchTerm: string }) {
     const [pdfFiles, setPdfFiles] = useState<EpisodeFileType[]>([]);
