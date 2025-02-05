@@ -17,6 +17,7 @@ import { useYear } from "../selectBox/yearProvider";
 import Menuhamburger from "../../common/menu";
 import { useMenu } from "../../common/menu/menuProvider";
 import Image from "next/image";
+import PageSpinner from "../../common/pageSpinner";
 
 export default function HeaderAuth() {
     const { selectedYear } = useYear();
@@ -29,7 +30,14 @@ export default function HeaderAuth() {
 
     const router = useRouter();
     const { isMenuOpen } = useMenu();
+    const [loading, setLoading] = useState(true)
 
+    useEffect(() => {
+        const intervalID = setInterval(() => {
+            setLoading(false);
+        }, 300)
+        return () => clearInterval(intervalID)
+    }, [])
     // Modal de perfil
     const handleOpenModal = () => {
         setModalOpen(!modalOpen);
@@ -86,6 +94,7 @@ export default function HeaderAuth() {
         return () => window.removeEventListener("resize", getAvailableWidth);
     }, []);
 
+    if (loading) return <PageSpinner/>
     return (
         <div className={`${styles.header} ${isMenuOpen ? styles.menuOpen : ""}`}>
             {/* Menu Hamburguer */}
@@ -106,7 +115,7 @@ export default function HeaderAuth() {
                         onChange={(e) => setSearchName(e.currentTarget.value.toLowerCase())}
                     />
                     {!isSearchOpen && (
-                        <SearchOutlined className={styles.searchIcon} onClick={handleSearchIconClick} />
+                        <SearchOutlined className={styles.searchIcon} onClick={(e) => handleSearch} />
                     )}
                 </Form>
             )}

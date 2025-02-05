@@ -23,7 +23,8 @@ const IconBtn = styled(IconButton)({
 
     '@media (max-width: 300px)': {
         padding: "0px 4px",
-    }
+    },
+
 });
 
 

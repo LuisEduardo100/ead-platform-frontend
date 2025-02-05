@@ -4,21 +4,53 @@
     align-items: center;
     margin: 0 auto;
 }
-
+.infoCourse {
+    display: block;
+    font-size: 1rem;
+}
 .ulDiv {
     list-style: none;
     padding: 0;
+    overflow-x: hidden;
 
+    .divIconName {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        @media (max-width: 468px) {
+            justify-content: center;
+        }
+    }
     li {
         display: flex;
         align-items: center;
         padding: 0.8rem;
+        flex-wrap: wrap;
         border-bottom: 1px solid #adadad;
         justify-content: space-between;
+
+        @media (max-width: 501px) {
+            .infoCourse {
+                padding-left: 45px;
+            }
+        }
+        @media (max-width: 468px) {
+            justify-content: center;
+        }
         &:hover {
             opacity: .75;
             background-color: #adadadb0;
             cursor: pointer;
+        }
+
+        .infoCourse {
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 950px) {
+            .infoCourse {
+                font-size: 0.6rem;
+            }
         }
 
         .linkStyle {
@@ -28,10 +60,32 @@
             max-width: 100%;
             overflow: hidden;
 
+            @media (max-width: 468px) {
+                text-align: center;
+            }
+
             .fileName {
                 margin-top: 5.5px;
                 display: inline-block;
-           
+                overflow: hidden;
+                text-overflow: ellipsis;
+                text-wrap: nowrap;
+                @media (max-width: 1300px) {
+                    width: 400px;
+                }
+                @media (max-width: 950px) {
+                    width: 300px;
+                }
+                @media (max-width: 730px) {
+                    width: 200px;
+                }
+                @media (max-width: 501px) {
+                    font-size: 0.8rem;
+                }
+                @media (max-width: 356px) {
+                    font-size: 0.6rem;
+                    width: 260px;
+                }
             }
         }
     }

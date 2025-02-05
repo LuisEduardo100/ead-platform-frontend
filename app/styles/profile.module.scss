@@ -6,11 +6,12 @@
 .main {
     transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
     margin-left: 0;
-    width: 100%;
-
+    max-width: 100%;
     &.menuOpen {
         margin-left: 250px; // Largura do menu
         width: calc(100% - 250px); // Ajuste a largura restante
+        max-width: 100%;
+        overflow-x: hidden;
     }
 }
 .renderFormBtn {
@@ -41,5 +42,10 @@
     .btnColumn{
         margin: 0 auto;
         padding-bottom: 50px;
+    }
+}
+@media (max-width: 450px) {
+    .title {
+        font-size: 1.2rem;
     }
 }

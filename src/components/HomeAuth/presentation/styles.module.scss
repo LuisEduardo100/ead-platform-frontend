@@ -1,5 +1,11 @@
+.divMain {
+        background-size: cover;
+        background-position: center;
+        height: 750px
+}
+
 .containerStyle {
-    padding: 40px 50px;
+    padding: 20px 50px;
 
     .title {
         font-size: 5.5rem;
@@ -33,7 +39,10 @@
 
     .divButton {
         width: 180px;
-
+        
+        @media (max-width: 390px) {
+            width: 120px;
+        }
         &:hover{
             .pAssistirAgora {
                 animation: pulsate 0.6s ease-out; /* Animação infinita de pulse */
@@ -99,24 +108,30 @@
 
 
 @media (max-width: 991px) {
+    .divMain {
+        height: 700px;
+    }
     .containerStyle {
         .title {
-            width: 400px;
+            font-size: 4.5rem;
+            line-height: 3.8rem;
+            width: 450px;
         }
-
+        .description {
+            width: 80%;
+            font-size: 1rem;
+        }
     }
 
 }
 
-@media (max-width: 767px) {
+@media (max-width: 600px) {
     .containerStyle {
         position: absolute;
-        left: 30px;
         width: 95%;
 
         .description {
-            width: 95%;
-            font-size: 20px;
+            font-size: 0.8rem;
         }
 
         .title {
@@ -126,61 +141,27 @@
     }
 }
 
-@media (max-width: 570px) {
+@media (max-width: 391px) {
+    .divMain {
+        height: 550px;
+    }
+    .divButton {
+        .redoAssistirAgora, .pAssistirAgora {
+            font-size: 0.6rem;
+        }
+
+        .button {
+            font-size: 1rem;
+        }
+    }
     .containerStyle {
-        left: 10px;
+        .title {
+            font-size: 3rem;
+            line-height: 2.8rem;
+        }
         .description {
-            font-size: 18px;
-            width: 450px;
-        }
-
-        .title {
-            font-size: 80px;
-        }
-
-    }
-}
-
-@media (max-width: 501px) {
-    .containerStyle {
-        .description {
-            width: 95%;
-        }
-
-        .title {
-            width: 95%;
-        }
-
-    }
-}
-
-@media (max-width: 407px) {
-    .containerStyle {
-        .description {
-            font-size: 16px;
-        }
-
-        .title {
-            font-size: 70px;
-        }
-
-    }
-}
-@media (max-width: 375px) {
-    .containerStyle {
-        .title {
-            font-size: 60px;
-            line-height: 55px;
+            font-size: 0.6rem;
         }
     }
 }
 
-
-@media (max-width: 314px) {
-    .containerStyle {
-        .title {
-            font-size: 60px;
-            line-height: 55px;
-        }
-    }
-}

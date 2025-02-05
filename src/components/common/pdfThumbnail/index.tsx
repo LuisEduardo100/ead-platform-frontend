@@ -68,7 +68,8 @@ export default function PdfThumbnail({ url }: { url: string }) {
         height={200}
         quality={100}
         style={{
-          objectFit: 'cover'
+          objectFit: 'cover',
+          borderRadius: '20px'
         }}
       />
     </div>

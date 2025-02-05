@@ -38,7 +38,7 @@ export default function HandoutNavigation({ serie, topic }: props) {
     return (
         <div className={styles.containerHeader}>
             <IconBtn onClick={handleHome}>
-                <Home fontSize="large" />
+                <Home className={styles.homeIcon} />
             </IconBtn>
             <Separation>&gt;</Separation>
             <Link className={styles.link} href='/apostilas'>apostilas</Link>

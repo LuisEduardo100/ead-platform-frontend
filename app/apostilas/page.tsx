@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { Folder, SearchOutlined } from "@mui/icons-material";
 import { useMenu } from "../../src/components/common/menu/menuProvider";
 import AllHandouts from "../../src/components/common/allHandouts";
+import FooterAuth from "../../src/components/HomeAuth/footerAuth";
 export default function ApostilaPage() {
     const [apostilas, setApostilas] = useState([])
     const router = useRouter()
@@ -67,7 +68,7 @@ export default function ApostilaPage() {
                             onClick={() => handleClick(serie)}
                             onDoubleClick={() => handleNavigation(serie)}
                         >
-                            <Folder fontSize='large' />
+                            <Folder className={styles.folderLi}/>
                             <Button className={styles.buttonStyle}>{serie}</Button>
                         </li>
                     ))}
@@ -86,6 +87,7 @@ export default function ApostilaPage() {
                     <AllHandouts searchTerm={searchTerm} />
                 </div>
             </div>
+            <FooterAuth/>
         </main>
     );
 }

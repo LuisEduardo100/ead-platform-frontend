@@ -16,6 +16,7 @@
 }
 .divBtn{
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
 }
 .btnAssine, .btnPrecos, .btnSouNotaDez{
@@ -58,54 +59,47 @@
         margin: 16px 0;
     }
 }
+@media (max-width: 528px) {
+    .divLogo {
+        .imgLogo {
+            width: 100px;
+        }
+    }
+    .divBtn {
+        .btnPrecos, .btnAssine, .btnSouNotaDez {
+            font-size: 0.7rem;
+        }
+    }
+}
+@media (max-width: 436px) {
+    .divLogo {
+        .imgLogo {
+            width: 75px;
+        }
+    }
+    .divBtn {
+        .btnPrecos, .btnAssine, .btnSouNotaDez {
+            font-size: 0.7rem;
+        }
 
-@media (max-width: 767px) {
-    .containerHeader {
-        justify-content: center;
-        flex-direction: column;
     }
-    .btnPrecos{
-        width: 120px;
-        font-size: 14px
+}
+@media (max-width: 407px) {
+    .divLogo {
+        .imgLogo {
+            width: 120px;
+        }
     }
-    .btnAssine {
-        font-size: 14px;
-        width: 120px;
-    }
-    .btnSouNotaDez {
-        border: none;
-        font-size: 14px;
-        width: 120px;
-    }
+
 }
 
 @media (max-width: 463px) {
-    .bgdiv{
-        background-color: transparent;
-    }
-    .containerHeader {
-        justify-content: center;
-    }
-    .divLogo{
-        display: none;   
-    }
-    .tituloNav{
-        font-size: 28px;
-    }
-    // .btnPrecos{
-    //     width: 120px;
-    //     font-size: 14px;
-    //     background-color: #deb66b;
-    // }
-    // .btnSouNotaDez {
-    //     font-size: 14px;
-    //     width: 120px;
-    //     background-color: #deb66b;
-    // }
+    .divBtn {
 
-    .btnAssine {
-        display: none;
     }
+   
+
+
 }
 
 @media (max-width: 409px) {

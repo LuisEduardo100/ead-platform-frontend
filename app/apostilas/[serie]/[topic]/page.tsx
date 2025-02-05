@@ -11,6 +11,7 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import HandoutNavigation from '../../../../src/components/common/navigationHandouts';
 import { useMenu } from '../../../../src/components/common/menu/menuProvider';
 import PdfThumbnail from '../../../../src/components/common/pdfThumbnail';
+import FooterAuth from '../../../../src/components/HomeAuth/footerAuth';
 export default function TopicPage() {
     const { topic } = useParams(); // Obtém o parâmetro da URL dinâmica
     const [files, setFiles] = useState<EpisodeFileType[]>([]); // Estado para armazenar arquivos
@@ -85,6 +86,7 @@ export default function TopicPage() {
                     )}
                 </ul>
             </div>
+            <FooterAuth/>
         </main>
     );
 }

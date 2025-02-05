@@ -91,7 +91,7 @@ $dropdown-text-color: #000;
             transform: translateX(-100%);
         }
 
-        @media (max-width: 400px) {
+        @media (max-width: 500px) {
             width: 100vw;
             /* 
               Se preferir, pode definir algo como width: 280px; 
@@ -152,7 +152,7 @@ $dropdown-text-color: #000;
             margin-right: 12px;
         }
 
-        @media (max-width: 400px) {
+        @media (max-width: 500px) {
             left: 50%;
         }
 

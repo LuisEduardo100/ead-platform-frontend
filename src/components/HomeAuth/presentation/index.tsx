@@ -23,12 +23,8 @@ export default function HomeAuthPresentation() {
         {
             filteredFeaturedCourses.map((course: CourseType) => (
                 <>
-                    <div style={{
-                        backgroundImage: `linear-gradient(to bottom, #dadada04, #E8E8E8), url(${process.env.NEXT_PUBLIC_BASEURL}/${course.featuredImage})`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                        height: "750px",
-                    }}
+                    <div style={{ backgroundImage: `linear-gradient(to bottom, #dadada04, #E8E8E8), url(${process.env.NEXT_PUBLIC_BASEURL}/${course.featuredImage})`, }}
+                        className={styles.divMain}
                     >
                         <HeaderAuth />
                         <div className={styles.containerStyle}>

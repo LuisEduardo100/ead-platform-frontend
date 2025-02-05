@@ -10,6 +10,8 @@ import HeaderAuth from '../../../src/components/HomeAuth/header';
 import styles from '../../styles/serieStyle.module.scss';
 import { Folder } from '@mui/icons-material';
 import { useMenu } from '../../../src/components/common/menu/menuProvider';
+import FooterAuth from '../../../src/components/HomeAuth/footerAuth';
+import PageSpinner from '../../../src/components/common/pageSpinner';
 
 export default function SeriePage() {
     const { serie } = useParams(); // Captura o parâmetro da rota dinâmica
@@ -18,6 +20,14 @@ export default function SeriePage() {
     const router = useRouter()
     const [selected, setSelected] = useState<number | string>(); // Mover o estado para fora do map
     const { isMenuOpen } = useMenu()
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const intervalID = setInterval(() => {
+            setLoading(false);
+        }, 500)
+        return () => clearInterval(intervalID)
+    }, [])
 
     useEffect(() => {
         const getAllApostila = async () => {
@@ -60,6 +70,8 @@ export default function SeriePage() {
     const handleClick = (courseId: number | string) => {
         setSelected(courseId);
     };
+
+    if (loading || !data) return <PageSpinner />
     return (
         <main className={`${styles.main} ${isMenuOpen ? styles.menuOpen : ""}`}>
             <HeaderAuth />
@@ -73,13 +85,13 @@ export default function SeriePage() {
                             onClick={() => handleClick(course?.id)}
                             onDoubleClick={() => handleNavigation(course?.id)}
                         >
-                            <Folder fontSize='large' />
+                            <Folder className={styles.folderLi}/>
                             <Button className={styles.buttonStyle}>{course?.name}</Button>
                         </li>
                     ))}
                 </ul>
-      
             </div>
+            <FooterAuth />
         </main>
     );
 }

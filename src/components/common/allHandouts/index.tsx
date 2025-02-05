@@ -64,7 +64,7 @@ export default function AllHandouts({ searchTerm }: { searchTerm: string }) {
                 <ul className={styles.ulDiv}>
                     {filteredFiles.map((file, index) => (
                         <li key={index}>
-                            <div>
+                            <div className={styles.divIconName}>
                                 <PictureAsPdfIcon style={{ color: '#D42428' }} fontSize='large' />
                                 {file.url && file.url.length > 0 ? (
                                     <Link className={styles.linkStyle} href={`${process.env.NEXT_PUBLIC_BASEURL}/${file.url}`} target="_blank" rel="noopener noreferrer">
@@ -74,7 +74,7 @@ export default function AllHandouts({ searchTerm }: { searchTerm: string }) {
                                     <div>URL não disponível</div>
                                 )}
                             </div>
-                            <p>{file.course}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;{file.serie}</p>
+                            <p className={styles.infoCourse}>{file.course}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;{file.serie}</p>
                         </li>
                     ))}
                 </ul>
