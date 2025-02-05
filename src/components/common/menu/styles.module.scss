@@ -35,18 +35,35 @@ $dropdown-text-color: #000;
 
     // Estilos do logo
     .menuLogo {
-        .linkStyle {
-            &.newLogo {
-                position: fixed;
-                top: 10px;
-                left: 60px;
-                z-index: 2000;
-                transition: right 1s ease, left 0.5s ease;
-            }
+        .newLogo {
+            position: fixed;
+            top: 10px;
+            left: 60px;
+            z-index: 2000;
 
             .divLogo .imgLogo {
                 width: 160px;
+                transition: width 0.4s;
+            }
+        }
+
+        .linkStyle {
+            .divLogo .imgLogo {
+                width: 160px;
+                margin-left: 25px;
                 transition: width 0.5s;
+            }
+            @media (max-width: 400px) {
+                .divLogo .imgLogo {
+                    width: 120px;
+                    margin-left: 25px;
+                    transition: width 0.5s;
+                }
+            }
+            @media (max-width: 480px) {
+                .divLogo .imgLogo {
+                    display: none;
+                }
             }
         }
     }
@@ -65,12 +82,21 @@ $dropdown-text-color: #000;
         z-index: 1000;
         padding-top: 110px;
 
+
         &.visible {
             transform: translateX(0);
         }
 
         &.hidden {
             transform: translateX(-100%);
+        }
+
+        @media (max-width: 400px) {
+            width: 100vw;
+            /* 
+              Se preferir, pode definir algo como width: 280px; 
+              Mas 100vw fará o menu ocupar toda a largura da tela.
+            */
         }
 
         .nav ul {
@@ -124,6 +150,10 @@ $dropdown-text-color: #000;
         @media (max-width: 768px) {
             margin-left: 0;
             margin-right: 12px;
+        }
+
+        @media (max-width: 400px) {
+            left: 50%;
         }
 
         .dropdownItem {

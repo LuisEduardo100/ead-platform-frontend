@@ -13,7 +13,6 @@ import { useRouter } from 'next/navigation';
 
 
 export default function HomeAuthPresentation() {
-    const router = useRouter()
     const { data, error } = useSWR('/featured', courseService.getFeaturedCourses)
     const { selectedYear, onYearChange } = useYear()
     const filteredFeaturedCourses = data?.data?.filter((course: CourseType) => course.serie === selectedYear);

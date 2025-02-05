@@ -1,36 +1,13 @@
+/*********************************
+ * Variáveis de exemplo
+ *********************************/
 $menu-meusdados-hoverbg: #d1d1d1;
 
+/*********************************
+  * Estilos gerais
+  *********************************/
 .divbackground {
     background-color: transparent;
-}
-
-.divLogo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    justify-items: center;
-}
-
-.imgLogo {
-    width: 150px;
-}
-
-.btnPrecos {
-    margin-right: 9px;
-    padding: 8px 16px;
-    font-weight: bold;
-    background-color: transparent;
-    border-color: black;
-    font-size: 0.8rem;
-    color: black;
-
-    &:hover {
-        background-color: #F0C36E;
-        color: black;
-        border: none;
-        transition: 0.4s;
-        font-weight: bolder;
-    }
 }
 
 .inputSearch {
@@ -44,32 +21,6 @@ $menu-meusdados-hoverbg: #d1d1d1;
         outline: none;
         box-shadow: none;
     }
-}
-
-.divAccess {
-    background-color: green;
-    padding: 8px 16px;
-    margin-right: 10px;
-    font-size: 0.9rem;
-    text-align: center;
-    border-radius: 6px;
-    color: white;
-    font-weight: bold;
-}
-
-.apostilasBtn {
-    background-color: green;
-    padding: 8px 16px;
-    margin-right: 10px;
-    font-size: 0.9rem;
-    text-align: center;
-    border-radius: 6px;
-    color: white;
-    font-weight: bold;
-}
-
-.premium {
-    background-color: #D42428;
 }
 
 .userProfile {
@@ -86,7 +37,6 @@ $menu-meusdados-hoverbg: #d1d1d1;
     cursor: pointer;
 }
 
-
 .imageProfile {
     height: 45px;
     width: 45px;
@@ -94,6 +44,9 @@ $menu-meusdados-hoverbg: #d1d1d1;
     cursor: pointer;
 }
 
+/*********************************
+  * Header
+  *********************************/
 .header {
     display: flex;
     align-items: center;
@@ -101,17 +54,138 @@ $menu-meusdados-hoverbg: #d1d1d1;
     width: 100%;
     height: 105.77px;
     padding: 10px 60px;
-}
-.divProfile {
-    position: relative; // Torna a divProfile um ponto de referência para o modal
-    display: flex;
+    position: relative;
+    /* 
+     Acima de 800px, o layout continua 
+     como você já tinha: logo esquerda,
+     search no meio, profile na direita 
+   */
+
+    /* 
+     Abaixo de 800px, ajustamos o layout:
+     - Escondemos a barra de busca
+     - Aproximamos searchIcon e perfil
+   */
+    @media (max-width: 800px) {
+        padding: 10px 20px;
+        /* Ajuste se quiser menos espaço */
+
+        /* Se quiser que a logo permaneça à esquerda e 
+        o perfil+searchIcon fiquem à direita: */
+        justify-content: space-between;
+    }
 }
 
+/*********************************
+  * Div de Perfil
+  *********************************/
+.divProfile {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    .searchOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 50px;
+        z-index: 9999;
+        background-color: #cccccc5b;
+        height: 100vh;
+
+        .mobileSearchForm {
+            display: flex;
+            align-items: center;
+            position: relative;
+
+        }
+
+        .iconDiv {
+            display: flex;
+            position: absolute;
+            right: 0;
+
+            .iconAction {
+                font-size: 2.2rem;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #ccccccbd;
+                    border-radius: 50%;
+                }
+            }
+        }
+    }
+}
+
+/*********************************
+  * Formulário de Busca
+  *********************************/
+.formSearch {
+    display: flex;
+    align-items: center;
+    position: relative;
+    transition: all 0.3s ease;
+
+    /* 
+     Comportamento normal acima de 800px:
+     - Barra de busca visível no header
+     - Ícone de busca à direita dentro do input
+   */
+
+    .searchIcon {
+        font-size: 2.2rem;
+        position: absolute;
+        right: 2%;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #ccccccbd;
+            border-radius: 50%;
+        }
+    }
+
+    /***********************************
+    * Abaixo de 800px
+    * - Escondemos a barra de busca
+    * - Só mostraremos se estiver "aberta"
+    ***********************************/
+    @media (max-width: 800px) {
+        display: none; // por padrão, some em telas menores
+    }
+
+    /*
+     Quando a barra de busca é "aberta" em telas menores, 
+     usamos uma classe extra, ex: .formSearchOpen.
+     Aqui ela vira uma barra fixa no topo (tipo "modal").
+   */
+
+}
+
+/*********************************
+  * Botão "MATRICULE-SE" (exemplo)
+  *********************************/
+.btnPrecos {
+    background-color: #d42428;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 8px 16px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+/*********************************
+  * Modal do Perfil
+  *********************************/
 .modal {
     position: absolute;
     background-color: white;
     border-radius: 4px;
-    // Conteúdo do modal
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -124,8 +198,9 @@ $menu-meusdados-hoverbg: #d1d1d1;
     padding: 10px 24px;
     margin-bottom: 0px;
     transition: background 0.4s;
+
     &:hover {
-        background-color: lighten($menu-meusdados-hoverbg, 5%)
+        background-color: lighten($menu-meusdados-hoverbg, 5%);
     }
 }
 
@@ -133,48 +208,34 @@ $menu-meusdados-hoverbg: #d1d1d1;
     background-color: transparent;
 }
 
-.formSearch {
-    display: flex;
-    align-items: center;
-    position: relative;
-    .searchIcon {
-        font-size: 2.2rem;
-        position: absolute;
-        right: 2%;
-
-        &:hover {
-            cursor: pointer;
-            background-color: #ccccccbd;
-            border-radius: 50%;
-        }
-
-    }
-}
-
-
-@media only screen and (max-width: 950px) {
+/*********************************
+  * Exemplo de breakpoints extras 
+  * (opcionais) caso precise
+  *********************************/
+@media (max-width: 1100px) {
     .inputSearch {
         width: 400px;
-    }    
+    }
+    .btnPrecos {
+       font-size: 0.8rem;
+    }
 }
-
-@media only screen and (max-width: 850px) {
+@media (max-width: 950px) {
     .inputSearch {
         width: 320px;
-    }    
+    }
+    .btnPrecos {
+        font-size: 0.6rem;
+     }
 }
 
-@media only screen and (max-width: 768px) {
-
-    .header {
-
-    }
-    .inputSearch {
-        display: none;
-        width: 0;
-
-        .searchIconIcon {
-
-        }
-    }    
+@media (max-width: 800px) {
+    .btnPrecos {
+        font-size: 0.8rem;
+     }
+}
+@media (max-width: 480px) {
+    .btnPrecos {
+        font-size: 0.6rem;
+     }
 }

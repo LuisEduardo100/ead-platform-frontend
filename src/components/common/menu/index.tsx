@@ -17,7 +17,7 @@ export default function Menuhamburger() {
 
     useEffect(() => {
         const handleResize = () => {
-            const isLarge = window.innerWidth >= 1442;
+            const isLarge = window.innerWidth >= 1538;
 
             if (isLarge) {
                 setIsMenuOpen(true);
@@ -38,14 +38,21 @@ export default function Menuhamburger() {
                 <Button onClick={toggleMenu} className={styles.menuButton}>
                     {isMenuOpen ? <Close /> : <Menu />}
                 </Button>
-                <Link className={`${styles.linkStyle} ${isMenuOpen ? styles.newLogo : ''}`} href="/home">
-                    <div className={styles.divLogo}>
-                        <img src="/logo-vocenotadez.png" alt="logoFooter" className={styles.imgLogo} />
-                    </div>
-                </Link>
+                {isMenuOpen ? (
+                    <Link className={`${styles.newLogo}`} href="/home">
+                        <div className={styles.divLogo}>
+                            <img src="/logo-vocenotadez.png" alt="logoFooter" className={styles.imgLogo} />
+                        </div>
+                    </Link>
+                ) : (
+                    <Link className={`${styles.linkStyle}`} href="/home">
+                        <div className={styles.divLogo}>
+                            <img src="/logo-vocenotadez.png" alt="logoFooter" className={styles.imgLogo} />
+                        </div>
+                    </Link>
+                )}
             </div>
-            <div className={`${styles.menu} ${isMenuOpen ? styles.visible : styles.hidden}`}
-            >
+            <div className={`${styles.menu} ${isMenuOpen ? styles.visible : styles.hidden}`}>
                 <nav className={styles.nav}>
                     <ul>
                         <li onClick={() => router.push('/home')}>
@@ -85,7 +92,7 @@ export default function Menuhamburger() {
                             Apostilas
                         </li>
                         <li>
-                            <Link 
+                            <Link
                                 href={'https://wa.me/558594123487?text=Olá, gostaria de tirar uma dúvida.'}
                                 style={{
                                     textDecoration: 'none',
@@ -94,7 +101,7 @@ export default function Menuhamburger() {
                                 target='_blank'
                             >
                                 <Help fontSize='large' style={{ marginRight: '16px' }} />
-                            Suporte
+                                Suporte
                             </Link>
                         </li>
                     </ul>

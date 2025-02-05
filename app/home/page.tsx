@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import FavoriteCourses from '../../src/components/HomeAuth/favoriteCategory'
 import FeaturedCategory from '../../src/components/HomeAuth/featuredCategory'
-import OnGoingCategory from '../../src/components/HomeAuth/keepWatchingSlide'
 import ListCategories from '../../src/components/HomeAuth/listCategories'
 import NewestCategory from '../../src/components/HomeAuth/newestCategory'
 import HomeAuthPresentation from '../../src/components/HomeAuth/presentation'
@@ -13,6 +12,7 @@ import { useMenu } from '../../src/components/common/menu/menuProvider';
 import styles from './styles.module.scss'
 import { useRouter } from 'next/navigation';
 import PageSpinner from '../../src/components/common/pageSpinner';
+
 const HomeAuth = function () {
     const router = useRouter()
     const { isMenuOpen } = useMenu();
@@ -27,9 +27,12 @@ const HomeAuth = function () {
         if (!sessionStorage.getItem("vocenotadez-token")) {
             router.push("/login");
         } else {
-            setLoading(false);
+            const intervalID = setInterval(()=>{
+                setLoading(false);
+            }, 500)
+            return () => clearInterval(intervalID)
         }
-    }, [])
+    }, [router])
 
     if (loading) return <PageSpinner/>
     return (
