@@ -38,6 +38,7 @@ export default function HeaderAuth() {
         }, 300)
         return () => clearInterval(intervalID)
     }, [])
+
     // Modal de perfil
     const handleOpenModal = () => {
         setModalOpen(!modalOpen);
@@ -58,6 +59,9 @@ export default function HeaderAuth() {
         router.push(`/search?name=${searchName}&serie=${selectedYear}`);
         setSearchName("");
         setIsSearchOpen(false); // fecha a barra de busca mobile depois da pesquisa
+    };
+    const handleSearchG = () => {
+        router.push(`/search?name=${searchName}&serie=${selectedYear}`);
     };
 
     // Quando clica no ícone de busca no header:
@@ -99,11 +103,6 @@ export default function HeaderAuth() {
         <div className={`${styles.header} ${isMenuOpen ? styles.menuOpen : ""}`}>
             {/* Menu Hamburguer */}
             <Menuhamburger />
-
-            {/** 
-       * Acima de 800px: mostra o Form de busca normalmente no header.
-       * Abaixo de 800px: não mostra (ou exibe via CSS display: none).
-       */}
             {availableWidth > 800 && (
                 <Form className={`${styles.formSearch} ${isSearchOpen ? styles.formSearchOpen : ''}`} onSubmit={handleSearch}>
                     <Input
@@ -115,15 +114,10 @@ export default function HeaderAuth() {
                         onChange={(e) => setSearchName(e.currentTarget.value.toLowerCase())}
                     />
                     {!isSearchOpen && (
-                        <SearchOutlined className={styles.searchIcon} onClick={(e) => handleSearch} />
+                        <SearchOutlined className={styles.searchIcon} onClick={handleSearchG} />
                     )}
                 </Form>
             )}
-
-
-            {/** 
-       * Perfil e (opcional) ícone de busca em telas menores
-       */}
             <div className={styles.divProfile}>
 
                 {/* Botão "MATRICULE-SE" caso não tenha acesso */}
@@ -207,12 +201,6 @@ export default function HeaderAuth() {
                     </p>
                 </Modal>
             </div>
-
-            {/** 
-       * Barra de busca "mobile" (overlay fixo) 
-       * Só aparece se isSearchOpen === true e a tela <= 800px
-       */}
-
         </div>
     );
 }

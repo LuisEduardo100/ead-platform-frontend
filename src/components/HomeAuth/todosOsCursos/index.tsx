@@ -4,6 +4,8 @@ import { useEffect, useState } from "react"
 import categoriesService from "../../../services/categoriesService"
 import { CourseType } from "../../../services/courseService"
 import CourseCard from "./courseCard"
+import PageSpinner from '../../common/pageSpinner'
+import BtnSpinner from '../../common/btnSpinner'
 
 export default function CursosDaCategoria({CategoryId} : {CategoryId: number}) {
     const [courses, setCourses] = useState<CourseType[]>([])
@@ -38,7 +40,7 @@ export default function CursosDaCategoria({CategoryId} : {CategoryId: number}) {
     }, [CategoryId])
   
     if (loading) {
-      return <div>Carregando cursos...</div>
+      return <BtnSpinner/>
     }
   
     if (error) {

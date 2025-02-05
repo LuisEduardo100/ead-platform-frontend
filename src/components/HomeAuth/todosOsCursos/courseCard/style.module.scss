@@ -1,36 +1,41 @@
 $background-dark-color: #3a3a3a;
 
 .card {
-    display: flex;
-    gap: 12px;
-    background-color: #F8F9FA;
-    padding: 20px;
-    border-radius: 20px;
-    box-sizing: border-box; // Inclua o padding e a borda na largura total do elemento
-    height: 100%; // O card ocupa a altura disponível no grid
+  display: flex;
+  gap: 12px;
+  background-color: #F8F9FA;
+  padding: 20px;
+  border-radius: 20px;
+  box-sizing: border-box; // Inclua o padding e a borda na largura total do elemento
+  height: 100%; // O card ocupa a altura disponível no grid
+  @media(max-width: 390px) {
+    flex-direction: column;
   }
-  
-  .course_name {
-    color: rgb(0, 71, 153);
-    font-size: 0.9rem;
-    margin-bottom: 5px; // Adicione um pequeno espaço abaixo do nome
-  }
-  
-  .qtd_aulas {
-    font-size: 0.7rem;
-    color: #6e6e6e;
-    border: 1px solid #6e6e6e;
-    border-radius: 20px;
-    width: fit-content;
-    padding: 2px 16px;
-  }
-  
-  // todosCursos.module.scss
-  .cursos {
-    width: 100%;
-    height: auto; // Altura automática para se ajustar ao conteúdo
-    padding: 20px 30px;
-    border-radius: 20px;
-    background-color: $background-dark-color;
-    overflow-y: auto; // Adicione barra de rolagem se o conteúdo exceder a altura
-  }
+}
+
+
+
+.course_name {
+  color: rgb(0, 71, 153);
+  font-size: 0.9rem;
+  margin-bottom: 5px; // Adicione um pequeno espaço abaixo do nome
+}
+
+.qtd_aulas {
+  font-size: 0.7rem;
+  color: #6e6e6e;
+  border: 1px solid #6e6e6e;
+  border-radius: 20px;
+  width: fit-content;
+  padding: 2px 16px;
+}
+
+// todosCursos.module.scss
+.cursos {
+  width: 100%;
+  height: auto; // Altura automática para se ajustar ao conteúdo
+  padding: 20px 30px;
+  border-radius: 20px;
+  background-color: $background-dark-color;
+  overflow-y: auto; // Adicione barra de rolagem se o conteúdo exceder a altura
+}

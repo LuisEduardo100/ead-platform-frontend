@@ -1,70 +1,145 @@
-$background-dark-color: #cecece;
-.main {
+.h1Title {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 2rem;
+  }
+  
+  .main {
     transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
     margin-left: 0;
     width: 100%;
-
+    overflow-x: hidden;
+    min-height: 100vh;
+  
     &.menuOpen {
-        margin-left: 250px; // Largura do menu
-        width: calc(100% - 250px); // Ajuste a largura restante
+      margin-left: 250px; // Largura do menu
+      width: calc(100% - 250px);
     }
-
-}
-.titulo {
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-.cursos {
-    width: 100%;
-    height: 90vh;
-    overflow-y: auto;
-    max-height: 90vh;
-    padding: 20px 30px;
-    border-radius: 20px;
-    background-color: $background-dark-color;
+  }
+  
+  /* Layout para telas grandes (>=768px) */
+  .containerSections {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+  
+  /* TopBar para o botão de toggle em telas pequenas (<768px) */
+  .topBar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+  }
+  
+  /* Botão de toggle para exibir/ocultar as categorias */
+  .toggleButton {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 2rem;
+    color: #333;
+    padding: 0.2rem;
+    transition: color 0.2s ease;
+  
+    &:hover {
+      color: #000;
+    }
+  }
+  
+  .toggleLabel {
+    margin-left: 0.5rem;
+    font-size: 1.5rem;
+  }
+  
+  /* Section de Categorias */
+  .categorias {
+    padding: 1rem;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    margin-bottom: 1rem; // utilizado no layout de telas pequenas
+  
+    h1.titulo {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      word-wrap: break-word;
+    }
   
     ul {
-        list-style-type: none;
-        text-align: left;
-        margin: 0;
-        padding: 10px 0px;
-
-        li {
-            padding: 5px 0px;
-            margin-top: 10px;
-            &:hover {
-                cursor: pointer;
-            }
-
+      list-style: none;
+      padding: 0;
+      margin: 0;
+  
+      li {
+        font-size: 1.2rem;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+        border-bottom: 1px solid #ddd;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        word-wrap: break-word;
+  
+        &:hover {
+          background-color: #e0e0e0;
         }
+      }
     }
-}
-
-.categorias {
-    width: 20%;
-    height: 90vh;
-    padding: 20px 30px;
-    border-radius: 20px;
-    background-color: $background-dark-color;
-
-    ul {
-        list-style-type: none;
-        text-align: left;
-        margin: 0;
-        padding: 10px 0px;
-
-        .li {
-            padding: 5px 0px;
-            margin-top: 10px;
-            &:hover {
-                cursor: pointer;
-            }
-
-            &.selected {
-                color: rgb(0, 71, 153);
-                font-size: 1.25rem;
-                transition: ease-in-out 0.3;
-            }
-        }
+  }
+  
+  /* Section de Cursos */
+  .cursos {
+    padding: 1rem;
+    width: 100%;
+    h1.titulo {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      word-wrap: break-word;
     }
-}
+  }
+  
+  @media (max-width: 420px) {
+    .containerSections {
+        justify-content: center;
+    }
+  }
+  /* Ajustes para telas menores (<768px) */
+  @media (max-width: 768px) {
+    .topBar {
+      display: flex;
+    }
+  
+    /* Em telas pequenas, a disposição é vertical e o painel de categorias
+       só aparece se o usuário acionar o botão */
+    .containerSections {
+      flex-direction: column;
+    }
+  
+    .categorias {
+      margin-bottom: 1rem;
+      h1.titulo {
+        font-size: 1.5rem;
+      }
+      ul li {
+        font-size: 1rem;
+      }
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .categorias {
+      h1.titulo {
+        font-size: 1.3rem;
+      }
+      ul li {
+        font-size: 0.9rem;
+        padding: 0.4rem;
+      }
+    }
+    .cursos {
+      h1.titulo {
+        font-size: 1.5rem;
+      }
+    }
+  }
+  

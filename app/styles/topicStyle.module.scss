@@ -13,7 +13,7 @@
   
     &.menuOpen {
       margin-left: 250px; // Largura do menu
-      width: calc(100% - 250px); // Ajusta a largura restante
+      width: calc(100% - 250px); // Largura restante
     }
   
     .mainContent {
@@ -22,13 +22,12 @@
     }
   }
   
-  /* Usando grid para tornar a listagem responsiva */
+  /* Grid responsivo para listagem (utilizado no componente CursosDaCategoria, por exemplo) */
   .ulDiv {
     list-style: none;
     padding: 0;
     display: grid;
     gap: 25px;
-    /* Cria colunas automáticas com largura mínima de 250px e máxima de 1fr */
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   
     .liDiv {
@@ -42,14 +41,14 @@
       overflow: hidden;
       text-overflow: ellipsis;
       position: relative;
-      
+  
       &:hover {
         overflow: visible;
         opacity: 0.75;
         background-color: #adadadb0;
         cursor: pointer;
       }
-      
+  
       .nameTip {
         position: absolute;
         top: 90%;
@@ -62,11 +61,11 @@
         opacity: 0;
         font-size: 0.8rem;
       }
-      
+  
       &:hover .nameTip {
         opacity: 1;
       }
-      
+  
       .linkStyle {
         text-decoration: none;
         color: #000;
@@ -76,7 +75,7 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        
+  
         .fileName {
           margin-top: 5.5px;
           display: inline-block;
@@ -89,7 +88,7 @@
     }
   }
   
-  /* Media queries para ajustes finos em telas menores */
+  /* Ajustes de padding para telas menores */
   @media (max-width: 768px) {
     .main {
       .mainContent {
@@ -106,22 +105,24 @@
     }
   }
   
+  /* Grid: 3 colunas para telas maiores */
   @media (min-width: 572px) {
     .ulDiv {
       grid-template-columns: repeat(3, 1fr);
     }
   }
   
-  /* Entre 400px e 572px: 2 colunas */
+  /* Grid: 2 colunas para telas entre 450px e 572px */
   @media (max-width: 572px) and (min-width: 450px) {
     .ulDiv {
       grid-template-columns: repeat(2, 1fr);
     }
   }
   
-  /* Menor que 400px: 1 coluna */
+  /* Grid: 1 coluna para telas menores que 450px (até 320px inclusive) */
   @media (max-width: 450px) {
     .ulDiv {
       grid-template-columns: 1fr;
     }
   }
+  
