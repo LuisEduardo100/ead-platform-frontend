@@ -32,7 +32,7 @@ export default function EpisodeList({ episode, course }: props) {
 
     useEffect(() => {
         handleEpisodeFile();
-    }, [episode.id]);
+    }, [handleEpisodeFile, episode.id]);
 
 
     const hasFile = getEpisodeFile?.Files && getEpisodeFile?.Files.length > 0

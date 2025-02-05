@@ -66,7 +66,7 @@ export default function Course({ params }: ParamsProps) {
   };
   useEffect(() => {
     getCourse();
-  }, [courseId]);
+  }, [getCourse, courseId]);
 
   const handleBackRouter = () => {
     router.push('/home')
@@ -123,7 +123,7 @@ export default function Course({ params }: ParamsProps) {
 
       setToastMessage("Acesso negado")
     }
-  }, []);
+  });
 
 
   if (loading) {

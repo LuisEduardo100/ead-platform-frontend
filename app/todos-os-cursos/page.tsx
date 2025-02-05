@@ -14,7 +14,7 @@ import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
 import { useMenu } from "../../src/components/common/menu/menuProvider"
 
-export default function allCourses() {
+export default function AllCourses() {
   const { isMenuOpen } = useMenu()
   const paramsCategoria = useSearchParams().get('categoria') || 'Matemática'
   const [user, setUser] = useState(false)

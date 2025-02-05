@@ -145,7 +145,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
 
   useEffect(() => {
     handleGetEpisodeTime();
-  }, [router]);
+  });
 
   if (playing === true) {
     setTimeout(() => {
@@ -236,7 +236,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
   useEffect(() => {
     handleEpisodeQuizz()
     handleEpisodeFile();
-  }, [episodeId]);
+  });
 
   const getCourse = async () => {
     if (typeof courseId !== "string") return;
@@ -256,7 +256,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
 
   useEffect(() => {
     getCourse();
-  }, [courseId]);
+  }, [getCourse, courseId]);
 
   useEffect(() => {
     if (courseId !== "1") {
@@ -278,7 +278,7 @@ export default function EpisodePlayer({ params, searchParams, }: {
       setLoading(false);
     }
 
-  }, [courseId]);
+  }, [router, courseId]);
 
   if (loading) {
     return <PageSpinner />;

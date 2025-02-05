@@ -26,7 +26,7 @@ export default function PaginaPrecos() {
             setLogged(true)
             router.refresh()
         }
-    }, [])
+    }, [router])
 
     const handlePayment = async () => {
         setLoading(true);

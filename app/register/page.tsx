@@ -41,7 +41,7 @@ const Register = function () {
         if (sessionStorage.getItem("vocenotadez-token")) {
             router.push("/home")
         }
-    }, [])
+    }, [router])
 
     const { executeRecaptcha } = useGoogleReCaptcha();
 

@@ -39,7 +39,7 @@ export default function SearchComponents(
 
     useEffect(() => {
         router.push(`/search?name=${searchName}&serie=${selectedYear}`);
-    }, [selectedYear, searchName]);
+    }, [router, selectedYear, searchName]);
 
     useEffect(() => {
         profileService.fetchCurrent().then((user) => {

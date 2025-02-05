@@ -29,7 +29,7 @@ const YearSelect = ({
 
   useEffect(() => {
     fetchUserData()
-  }, [])
+  }, [fetchUserData])
 
   if (loading) {
     return <PageSpinner />
