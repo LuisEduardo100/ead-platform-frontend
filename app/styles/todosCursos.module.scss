@@ -60,6 +60,7 @@
     border-radius: 8px;
     margin-bottom: 1rem; // utilizado no layout de telas pequenas
   
+
     h1.titulo {
       font-size: 1.8rem;
       margin-bottom: 1rem;
@@ -79,9 +80,13 @@
         cursor: pointer;
         transition: background-color 0.2s ease;
         word-wrap: break-word;
-  
+        
+        &.selected {
+          background-color: #e0e0e0;
+        }
         &:hover {
           background-color: #e0e0e0;
+          cursor: pointer;
         }
       }
     }
@@ -95,6 +100,16 @@
       font-size: 2rem;
       margin-bottom: 1rem;
       word-wrap: break-word;
+    }
+
+    ul {
+      li {
+        &:hover {
+          cursor: pointer;
+          transition: ease-in 0.2s;
+          transform: translateY(-5px);
+        }
+      }
     }
   }
   

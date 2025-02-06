@@ -7,6 +7,7 @@ import 'jsuites'
 import ToastComponent from "../../common/toastComponent";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import BtnSpinner from "../../common/btnSpinner";
 
 export default function UserForm() {
     const router = useRouter()
@@ -15,7 +16,6 @@ export default function UserForm() {
     const [errorMessage, setErrorMessage] = useState("");
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [userStats, setUserStats] = useState(false)
-
     const [profilePicture, setProfilePicture] = useState(""); // Placeholder para a imagem
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
@@ -26,6 +26,7 @@ export default function UserForm() {
     const [createdAt, setCreatedAt] = useState("")
     const date = new Date(createdAt);
     const month = date.toLocaleDateString("pt-BR", { month: "long" });
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         profileService.fetchCurrent().then((user) => {
@@ -77,16 +78,33 @@ export default function UserForm() {
     };
 
     const handleUpload = async () => {
-        if (!selectedFile) return alert('Nenhum arquivo selecionado!');
-
+        if (!selectedFile) return setToastIsOpen(true), setErrorMessage("Nenhum arquivo selecionado"), setColor("bg-danger"), setTimeout(() => setToastIsOpen(false), 2500), setLoading(false)
+        
+        setLoading(true);
+    
         try {
-            const updatedUser = await profileService.uploadProfilePicture(selectedFile);
-            if (updatedUser) alert('Foto de perfil atualizada com sucesso!');
+          const uploadPromise = profileService.uploadProfilePicture(selectedFile);
+          const delayPromise = new Promise(resolve => setTimeout(resolve, 1000));
+          
+          const [updatedUser] = await Promise.all([uploadPromise, delayPromise]);
+    
+          if (updatedUser) {
+            setProfilePicture(updatedUser.profileImage);
+            
+            setToastIsOpen(true)
+            setErrorMessage("Foto de perfil atualizada com sucesso")
+            setColor("bg-success")
+            setTimeout(() => setToastIsOpen(false), 2500);
+          }
         } catch (error) {
-            console.error('Erro ao atualizar a foto de perfil:', error);
-            alert('Erro ao atualizar a foto de perfil.');
+            setToastIsOpen(true)
+            setErrorMessage("Erro ao atualizar foto de perfil")
+            setColor("bg-danger")
+            setTimeout(() => setToastIsOpen(false), 2500);
+        } finally {
+          setLoading(false);
         }
-    };
+      }
 
     return (<>
         <Form className={styles.forms} onSubmit={(event) => handleUserUpdate(event)}>
@@ -128,8 +146,10 @@ export default function UserForm() {
             <div className={styles.div_foto_perfil}>
                 <p>UPLOAD SUA FOTO DE PERFIL</p>
                 <div>
-                    <Input className={styles.input_image} type="file" onChange={handleFileChange} />
-                    <Button className={styles.btn_upload_image} onClick={handleUpload}>Enviar foto</Button>
+                    <Input className={styles.input_image} type="file" onChange={handleFileChange} disabled={loading} />
+                    <Button className={styles.btn_upload_image} onClick={handleUpload} disabled={loading}>
+                        {loading ? <BtnSpinner/> : 'Enviar Foto'}
+                    </Button>
                 </div>
             </div>
             <div className={styles.memberTime}>

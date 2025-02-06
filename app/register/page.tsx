@@ -29,8 +29,8 @@ const Register = function () {
     const [loading, setLoading] = useState(false);
     const [toastIsOpen, setToastIsOpen] = useState(false)
     const [toastMessage, setToastMessage] = useState("")
-    const [isPasswordVisible, setIsPasswordVisible] = useState(false)
     const [color, setColor] = useState("");
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false)
     const { isMenuOpen } = useMenu()
 
     const togglePasswordVisibility = () => {
@@ -55,6 +55,7 @@ const Register = function () {
             setToastMessage("Erro no formulário de registro")
             setColor("bg-danger")
             setLoading(false)
+            setTimeout(() => setToastIsOpen(false), 2500);
             return
         }
 

@@ -69,7 +69,7 @@ export default function Course({ params }: ParamsProps) {
   }, [getCourse, courseId]);
 
   const handleBackRouter = () => {
-    router.push('/home')
+    router.push('/todos-os-cursos?categoria=Matematica')
   }
 
   const handleLikeCourse = async () => {
