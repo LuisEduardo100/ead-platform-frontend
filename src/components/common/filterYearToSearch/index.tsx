@@ -1,14 +1,15 @@
 'use client';
-import styles from './styles.module.scss'
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { useYear } from '../../HomeAuth/selectBox/yearProvider';
+import styles from "./styles.module.scss";
+import { useYear } from "../../HomeAuth/selectBox/yearProvider";
 
 export default function CustomSelectBox() {
   const { selectedYear, onYearChange } = useYear();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   // Opções de séries
   const options = ["6º ano", "7º ano", "8º ano", "9º ano"];
 
@@ -21,11 +22,26 @@ export default function CustomSelectBox() {
     setIsOpen(false);
   };
 
+  // Quando o mouse entra no container, cancela qualquer timer de fechamento e abre o dropdown
+  const handleMouseEnter = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+    setIsOpen(true);
+  };
+
+  // Ao sair com o mouse, inicia um timer para fechar o dropdown após um pequeno atraso
+  const handleMouseLeave = () => {
+    closeTimeoutRef.current = setTimeout(() => {
+      setIsOpen(false);
+    }, 200); // 200ms de atraso (você pode ajustar esse valor conforme necessário)
+  };
+
   return (
     <div 
       className={styles.selectContainer} 
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       onClick={() => setIsOpen(prev => !prev)}
     >
       <div className={styles.selectedValue}>
@@ -38,7 +54,7 @@ export default function CustomSelectBox() {
               key={option} 
               className={styles.optionItem} 
               onClick={(e) => {
-                // Impede que o onClick do container seja disparado novamente
+                // Evita que o clique se propague para o container
                 e.stopPropagation();
                 handleSelect(option);
               }}
