@@ -4,6 +4,10 @@
     align-items: center;
     padding: 8px;
     gap: 8px;
+
+    @media (max-width: 487px) {
+        margin: 0 auto;
+    }
 }
 
 .select {

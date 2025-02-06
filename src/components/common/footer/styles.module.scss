@@ -7,6 +7,106 @@
     flex-wrap: wrap;
     margin-top: 54px;
     max-width: 1300px;
+
+    @media (max-width: 965px) {
+        width: 95%;
+
+        .logo_div {
+            .imgLogo {
+                width: 160px;
+            }
+
+            padding: 18px;
+            .logo_p {
+                width: 95%;
+            }
+        }
+
+        .quemsomos { 
+            width: 280px;
+            padding: 18px;
+            .quemsomos_title {
+                font-size: 1.5rem;
+            }
+        
+            .quemsomos_p {
+                font-size: 1.0rem;
+            }
+        }
+
+        .contato {
+            width: 280px;
+            padding: 18px;
+            .contato_info {
+                font-size: 1rem;
+            }
+        
+            .contato_title {
+                font-size: 1.5rem;
+            }
+        }
+    }
+
+    @media (max-width: 856px) {
+
+        .logo_div {
+            .imgLogo {
+                width: 130px;
+            }
+            padding: 12px;
+            .logo_p {
+                width: 80%;
+            }
+        }
+
+        .quemsomos { 
+            width: 220px;
+            padding: 12px;
+            .quemsomos_title {
+                font-size: 1.2rem;
+            }
+        
+            .quemsomos_p {
+                font-size: 0.8rem;
+            }
+        }
+        .contato {
+            width: 250px;
+            padding: 12px;
+            .contato_info {
+                font-size: 0.8rem;
+            }
+        
+            .contato_title {
+                width: 200px;
+                font-size: 1.2rem;
+            }
+        }
+    }
+
+    @media (max-width: 747px) {
+
+        .logo_div {
+            width: 100%;
+        }
+
+        .quemsomos { 
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+        }
+        
+        .contato {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+    }
 }
 
 .quemsomos {
@@ -25,6 +125,8 @@
         line-height: 18px;
         font-size: 1.2rem;
     }
+
+   
 }
 
 .contato {

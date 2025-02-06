@@ -24,7 +24,7 @@ export default function CourseCard({course}: {course: CourseType}) {
         />
         <div>
           <p className={styles.course_name}>{course.name.toUpperCase()}</p>
-          <p className={styles.qtd_aulas}>10 aulas</p>
+          <p className={styles.qtd_aulas}>{`${course.Episodes!.length > 1 ? `${course.Episodes?.length} aulas` : `${course.Episodes?.length} aula`} `}</p>
         </div>
     </div>
   )

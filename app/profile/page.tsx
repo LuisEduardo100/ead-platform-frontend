@@ -31,6 +31,7 @@ const IconBtn = styled(IconButton)({
 const Profile = function () {
     const { selectedYear, onYearChange } = useYear();
     const [form, setForm] = useState("userForm")
+
     const { isMenuOpen } = useMenu();
 
     const router = useRouter()
@@ -45,9 +46,11 @@ const Profile = function () {
         const fetchUserData = async () => {
             try {
                 const data = await profileService.fetchCurrent();
+
                 if (data?.serie) {
                     onYearChange(data.serie);
                 }
+
             } catch (error) {
                 console.error("Erro ao buscar os dados do usuário:", error);
             } finally {

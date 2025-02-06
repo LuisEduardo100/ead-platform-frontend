@@ -14,6 +14,8 @@ export default function UserForm() {
     const [toastIsOpen, setToastIsOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [userStats, setUserStats] = useState(false)
+
     const [profilePicture, setProfilePicture] = useState(""); // Placeholder para a imagem
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
@@ -105,6 +107,22 @@ export default function UserForm() {
                         </p>
                     )
                 }
+                {!userStats ? (
+                    <span style={{
+                        backgroundColor: '#e8ea5b',
+                        padding: '2px 16px',
+                        borderRadius: '20px',
+                        fontSize: '0.8rem'
+                    }}>PREMIUM</span>
+                ) : (
+                    <span style={{
+                        backgroundColor: '#19b719',
+                        padding: '2px 16px',
+                        borderRadius: '20px',
+                        fontSize: '0.8rem'
+                    }}>FREE</span>
+
+                )}
                 <p className={styles.userName}>{`${firstName} ${lastName}`}</p>
             </div>
             <div className={styles.div_foto_perfil}>
