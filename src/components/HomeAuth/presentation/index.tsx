@@ -35,7 +35,6 @@ export default function HomeAuthPresentation() {
                                     <p className={styles.pAssistirAgora}>Assita agora  <Reply className={styles.redoAssistirAgora} /></p>
                                     <Button outline color="light" className={styles.button}>
                                         PLAY
-                                        <PlayArrow style={{ fontSize: '42px' }} />
                                     </Button>
                                 </div>
                             </Link>

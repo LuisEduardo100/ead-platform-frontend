@@ -28,7 +28,7 @@
     padding: 0;
     display: grid;
     gap: 25px;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   
     .liDiv {
       border-radius: 20px;
@@ -36,7 +36,6 @@
       flex-direction: column;
       align-items: center;
       padding: 1rem;
-      width: 100%;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -106,23 +105,23 @@
   }
   
   /* Grid: 3 colunas para telas maiores */
-  @media (min-width: 572px) {
-    .ulDiv {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
+//   @media (min-width: 572px) {
+//     .ulDiv {
+//       grid-template-columns: repeat(3, 1fr);
+//     }
+//   }
   
-  /* Grid: 2 colunas para telas entre 450px e 572px */
-  @media (max-width: 572px) and (min-width: 450px) {
-    .ulDiv {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
+//   /* Grid: 2 colunas para telas entre 450px e 572px */
+//   @media (max-width: 572px) and (min-width: 450px) {
+//     .ulDiv {
+//       grid-template-columns: repeat(2, 1fr);
+//     }
+//   }
   
-  /* Grid: 1 coluna para telas menores que 450px (até 320px inclusive) */
-  @media (max-width: 450px) {
-    .ulDiv {
-      grid-template-columns: 1fr;
-    }
-  }
+//   /* Grid: 1 coluna para telas menores que 450px (até 320px inclusive) */
+//   @media (max-width: 450px) {
+//     .ulDiv {
+//       grid-template-columns: 1fr;
+//     }
+//   }
   
