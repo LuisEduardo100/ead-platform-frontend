@@ -8,12 +8,14 @@ $background-dark-color: #3a3a3a;
         list-style: none;
         grid-auto-rows: minmax(auto, auto);
         padding: 20px 0px;
+        justify-content: center;
 
         @media (max-width: 390px) {
             display: flex;
             flex-direction: column;
-            gap: 20px;
             justify-content: center;
+            width: 180px;
+            margin: 0 auto;
         }
     }
 
