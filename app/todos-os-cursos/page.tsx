@@ -173,7 +173,6 @@ export default function AllCourses() {
           </>
         )}
       </div>
-      <FooterAuth />
     </main>
   )
 }
