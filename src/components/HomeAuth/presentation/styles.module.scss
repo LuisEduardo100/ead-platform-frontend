@@ -7,19 +7,27 @@
         padding: 20px 50px;
 
         .title {
-            font-size: 6rem;
+            font-size: 4rem;
             font-family: "Bebas Neue", sans-serif;
             letter-spacing: 2px;
             font-weight: bold;
             line-height: 90px;
-            width: 800px;
+            max-width: 800px;
+            width: 100%;
             color: #D42428;
             text-transform: uppercase;
             text-shadow: 3.5px 6px #7D7D7D;
+
+            @media (max-width: 512px) {
+                    font-size: 3rem;
+                    width: 95%;
+                    line-height: 65px;
+            }
         }
 
         .description {
-            width: 600px;
+            max-width: 600px;
+            width: 100%;
             font-size: 1.1rem;
             font-family: "Quicksand", sans-serif;
             font-weight: bold;
@@ -93,6 +101,7 @@
         @media (max-width: 951px) {
             .title {
                 font-size: 5rem;
+                text-overflow: wrap;
             }
 
             .description {
@@ -104,6 +113,19 @@
         @media (max-width: 690px) {
             .title {
                 font-size: 4rem;
+                width: 95%;
+                line-height: 65px;
+            }
+
+            .description {
+                width: 95%;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .title {
+                font-size: 3.5rem;
                 width: 95%;
                 line-height: 65px;
             }

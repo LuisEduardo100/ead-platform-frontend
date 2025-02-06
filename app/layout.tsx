@@ -1,7 +1,7 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "./styles/globals.scss";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./styles/globals.scss";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { YearProvider } from "../src/components/HomeAuth/selectBox/yearProvider";
 import { MenuProvider } from "../src/components/common/menu/menuProvider";
 
@@ -35,6 +35,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="index, follow" />
         <meta name="author" content="NOTA DEZ" />
         <meta name="keywords" content="cursos online, suporte escolar, ensino EAD, plataforma de estudo" />
