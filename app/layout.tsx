@@ -21,10 +21,22 @@ export const metadata: Metadata = {
     siteName: "NOTA DEZ",
     locale: "pt_BR",
     type: "website",
+    images: [
+      {
+        url: "/anuncio-votanotadez.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Banner da plataforma Nota Dez",
+      },
+    ],
   },
   alternates: {
     canonical: siteUrl,
   },
+  robots: {
+    index: true,
+    follow: true
+  }
 };
 
 export default function RootLayout({
