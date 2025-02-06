@@ -87,7 +87,6 @@ export default function ApostilaPage() {
                     <AllHandouts searchTerm={searchTerm} />
                 </div>
             </div>
-            <FooterAuth/>
         </main>
     );
 }
