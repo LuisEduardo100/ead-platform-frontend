@@ -1,131 +1,118 @@
 .divMain {
-        background-size: cover;
-        background-position: center;
-        height: 750px;
+    background-size: cover;
+    background-position: center;
+    height: 750px;
 
-        .containerStyle {
-            @media (max-width: 951px) {
-                .title {
-                    font-size: 5rem;
-                }
-                .description {
-                    width: 500px;
-                    font-size: 0.9rem;
-                }
-            }
-            @media (max-width: 690px) {
-                .title {
-                    font-size: 4rem;
-                    width: 95%;
-                    line-height: 65px;
-                }
-                .description {
-                    width: 95%;
-                    font-size: 0.8rem;
-                }
-            }
+    .containerStyle {
+        padding: 20px 50px;
+
+        .title {
+            font-size: 6rem;
+            font-family: "Bebas Neue", sans-serif;
+            letter-spacing: 2px;
+            font-weight: bold;
+            line-height: 90px;
+            width: 800px;
+            color: #D42428;
+            text-transform: uppercase;
+            text-shadow: 3.5px 6px #7D7D7D;
         }
-}
 
-.containerStyle {
-    padding: 20px 50px;
-
-    .title {
-        font-size: 6rem;
-        font-family: "Bebas Neue", sans-serif;
-        letter-spacing: 2.0px;
-        font-weight: bold;
-        line-height: 90px;
-        width: 800px;
-        color: #D42428;
-        text-transform: uppercase;
-        text-shadow: 3.5px 6px #7D7D7D;
-    }
-
-    .description {
-        width: 600px;
-        font-size: 1.1rem;
-        font-family: "Quicksand", sans-serif;
-        font-weight: bold;
-        padding: 15px 0px;
-        color: #4C4D4C;
-
-    }
-
-    .linkStyle {
-        text-decoration: none;
-        padding: 0;
-        margin: 0;
-        width: 250px;
-        display: block;
-    }
-
-    .divButton {
-        width: 180px;
-        
-        @media (max-width: 390px) {
-            width: 120px;
+        .description {
+            width: 600px;
+            font-size: 1.1rem;
+            font-family: "Quicksand", sans-serif;
+            font-weight: bold;
+            padding: 15px 0;
+            color: #4C4D4C;
         }
-        &:hover{
-            .pAssistirAgora {
-                animation: pulsate 0.6s ease-out; /* Animação infinita de pulse */
-                animation-iteration-count: infinite;
-            }
-        }
-      
-    }
-    .button {
-        color: #D42428;
-        padding: 0px 36px;
-        font-family: "Bebas Neue", sans-serif;
-        font-size: 36px;
-        display: flex;
-        letter-spacing: 2.0px;
-        gap: 6px;
-        font-weight: bold;
-        align-items: center;
-        border: 2px solid black;
-        .imgBtn {
-            width: 20px;
-            margin: 0 0 0 30px;
+
+        .linkStyle {
+            text-decoration: none;
             padding: 0;
-            filter: brightness(0) saturate(100%) invert(77%) sepia(66%) saturate(332%) hue-rotate(344deg) brightness(90%) contrast(93%);
+            margin: 0;
+            width: 250px;
+            display: block;
         }
 
-        &:hover {
-            transform: scale(1.1);
-            transition: transform 0.3s ease-in-out;
-            background-color: #deb66b;
-            border: none;
-            font-weight: bolder;
+        .divButton {
+            width: 180px;
 
+            @media (max-width: 390px) {
+                width: 120px;
+            }
+
+            &:hover {
+                .pAssistirAgora {
+                    animation: pulsate 0.6s ease-out infinite;
+                }
+            }
+        }
+
+        .button {
+            color: #D42428;
+            padding: 0 36px;
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 36px;
+            display: flex;
+            letter-spacing: 2px;
+            gap: 6px;
+            font-weight: bold;
+            align-items: center;
+            border: 2px solid black;
+
+            .imgBtn {
+                width: 20px;
+                margin: 0 0 0 30px;
+                padding: 0;
+                filter: brightness(0) saturate(100%) invert(77%) sepia(66%) saturate(332%) hue-rotate(344deg) brightness(90%) contrast(93%);
+            }
+
+            &:hover {
+                transform: scale(1.1);
+                transition: transform 0.3s ease-in-out;
+                background-color: #deb66b;
+                border: none;
+                font-weight: bolder;
+            }
+        }
+
+        .pAssistirAgora {
+            font-family: "Chewy", system-ui;
+            text-align: left;
+            margin-bottom: 5px;
+            font-size: 22px;
+
+            .redoAssistirAgora {
+                transform: scaleX(-1);
+                rotate: 55deg;
+            }
+        }
+
+        // Media queries específicas para ajustes responsivos
+        @media (max-width: 951px) {
+            .title {
+                font-size: 5rem;
+            }
+
+            .description {
+                width: 500px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 690px) {
+            .title {
+                font-size: 4rem;
+                width: 95%;
+                line-height: 65px;
+            }
+
+            .description {
+                width: 95%;
+                font-size: 0.8rem;
+            }
         }
     }
 
-    .pAssistirAgora{
-        font-family: "Chewy", system-ui;
-        text-align: left;
-        margin-bottom: 5px;
-        font-size: 22px;
-        .redoAssistirAgora{
-            transform: scaleX(-1);
-            rotate: 55deg;
-        }
-
-    }
-   
 }
-
-
-@keyframes pulsate {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-     100% {
-        transform: scale(1);
-    }
-}
-
