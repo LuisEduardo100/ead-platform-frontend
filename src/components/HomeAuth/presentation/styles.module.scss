@@ -1,7 +1,30 @@
 .divMain {
         background-size: cover;
         background-position: center;
-        height: 750px
+        height: 750px;
+
+        .containerStyle {
+            @media (max-width: 951px) {
+                .title {
+                    font-size: 5rem;
+                }
+                .description {
+                    width: 500px;
+                    font-size: 0.9rem;
+                }
+            }
+            @media (max-width: 690px) {
+                .title {
+                    font-size: 4rem;
+                    width: 95%;
+                    line-height: 65px;
+                }
+                .description {
+                    width: 95%;
+                    font-size: 0.8rem;
+                }
+            }
+        }
 }
 
 .containerStyle {
@@ -103,50 +126,6 @@
     }
      100% {
         transform: scale(1);
-    }
-}
-
-
-@media (max-width: 991px) {
-    .divMain {
-        height: 700px;
-    }
-    .containerStyle {
-        .title {
-            font-size: 4.5rem;
-            line-height: 3.8rem;
-            width: 60%;
-        }
-        .description {
-            width: 80%;
-            font-size: 1rem;
-        }
-    }
-
-}
-
-
-@media (max-width: 391px) {
-    .divMain {
-        height: 550px;
-    }
-    .divButton {
-        .redoAssistirAgora, .pAssistirAgora {
-            font-size: 0.6rem;
-        }
-
-        .button {
-            font-size: 1rem;
-        }
-    }
-    .containerStyle {
-        .title {
-            font-size: 3rem;
-            line-height: 2.8rem;
-        }
-        .description {
-            font-size: 0.6rem;
-        }
     }
 }
 
