@@ -1,111 +1,187 @@
-
 .container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .menu {
-    flex: 1;
-    transition: 0.3s ease;
-    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
-    margin-left: 0;
-    width: 100%;
-    min-height: 100vh;
-    background-color: #E8E8E8;
-    overflow-x: hidden;
-    &.menuOpen {
-        margin-left: 250px; // Largura do menu
-        width: calc(100% - 250px); // Ajuste a largura restante
-    }
-
-    .mainContent {
-        padding: 20px 50px;
-    }
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
-  
-  .successCard {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-    text-align: center;
+
+.menu {
+  flex: 1;
+  transition: 0.3s ease;
+  transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+  margin-left: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #E8E8E8;
+  overflow-x: hidden;
+
+  &.menuOpen {
+    margin-left: 250px; // Largura do menu
+    width: calc(100% - 250px); // Ajuste a largura restante
   }
-  
-  .checkmark {
-    color: #4BB543;
-    font-size: 4rem;
-    margin-bottom: 1rem;
+
+  .mainContent {
+    padding: 20px 50px;
   }
-  
+}
+
+.successCard {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.checkmark {
+  color: #4BB543;
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.details {
+  text-align: left;
+  margin: 2rem 0;
+  padding: 1rem 3rem;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+.details p {
+  margin: 0.5rem 0;
+
+  @media (max-width: 350px) {
+    font-size: 0.8rem;
+  }
+}
+
+.importantNotes {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+.importantNotes ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.importantNotes li {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.importantNotes li::before {
+  content: '•';
+  color: #0070f3;
+  position: absolute;
+  left: 0;
+}
+
+.homeButton {
+  background: #0070f3;
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.homeButton:hover {
+  background: #0051a2;
+}
+
+.loadingContainer,
+.errorContainer {
+  text-align: center;
+}
+
+.loader {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.error {
+  color: #dc3545;
+  padding: 2rem;
+}
+
+// Adicione estas classes ao seu arquivo SCSS
+.crossmark {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+// Ajuste específico para a página de cancelamento
+.successCard[style*="background-color: #fff3f3"] {
   .details {
-    text-align: left;
-    margin: 2rem 0;
-    padding: 1rem 3rem;
+    border-color: #ffd4d4;
+  }
+
+  .importantNotes li::before {
+    color: #ff6666;
+  }
+
+  button:hover {
+    background-color: #555 !important;
+  }
+}
+
+// Estilos específicos para a página de confirmação de email
+.successCard {
+  .checkmark {
+    color: #4BB543; // Verde para sucesso
+  }
+
+  .crossmark {
+    color: #dc3545; // Vermelho para erro
+  }
+
+  h1 {
+    margin-bottom: 1.5rem;
+  }
+
+  .details {
+    text-align: center;
+    margin: 1.5rem 0;
+    padding: 1rem;
     border: 1px solid #eee;
     border-radius: 8px;
   }
-  
-  .details p {
-    margin: 0.5rem 0;
-    @media (max-width: 350px) {
-        font-size: 0.8rem;
-    }
-  }
-  
-  .importantNotes {
-    background: #f8f9fa;
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin: 2rem 0;
-  }
-  
-  .importantNotes ul {
-    list-style: none;
-    padding: 0;
-    margin: 1rem 0;
-  }
-  
-  .importantNotes li {
-    margin: 0.5rem 0;
-    padding-left: 1.5rem;
-    position: relative;
-  }
-  
-  .importantNotes li::before {
-    content: '•';
-    color: #0070f3;
-    position: absolute;
-    left: 0;
-  }
-  
+
   .homeButton {
     background: #0070f3;
     color: white;
-    padding: 1rem 2rem;
+    padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 5px;
-    font-size: 1.1rem;
+    font-size: 1rem;
     cursor: pointer;
     transition: background 0.3s ease;
+
+    &:hover {
+      background: #0051a2;
+    }
   }
-  
-  .homeButton:hover {
-    background: #0051a2;
-  }
-  
-  .loadingContainer, .errorContainer {
-    text-align: center;
-  }
-  
-  .loader {
-    font-size: 1.2rem;
-    color: #666;
-  }
-  
-  .error {
-    color: #dc3545;
-    padding: 2rem;
-  }
+}

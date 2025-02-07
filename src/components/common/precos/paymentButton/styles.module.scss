@@ -1,13 +1,20 @@
 .btnMatricula {
-    background: #CC202C;
+    background: rgba(240, 195, 110, 0.9);
     border: none;
-    font-weight: bold;
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
     text-transform: uppercase;
-    box-shadow: -2px 4px black;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #2b2b2b;
+    transition: all 0.3s ease;
+    display: block;
+    margin: 0 auto;
 
-        &:hover {
-            scale: 110%;
-            transition: 0.3s;
-            background-color: #CC202C;
-        }
+    &:hover {
+        background: rgb(197, 161, 95);
+        box-shadow: 0 4px 15px rgba(240, 195, 110, 0.4);
+        color: #2b2b2b;
+    }
+
 }

@@ -18,6 +18,7 @@ import Menuhamburger from "../../common/menu";
 import { useMenu } from "../../common/menu/menuProvider";
 import Image from "next/image";
 import PageSpinner from "../../common/pageSpinner";
+import PaymentButton from "../../common/precos/paymentButton";
 
 export default function HeaderAuth() {
     const { selectedYear } = useYear();
@@ -39,7 +40,6 @@ export default function HeaderAuth() {
         return () => clearInterval(intervalID)
     }, [])
 
-    // Modal de perfil
     const handleOpenModal = () => {
         setModalOpen(!modalOpen);
     };
@@ -47,40 +47,31 @@ export default function HeaderAuth() {
         setModalOpen(false);
     };
 
-    // Logout
     const handleLogout = () => {
         sessionStorage.clear();
         router.push("/");
     };
 
-    // Busca
     const handleSearch = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         router.push(`/search?name=${searchName}&serie=${selectedYear}`);
         setSearchName("");
-        setIsSearchOpen(false); // fecha a barra de busca mobile depois da pesquisa
+        setIsSearchOpen(false); 
     };
     const handleSearchG = () => {
         router.push(`/search?name=${searchName}&serie=${selectedYear}`);
     };
 
-    // Quando clica no ícone de busca no header:
-    // - Acima de 800px, a busca já está visível, então basta submeter o form ou focar no input.
-    // - Abaixo de 800px, abrimos a barra de busca "mobile" (overlay).
     const handleSearchIconClick = () => {
         if (availableWidth <= 800) {
-            setIsSearchOpen(true); // abre a barra de busca mobile
+            setIsSearchOpen(true); 
         }
-        // Se quiser fazer algo acima de 800px, coloque aqui. 
-        // Por exemplo, focar no input. Mas geralmente o form normal já está visível.
     };
 
-    // Fecha a barra de busca mobile
     const handleCloseSearch = () => {
         setIsSearchOpen(false);
     };
 
-    // Carrega dados do usuário
     useEffect(() => {
         profileService.fetchCurrent().then((user) => {
             setAccessType(user.hasFullAccess);
@@ -120,9 +111,7 @@ export default function HeaderAuth() {
             )}
             <div className={styles.divProfile}>
                 {!accessType && (
-                    <Link href="/precos" style={{ marginRight: "4px" }}>
-                        <Button className={styles.btnPrecos}>MATRICULE-SE</Button>
-                    </Link>
+                    <PaymentButton />
                 )}
                 {availableWidth <= 800 && !isSearchOpen && (
                     <SearchOutlined

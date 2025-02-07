@@ -52,7 +52,7 @@ export default function PremiumDetails() {
         setLoading(true);
         try {
             const response = await stripeService.getCustomerPortalLink(subscriptionDetails.stripeCustomerId);
-            router.push(response);
+            router.push(response.url);
         } catch (error) {
             showToast("Erro ao acessar portal de assinatura", "bg-danger");
         } finally {

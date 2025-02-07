@@ -6,10 +6,8 @@ import { Button } from 'reactstrap';
 import PageSpinner from '../../pageSpinner';
 import BtnSpinner from '../../btnSpinner';
 
-type styleProps = {
-  bgColor: string
-}
-const PaymentButton = ({bgColor}: styleProps) => {
+
+const PaymentButton = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const params = useSearchParams()
@@ -18,11 +16,11 @@ const PaymentButton = ({bgColor}: styleProps) => {
     setLoading(true);
     const registerSuccess = params.get("newuserbuy")
 
-    if (registerSuccess === 'true'){
+    if (registerSuccess === 'true') {
       return router.push('/login?newuserbuy=true')
     }
 
-    if(!sessionStorage.getItem("vocenotadez-token")){
+    if (!sessionStorage.getItem("vocenotadez-token")) {
       return router.push('/register?newuser=true')
     }
 
@@ -36,7 +34,7 @@ const PaymentButton = ({bgColor}: styleProps) => {
       }
     } catch (error) {
       console.error("Erro na requisição:", error);
-    } 
+    }
   };
 
   return (
@@ -44,9 +42,8 @@ const PaymentButton = ({bgColor}: styleProps) => {
       className={styles.btnMatricula}
       onClick={handlePayment}
       disabled={loading}
-      style={{backgroundColor: bgColor}}
     >
-      {loading ? <BtnSpinner/> : 'Matricule-se'}
+      {loading ? <BtnSpinner /> : 'Matricule-se'}
     </Button>
   );
 };

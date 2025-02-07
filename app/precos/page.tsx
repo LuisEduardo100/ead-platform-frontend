@@ -73,7 +73,7 @@ export default function PaginaPrecos() {
             <div className={styles.apresentation}>
                 <div className={styles.divAnuncio}>
                     <Image className={styles.imgAnuncio} src="/anuncio-votanotadez.jpg" alt="anuncio" width={400} height={700}/>
-                    <PaymentButton bgColor="#CC202C"/>
+                    <PaymentButton/>
                 </div>
                 <div className={styles.wrapper}>
                     <p className={styles.pWrapper}>Conheça tudo o que o Nota Dez oferece a você!</p>
@@ -147,7 +147,7 @@ export default function PaginaPrecos() {
                         </tr>
                     </tbody>
                 </table>
-                <PaymentButton bgColor={'#deb66b'}/>
+                <PaymentButton/>
             </div>
             <div className={styles.separator}>
                 <p className={styles.pSeparator}>Materiais separados em níveis para uma melhor aprendizagem!</p>
