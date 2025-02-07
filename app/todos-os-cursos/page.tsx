@@ -13,6 +13,8 @@ import { LibraryBooks } from '@mui/icons-material'
 import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
 import { useMenu } from "../../src/components/common/menu/menuProvider"
+import { useYear } from "../../src/components/HomeAuth/selectBox/yearProvider"
+import profileService from "../../src/services/profileService"
 
 export default function AllCourses() {
   const { isMenuOpen } = useMenu()
@@ -25,6 +27,7 @@ export default function AllCourses() {
   const [showCategories, setShowCategories] = useState(false)
   // Estado para identificar se é tela grande ou pequena
   const [isLargeScreen, setIsLargeScreen] = useState(true)
+  const { selectedYear, onYearChange } = useYear()
   const router = useRouter()
   const { data } = useSWR('/categories', categoriesService.getCategories)
 
@@ -32,6 +35,13 @@ export default function AllCourses() {
   useEffect(() => {
     setSelectedCategory(paramsCategoria)
   }, [paramsCategoria])
+
+  useEffect(() => {
+    profileService.fetchCurrent().then((user) => {
+      onYearChange(user?.serie)
+      setLoading(false)
+    })
+  })
 
   // Busca o ID da categoria selecionada
   useEffect(() => {
@@ -97,11 +107,10 @@ export default function AllCourses() {
                   data.map((categoria: CategoryType) => (
                     <li
                       key={categoria.id}
-                      className={`${styles.li} ${
-                        selectedCategory.trim().toLowerCase() === categoria.name.trim().toLowerCase()
+                      className={`${styles.li} ${selectedCategory.trim().toLowerCase() === categoria.name.trim().toLowerCase()
                           ? styles.selected
                           : ''
-                      }`}
+                        }`}
                       onClick={() => handleCategoryClick(categoria)}
                     >
                       {categoria.name}
@@ -144,11 +153,10 @@ export default function AllCourses() {
                     data.map((categoria: CategoryType) => (
                       <li
                         key={categoria.id}
-                        className={`${styles.li} ${
-                          selectedCategory.trim().toLowerCase() === categoria.name.trim().toLowerCase()
+                        className={`${styles.li} ${selectedCategory.trim().toLowerCase() === categoria.name.trim().toLowerCase()
                             ? styles.selected
                             : ''
-                        }`}
+                          }`}
                         onClick={() => handleCategoryClick(categoria)}
                       >
                         {categoria.name}

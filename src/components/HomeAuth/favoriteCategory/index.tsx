@@ -8,19 +8,29 @@ import { Container } from 'reactstrap'
 import SlideSectionNoYear from '../../HomeNoAuth/slideSectionNoYear'
 import { useYear } from '../selectBox/yearProvider'
 import SlideComponentSearch from '../../common/SlideComponentSearch'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 
 export default function FavoriteCourses() {
   const { data, error } = useSWR("/favorites", courseService.getFavCourses);
-  
+  const [loading, setLoading] = useState(true)
+
   if (error) return error;
-  if (!data) return (<PageSpinner />);
+
+  useEffect(() => {
+    if (!data) {
+      <PageSpinner />
+    } else {
+      setLoading(false)
+    }
+  })
+
+  if (loading) return <PageSpinner />
   return (
     <>
-      <div style={{padding: '20px 50px'}}>
+      <div style={{ padding: '20px 50px' }}>
         <p className={styles.pStyle}>MINHA LISTA</p>
-        {data?.data.courses?.length > 0 ? (
+        {data?.data?.courses?.length > 0 ? (
           <SlideComponentSearch course={data?.data.courses} />
         ) : (
           <div className="text-center py-3">

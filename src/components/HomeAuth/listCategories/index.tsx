@@ -13,8 +13,8 @@ export default function ListCategories() {
     const { data, error } = useSWR("/categories", categoriesService.getCategories)
     
     useEffect(() => {
-        if (selectedYear) setLoading(false)
-    }, [selectedYear])
+        if (data?.length > 0) setLoading(false)
+    }, [data])
 
     if (error) return error
     if (!data || loading) return <PageSpinner />
@@ -22,7 +22,7 @@ export default function ListCategories() {
     return (<>
         {data?.map((category: CategoryType) => (
             <div style={{padding: '20px 50px'}} key={category.id}>
-                <ListCategoriesSlide key={category.id} selectedYear={selectedYear} categoryId={category.id} categoryName={category.name.toUpperCase()}/>
+                <ListCategoriesSlide key={category.id} selectedYear={selectedYear!} categoryId={category.id} categoryName={category.name.toUpperCase()}/>
             </div>
         ))}
     </>)

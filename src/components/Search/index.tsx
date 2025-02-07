@@ -120,7 +120,7 @@ export default function SearchComponents(
             <>
               {searchResult.length >= 1 ? (
                 <div style={{ padding: '20px 50px' }}>
-                  <p style={{ fontSize: '1.4rem' }}>CURSOS DO {selectedYear.toUpperCase()}</p>
+                  <p style={{ fontSize: '1.4rem' }}>CURSOS DO {selectedYear?.toUpperCase()}</p>
                   <SlideComponentSearch course={searchResult} />
                 </div>
               ) : (

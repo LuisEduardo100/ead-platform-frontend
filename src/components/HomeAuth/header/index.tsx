@@ -119,8 +119,6 @@ export default function HeaderAuth() {
                 </Form>
             )}
             <div className={styles.divProfile}>
-
-                {/* Botão "MATRICULE-SE" caso não tenha acesso */}
                 {!accessType && (
                     <Link href="/precos" style={{ marginRight: "4px" }}>
                         <Button className={styles.btnPrecos}>MATRICULE-SE</Button>

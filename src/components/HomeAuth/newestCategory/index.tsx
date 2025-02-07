@@ -16,8 +16,8 @@ export default function NewestCategory() {
     const filteredCourses = data?.data?.filter((course: CourseType) => course.serie === selectedYear);
 
     useEffect(() => {
-        if (selectedYear) setLoading(false)
-    }, [selectedYear])
+        if (filteredCourses?.length > 0) setLoading(false)
+    }, [filteredCourses])
 
     if (error) return error
     if (!data || loading) return <PageSpinner />

@@ -1,15 +1,17 @@
 'use client'
-import React, { createContext, ReactNode, useContext, useState } from 'react';
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import profileService from '../../../services/profileService';
+import PageSpinner from '../../common/pageSpinner';
 
 interface YearContextType {
-    selectedYear: string;
+    selectedYear: string | null;
     onYearChange: (year: string) => void;
 }
 
 const YearContext = createContext<YearContextType | undefined>(undefined);
 
 export const YearProvider = ({ children }: { children: ReactNode }) => {
-    const [selectedYear, setSelectedYear] = useState('6º ano');
+    const [selectedYear, setSelectedYear] = useState<string | null>(null);
 
     const onYearChange = (year: string) => setSelectedYear(year);
 

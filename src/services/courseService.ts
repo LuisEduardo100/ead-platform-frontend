@@ -162,7 +162,7 @@ const courseService = {
         }).catch((error) => { return error.message })
         return res
     },
-    getSearch: async (name: string, year: string) => {
+    getSearch: async (name: string, year: string | null) => {
         const query = name ? `/courses/search?name=${name}&serie=${year}` : `/courses/search?name=&serie=${year}`;
         const res = await api.get(query).catch((error) => { return "Erro aqui"+error.message });
         return res;

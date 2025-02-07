@@ -1,101 +1,88 @@
+.passwordSection {
+    background: linear-gradient(to bottom, #1a1a1a, #2d2d2d);
+    min-height: 100vh;
+    padding: 2rem 0;
+}
+
 .forms {
-    border: 1px solid #F0C36E;
-    padding: 20px 0px;
-    max-width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 12px;
 }
 
-//   Inputs formulários 
-
-.label {
-    font-size: 14px;
-    font-weight: bold;
+.formHeader {
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
-.inputFlexDiv {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 50px;
+.formTitle {
+    color: #f8f9fa;
+    font-size: 1.75rem;
+    font-weight: 600;
+    position: relative;
 }
 
-
-.inputFlex {
-    width: 350px;
-    background-color: #deb66b;
-    border: 1px solid #64512e;
-    color: white;
-    transition: 0.3s;
-    text-transform: uppercase;
-
-    &::placeholder {
-        color: rgba(0, 0, 0, 0.753);
-    }
-
-    &:focus {
-        box-shadow: none;
-        border-color: #F0C36E;
-        background-color: #deb66b;
-        color: white;
-    }
+.formTitle::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: #F0C36E;
+    margin: 1rem auto 0;
 }
-.inputNormalDiv {
+
+.inputGroup {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
-    gap: 20px;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.label {
+    color: #adb5bd;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    text-align: center;
 }
 
 .input {
-    @extend .inputFlex;
-    text-transform: lowercase;
-    width: 350px;
-}
-
-.formBtn {
-    border-color: black;
+    width: 100%;
+    max-width: 350px;
+    background: rgba(240, 195, 110, 0.1);
+    border: 1px solid rgba(240, 195, 110, 0.3);
+    color: #f8f9fa;
+    border-radius: 8px;
+    padding: 0.5rem;
     text-align: center;
-    color: black;
-    font-weight: bold;
-    font-size: 15px;
-    padding: 6px 20px;
-    transition: 0.4s;
-    background-color: #deb66b;
 
-    &:hover {
-        background-color: #deb66b;
-        filter: brightness(80%);
-        color: gray;
-    }
-
-    &:focus {
-        box-shadow: none;
-        outline: none;
+    &::placeholder {
+        color: rgba(240, 195, 110, 0.3);
     }
 }
 
-@media (max-width: 482px) {
-    .forms {
-        width: 95%;
-        margin: 0 auto;
-    }
-
-    .input {
-        width: 250px;
-    }
-
-    .inputFlex {
-        width: 250px;
-    }
+.submitButton {
+    background: rgba(240, 195, 110, 0.9);
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #2b2b2b;
+    transition: all 0.3s ease;
+    display: block;
+    margin: 0 auto;
 }
-@media (max-width: 337px) {
 
+.submitButton:hover {
+    background: rgba(240, 195, 110, 1);
+    box-shadow: 0 4px 15px rgba(240, 195, 110, 0.2);
+    color: #2b2b2b;
+}
 
+@media (max-width: 768px) {
     .input {
-        width: 180px;
-    }
-
-    .inputFlex {
-        width: 180px;
+        max-width: 250px;
     }
 }

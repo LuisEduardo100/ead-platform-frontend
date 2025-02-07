@@ -14,22 +14,23 @@ const YearSelect = ({
 }) => {
   const [loading, setLoading] = useState(true)
 
-  const fetchUserData = async () => {
-    try {
-      const data = await profileService.fetchCurrent();
-      if (data?.serie) {
-        onYearChange(data.serie);
-      }
-    } catch (error) {
-      console.error("Erro ao buscar os dados do usuário:", error);
-    } finally {
-      setLoading(false);
-    }
-  }
-
   useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const data = await profileService.fetchCurrent();
+
+        if (data?.serie) {
+          onYearChange(data.serie);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar os dados do usuário:", error);
+      } finally {
+        setLoading(false)
+      }
+    }
+
     fetchUserData()
-  }, [fetchUserData])
+  })
 
   if (loading) {
     return <PageSpinner />

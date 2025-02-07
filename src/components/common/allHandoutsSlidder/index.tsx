@@ -97,7 +97,7 @@ export default function AllHandoutsSlidder({ searchTerm }: { searchTerm: string 
                         style={{
                             fontSize: '1.4rem',
                         }}
-                    >APOSTILAS DO {selectedYear.toUpperCase()}</p>
+                    >APOSTILAS DO {selectedYear?.toUpperCase()}</p>
                     <Splide
                         options={{
                             rewind: true,

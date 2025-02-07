@@ -12,11 +12,14 @@ import { useMenu } from '../../src/components/common/menu/menuProvider';
 import styles from './styles.module.scss'
 import { useRouter } from 'next/navigation';
 import PageSpinner from '../../src/components/common/pageSpinner';
+import { useYear } from '../../src/components/HomeAuth/selectBox/yearProvider';
+import profileService from '../../src/services/profileService';
 
 const HomeAuth = function () {
     const router = useRouter()
     const { isMenuOpen } = useMenu();
     const [loading, setLoading] = useState(true);
+    const {selectedYear, onYearChange} = useYear()
 
     useEffect(() => {
         AOS.init();
@@ -25,14 +28,17 @@ const HomeAuth = function () {
 
     useEffect(() => {
         if (!sessionStorage.getItem("vocenotadez-token")) {
+            setLoading(false)
             router.push("/login");
-        } else {
-            const intervalID = setInterval(()=>{
-                setLoading(false);
-            }, 500)
-            return () => clearInterval(intervalID)
-        }
+        } 
     }, [router])
+
+    useEffect(()=> {
+        profileService.fetchCurrent().then((user)=>{
+            onYearChange(user?.serie)
+            setLoading(false)
+        })
+    })
 
     if (loading) return <PageSpinner/>
     return (

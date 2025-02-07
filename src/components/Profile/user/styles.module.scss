@@ -1,190 +1,274 @@
+.profileImageContainer {
+    position: relative;
+    display: inline-block;
+
+    .uploadWrapper {
+        display: block;
+        position: relative;
+        cursor: pointer;
+
+        &:hover {
+            .cameraOverlay {
+                display: flex;
+            }
+            .profileImage {
+                background: rgba(240, 195, 110, 1);
+                box-shadow: 0 4px 15px rgba(240, 195, 110, 0.2);
+                opacity: 0.75;
+            }
+        }
+        .nameAbbreviation {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 120px;
+            height: 120px;
+            background-color: #4a3f35;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s ease;
+
+        }
+
+        .uploadLabel {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            bottom: 23px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+        }
+
+        .nameAbbreviation:hover .uploadLabel {
+            display: block;
+        }
+
+        .cameraOverlay {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            border-radius: 50%;
+            bottom: 32px;
+            right: 33px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cameraIcon {
+            color: white;
+            font-size: 32px;
+        }
+
+        .hiddenFileInput {
+            display: none;
+        }
+    }
+}
+
+.userSection {
+    background: linear-gradient(to bottom, #1a1a1a 0%, #2d2d2d 100%);
+    min-height: 100vh;
+    padding: 2rem 0;
+}
+
 .forms {
-    border: 1px solid #F0C36E;
-    padding: 20px 0px;
-    max-width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: linear-gradient(to bottom, #1a1a1a 0%, #2d2d2d 100%);
+    border-radius: 12px;
 }
 
-.hr {
-    color: #F0C36E;
-}
-
-.formName {
+.userHeader {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 80%;
-    margin: 20px auto;
-    text-transform: uppercase;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.profileImage {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    filter: drop-shadow(0 4px 8px rgba(240, 195, 110, 0.2));
 }
 
 .nameAbbreviation {
     font-size: 60px;
     font-weight: bold;
-    min-width: 150px;
-    min-height: 150px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
-    background-color: white;
-    color: rgb(0, 0, 0);
+    background: rgba(240, 195, 110, 0.2);
+    color: #f8f9fa;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.div_foto_perfil{
+
+.formTitle {
+    color: #f8f9fa;
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    position: relative;
+}
+
+.formTitle::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: #F0C36E;
+    margin: 1rem auto 0;
+}
+
+.statusBadge {
+    margin-top: 0.5rem;
+    background: #e8ea5b;
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #2b2b2b;
+}
+
+.uploadSection {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.uploadLabel {
+    color: #f8f9fa;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.uploadContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 90%;
-    margin: 0 auto;
-    text-align: center;
+    gap: 1rem;
+}
 
-    .input_image{
-        display: inline-block;
-        margin: 0px 10px 20px 0px;
-        width: 300px;
-    }
-    .btn_upload_image{
-        display: inline;
-        background-color: #deb66b;
-        border: 1px solid black;
-        color: black;
-        font-size: 15px;
-        &:hover{
-            filter: brightness(95%)
-        }
-    }
+.fileInput {
+    background: rgba(240, 195, 110, 0.1);
+    border: 1px solid rgba(240, 195, 110, 0.3);
+    border-radius: 8px;
+    color: #f8f9fa;
+    padding: 0.5rem;
+    width: 300px;
 }
-.label {
-    text-align: center;
+
+.uploadButton {
+    background: rgba(240, 195, 110, 0.9);
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #2b2b2b;
+    transition: all 0.3s ease;
 }
-.radioGroup {
+
+.uploadButton:hover {
+    background: rgba(240, 195, 110, 1);
+    box-shadow: 0 4px 15px rgba(240, 195, 110, 0.2);
+}
+
+.memberInfo {
     display: flex;
-}
-.userName {
-    font-size: 20px;
-    font-weight: bold;
-    word-break: break-all;
-}
-
-.memberTime {
-    display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
-.memberTimeImg {
+.memberLogo {
     width: 60px;
 }
 
-.memberTimeText {
-    font-size: 14px;
-    color: gray;
+.memberText {
+    color: #f8f9fa;
+    font-size: 1rem;
 }
 
-@media(max-width: 335px) {
-    .formName {
-        flex-direction: column;
-    }
+.hr {
+    border: 0;
+    border-top: 3px solid rgba(240, 195, 110, 0.3);
+    margin: 2rem 0;
 }
 
-//   Inputs formulários 
-.label {
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.inputFlexDiv {
+.inputGroup {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 50px;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
-.inputFlex {
-    width: 250px;
-    background-color: #deb66b;
-    border: 1px solid #64512e;
-    color: white;
-    transition: 0.3s;
-    text-transform: uppercase;
-
-    &::placeholder {
-        color: rgba(0, 0, 0, 0.753);
-    }
-
-    &:focus {
-        box-shadow: none;
-        border-color: #F0C36E;
-        background-color: #deb66b;
-        color: white;
-    }
-}
-
-.inputNormalDiv {
+.inputGroupVertical {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
-    gap: 20px;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
 }
 
-.input {
-    @extend .inputFlex;
-    text-transform: lowercase;
-    width: 550px;
-}
-
-.formBtn {
-    border-color: black;
+.label {
+    color: #adb5bd;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
     text-align: center;
-    color: black;
-    font-weight: bold;
-    font-size: 15px;
-    padding: 6px 20px;
-    transition: 0.4s;
-    background-color: #deb66b;
+}
 
-    &:hover {
-        background-color: #deb66b;
-        filter: brightness(80%);
-        color: gray;
-    }
+.input,
+.select {
+    width: 100%;
+    max-width: 350px;
+    background: rgba(240, 195, 110, 0.1);
+    border: 1px solid rgba(240, 195, 110, 0.3);
+    color: #f8f9fa;
+    border-radius: 8px;
+    padding: 0.5rem;
+    text-align: center;
 
     &:focus {
-        box-shadow: none;
-        outline: none;
+        background: rgba(240, 195, 110, 0.6);
+        border: 1px solid rgba(240, 195, 110, 0.3);
+        color: black;
     }
 }
 
-@media(max-width: 767px) {
-    .inputFlexDiv {
-        gap: 20px;
-    }
+.submitButton {
+    background: rgba(240, 195, 110, 0.9);
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #2b2b2b;
+    transition: all 0.3s ease;
+    display: block;
+    margin: 0 auto;
 }
 
-@media (min-width: 543px) and (max-width: 575px) {
-    .inputFlexDiv {
-        flex-direction: column;
-        align-items: center;
-    }
+.submitButton:hover {
+    background: rgba(240, 195, 110, 1);
+    box-shadow: 0 4px 15px rgba(240, 195, 110, 0.2);
+    color: #2b2b2b;
 }
 
-@media (max-width: 594px) {
-    .input {
-        width: 250px;
-    }
+@media (max-width: 768px) {
 
-    .inputFlexDiv {
-        gap: 20px;
-    }
-}
-@media (max-width: 364px) {
-    .div_foto_perfil{
-        .input_image{
-            width: 140px;
-        }
+    .input,
+    .select {
+        max-width: 250px;
     }
 }

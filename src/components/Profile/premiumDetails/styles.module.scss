@@ -1,0 +1,162 @@
+.premiumSection {
+    background: linear-gradient(to bottom, #1a1a1a 0%, #2d2d2d 100%);
+    min-height: 100vh;
+    padding: 2rem 0;
+}
+
+.forms {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.premiumHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 3rem;
+    text-align: center;
+
+    .premiumBadge {
+        filter: drop-shadow(0 4px 8px rgba(240, 195, 110, 0.2));
+        width: 100px !important;
+        height: auto !important;
+    }
+
+    .premiumTitle {
+        color: #f8f9fa;
+        font-weight: 600;
+        font-size: 1.75rem;
+        margin-top: 1.5rem;
+        position: relative;
+
+        &::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: #F0C36E;
+            margin: 1rem auto 0;
+        }
+    }
+}
+
+.detailsContainer {
+    display: grid;
+    gap: 1.5rem;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.detailItem {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(240, 195, 110, 0.15);
+    transition: transform 0.2s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+    }
+
+    .iconContainer {
+        width: 50px;
+        height: 50px;
+        min-width: 50px;
+        background: rgba(240, 195, 110, 0.1);
+        border-radius: 8px;
+        color: #F0C36E;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .detailContent {
+        flex: 1;
+
+        .detailLabel {
+            color: #adb5bd;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .detailValue {
+            color: #f8f9fa;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+    }
+}
+
+.actionsContainer {
+    margin-top: 3rem;
+    text-align: center;
+
+    .manageButton {
+        background: rgba(240, 195, 110, 0.9);
+        color: #2b2b2b;
+        border: none;
+        padding: 1rem 2.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background: rgba(240, 195, 110, 1);
+            box-shadow: 0 4px 15px rgba(240, 195, 110, 0.2);
+        }
+
+        &:disabled {
+            opacity: 0.7;
+        }
+    }
+
+    .disclaimer {
+        color: #6c757d;
+        font-size: 0.875rem;
+        margin-top: 1rem;
+        line-height: 1.5;
+        max-width: 500px;
+        margin: 1.5rem auto 0;
+    }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+    .forms {
+        padding: 1.5rem;
+    }
+
+    .premiumTitle {
+        font-size: 1.5rem !important;
+    }
+
+    .detailItem {
+        padding: 1rem;
+        gap: 1rem;
+
+        .iconContainer {
+            width: 40px;
+            height: 40px;
+        }
+
+        .detailValue {
+            font-size: 1rem !important;
+        }
+    }
+
+    .manageButton {
+        width: 100%;
+        padding: 1rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .detailItem {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

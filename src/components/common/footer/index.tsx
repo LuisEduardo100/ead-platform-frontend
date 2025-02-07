@@ -34,7 +34,7 @@ const Footer = function () {
             </div>
         </div>
         <p className={styles.pFooter}>
-            Copyright © 2024 - Reforço Escolar Nota Dez | Todos os direitos reservados
+            Copyright © 2025 - Reforço Escolar Nota Dez | Todos os direitos reservados
         </p>
     </>)
 }

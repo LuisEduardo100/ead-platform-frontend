@@ -8,7 +8,7 @@ import { Button, Container } from 'reactstrap';
 import Link from 'next/link';
 import { PlayArrow, Reply } from '@mui/icons-material';
 import { useYear } from '../selectBox/yearProvider';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 
@@ -16,14 +16,19 @@ export default function HomeAuthPresentation() {
     const { data, error } = useSWR('/featured', courseService.getFeaturedCourses)
     const { selectedYear, onYearChange } = useYear()
     const filteredFeaturedCourses = data?.data?.filter((course: CourseType) => course.serie === selectedYear);
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        if (filteredFeaturedCourses?.length > 0) setLoading(false)
+    }, [filteredFeaturedCourses])
 
     if (error) return error
-    if (!data) return <PageSpinner />
+    if (loading) return <PageSpinner />
     return <>
         {
             filteredFeaturedCourses.map((course: CourseType) => (
                 <>
-                    <div style={{ 
+                    <div style={{
                         backgroundImage: `linear-gradient(to bottom, #dadada04, #E8E8E8), url(${process.env.NEXT_PUBLIC_BASEURL}/${course.featuredImage})`,
                     }}
                         className={styles.divMain}
