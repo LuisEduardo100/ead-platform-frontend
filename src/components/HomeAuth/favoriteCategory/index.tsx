@@ -15,16 +15,15 @@ export default function FavoriteCourses() {
   const { data, error } = useSWR("/favorites", courseService.getFavCourses);
   const [loading, setLoading] = useState(true)
 
-  if (error) return error;
-
   useEffect(() => {
     if (!data) {
       <PageSpinner />
     } else {
       setLoading(false)
     }
-  })
-
+  }, [data])
+  
+  if (error) return error;
   if (loading) return <PageSpinner />
   return (
     <>

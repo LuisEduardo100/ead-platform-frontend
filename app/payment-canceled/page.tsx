@@ -30,11 +30,6 @@ export default function PaymentCanceled() {
                 <li>Oferecemos material gratuito para experimentar</li>
               </ul>
             </div>
-
-            <p style={{ marginTop: '1rem', fontStyle: 'italic' }}>
-              "A educação é a arma mais poderosa que você pode usar para mudar o mundo." 
-              <br/>- Nelson Mandela
-            </p>
           </div>
 
           <button 
