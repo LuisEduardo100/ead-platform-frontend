@@ -30,6 +30,8 @@ export type CourseType = {
     featuredImage: string;
     Episodes?: EpisodeType[];
     watchStatus?: WatchStatus[]
+    liked: boolean
+    favorited: boolean
 }
 export type CourseQuizzType = {
     id: number

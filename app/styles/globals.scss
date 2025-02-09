@@ -10,7 +10,6 @@
     font-family: "Quicksand", sans-serif;
     font-weight: bold;
     max-width: 100%;
-    
 }
 
 .splide__track,
@@ -19,7 +18,9 @@
     position: relative; // Garante que os filhos respeitem a hierarquia
     z-index: 1; // Não impede que os filhos tenham um z-index maior
 }
-
+.splide:global(.splide__arrow) {
+    z-index: 9999 !important;
+}
 
 main {
     background-color: #E8E8E8;

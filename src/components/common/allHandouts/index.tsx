@@ -7,6 +7,7 @@ import Link from "next/link";
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { EpisodeFileType, EpisodeTypeAdapted } from '../../../services/courseService';
 import ToastComponent from '../toastComponent';
+import { Lock } from '@mui/icons-material';
 
 interface Props {
     searchTerm: string
@@ -68,30 +69,62 @@ export default function AllHandouts({ searchTerm, access }: Props) {
         }
     }, [searchTerm, pdfFiles]);
 
-    return (<>
-        <ToastComponent isOpen={toastIsOpen} color={toastColor} message={toastMessage} />
-        <div>
-            {filteredFiles.length > 0 ? (
-                <ul className={styles.ulDiv}>
-                    {filteredFiles.map((file, index) => (
-                        <li key={index}>
-                            <div className={styles.divIconName}>
-                                <PictureAsPdfIcon style={{ color: '#D42428' }} fontSize='large' />
-                                {file.url && file.url.length > 0 ? (
-                                    <Link className={styles.linkStyle} href={`${process.env.NEXT_PUBLIC_BASEURL}/${file.url}`} target="_blank" rel="noopener noreferrer">
-                                        <span className={styles.fileName}>{file.name}</span>
-                                    </Link>
-                                ) : (
-                                    <div>URL não disponível</div>
-                                )}
-                            </div>
-                            <p className={styles.infoCourse}>{file.course}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;{file.serie}</p>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p style={{ textAlign: 'center' }}>Nenhum arquivo encontrado.</p>
-            )}
-        </div>
-    </>)
+    const handleFileClick = () => {
+        setToastColor("bg-danger");
+        setToastMessage("Matricule-se para ter acesso");
+        setToastIsOpen(true);
+        setTimeout(() => setToastIsOpen(false), 3000);
+    };
+
+    return (
+        <>
+            <ToastComponent isOpen={toastIsOpen} color={toastColor} message={toastMessage} />
+            <div>
+                {filteredFiles.length > 0 ? (
+                    <ul className={styles.ulDiv}>
+                        {filteredFiles.map((file, index) => (
+                            <li key={index}>
+                                <div className={styles.divIconName}>
+                                    <PictureAsPdfIcon style={{ color: '#D42428' }} fontSize='large' />
+                                    {file.url ? (
+                                        access ? (
+                                            <Link
+                                                className={styles.linkStyle}
+                                                href={`${process.env.NEXT_PUBLIC_BASEURL}/${file.url}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                <span className={styles.fileName}>{file.name}</span>
+                                            </Link>
+                                        ) : (
+                                            <div
+                                                className={styles.disabledLink}
+                                                onClick={handleFileClick}
+                                                style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    cursor: 'not-allowed',
+                                                    opacity: 0.6
+                                                }}
+                                            >
+                                                <span className={styles.fileName}>{file.name}</span>
+                                                <Lock fontSize="small" style={{ marginLeft: '5px' }} />
+                                            </div>
+                                        )
+                                    ) : (
+                                        <div>URL não disponível</div>
+                                    )}
+                                </div>
+                                <p className={styles.infoCourse}>
+                                    {file.course}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;{file.serie}
+                                </p>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p style={{ textAlign: 'center' }}>Nenhum arquivo encontrado.</p>
+                )}
+            </div>
+        </>
+    );
 }

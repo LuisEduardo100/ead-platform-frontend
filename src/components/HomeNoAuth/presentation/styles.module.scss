@@ -40,6 +40,10 @@
     bottom: 5.5px;
     right: 14px;
     cursor: pointer;
+    &:hover {
+        background-color: #ccccccbd;
+        border-radius: 50%;
+    }
 }
 @media (max-width: 1399px){
     .img{

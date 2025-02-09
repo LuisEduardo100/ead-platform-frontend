@@ -7,7 +7,7 @@ import SlideCard from './slideCard';
 import { useMenu } from './menu/menuProvider';
 import { useEffect, useState } from 'react';
 import profileService from '../../services/profileService';
-import zIndex from '@mui/material/styles/zIndex';
+import styles from './SlideComponent.module.scss'
 
 interface Props {
     course: CourseType[];
@@ -68,6 +68,7 @@ export default function SlideComponentSearch({ course }: Props) {
         <div className="d-flex flex-column py-2">
             <Splide
                 key={slidesPerPage || 10}
+                className={styles.splide}
                 options={{
                     rewind: true,
                     rewindSpeed: 800,
@@ -120,7 +121,10 @@ export default function SlideComponentSearch({ course }: Props) {
                     <SplideSlide key={item.id}
                         style={{
                             maxWidth: `${SLIDE_WIDTH}px`,
-                        }}>
+                            position: 'relative',
+                            zIndex: 1
+                        }}
+                    >
                         <SlideCard course={item} access={hasFullAccess} />
                     </SplideSlide>
                 ))}

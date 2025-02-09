@@ -6,7 +6,7 @@ import PageSpinner from '../../common/pageSpinner';
 import { Container } from 'reactstrap';
 import KeepWatchingService from '../../../services/keepWatchingService';
 import { CourseType } from '../../../services/courseService';
-import SlideComponent from '../../common/SlideComponent';
+import SlideComponentSearch from '../../common/SlideComponentSearch';
 
 // Função para o SWR fetcher
 const fetcher = async () => {
@@ -14,9 +14,10 @@ const fetcher = async () => {
     return courses;
 };
 
-export default function OnGoingCategory({ selectedYear }: { selectedYear: string }) {
+export default function OnGoingCategory() {
     const { data, error } = useSWR('ongoingCourses', fetcher);
     const [loading, setLoading] = useState(true);
+    
     useEffect(() => {
         if (data || error) {
             setLoading(false);
@@ -32,7 +33,7 @@ export default function OnGoingCategory({ selectedYear }: { selectedYear: string
         <Container>
             <p className={styles.pStyle}>CURSOS EM ANDAMENTO</p>
                 <div>
-                    <SlideComponent course={data!} serie={selectedYear} />
+                    <SlideComponentSearch course={data!} />
                 </div>
         </Container>
         )

@@ -14,6 +14,7 @@ import { ArrowBackIosNew } from "@mui/icons-material";
 import { useYear } from "../../../src/components/HomeAuth/selectBox/yearProvider";
 import FooterAuth from "../../../src/components/HomeAuth/footerAuth";
 import { useMenu } from "../../../src/components/common/menu/menuProvider";
+import profileService from "../../../src/services/profileService";
 
 const IconBtn = styled(IconButton)({
   color: "#000",
@@ -44,33 +45,34 @@ const getCourseId = async ({ params }: ParamsProps) => {
 
 export default function Course({ params }: ParamsProps) {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
-  const {isMenuOpen} = useMenu()
-  const [course, setCourse] = useState<CourseType>();
-  const [liked, setLiked] = useState(Boolean);
-  const [favorited, setFavorited] = useState(Boolean);
+  const [loading, setLoading] = useState(true)
+  const { isMenuOpen } = useMenu()
+  const [course, setCourse] = useState<CourseType>()
+  const [liked, setLiked] = useState(Boolean)
+  const [favorited, setFavorited] = useState(Boolean)
   const [firstEpisodeId, setFirstEpisodeId] = useState(0)
   const [firstEpisodeOrder, setFirstEpisodeOrder] = useState(0)
-  const [toastColor, setToastColor] = useState("");
-  const [toastIsOpen, setToastIsOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
+  const [toastColor, setToastColor] = useState("")
+  const [toastIsOpen, setToastIsOpen] = useState(false)
+  const [toastMessage, setToastMessage] = useState("")
 
   const paramsUrl = useSearchParams()
-  const courseId = params.id;
+  const courseId = params.id
 
   const getCourse = async () => {
     const course = await getCourseId({ params });
-    setCourse(course);
-    setLiked(course.liked);
-    setFavorited(course.favorited);
-  };
-  
+    setCourse(course)
+    setLiked(course.liked)
+    setFavorited(course.favorited)
+  }
+
   useEffect(() => {
     getCourse();
   }, [getCourse, courseId]);
 
   const handleBackRouter = () => {
-    router.push('/todos-os-cursos?categoria=Matematica')
+    const previousPage = sessionStorage.getItem("previousPage") || "/home"; // Se não houver, vá para /home
+    router.push(previousPage);
   }
 
   const handleLikeCourse = async () => {
@@ -81,7 +83,7 @@ export default function Course({ params }: ParamsProps) {
       await courseService.like(courseId);
       setLiked(true);
     }
-  };
+  }
 
   const handleFavCourse = async () => {
     if (favorited === true) {
@@ -91,7 +93,7 @@ export default function Course({ params }: ParamsProps) {
       await courseService.addToFav(courseId);
       setFavorited(true);
     }
-  };
+  }
 
   useEffect(() => {
     if (course?.Episodes && course.Episodes.length > 0) {
@@ -110,9 +112,9 @@ export default function Course({ params }: ParamsProps) {
     const access = paramsUrl.get("access")
 
     if (!sessionStorage.getItem("vocenotadez-token")) {
-      router.push("/login");
+      router.push("/login?access=denied");
     } else {
-      setLoading(false);
+        setLoading(false);
     }
 
     if (access === "false") {
@@ -126,7 +128,9 @@ export default function Course({ params }: ParamsProps) {
     }
   });
 
-
+  if (!course) {
+    return <PageSpinner />
+  }
   if (loading) {
     return <PageSpinner />;
   }
@@ -141,12 +145,12 @@ export default function Course({ params }: ParamsProps) {
             backgroundPosition: "center",
             height: "600px",
           }}>
-          <HeaderAuth/>
+          <HeaderAuth />
         </div>
         <Container className={styles.courseInfo}>
           <div className="d-flex align-items-center">
             <IconBtn onClick={handleBackRouter}>
-              <ArrowBackIosNew style={{fontSize: '32px', marginRight: '5px'}}/>
+              <ArrowBackIosNew style={{ fontSize: '32px', marginRight: '5px' }} />
             </IconBtn>
             <p className={styles.courseTitle}>{course?.name}</p>
             <div className={styles.interactions}>
@@ -163,7 +167,7 @@ export default function Course({ params }: ParamsProps) {
             </div>
           </div>
           <p className={styles.courseDescription}>{course?.synopsis}</p>
-            <p className={styles.episodesLength}>Episódios:&nbsp;&nbsp;{`${course?.Episodes?.length}`} </p>
+          <p className={styles.episodesLength}>Episódios:&nbsp;&nbsp;{`${course?.Episodes?.length}`} </p>
           <div className={styles.divBtnImg}>
             <Button
               outline

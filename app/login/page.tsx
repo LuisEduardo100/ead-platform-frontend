@@ -33,13 +33,22 @@ const Login = function () {
 
     useEffect(() => {
         const registerSuccess = params.get("success")
+        const access = params.get("access")
+        
+        if (access === "denied") {
+            setToastColor("bg-danger")
+            setToastIsOpen(true)
+            setTimeout(() => {
+                setToastIsOpen(false)
+            }, 2500)
+            setToastMessage("Faça o login para ter acesso gratuito")
+        }
         if (registerSuccess === "true") {
             setToastColor("bg-success")
             setToastIsOpen(true)
             setTimeout(() => {
                 setToastIsOpen(false)
             }, 2500)
-
             setToastMessage("Cadastrado com sucesso")
         }
     }, [params])

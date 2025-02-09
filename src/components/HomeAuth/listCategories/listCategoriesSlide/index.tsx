@@ -2,8 +2,6 @@ import useSWR from "swr"
 import categoriesService from "../../../../services/categoriesService"
 import PageSpinner from "../../../common/pageSpinner"
 import styles from '../styles.module.scss'
-import SlideComponent from "../../../common/SlideComponent"
-import { Container } from "reactstrap"
 import SlideComponentSearch from "../../../common/SlideComponentSearch"
 import { CourseType } from "../../../../services/courseService"
 import { useEffect, useState } from "react"

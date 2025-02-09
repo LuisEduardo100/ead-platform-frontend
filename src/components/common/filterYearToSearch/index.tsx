@@ -10,19 +10,14 @@ export default function CustomSelectBox() {
   const [isOpen, setIsOpen] = useState(false);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Opções de séries
   const options = ["6º ano", "7º ano", "8º ano", "9º ano"];
 
   const handleSelect = (year: string) => {
-    // Atualiza o contexto
     onYearChange(year);
-    // Atualiza a URL com o novo parâmetro
     router.push(`/search?name=&serie=${encodeURIComponent(year)}`);
-    // Fecha a lista de opções
     setIsOpen(false);
   };
 
-  // Quando o mouse entra no container, cancela qualquer timer de fechamento e abre o dropdown
   const handleMouseEnter = () => {
     if (closeTimeoutRef.current) {
       clearTimeout(closeTimeoutRef.current);
@@ -30,11 +25,10 @@ export default function CustomSelectBox() {
     setIsOpen(true);
   };
 
-  // Ao sair com o mouse, inicia um timer para fechar o dropdown após um pequeno atraso
   const handleMouseLeave = () => {
     closeTimeoutRef.current = setTimeout(() => {
       setIsOpen(false);
-    }, 200); // 200ms de atraso (você pode ajustar esse valor conforme necessário)
+    }, 200); 
   };
 
   return (
@@ -45,7 +39,7 @@ export default function CustomSelectBox() {
       onClick={() => setIsOpen(prev => !prev)}
     >
       <div className={styles.selectedValue}>
-        {selectedYear}
+        {selectedYear || "Todas as séries"}
       </div>
       {isOpen && (
         <ul className={styles.optionsList}>
@@ -54,7 +48,6 @@ export default function CustomSelectBox() {
               key={option} 
               className={styles.optionItem} 
               onClick={(e) => {
-                // Evita que o clique se propague para o container
                 e.stopPropagation();
                 handleSelect(option);
               }}

@@ -5,7 +5,7 @@ import PageSpinner from '../../common/pageSpinner';
 
 interface YearContextType {
     selectedYear: string | null;
-    onYearChange: (year: string) => void;
+    onYearChange: (year: string | null) => void;
 }
 
 const YearContext = createContext<YearContextType | undefined>(undefined);
@@ -13,7 +13,7 @@ const YearContext = createContext<YearContextType | undefined>(undefined);
 export const YearProvider = ({ children }: { children: ReactNode }) => {
     const [selectedYear, setSelectedYear] = useState<string | null>(null);
 
-    const onYearChange = (year: string) => setSelectedYear(year);
+    const onYearChange = (year: string | null) => setSelectedYear(year);
 
     return (
         <YearContext.Provider value={{ selectedYear, onYearChange }}>

@@ -13,15 +13,19 @@ import { useYear } from '../../HomeAuth/selectBox/yearProvider';
 import PdfThumbnail from '../pdfThumbnail';
 import PageSpinner from '../pageSpinner';
 import zIndex from '@mui/material/styles/zIndex';
+import ToastComponent from '../toastComponent';
 
 interface Props {
     searchTerm: string
     access: boolean
 }
-export default function AllHandoutsSlidder({ searchTerm }: Props) {
+export default function AllHandoutsSlidder({ searchTerm, access }: Props) {
     const [pdfFiles, setPdfFiles] = useState<EpisodeFileType[]>([]);
     const [filteredFiles, setFilteredFiles] = useState<EpisodeFileType[]>([]);
     const { selectedYear, onYearChange } = useYear()
+    const [toastIsOpen, setToastIsOpen] = useState(false);
+    const [toastMessage, setToastMessage] = useState("");
+    const [toastColor, setToastColor] = useState("");
 
     const getAvailableWidth = () => {
         return typeof window !== "undefined" ? window.innerWidth : 0;
@@ -94,15 +98,30 @@ export default function AllHandoutsSlidder({ searchTerm }: Props) {
         setFilteredFiles(results);
     }, [searchTerm, selectedYear, pdfFiles]);
 
+    const handleDeniedClick = () => {
+        setToastColor("bg-danger");
+        setToastMessage("Matricule-se para ter acesso");
+        setToastIsOpen(true);
+        setTimeout(() => setToastIsOpen(false), 3000);
+    };
+
+
     return (
         <div style={{ padding: '20px 50px' }}>
+            <ToastComponent isOpen={toastIsOpen} color={toastColor} message={toastMessage} />
             {filteredFiles.length > 0 ? (
                 <div>
                     <p
                         style={{
                             fontSize: '1.4rem',
                         }}
-                    >APOSTILAS DO {selectedYear?.toUpperCase()}</p>
+                    >
+                        {selectedYear !== null ? (
+                            `APOSTILAS DO ${selectedYear?.toUpperCase()}`
+                        ) : (
+                            `TODAS AS APOSTILAS`
+                        )}
+                    </p>
                     <Splide
                         options={{
                             rewind: true,
@@ -139,7 +158,7 @@ export default function AllHandoutsSlidder({ searchTerm }: Props) {
                         {filteredFiles.map((file, index) => (
                             <SplideSlide key={index}>
                                 <div className={styles.slideItem}>
-                                    <div className={styles.iconAndLink}>
+                                    {access ? (
                                         <Link
                                             className={styles.linkStyle}
                                             href={`${process.env.NEXT_PUBLIC_BASEURL}/${file.url}`}
@@ -148,7 +167,22 @@ export default function AllHandoutsSlidder({ searchTerm }: Props) {
                                         >
                                             <PdfThumbnail url={`${process.env.NEXT_PUBLIC_BASEURL}/${file.url}`} />
                                         </Link>
-                                    </div>
+                                    ) : (
+                                        <div
+                                            rel="noopener noreferrer"
+                                            onClick={handleDeniedClick}
+                                            style={{
+                                                cursor: 'not-allowed',
+                                                opacity: 0.6,
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                alignItems: 'center'
+                                            }}
+                                        >
+                                            <PdfThumbnail url={`${process.env.NEXT_PUBLIC_BASEURL}/${file.url}`} />
+                                        </div>
+                                    )}
+
                                     <span
                                         style={{
                                             textAlign: 'center',

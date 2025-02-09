@@ -17,6 +17,7 @@ import FooterAuth from "../HomeAuth/footerAuth";
 import AllHandoutsSlidder from "../common/allHandoutsSlidder";
 import CustomSelectBox from "../common/filterYearToSearch";
 import BtnSpinner from "../common/btnSpinner";
+import HeaderNoAuth from "../HomeNoAuth/header";
 
 export default function SearchComponents(
   { searchParams }: { searchParams: { name: string, serie: string } }
@@ -26,20 +27,26 @@ export default function SearchComponents(
   const [searchResult, setSearchResult] = useState<CourseType[]>([]);
   const [searchUser, setSearchUser] = useState<boolean>(false);
   const searchName = searchParams.name || "";
-  const { selectedYear } = useYear();
+  const { selectedYear, onYearChange } = useYear();
   const { isMenuOpen } = useMenu();
   const [SearchName, setSearchName] = useState("");
-  
+  const [hasFullAccess, setHasFullAccess] = useState(true)
+
   useEffect(() => {
-    const fetchProfile = async () => {
-        try {
-            const userData = await profileService.fetchCurrent();
-            setSearchUser(userData.hasFullAccess);
-        } catch (error) {
-            console.error("Erro ao buscar perfil do usuário:", error);
-        }
-    };
-    fetchProfile();
+      const fetchProfile = async () => {
+          try {
+              const userData = await profileService.fetchCurrent();
+              setHasFullAccess(userData.hasFullAccess);
+          } catch (error) {
+              console.error("Erro ao buscar perfil do usuário:", error);
+          }
+      };
+      fetchProfile();
+  }, []);
+
+  useEffect(() => {
+    const userAuth = sessionStorage.getItem("vocenotadez-token")
+    if (userAuth) setSearchUser(true)
 }, []);
 
   const nhandleSearch = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -50,6 +57,7 @@ export default function SearchComponents(
 
   const nhandleSearchClick = () => {
     router.push(`/search?name=${SearchName}&serie=${selectedYear}`);
+    onYearChange(null)
     setSearchName("");
   };
 
@@ -67,8 +75,14 @@ export default function SearchComponents(
           setSearchResult(res.data.rows);
         } else {
           const res = await courseService.getSearchGeneral(searchName);
-          //@ts-ignore
-          setSearchResult(res.data.courses);
+          if (selectedYear === null) {
+            //@ts-ignore
+            setSearchResult(res.data.courses);
+          } else {
+            //@ts-ignore
+            const result = res.data.courses.filter((course: CourseType) => course.serie === selectedYear)
+            setSearchResult(result)
+          }
         }
       } catch (error) {
         throw error;
@@ -76,7 +90,6 @@ export default function SearchComponents(
         setLoading(false);
       }
     };
-
     fetchCourses();
   }, [searchName, selectedYear, searchUser]);
 
@@ -86,12 +99,12 @@ export default function SearchComponents(
         {searchUser ? (
           <HeaderAuth />
         ) : (
-          <HeaderGeneric logoUrl="/" btnUrl="/" btnContent="Voltar" />
+          <HeaderNoAuth />
         )}
       </div>
       <main className={`${styles.main} ${isMenuOpen ? styles.menuOpen : ""}`}>
         {!searchUser && (
-          <Container className="d-flex py-5 gap-2 justify-content-center align-items-center">
+          <Container className="d-flex py-1 gap-2 justify-content-center align-items-center">
             <Row className="d-flex gap-2 align-items-center">
               <Col md="auto" className="d-flex justify-content-center">
                 <Form className={styles.form} onSubmit={nhandleSearch}>
@@ -122,13 +135,19 @@ export default function SearchComponents(
             <>
               {searchResult.length >= 1 ? (
                 <div style={{ padding: '20px 50px' }}>
-                  <p style={{ fontSize: '1.4rem' }}>CURSOS DO {selectedYear?.toUpperCase()}</p>
+                  <p style={{ fontSize: '1.4rem' }}>
+                    {selectedYear !== null ? (
+                      `CURSOS DO ${selectedYear?.toUpperCase()}`
+                    ) : (
+                      `TODOS OS CURSOS`
+                    )}
+                  </p>
                   <SlideComponentSearch course={searchResult} />
                 </div>
               ) : (
                 <p className={styles.noSearchText}>Nenhum curso encontrado</p>
               )}
-              <AllHandoutsSlidder searchTerm={searchName} access={searchUser} />
+              <AllHandoutsSlidder searchTerm={searchName} access={hasFullAccess} />
             </>
           )}
         </section>

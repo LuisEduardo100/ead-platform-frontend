@@ -13,34 +13,23 @@ interface Props {
 
 export default function CourseCard({ course, access }: Props) {
   const router = useRouter()
-  const [loading, setLoading] = useState(true)
-  const [toastColor, setToastColor] = useState("");
-  const [toastIsOpen, setToastIsOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-
   const freeCourseAccess = course.name.toLowerCase().trim() !== 'matemática básica'
 
   return (<>
+
     <div
       className={styles.card}
       onClick={() => {
         if (access || !freeCourseAccess) {
+          sessionStorage.setItem("previousPage", window.location.pathname);
           router.push(`/courses/${course.id}`)
-        } else {
-          setToastIsOpen(true);
-          setToastColor("bg-danger");
-          setToastMessage("Matricule-se para ter acesso.");
-          setTimeout(() => setToastIsOpen(false), 3000);
-        }
+        } 
       }}
     >
       {!access && freeCourseAccess && <div style={{
-        backgroundColor: '#141414',
-        borderRadius: '50%',
-        padding: '4px 6px 8px 7px',
         position: 'absolute',
-        right: 8,
-        bottom: 5,
+        right: 16,
+        bottom: 12,
         color: '#ff3130'
       }}><Lock fontSize='small' /></div>}
       <Image
@@ -59,7 +48,6 @@ export default function CourseCard({ course, access }: Props) {
         <p className={styles.qtd_aulas}>{`${course.Episodes!.length > 1 ? `${course.Episodes?.length} aulas` : `${course.Episodes?.length} aula`} `}</p>
       </div>
     </div>
-    <ToastComponent isOpen={toastIsOpen} color={toastColor} message={toastMessage} />
   </>
   )
 }

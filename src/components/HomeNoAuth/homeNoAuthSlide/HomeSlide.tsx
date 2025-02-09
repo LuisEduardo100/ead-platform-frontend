@@ -2,7 +2,6 @@ import React from 'react'
 import courseService from '../../../services/courseService'
 import PageSpinner from '../../common/pageSpinner';
 import useSWR from 'swr';
-import SlideComponentNoAuth from '../sliderAutoplay/SlideComponent';
 import SlideComponentSearch from '../../common/SlideComponentSearch';
 
 const HomeSlide = () => {

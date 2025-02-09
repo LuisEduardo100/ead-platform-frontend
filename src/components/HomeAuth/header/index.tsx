@@ -2,7 +2,7 @@
 import Modal from "react-modal";
 import Link from "next/link";
 import styles from "./styles.module.scss";
-import { Button, Form, Input } from "reactstrap";
+import { Form, Input } from "reactstrap";
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import profileService from "../../../services/profileService";
@@ -28,7 +28,6 @@ export default function HeaderAuth() {
     const [isSearchOpen, setIsSearchOpen] = useState(false); // controla a barra de busca em telas pequenas
     const [profilePicture, setProfilePicture] = useState("");
     const [availableWidth, setAvailableWidth] = useState(0);
-
     const router = useRouter();
     const { isMenuOpen } = useMenu();
     const [loading, setLoading] = useState(true)
@@ -93,7 +92,7 @@ export default function HeaderAuth() {
     return (
         <div className={`${styles.header} ${isMenuOpen ? styles.menuOpen : ""}`}>
             {/* Menu Hamburguer */}
-            <Menuhamburger />
+            <Menuhamburger accessType={accessType} />
             {availableWidth > 800 && (
                 <Form className={`${styles.formSearch} ${isSearchOpen ? styles.formSearchOpen : ''}`} onSubmit={handleSearch}>
                     <Input

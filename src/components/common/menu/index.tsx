@@ -1,5 +1,5 @@
 'use client';
-import { Menu, Close, Home, VideoLibrary, LibraryBooks, Help, School } from '@mui/icons-material';
+import { Menu, Close, Home, VideoLibrary, LibraryBooks, Help, School, OndemandVideo, Payment } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 import { Button } from 'reactstrap';
 import styles from './styles.module.scss';
@@ -9,7 +9,7 @@ import { useYear } from '../../HomeAuth/selectBox/yearProvider';
 import YearSelect from '../../HomeAuth/selectBox';
 import { useRouter } from 'next/navigation';
 
-export default function Menuhamburger() {
+export default function Menuhamburger({ accessType }: { accessType: boolean }) {
     const { isMenuOpen, toggleMenu, setIsMenuOpen } = useMenu() // Usa o contexto para controlar o estado do menu
     const { selectedYear, onYearChange } = useYear()
     const [showDropdown, setShowDropdown] = useState(false);
@@ -59,6 +59,24 @@ export default function Menuhamburger() {
                             <Home fontSize='large' style={{ marginRight: '16px' }} />
                             Início
                         </li>
+                        {!accessType && (
+                            <>
+                            <li onClick={() => {
+                                sessionStorage.setItem("previousPage", window.location.pathname);
+                                router.push(`/courses/${1}`)
+                            }}>
+                                <OndemandVideo fontSize='large' style={{ marginRight: '16px' }} />
+                                Curso gratuito
+                            </li>
+                             <li onClick={() => {
+                                sessionStorage.setItem("previousPage", window.location.pathname);
+                                router.push(`/precos`)
+                            }}>
+                                <Payment fontSize='large' style={{ marginRight: '16px' }} />
+                                Acesso completo
+                            </li>
+                            </>
+                        )}
                         <li
                             className={styles.menuItemWithDropdown}
                             onMouseEnter={() => setShowDropdown(true)}
