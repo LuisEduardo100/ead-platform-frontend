@@ -1,51 +1,29 @@
-import api from "./api";
-import categoriesService, { CategoryType, CategoryWithNoCourse } from "./categoriesService"
-import courseService, { CourseType, EpisodeType } from "./courseService"
+import { CourseType } from './courseService'; 
+import api from './api';
 
-export async function fetchCoursesByCategoryId(categoryId: number) {
-    const token = sessionStorage.getItem('vocenotadez-token')
-
-    const response = await api.get(`/categories/${categoryId}`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    });
-    return response.data.Courses; // Retorna um array de cursos
-}
-
-export async function fetchCourseById(courseId: number) {
-    const token = sessionStorage.getItem('vocenotadez-token')
-
-    const response = await api.get(`/courses/${courseId}`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    });
-    return response.data;
-}
-
-const KeepWatchingService = {
-    fectchingOnGoingCourses: async () => {
-        try {
-            const categories: CategoryWithNoCourse[] = await categoriesService.getCategories();
-            const ongoingCourses: any = [];
-            for (const category of categories) {
-                const courses = await fetchCoursesByCategoryId(category.id);
-                for (const course of courses) {
-                    const courseDetails = await fetchCourseById(course.id);
-                    
-                    if(courseDetails.watchStatus.length > 0 && courseDetails.watchStatus.length < courseDetails.Episodes.length){
-                        ongoingCourses.push(courseDetails)
-                    }
-                }
-            }
-            return ongoingCourses
-        } catch (error) {
-            console.error('Error fetching ongoing courses:', error);
-            return [];
-        }
-
+export async function getKeepWatchingCourses(): Promise<CourseType[]> {
+    const token = sessionStorage.getItem("vocenotadez-token");
+    if (!token) {
+        throw new Error("Token de autenticação não encontrado");
     }
+
+    const response = await api.get(`/users/current/watching`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    const courses: CourseType[] = response.data.map((item: any) => {
+        return {
+            ...item.Course, 
+            progress: item.watchTime.seconds, 
+            episodeId: item.id,             
+            videoUrl: item.videoUrl,
+            secondsLong: item.secondsLong,
+        };
+    });
+
+    return courses;
 }
 
-export default KeepWatchingService
+export default { getKeepWatchingCourses };

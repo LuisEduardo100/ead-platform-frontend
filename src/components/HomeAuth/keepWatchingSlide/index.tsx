@@ -1,3 +1,4 @@
+// components/OnGoingCategory/index.tsx
 'use client';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
@@ -8,16 +9,10 @@ import KeepWatchingService from '../../../services/keepWatchingService';
 import { CourseType } from '../../../services/courseService';
 import SlideComponentSearch from '../../common/SlideComponentSearch';
 
-// Função para o SWR fetcher
-const fetcher = async () => {
-    const courses: CourseType[] = await KeepWatchingService.fectchingOnGoingCourses();
-    return courses;
-};
-
 export default function OnGoingCategory() {
-    const { data, error } = useSWR('ongoingCourses', fetcher);
+    const { data, error } = useSWR<CourseType[]>('keepWatching', KeepWatchingService.getKeepWatchingCourses);
     const [loading, setLoading] = useState(true);
-    
+
     useEffect(() => {
         if (data || error) {
             setLoading(false);
@@ -26,16 +21,14 @@ export default function OnGoingCategory() {
 
     if (loading) return <PageSpinner />;
 
-    if (error) return error.message;
+    if (error) return <div>{error.message}</div>;
 
     return (
         data!.length > 0 && (
-        <Container>
-            <p className={styles.pStyle}>CURSOS EM ANDAMENTO</p>
-                <div>
-                    <SlideComponentSearch course={data!} />
-                </div>
-        </Container>
+            <div style={{ padding: '20px 50px' }}>
+                <p className={styles.pStyle}>CURSOS EM ANDAMENTO</p>
+                <SlideComponentSearch course={data!} />
+            </div>
         )
     );
 }

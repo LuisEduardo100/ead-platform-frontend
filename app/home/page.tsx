@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import PageSpinner from '../../src/components/common/pageSpinner';
 import { useYear } from '../../src/components/HomeAuth/selectBox/yearProvider';
 import profileService from '../../src/services/profileService';
+import OnGoingCategory from '../../src/components/HomeAuth/keepWatchingSlide';
 
 const HomeAuth = function () {
     const router = useRouter()
@@ -46,7 +47,7 @@ const HomeAuth = function () {
             <main className={`${styles.main} ${isMenuOpen ? styles.menuOpen : ""}`}>
                 <HomeAuthPresentation />
                 <div className='pb-5' data-aos="fade-right" data-aos-duration="500" data-aos-offset="300">
-                    {/* <OnGoingCategory selectedYear={selectedYear} /> */}
+                    <OnGoingCategory />
                     <NewestCategory />
                     <FavoriteCourses />
                     <FeaturedCategory />

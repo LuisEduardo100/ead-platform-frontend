@@ -5,14 +5,13 @@ import { useRouter } from "next/navigation";
 import ReactPlayer from "react-player";
 import courseService, { CourseType, EpisodeFileType, QuizzType } from "../../../../src/services/courseService";
 import watchEpisodeService from "../../../../src/services/episodeService";
-import PageSpinner from "../../../../src/components/common/pageSpinner";
 import episodeFileService from "../../../../src/services/episodeFileService";
-import EpisodeAdaptedList from "../../../../src/components/common/episodeListAdapted";
 import profileService from "../../../../src/services/profileService";
+import PageSpinner from "../../../../src/components/common/pageSpinner";
 import Control from "../../../../src/components/common/videoControls";
+import EpisodeAdaptedList from "../../../../src/components/common/episodeListAdapted";
 import FileListToEpisode from "../../../../src/components/common/filePageToEpisode";
 
-let count = 0;
 type EpisodeTypeAdapted = {
   id: number;
   name: string;
@@ -22,502 +21,411 @@ type EpisodeTypeAdapted = {
   quizz: QuizzType[];
   secondsLong: number;
   Files: EpisodeFileType[];
-}
+};
 
-export default function EpisodePlayer({ params, searchParams, }: {
+export default function EpisodePlayer({
+  params,
+  searchParams,
+}: {
   params: { id: number | string };
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
   const router = useRouter();
+
+  // Estados essenciais
   const [loading, setLoading] = useState(true);
   const [course, setCourse] = useState<CourseType>();
-  const [accessType, setAccessType] = useState(false)
-
-  const episodeOrder = parseFloat(params.id.toString() || "");
-  const episodeId = parseFloat(searchParams?.episodeid?.toString() || "");
-  const courseId = searchParams?.courseid?.toString() || "";
-
-  const [getEpisodeTime, setGetEpisodeTime] = useState(0);
-  const [getEpisodeFile, setGetEpisodeFile] = useState<EpisodeTypeAdapted>()
-  const [getQuizzByEp, setQuizzByEp] = useState<EpisodeTypeAdapted>()
+  const [watchTime, setWatchTime] = useState(0);
   const [episodeTime, setEpisodeTime] = useState(0);
-  const [isReady, setIsReady] = useState(false);
+  const [episodeFiles, setEpisodeFiles] = useState<EpisodeTypeAdapted | null>(null);
+  const [episodeQuizz, setEpisodeQuizz] = useState<EpisodeTypeAdapted | null>(null);
+  const [selectedFileUrl, setSelectedFileUrl] = useState<string | null>(null);
 
-  const [selectedFileUrl, setSelectedFileUrl] = useState<string | null>(null)
-
-  const videoPlayerRef = useRef<ReactPlayer>(null);
-  const controlRef = useRef<HTMLDivElement>(null);
-
+  // Estado do player
   const [videoState, setVideoState] = useState({
     playing: true,
     muted: false,
-    volume: 0.5,
+    volume: 0.5,         // valor entre 0 e 1
     playbackRate: 1.0,
-    played: 0,
+    played: 0,           // fração entre 0 e 1
     seeking: false,
-    buffer: true,
   });
 
-  //Destructuring the properties from the videoState
-  const { playing, muted, volume, playbackRate, played, seeking, buffer } =
-    videoState;
+  // Estado para indicar quando o player está pronto
+  const [playerReady, setPlayerReady] = useState(false);
 
-  const currentTime = videoPlayerRef.current
-    ? videoPlayerRef.current.getCurrentTime()
-    : "00:00";
-  const duration = videoPlayerRef.current
-    ? videoPlayerRef.current.getDuration()
-    : "00:00";
+  // Referências
+  const videoPlayerRef = useRef<ReactPlayer>(null);
+  const controlRef = useRef<HTMLDivElement>(null);
 
-  const formatTime = (time: number) => {
-    //formarting duration of video
-    if (isNaN(time)) {
-      return "00:00";
-    }
+  // Parâmetros extraídos da URL
+  const episodeOrder = Number(params.id);
+  const episodeId = Number(searchParams?.episodeid);
+  const courseId = (searchParams?.courseid as string) || "";
 
-    const date = new Date(time * 1000);
-    const hours = date.getUTCHours();
-    const minutes = date.getUTCMinutes();
-    const seconds = date.getUTCSeconds().toString().padStart(2, "0");
-    if (hours) {
-      //if video have hours
-      return `${hours}:${minutes.toString().padStart(2, "0")} `;
-    } else return `${minutes}:${seconds}`;
-  };
+  // ****************************************************
+  // BUSCA DOS DADOS (watchTime, detalhes do episódio e curso)
+  // ****************************************************
 
-  const formatCurrentTime = formatTime(Number(currentTime));
-  const formatDuration = formatTime(Number(duration));
-
-  const playPauseHandler = () => {
-    setVideoState({ ...videoState, playing: !videoState.playing });
-  };
-
-  const rewindHandler = () => {
-    videoPlayerRef.current!.seekTo(videoPlayerRef.current!.getCurrentTime() - 10);
-  };
-
-  const handleFastFoward = () => {
-    videoPlayerRef.current!.seekTo(videoPlayerRef.current!.getCurrentTime() + 10);
-  };
-
-  //console.log("========", (controlRef.current.style.visibility = "false"));
-  const progressHandler = (state: any) => {
-    if (count > 1) {
-      controlRef.current!.style.visibility = "hidden";
-      setEpisodeTime(state.playedSeconds);
-    } else if (controlRef.current!.style.visibility === "visible") {
-      count += 1;
-    }
-
-    if (!seeking) {
-      setVideoState({ ...videoState, ...state});
-    }
-  };
-
-  const seekHandler = (e: any, value: any) => {
-    setVideoState({ ...videoState, played: value / 100 });
-    videoPlayerRef.current!.seekTo(value / 100);
-  };
-
-  const seekMouseUpHandler = (e: any, value: any) => {
-    setVideoState({ ...videoState, seeking: false });
-    videoPlayerRef.current!.seekTo(value / 100);
-  };
-
-  const handleGetEpisodeTime = async () => {
-    const res = await watchEpisodeService.getWatchTime(episodeId);
-    if (res.data !== null) {
-      setGetEpisodeTime(res.data.seconds);
-    }
-  };
-
-  const handleSetEpisodeTime = async () => {
-    await watchEpisodeService.setWatchTime({
-      episodeId: episodeId,
-      seconds: Math.round(episodeTime),
-    });
-  };
-
-  const handlePlayerTime = () => {
-    videoPlayerRef.current?.seekTo(getEpisodeTime);
-    setVideoState({ ...videoState, playing: true })
-  };
-
+  // Busca o watchTime para o episódio
   useEffect(() => {
-    handleGetEpisodeTime();
-  });
-
-  if (playing === true) {
-    setTimeout(() => {
-      handleSetEpisodeTime();
-    }, 3000);
-  }
-  const volumeChangeHandler = (e: any, value: any) => {
-    const newVolume = parseFloat(value) / 100;
-
-    setVideoState({
-      ...videoState,
-      volume: newVolume,
-      muted: Number(newVolume) === 0 ? true : false, // volume === 0 then muted
-    });
-  };
-
-  const volumeSeekUpHandler = (e: any, value: any) => {
-    const newVolume = parseFloat(value) / 100;
-
-    setVideoState({
-      ...videoState,
-      volume: newVolume,
-      muted: newVolume === 0 ? true : false,
-    });
-  };
-
-  const muteHandler = () => {
-    //Mutes the video player
-    setVideoState({ ...videoState, muted: !videoState.muted });
-  };
-
-  const onSeekMouseDownHandler = (e: any) => {
-    setVideoState({ ...videoState, seeking: true });
-  };
-
-  const mouseMoveHandler = () => {
-    controlRef.current!.style.visibility = "visible";
-    count = 0;
-  };
-
-  const bufferStartHandler = () => {
-    setVideoState({ ...videoState, buffer: true});
-  };
-
-  const bufferEndHandler = () => {
-    setVideoState({ ...videoState, buffer: false, playing: true});
-  };
-
-  const playbackRateHandler = () => {
-    let newvalue = playbackRate + 0.25;
-    if (newvalue > 2) {
-      newvalue = 0.25
-    }
-    setVideoState({ ...videoState, playbackRate: newvalue })
-  }
-
-  const handleFileClick = (url: string) => {
-      setSelectedFileUrl(url);
-  }
-
-
-  const handleEpisodeFile = async () => {
-    try {
-      const res = await episodeFileService.getEpisodeWithFile(episodeId);
-      if (res) {
-        setGetEpisodeFile(res);
-      } else {
-        console.error('No files found in the response.');
+    const fetchWatchTime = async () => {
+      const res = await watchEpisodeService.getWatchTime(episodeId);
+      if (res.data) {
+        setWatchTime(res.data.seconds);
       }
-    } catch (error) {
-      console.error('Error fetching episode file:', error);
-    }
-  };
+    };
+    fetchWatchTime();
+  }, [episodeId]);
 
-  const handleEpisodeQuizz = async () => {
-    try {
-      const res = await episodeFileService.getEpisodeWithQuizz(episodeId);
-      if (res) {
-        setQuizzByEp(res);
-      } else {
-        console.error('No files found in the response.');
+  // Quando o player estiver pronto e o watchTime carregado, busca para o tempo salvo.
+  useEffect(() => {
+    if (playerReady && watchTime > 0 && videoPlayerRef.current) {
+      videoPlayerRef.current.seekTo(watchTime, "seconds");
+    }
+  }, [playerReady, watchTime]);
+
+  // Busca arquivos e quizz do episódio
+  useEffect(() => {
+    const fetchEpisodeDetails = async () => {
+      try {
+        const filesRes = await episodeFileService.getEpisodeWithFile(episodeId);
+        setEpisodeFiles(filesRes);
+        const quizzRes = await episodeFileService.getEpisodeWithQuizz(episodeId);
+        setEpisodeQuizz(quizzRes);
+      } catch (error) {
+        console.error("Erro ao buscar detalhes do episódio:", error);
       }
-    } catch (error) {
-      console.error('Error fetching episode file:', error);
-    }
-  };
+    };
+    fetchEpisodeDetails();
+  }, [episodeId]);
 
+  // Busca dados do curso
   useEffect(() => {
-    handleEpisodeQuizz()
-    handleEpisodeFile();
-  });
-
-  const getCourse = async () => {
-    if (typeof courseId !== "string") return;
-    const res = await courseService.getEpisodes(courseId);
-    if (res.status === 200) {
-      setCourse(res.data);
-    }
-  };
-
-  const handleNextEpisode = () => {
-    router.push(`/courses/episodes/${episodeOrder + 1}?courseid=${course?.id}&episodeid=${episodeId + 1}`);
-  };
-
-  const routerPushToCourse = () => {
-    router.push(`/courses/${courseId}`)
-  }
-
-  useEffect(() => {
-    getCourse();
-  }, [getCourse, courseId]);
-
-  useEffect(() => {
-    if (courseId !== "1") {
-      profileService.fetchCurrent().then((user) => {
-        const hasFullAccess = user.hasFullAccess
-        setAccessType(user.hasFullAccess)
-
-        if (!hasFullAccess) {
-          router.push(`/courses/${courseId}?access=${hasFullAccess}`)
-        } else {
-          setLoading(false)
+    const fetchCourse = async () => {
+      if (courseId) {
+        const res = await courseService.getEpisodes(courseId);
+        if (res.status === 200) {
+          setCourse(res.data);
         }
-      })
-    }
+      }
+    };
+    fetchCourse();
+  }, [courseId]);
 
+  // Validação de acesso (token e acesso completo)
+  useEffect(() => {
     if (!sessionStorage.getItem("vocenotadez-token")) {
       router.push("/login");
     } else {
-      setLoading(false);
+      if (courseId !== "1") {
+        profileService.fetchCurrent().then((user) => {
+          if (!user.hasFullAccess) {
+            router.push(`/courses/${courseId}?access=${user.hasFullAccess}`);
+          } else {
+            setLoading(false);
+          }
+        });
+      } else {
+        setLoading(false);
+      }
+    }
+  }, [courseId, router]);
+
+  // ****************************************************
+  // ATUALIZAÇÃO PERIÓDICA DO WATCHTIME
+  // ****************************************************
+
+  // Enquanto o vídeo estiver tocando, atualiza periodicamente o watchTime no backend.
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (videoState.playing) {
+      interval = setInterval(() => {
+        const current = videoPlayerRef.current?.getCurrentTime() || 0;
+        setEpisodeTime(current);
+        watchEpisodeService.setWatchTime({ episodeId, seconds: Math.round(current) });
+      }, 3000);
+    }
+    return () => clearInterval(interval);
+  }, [videoState.playing, episodeId]);
+
+  // Se o episódio foi concluído, navega para o próximo.
+  useEffect(() => {
+    if (course?.Episodes && course.Episodes[episodeOrder]) {
+      if (Math.round(episodeTime) >= course.Episodes[episodeOrder].secondsLong) {
+        router.push(
+          `/courses/episodes/${episodeOrder + 1}?courseid=${course.id}&episodeid=${episodeId + 1}`
+        );
+      }
+    }
+  }, [episodeTime, course, episodeOrder, episodeId, router]);
+
+  // ****************************************************
+  // HANDLERS DOS CONTROLES DO PLAYER
+  // ****************************************************
+
+  // PLAY/PAUSE, REWIND e FAST-FORWARD
+  const togglePlayPause = () =>
+    setVideoState((prev) => ({ ...prev, playing: !prev.playing }));
+
+  const rewind = () => {
+    const current = videoPlayerRef.current?.getCurrentTime() || 0;
+    videoPlayerRef.current?.seekTo(current - 10, "seconds");
+  };
+
+  const fastForward = () => {
+    const current = videoPlayerRef.current?.getCurrentTime() || 0;
+    videoPlayerRef.current?.seekTo(current + 10, "seconds");
+  };
+
+  // --- HANDLERS DO SLIDER DE SEEK ---
+  const onSeekMouseDownHandler = () =>
+    setVideoState((prev) => ({ ...prev, seeking: true }));
+  
+  const handleSeekChange = (
+    event: Event,
+    value: number | number[],
+    activeThumb?: number
+  ) => {
+    const sliderValue = Array.isArray(value) ? value[0] : value;
+    const fraction = sliderValue / 100;
+    setVideoState((prev) => ({ 
+      ...prev, 
+      played: isFinite(fraction) ? fraction : prev.played 
+    }));
+  };
+  
+  const handleSeekMouseUp = (
+    event: React.SyntheticEvent,
+    value: number | number[]
+  ) => {
+    setVideoState((prev) => ({ ...prev, seeking: false }));
+    
+    const sliderValue = Array.isArray(value) ? value[0] : value;
+    
+    // Verificação de segurança
+    if (typeof sliderValue !== 'number' || isNaN(sliderValue)) {
+      console.error('Valor inválido:', sliderValue);
+      return;
+    }
+  
+    const fraction = sliderValue / 100;
+    const safeFraction = Math.max(0, Math.min(1, fraction));
+  
+    if (isFinite(safeFraction)) {
+      videoPlayerRef.current?.seekTo(safeFraction, "fraction");
+    } else {
+      console.error('Valor de seek inválido:', safeFraction);
+    }
+  };
+  // --- HANDLERS DO VOLUME ---
+  const handleVolumeChange = (valueOrEvent: any) => {
+    let value: number;
+    if (typeof valueOrEvent === "number") {
+      value = valueOrEvent;
+    } else if (valueOrEvent && valueOrEvent.target && valueOrEvent.target.value !== undefined) {
+      value = parseFloat(valueOrEvent.target.value);
+    } else {
+      return;
     }
 
-  }, [router, courseId]);
+    const newVolume = value > 1 ? value / 100 : value;
+    if (!isFinite(newVolume)) return;
+    setVideoState((prev) => ({
+      ...prev,
+      volume: newVolume,
+      muted: newVolume === 0,
+    }));
+  };
 
-  if (loading) {
-    return <PageSpinner />;
-  }
+  const toggleMute = () =>
+    setVideoState((prev) => ({ ...prev, muted: !prev.muted }));
 
-  if (course?.Episodes == undefined) return <PageSpinner />;
+  // --- HANDLER DA PLAYBACK RATE ---
+  const changePlaybackRate = () =>
+    setVideoState((prev) => {
+      let newRate = prev.playbackRate + 0.25;
+      if (newRate > 2) newRate = 0.25;
+      return { ...prev, playbackRate: newRate };
+    });
 
+  // --- UTILITÁRIO: FORMATAÇÃO DO TEMPO (mm:ss) ---
+  const formatTime = (time: number) => {
+    if (isNaN(time)) return "00:00";
+    const date = new Date(time * 1000);
+    const minutes = date.getUTCMinutes();
+    const seconds = date.getUTCSeconds().toString().padStart(2, "0");
+    return `${minutes}:${seconds}`;
+  };
 
-  // Ajustes de constantes
-  const hasFiles = getEpisodeFile?.Files && getEpisodeFile.Files?.length != 0
-  const confirmNextVideo  = course.Episodes.length > 1 && episodeOrder < course.Episodes.length - 1
-  const hasQuizz = getQuizzByEp?.quizz && getQuizzByEp.quizz?.length != 0
-  if (confirmNextVideo) {
-    if (Math.round(episodeTime) === course.Episodes[episodeOrder].secondsLong) {
-      handleNextEpisode();
-    }
-  }
-  // Roda de progresso do aluno 
+  // ****************************************************
+  // RENDERIZAÇÃO
+  // ****************************************************
+  if (loading || !course?.Episodes) return <PageSpinner />;
 
   const calculateProgress = () => {
-    const totalEpisodes = course.Episodes?.length || 0;
-    const watchedEpisodes = course.watchStatus?.length;
-    const progressPercent = totalEpisodes > 0 ? (watchedEpisodes! / totalEpisodes) * 100 : 0;
-
+    const totalEpisodes = course.Episodes?.length;
+    const watchedEpisodes = course.watchStatus?.length || 0;
+    const progressPercent = totalEpisodes! > 0 ? (watchedEpisodes / totalEpisodes!) * 100 : 0;
     const radius = 15.9155;
     const circumference = 2 * Math.PI * radius;
     const offset = circumference - (progressPercent / 100) * circumference;
-
-    return {
-      progressPercent,
-      strokeDasharray: `${circumference - offset}, ${circumference}`,
-    };
+    return { progressPercent, strokeDasharray: `${circumference - offset}, ${circumference}` };
   };
 
   const { progressPercent, strokeDasharray } = calculateProgress();
 
   return (
-    <>
-      <main className={styles.mainDiv}>
-        <div className={styles.video_container}>
-          <div className={styles.video_description_container}>
-            <div className={styles.player_wrapper} onMouseMove={mouseMoveHandler}>
-              <ReactPlayer
-                ref={videoPlayerRef}
-                className={styles.player}
-                url={`${process.env.NEXT_PUBLIC_BASEURL}/episodes/stream?videoUrl=${course.Episodes[episodeOrder]?.videoUrl}&token=${sessionStorage.getItem("vocenotadez-token")}`}
-                width="100%"
-                height="100%"
-                playing={playing}
-                volume={volume}
-                playbackRate={playbackRate}
-                muted={muted}
-                onStart={handlePlayerTime}
-                onProgress={progressHandler}
-                onBuffer={bufferStartHandler}
-                onBufferEnd={bufferEndHandler}
-              />
-              <Control
-                onPlayPause={playPauseHandler}
-                playing={playing}
-                onRewind={rewindHandler}
-                onForward={handleFastFoward}
-                played={played}
-                onSeek={seekHandler}
-                onSeekMouseUp={seekMouseUpHandler}
-                onVolumeChangeHandler={volumeChangeHandler}
-                onVolumeSeekUp={volumeSeekUpHandler}
-                volume={volume}
-                mute={muted}
-                onMute={muteHandler}
-                duration={formatDuration}
-                currentTime={formatCurrentTime}
-                onMouseSeekDown={onSeekMouseDownHandler}
-                controlRef={controlRef}
-                buffer={buffer}
-                playerRef={videoPlayerRef}
-                playbackSpeedHandler={playbackRateHandler}
-                playrateValue={playbackRate}
-                handleNextEpisode={handleNextEpisode}
-                nextEpisodeAvailable={confirmNextVideo}
-                videoTitle={course.Episodes[episodeOrder].name}
-                routerPush={routerPushToCourse}
-              />
-            </div>
-            <div className={styles.fileAndButtons}>
-              <div className={styles.divFileUrl}>
-                {hasFiles ? (
-                  <FileListToEpisode files={getEpisodeFile.Files} onFileClick={handleFileClick} />
-                ) : (
-                  <p className={styles.pSemDownload}>Sem material para download.</p>
-                )}
-              </div>
-              <div className={styles.divSinopse}>
-                <p className={styles.pSinopse}>{course.Episodes[episodeOrder].synopsis}</p>
-              </div>
-            </div>
-            {selectedFileUrl && (
-              <div>
-                {selectedFileUrl.endsWith('.pdf') ? (
-                  <div
-                    style={{
-                      position: 'fixed',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
-                      height: '100%',
-                      backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                      display: 'flex',
-                      zIndex: 1000,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <iframe
-                      key={selectedFileUrl} // Força o re-render quando o URL muda
-                      src={`${process.env.NEXT_PUBLIC_BASEURL}/${selectedFileUrl}`}
-                      width="80%"
-                      height="80%"
-                      allowFullScreen
-                      style={{
-                        border: 'none',
-                        position: 'relative',
-                      }}
-                    />
-                    <button
-                      onClick={() => setSelectedFileUrl(null)}
-                      style={{
-                        position: 'absolute',
-                        top: '10px',
-                        right: '10px',
-                        backgroundColor: '#fff',
-                        border: 'none',
-                        padding: '10px',
-                        cursor: 'pointer',
-                        zIndex: 1001,
-                      }}
-                    >
-                      Close
-                    </button>
-                    <button
-                      onClick={() => {
-                        window.open(`${process.env.NEXT_PUBLIC_BASEURL}/${selectedFileUrl}`)
-                      }}
-                      style={{
-                        position: 'absolute',
-                        top: '10px',
-                        right: '80px',
-                        backgroundColor: '#fff',
-                        border: 'none',
-                        padding: '10px',
-                        cursor: 'pointer',
-                        zIndex: 1001,
-                      }}
-                    >
-                      Abrir em nova aba
-                    </button>
-                  </div>
-
-                ) : (
-                  <div style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                    display: 'flex',
-                    zIndex: 1000,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                    <ReactPlayer
-                      url={`${process.env.NEXT_PUBLIC_BASEURL}/${selectedFileUrl}`}
-                      width="80%"
-                      height="60%"
-                      controls={true}
-                      style={{
-                        border: 'none',
-                        position: 'relative',
-                        margin: '0 auto'
-                      }}
-                    />
-                    <button
-                      onClick={() => setSelectedFileUrl(null)}
-                      style={{
-                        position: 'absolute',
-                        top: '10px',
-                        right: '10px',
-                        backgroundColor: '#fff',
-                        border: 'none',
-                        padding: '10px',
-                        cursor: 'pointer',
-                        zIndex: 1001,
-                      }}
-                    >
-                      Close
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-          <div className={styles.episodeContent}>
-            <div className={styles.progress}>
-              <div className="d-flex align-items-center gap-2">
-                <div className={styles.progress_circle}>
-                  <svg className={styles.svg} viewBox="0 0 36 36">
-                    <path
-                      className={styles.circle_bg}
-                      d="M18 2.0845
-          a 15.9155 15.9155 0 0 1 0 31.831
-          a 15.9155 15.9155 0 0 1 0 -31.831"
-                    />
-                    <path
-                      className={styles.circle}
-                      d="M18 2.0845
-          a 15.9155 15.9155 0 0 1 0 31.831
-          a 15.9155 15.9155 0 0 1 0 -31.831"
-                      style={{ strokeDasharray }}
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <h4 className={styles.titulo}>Meu progresso - {`${progressPercent.toFixed(0)}%`}</h4>
-                  <p className={styles.pQtdAulas}>{`${course.watchStatus?.length} de ${course.Episodes.length} aulas`}</p>
-                </div>
-              </div>
-            </div>
-            <div className={styles.div_episode_list}>
-
-              {
-                course.Episodes?.map((episode) =>
-                  <EpisodeAdaptedList key={episode.id} episode={episode} course={course} />
+    <main className={styles.mainDiv}>
+      <div className={styles.video_container}>
+        <div className={styles.video_description_container}>
+          <div className={styles.player_wrapper}>
+            <ReactPlayer
+              ref={videoPlayerRef}
+              className={styles.player}
+              url={`${process.env.NEXT_PUBLIC_BASEURL}/episodes/stream?videoUrl=${course.Episodes[episodeOrder]?.videoUrl}&token=${sessionStorage.getItem(
+                "vocenotadez-token"
+              )}`}
+              width="100%"
+              height="100%"
+              playing={videoState.playing}
+              volume={videoState.volume}
+              playbackRate={videoState.playbackRate}
+              muted={videoState.muted}
+              onProgress={(state) => {
+                if (!videoState.seeking) {
+                  setVideoState((prev) => ({ ...prev, played: state.played }));
+                  setEpisodeTime(state.playedSeconds);
+                }
+              }}
+              // Apenas marca o player como pronto; o seek inicial ocorrerá via useEffect
+              onReady={() => setPlayerReady(true)}
+            />
+            <Control
+              onPlayPause={togglePlayPause}
+              playing={videoState.playing}
+              onRewind={rewind}
+              onForward={fastForward}
+              played={videoState.played}
+              onMouseSeekDown={onSeekMouseDownHandler}
+              onSeek={handleSeekChange}
+              onSeekMouseUp={handleSeekMouseUp}
+              onVolumeChangeHandler={handleVolumeChange}
+              volume={videoState.volume}
+              mute={videoState.muted}
+              onMute={toggleMute}
+              duration={formatTime(videoPlayerRef.current?.getDuration() || 0)}
+              currentTime={formatTime(episodeTime)}
+              controlRef={controlRef}
+              playbackSpeedHandler={changePlaybackRate}
+              playrateValue={videoState.playbackRate}
+              handleNextEpisode={() =>
+                router.push(
+                  `/courses/episodes/${episodeOrder + 1}?courseid=${course.id}&episodeid=${episodeId + 1}`
                 )
               }
+              nextEpisodeAvailable={
+                course.Episodes.length > 1 && episodeOrder < course.Episodes.length - 1
+              }
+              videoTitle={course.Episodes[episodeOrder].name}
+              routerPush={() => router.push(`/courses/${courseId}`)}
+            />
+          </div>
+          <div className={styles.fileAndButtons}>
+            <div className={styles.divFileUrl}>
+              {episodeFiles?.Files && episodeFiles.Files.length > 0 ? (
+                <FileListToEpisode files={episodeFiles.Files} onFileClick={setSelectedFileUrl} />
+              ) : (
+                <p className={styles.pSemDownload}>Sem material para download.</p>
+              )}
+            </div>
+            <div className={styles.divSinopse}>
+              <p className={styles.pSinopse}>{course.Episodes[episodeOrder].synopsis}</p>
             </div>
           </div>
+          {selectedFileUrl && (
+            <div
+              className={styles.overlay}
+              style={{
+                position: "fixed",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                backgroundColor: "rgba(0,0,0,0.8)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                zIndex: 1000,
+              }}
+            >
+              {selectedFileUrl.endsWith(".pdf") ? (
+                <>
+                  <iframe
+                    src={`${process.env.NEXT_PUBLIC_BASEURL}/${selectedFileUrl}`}
+                    width="80%"
+                    height="80%"
+                    allowFullScreen
+                    style={{ border: "none" }}
+                  />
+                  <button onClick={() => setSelectedFileUrl(null)}>Close</button>
+                  <button
+                    onClick={() =>
+                      window.open(`${process.env.NEXT_PUBLIC_BASEURL}/${selectedFileUrl}`)
+                    }
+                  >
+                    Abrir em nova aba
+                  </button>
+                </>
+              ) : (
+                <>
+                  <ReactPlayer
+                    url={`${process.env.NEXT_PUBLIC_BASEURL}/${selectedFileUrl}`}
+                    width="80%"
+                    height="60%"
+                    controls
+                  />
+                  <button onClick={() => setSelectedFileUrl(null)}>Close</button>
+                </>
+              )}
+            </div>
+          )}
         </div>
-      </main>
-    </>
+        <div className={styles.episodeContent}>
+          <div className={styles.progress}>
+            <div className="d-flex align-items-center gap-2">
+              <div className={styles.progress_circle}>
+                <svg className={styles.svg} viewBox="0 0 36 36">
+                  <path
+                    className={styles.circle_bg}
+                    d="M18 2.0845
+                       a 15.9155 15.9155 0 0 1 0 31.831
+                       a 15.9155 15.9155 0 0 1 0 -31.831"
+                  />
+                  <path
+                    className={styles.circle}
+                    d="M18 2.0845
+                       a 15.9155 15.9155 0 0 1 0 31.831
+                       a 15.9155 15.9155 0 0 1 0 -31.831"
+                    style={{ strokeDasharray }}
+                  />
+                </svg>
+              </div>
+              <div>
+                <h4 className={styles.titulo}>
+                  Meu progresso - {progressPercent.toFixed(0)}%
+                </h4>
+                <p className={styles.pQtdAulas}>{`${course.watchStatus?.length || 0} de ${course.Episodes.length} aulas`}</p>
+              </div>
+            </div>
+          </div>
+          <div className={styles.div_episode_list}>
+            {course.Episodes.map((episode) => (
+              <EpisodeAdaptedList key={episode.id} episode={episode} course={course} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </main>
   );
 }
