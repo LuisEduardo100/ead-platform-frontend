@@ -6,6 +6,8 @@ import { CourseType } from '../../services/courseService';
 import SlideCard from './slideCard';
 import { useMenu } from './menu/menuProvider';
 import { useEffect, useState } from 'react';
+import profileService from '../../services/profileService';
+import zIndex from '@mui/material/styles/zIndex';
 
 interface Props {
     course: CourseType[];
@@ -33,23 +35,34 @@ const getSlideCount = (availableWidth: number, totalSlides: number): number => {
 export default function SlideComponentSearch({ course }: Props) {
     const { isMenuOpen } = useMenu();
     const [slidesPerPage, setSlidesPerPage] = useState(getSlideCount(getAvailableWidth(isMenuOpen), course.length));
+    const [hasFullAccess, setHasFullAccess] = useState(true)
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const userData = await profileService.fetchCurrent();
+                setHasFullAccess(userData.hasFullAccess);
+            } catch (error) {
+                console.error("Erro ao buscar perfil do usuário:", error);
+            }
+        };
+        fetchProfile();
+    }, []);
 
     useEffect(() => {
         const getAvailableWidth = () => window.innerWidth - (isMenuOpen ? MENU_WIDTH : 0);
-        
+
         const updateSlides = () => {
             const availableWidth = getAvailableWidth();
             const newCount = getSlideCount(availableWidth, course.length);
             setSlidesPerPage(newCount);
         };
 
-        // Executa imediatamente ao montar o componente
         updateSlides();
-        
-        // Configura o listener de resize
+
         window.addEventListener('resize', updateSlides);
         return () => window.removeEventListener('resize', updateSlides);
-    }, [isMenuOpen, course.length]); // Recálculo quando menu ou cursos mudarem
+    }, [isMenuOpen, course.length]);
 
     return (
         <div className="d-flex flex-column py-2">
@@ -60,7 +73,7 @@ export default function SlideComponentSearch({ course }: Props) {
                     rewindSpeed: 800,
                     perPage: slidesPerPage,
                     perMove: 1,
-                    gap: GAP, // Use a constante definida
+                    gap: GAP,
                     padding: {
                         left: 0,
                         right: 0
@@ -104,8 +117,11 @@ export default function SlideComponentSearch({ course }: Props) {
                 }}
             >
                 {course.map((item) => (
-                    <SplideSlide key={item.id}  style={{ maxWidth: `${SLIDE_WIDTH}px` }}>
-                        <SlideCard course={item} />
+                    <SplideSlide key={item.id}
+                        style={{
+                            maxWidth: `${SLIDE_WIDTH}px`,
+                        }}>
+                        <SlideCard course={item} access={hasFullAccess} />
                     </SplideSlide>
                 ))}
             </Splide>

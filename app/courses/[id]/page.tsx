@@ -64,6 +64,7 @@ export default function Course({ params }: ParamsProps) {
     setLiked(course.liked);
     setFavorited(course.favorited);
   };
+  
   useEffect(() => {
     getCourse();
   }, [getCourse, courseId]);

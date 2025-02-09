@@ -4,14 +4,27 @@ import { useEffect, useState } from "react"
 import categoriesService from "../../../services/categoriesService"
 import { CourseType } from "../../../services/courseService"
 import CourseCard from "./courseCard"
-import PageSpinner from '../../common/pageSpinner'
 import BtnSpinner from '../../common/btnSpinner'
+import profileService from '../../../services/profileService'
 
 export default function CursosDaCategoria({CategoryId} : {CategoryId: number}) {
     const [courses, setCourses] = useState<CourseType[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null) 
+    const [hasFullAccess, setHasFullAccess] = useState(true)
   
+    useEffect(() => {
+      const fetchProfile = async () => {
+          try {
+              const userData = await profileService.fetchCurrent();
+              setHasFullAccess(userData.hasFullAccess);
+          } catch (error) {
+              console.error("Erro ao buscar perfil do usuário:", error);
+          }
+      };
+      fetchProfile();
+  }, []);
+
     useEffect(() => {
       const getAllCourses = async () => {
         setLoading(true)
@@ -53,7 +66,7 @@ export default function CursosDaCategoria({CategoryId} : {CategoryId: number}) {
           <ul className={styles.courses_grid}>
             {courses.map((course) => (
               <li key={course.id} className={styles.course_item}>
-                <CourseCard course={course}/>
+                <CourseCard course={course} access={hasFullAccess}/>
               </li>
             ))}
           </ul>

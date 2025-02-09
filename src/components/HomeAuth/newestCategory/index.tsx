@@ -2,12 +2,9 @@
 import useSWR from "swr";
 import PageSpinner from "../../common/pageSpinner";
 import courseService, { CourseType } from "../../../services/courseService";
-import SlideSection from "../../HomeNoAuth/slideSectionSelectedYear";
 import styles from './styles.module.scss'
-import { Container } from "reactstrap";
 import SlideComponentSearch from "../../common/SlideComponentSearch";
 import { useYear } from "../selectBox/yearProvider";
-import SlideComponent from "../../common/SlideComponent";
 import { useEffect, useState } from "react";
 export default function NewestCategory() {
     const [loading, setLoading] = useState(true)

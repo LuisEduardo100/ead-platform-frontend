@@ -11,24 +11,36 @@ import { Folder, SearchOutlined } from "@mui/icons-material";
 import { useMenu } from "../../src/components/common/menu/menuProvider";
 import AllHandouts from "../../src/components/common/allHandouts";
 import FooterAuth from "../../src/components/HomeAuth/footerAuth";
+import profileService from "../../src/services/profileService";
 export default function ApostilaPage() {
     const [apostilas, setApostilas] = useState([])
     const router = useRouter()
     const [selected, setSelected] = useState<number | string>();
     const { isMenuOpen } = useMenu();
     const [searchTerm, setSearchTerm] = useState("");
-    
+    const [hasFullAccess, setHasFullAccess] = useState<boolean>(false);
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+          try {
+            const userData = await profileService.fetchCurrent();
+            setHasFullAccess(userData.hasFullAccess); 
+          } catch (error) {
+            console.error("Erro ao buscar perfil do usuário:", error);
+          }
+        };
+        fetchProfile();
+      }, []);
+
     useEffect(() => {
         const getAllApostila = async () => {
             try {
-                const data = await episodeFileService.getAllFiles(); // Obtenha apenas os dados
-
-                if (!data) return "Data não recebida!"
-
-                setApostilas(data.data); // Atualize o estado apenas se for um array
-            } catch (error) {
-                console.error("Erro ao buscar apostilas:", error);
-            }
+            const data = await episodeFileService.getAllFiles(); 
+            if (!data) return console.error("Data não recebida!");
+            setApostilas(data.data); 
+        } catch (error) {
+            console.error("Erro ao buscar apostilas:", error);
+        }
         };
 
         getAllApostila()
@@ -39,11 +51,10 @@ export default function ApostilaPage() {
             category.courses?.map(course => course.serie) || []
         );
 
-        // Remove duplicatas e ordena as séries
         return Array.from(new Set(allSeries)).sort((a, b) => {
-            const numA = parseInt(a.split("º")[0], 10); // Extrai o número antes de "º"
-            const numB = parseInt(b.split("º")[0], 10); // Extrai o número antes de "º"
-            return numA - numB; // Ordena em ordem crescente
+            const numA = parseInt(a.split("º")[0], 10); 
+            const numB = parseInt(b.split("º")[0], 10); 
+            return numA - numB; 
         });
     };
 
@@ -84,9 +95,10 @@ export default function ApostilaPage() {
                             onChange={(e) => setSearchTerm(e.currentTarget.value)}
                         />
                     </div>
-                    <AllHandouts searchTerm={searchTerm} />
+                    <AllHandouts searchTerm={searchTerm} access={hasFullAccess} />
                 </div>
             </div>
+            <FooterAuth/>
         </main>
     );
 }

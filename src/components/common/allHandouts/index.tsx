@@ -6,10 +6,19 @@ import { CategoryType } from "../../../services/categoriesService";
 import Link from "next/link";
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { EpisodeFileType, EpisodeTypeAdapted } from '../../../services/courseService';
+import ToastComponent from '../toastComponent';
 
-export default function AllHandouts({ searchTerm }: { searchTerm: string }) {
+interface Props {
+    searchTerm: string
+    access: boolean
+}
+export default function AllHandouts({ searchTerm, access }: Props) {
     const [pdfFiles, setPdfFiles] = useState<EpisodeFileType[]>([]);
     const [filteredFiles, setFilteredFiles] = useState<EpisodeFileType[]>([]);
+    const [toastColor, setToastColor] = useState("");
+    const [toastIsOpen, setToastIsOpen] = useState(false);
+    const [toastMessage, setToastMessage] = useState("");
+
     useEffect(() => {
         const getAllApostila = async () => {
             try {
@@ -35,6 +44,7 @@ export default function AllHandouts({ searchTerm }: { searchTerm: string }) {
                         )
                     )
                 );
+
                 setPdfFiles(extractedHandouts); // Atualiza o estado com os arquivos PDF
                 setFilteredFiles(extractedHandouts); // Inicia
             } catch (error) {
@@ -59,6 +69,7 @@ export default function AllHandouts({ searchTerm }: { searchTerm: string }) {
     }, [searchTerm, pdfFiles]);
 
     return (<>
+        <ToastComponent isOpen={toastIsOpen} color={toastColor} message={toastMessage} />
         <div>
             {filteredFiles.length > 0 ? (
                 <ul className={styles.ulDiv}>
@@ -79,7 +90,7 @@ export default function AllHandouts({ searchTerm }: { searchTerm: string }) {
                     ))}
                 </ul>
             ) : (
-                <p style={{textAlign: 'center'}}>Nenhum arquivo encontrado.</p>
+                <p style={{ textAlign: 'center' }}>Nenhum arquivo encontrado.</p>
             )}
         </div>
     </>)

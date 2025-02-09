@@ -12,8 +12,13 @@ import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { useYear } from '../../HomeAuth/selectBox/yearProvider';
 import PdfThumbnail from '../pdfThumbnail';
 import PageSpinner from '../pageSpinner';
+import zIndex from '@mui/material/styles/zIndex';
 
-export default function AllHandoutsSlidder({ searchTerm }: { searchTerm: string }) {
+interface Props {
+    searchTerm: string
+    access: boolean
+}
+export default function AllHandoutsSlidder({ searchTerm }: Props) {
     const [pdfFiles, setPdfFiles] = useState<EpisodeFileType[]>([]);
     const [filteredFiles, setFilteredFiles] = useState<EpisodeFileType[]>([]);
     const { selectedYear, onYearChange } = useYear()

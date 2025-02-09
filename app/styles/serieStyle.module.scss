@@ -9,7 +9,8 @@
     width: 100%;
     min-height: 100vh;
     overflow-x: hidden;
-
+    display: flex;
+    flex-direction: column;
     &.menuOpen {
         margin-left: 250px; // Largura do menu
         width: calc(100% - 250px); // Ajuste a largura restante
@@ -18,6 +19,7 @@
     .mainContent {
         padding: 20px 50px;
         width: 100%;
+        flex: 1;
     }
 }
 

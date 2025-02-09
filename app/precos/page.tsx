@@ -242,9 +242,10 @@ export default function PaginaPrecos() {
 
                 <button
                     className={styles.metodoButton}
-                    onClick={handlePayment}
                 >
-                    QUERO ME MATRICULAR
+                    <Link href="#propaganda" style={{ textDecoration: 'none', color: 'inherit' }}>
+                        QUERO ME MATRICULAR AGORA
+                    </Link>
                 </button>
             </section>
 

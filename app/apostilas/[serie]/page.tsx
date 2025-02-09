@@ -91,6 +91,7 @@ export default function SeriePage() {
                     ))}
                 </ul>
             </div>
+            <FooterAuth/>
         </main>
     );
 }

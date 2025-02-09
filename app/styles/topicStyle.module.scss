@@ -1,126 +1,105 @@
 .h1Title {
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 2rem;
+}
+
+.main {
+  transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+  margin-left: 0;
+  width: 100%;
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  &.menuOpen {
+    margin-left: 250px;
+    width: calc(100% - 250px);
   }
-  
-  .main {
-    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
-    margin-left: 0;
-    width: 100%;
-    overflow-x: hidden;
-    min-height: 100vh;
-  
-    &.menuOpen {
-      margin-left: 250px; // Largura do menu
-      width: calc(100% - 250px); // Largura restante
-    }
-  
-    .mainContent {
-      padding: 20px 50px;
-    }
+
+  .mainContent {
+    padding: 20px 50px;
+    flex: 1;
   }
-  
-  /* Grid responsivo para listagem (utilizado no componente CursosDaCategoria, por exemplo) */
-  .ulDiv {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    gap: 25px;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  
-    .liDiv {
-      border-radius: 20px;
+}
+
+.ulDiv {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+  .liDiv {
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+
+    &:hover {
+      overflow: visible;
+      opacity: 0.75;
+      background-color: #adadadb0;
+      cursor: pointer;
+    }
+
+    .nameTip {
+      position: absolute;
+      top: 90%;
+      padding: 5px 10px;
+      z-index: 10000;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      color: #000;
+      transition: opacity 0.2s ease-in-out;
+      opacity: 0;
+      font-size: 0.8rem;
+    }
+
+    &:hover .nameTip {
+      opacity: 1;
+    }
+
+    .linkStyle {
+      text-decoration: none;
+      color: #000;
+      max-width: 100%;
       display: flex;
-      flex-direction: column;
+      text-align: center;
+      justify-content: center;
       align-items: center;
-      padding: 1rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      position: relative;
-  
-      &:hover {
-        overflow: visible;
-        opacity: 0.75;
-        background-color: #adadadb0;
-        cursor: pointer;
-      }
-  
-      .nameTip {
-        position: absolute;
-        top: 90%;
-        padding: 5px 10px;
-        z-index: 10000;
-        border: 1px solid #ccc;
-        background-color: #fff;
-        color: #000;
-        transition: opacity 0.2s ease-in-out;
-        opacity: 0;
-        font-size: 0.8rem;
-      }
-  
-      &:hover .nameTip {
-        opacity: 1;
-      }
-  
-      .linkStyle {
-        text-decoration: none;
-        color: #000;
+      flex-direction: column;
+
+      .fileName {
+        margin-top: 5.5px;
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         max-width: 100%;
-        display: flex;
-        text-align: center;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-  
-        .fileName {
-          margin-top: 5.5px;
-          display: inline-block;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          max-width: 100%;
-        }
       }
     }
   }
-  
-  /* Ajustes de padding para telas menores */
-  @media (max-width: 768px) {
-    .main {
-      .mainContent {
-        padding: 20px;
-      }
+}
+
+@media (max-width: 768px) {
+  .main {
+    .mainContent {
+      padding: 20px;
     }
   }
-  
-  @media (max-width: 480px) {
-    .main {
-      .mainContent {
-        padding: 10px;
-      }
+}
+
+@media (max-width: 480px) {
+  .main {
+    .mainContent {
+      padding: 10px;
     }
   }
-  
-  /* Grid: 3 colunas para telas maiores */
-//   @media (min-width: 572px) {
-//     .ulDiv {
-//       grid-template-columns: repeat(3, 1fr);
-//     }
-//   }
-  
-//   /* Grid: 2 colunas para telas entre 450px e 572px */
-//   @media (max-width: 572px) and (min-width: 450px) {
-//     .ulDiv {
-//       grid-template-columns: repeat(2, 1fr);
-//     }
-//   }
-  
-//   /* Grid: 1 coluna para telas menores que 450px (até 320px inclusive) */
-//   @media (max-width: 450px) {
-//     .ulDiv {
-//       grid-template-columns: 1fr;
-//     }
-//   }
-  
+}

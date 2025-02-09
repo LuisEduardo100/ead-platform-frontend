@@ -18,13 +18,17 @@
     min-height: 100vh;
     background-color: #E8E8E8;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+
     &.menuOpen {
-        margin-left: 250px; // Largura do menu
-        width: calc(100% - 250px); // Ajuste a largura restante
+        margin-left: 250px;
+        width: calc(100% - 250px); 
     }
 
     .mainContent {
         padding: 20px 50px;
+        flex: 1;
     }
 }
 .containerHeader{

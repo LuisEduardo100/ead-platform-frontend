@@ -10,7 +10,9 @@
     width: 100%;
     overflow-x: hidden;
     min-height: 100vh;
-  
+    display: flex;
+    flex-direction: column;
+    
     &.menuOpen {
       margin-left: 250px; // Largura do menu
       width: calc(100% - 250px);

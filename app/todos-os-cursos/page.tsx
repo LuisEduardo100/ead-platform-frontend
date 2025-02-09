@@ -15,6 +15,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import { useMenu } from "../../src/components/common/menu/menuProvider"
 import { useYear } from "../../src/components/HomeAuth/selectBox/yearProvider"
 import profileService from "../../src/services/profileService"
+import ToastComponent from "../../src/components/common/toastComponent"
 
 export default function AllCourses() {
   const { isMenuOpen } = useMenu()
@@ -23,15 +24,12 @@ export default function AllCourses() {
   const [loading, setLoading] = useState(true)
   const [selectedCategory, setSelectedCategory] = useState(paramsCategoria)
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
-  // Estado para controlar a exibição do painel de matérias em telas menores (<768px)
   const [showCategories, setShowCategories] = useState(false)
-  // Estado para identificar se é tela grande ou pequena
   const [isLargeScreen, setIsLargeScreen] = useState(true)
   const { selectedYear, onYearChange } = useYear()
   const router = useRouter()
   const { data } = useSWR('/categories', categoriesService.getCategories)
 
-  // Atualiza a categoria selecionada a partir da URL
   useEffect(() => {
     setSelectedCategory(paramsCategoria)
   }, [paramsCategoria])
@@ -43,7 +41,6 @@ export default function AllCourses() {
     })
   })
 
-  // Busca o ID da categoria selecionada
   useEffect(() => {
     if (data?.length) {
       const selectedCat = data.find((cat: CategoryType) =>
@@ -53,7 +50,6 @@ export default function AllCourses() {
     }
   }, [data, selectedCategory])
 
-  // Verifica se o usuário está autenticado e desativa o loading após 500ms
   useEffect(() => {
     const token = sessionStorage.getItem('vocenotadez-token')
     setUser(!!token)
@@ -63,12 +59,10 @@ export default function AllCourses() {
     return () => clearTimeout(timeoutId)
   }, [])
 
-  // Detecta a largura da tela e atualiza os estados
   useEffect(() => {
     const checkScreenSize = () => {
       const isLarge = window.innerWidth <= 768
       setIsLargeScreen(!isLarge)
-      // Em telas pequenas, o painel de categorias fica oculto inicialmente
       if (isLarge) {
         setShowCategories(true)
       }
@@ -80,7 +74,6 @@ export default function AllCourses() {
 
   const handleCategoryClick = (categoria: CategoryType) => {
     setSelectedCategory(categoria.name)
-    // Em telas pequenas, fecha o painel de categorias ao selecionar
     if (!isLargeScreen) {
       setShowCategories(false)
     }
@@ -96,9 +89,8 @@ export default function AllCourses() {
       ) : (
         <HeaderGeneric btnContent="Voltar" btnUrl="/home" logoUrl="/logo-vocenotadez.png" />
       )}
-      <div style={{ padding: '20px 50px' }}>
+      <div style={{ padding: '20px 50px', flex: '1'}}>
         {isLargeScreen ? (
-          // Layout para telas grandes: exibe as duas sections lado a lado
           <div className={styles.containerSections}>
             <section className={styles.categorias}>
               <h1 className={styles.titulo}>Matérias</h1>
@@ -133,7 +125,6 @@ export default function AllCourses() {
             </section>
           </div>
         ) : (
-          // Layout para telas pequenas: a section de categorias fica oculta por padrão e pode ser aberta pelo botão
           <>
             <div className={styles.topBar}>
               <button
@@ -181,6 +172,7 @@ export default function AllCourses() {
           </>
         )}
       </div>
+      <FooterAuth/>
     </main>
   )
 }

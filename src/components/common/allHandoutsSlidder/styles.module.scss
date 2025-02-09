@@ -22,7 +22,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
+    z-index: 1;
     &:hover {
         opacity: .75;
         cursor: pointer;

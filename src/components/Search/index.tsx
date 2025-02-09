@@ -24,11 +24,23 @@ export default function SearchComponents(
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [searchResult, setSearchResult] = useState<CourseType[]>([]);
-  const [searchUser, setSearchUser] = useState(false);
+  const [searchUser, setSearchUser] = useState<boolean>(false);
   const searchName = searchParams.name || "";
   const { selectedYear } = useYear();
   const { isMenuOpen } = useMenu();
   const [SearchName, setSearchName] = useState("");
+  
+  useEffect(() => {
+    const fetchProfile = async () => {
+        try {
+            const userData = await profileService.fetchCurrent();
+            setSearchUser(userData.hasFullAccess);
+        } catch (error) {
+            console.error("Erro ao buscar perfil do usuário:", error);
+        }
+    };
+    fetchProfile();
+}, []);
 
   const nhandleSearch = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -44,16 +56,6 @@ export default function SearchComponents(
   useEffect(() => {
     router.push(`/search?name=${searchName}&serie=${selectedYear}`);
   }, [router, selectedYear, searchName]);
-
-  useEffect(() => {
-    profileService.fetchCurrent().then((user) => {
-      if (user.email != null && user.email !== "") {
-        setSearchUser(true);
-      }
-    }).catch(() => {
-      setSearchUser(false);
-    });
-  }, []);
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -126,7 +128,7 @@ export default function SearchComponents(
               ) : (
                 <p className={styles.noSearchText}>Nenhum curso encontrado</p>
               )}
-              <AllHandoutsSlidder searchTerm={searchName} />
+              <AllHandoutsSlidder searchTerm={searchName} access={searchUser} />
             </>
           )}
         </section>

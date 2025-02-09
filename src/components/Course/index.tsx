@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleCheck as faCircleCheckSolid, faCirclePlay, faCloudArrowDown } from '@fortawesome/free-solid-svg-icons'
 import FileListToCourse from '../common/filePageToCourse'
+import profileService from '../../services/profileService'
 
 interface props {
     episode: EpisodeType
@@ -16,6 +17,19 @@ interface props {
 export default function EpisodeList({ episode, course }: props) {
     const router = useRouter()
     const [getEpisodeFile, setGetEpisodeFile] = useState<EpisodeType>()
+    const [hasFullAccess, setHasFullAccess] = useState(true)
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const userData = await profileService.fetchCurrent();
+                setHasFullAccess(userData.hasFullAccess);
+            } catch (error) {
+                console.error("Erro ao buscar perfil do usuário:", error);
+            }
+        };
+        fetchProfile();
+    }, []);
 
     const handleEpisodeFile = async () => {
         try {
@@ -69,10 +83,8 @@ export default function EpisodeList({ episode, course }: props) {
                     <FontAwesomeIcon className={styles.checkItem} icon={faCircleCheckSolid} style={{ fontSize: '30px', color: '#183153' }} />
                 }
                 <div className={styles.divFileUrl}>
-                    {hasFile ? (
-                        <FileListToCourse files={getEpisodeFile.Files}/>
-                    ) : (
-                        <p className={styles.pSemDownload}>Sem material para download.</p>
+                    {hasFile && hasFullAccess && (
+                        <FileListToCourse files={getEpisodeFile.Files} />
                     )}
                 </div>
             </div>
