@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
 import { Favorite, Add, PlayCircle, CheckCircle, Lock } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
-import ToastComponent from '../toastComponent';
 
 interface Props {
     course: CourseType;
@@ -64,14 +63,12 @@ const SlideCard = ({ course, access }: Props) => {
         }
     };
 
-    // Inicia o delay de 1 segundo para ativar o hover
     const handleMouseEnter = () => {
         hoverTimeoutRef.current = setTimeout(() => {
             setIsHoverActive(true);
         }, 300);
     };
 
-    // Cancela o delay se o mouse sair antes e desativa o efeito
     const handleMouseLeave = () => {
         if (hoverTimeoutRef.current) {
             clearTimeout(hoverTimeoutRef.current);
@@ -117,8 +114,6 @@ const SlideCard = ({ course, access }: Props) => {
                         height={720}
                     />
                 </div>
-
-                {/* Adiciona condicionalmente a classe "hoverActive" */}
                 <div className={`${styles.hoverContent} ${isHoverActive ? styles.hoverActive : ''}`}>
                     <Image
                         src={`${process.env.NEXT_PUBLIC_BASEURL}/${course.thumbnailUrl}`}
@@ -157,8 +152,8 @@ const SlideCard = ({ course, access }: Props) => {
                         )}
                         <div className='d-flex flex-column gap-1'>
                             <h3 className={styles.courseName}>{course.name}</h3>
-                            <p className={styles.courseSynopsis}>
-                                {course.Episodes?.length !== undefined ? course.Episodes?.length : '0'} episódios
+                            <p className={styles.episodeLength}>
+                                {newCourse ? newCourse.Episodes?.length : '0'} episódios
                             </p>
                             <p className={styles.courseSynopsis}>{course.synopsis}</p>
                         </div>

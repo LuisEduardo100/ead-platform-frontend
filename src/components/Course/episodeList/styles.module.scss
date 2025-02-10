@@ -1,0 +1,63 @@
+// components/Course/episodeList.module.scss
+
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #e0e0e0; // cor de fundo clara
+    width: 100%;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.card:hover {
+    border: 0.4px solid #e50914e0;
+}
+
+.info {
+    flex: 1;
+}
+
+.time {
+    color: #1E1E1E;
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.title {
+    color: #000000;
+    font-size: 1.2rem;
+    margin: 16px 0px 8px 0px;
+}
+
+.pdfLink {
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: black;
+    z-index: 10;
+}
+.icon {
+    margin-left: 8px;
+}
+
+.playBtn {
+    background-color: #e50914;
+    color: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    border: none;
+}

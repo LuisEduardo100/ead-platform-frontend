@@ -68,10 +68,10 @@ const ConfirmEmail = () => {
 
           <button
             className={styles.homeButton}
-            onClick={() => router.push('/')}
+            onClick={() => router.push('/login')}
             style={{ marginTop: '2rem' }}
           >
-            Voltar para a Página Inicial
+            Faça o login agora
           </button>
         </div>
         <Footer />

@@ -298,7 +298,6 @@ export default function EpisodePlayer({
                   setEpisodeTime(state.playedSeconds);
                 }
               }}
-              // Apenas marca o player como pronto; o seek inicial ocorrerá via useEffect
               onReady={() => setPlayerReady(true)}
             />
             <Control
