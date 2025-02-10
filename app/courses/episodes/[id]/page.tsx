@@ -40,19 +40,20 @@ export default function EpisodePlayer({
   const [episodeFiles, setEpisodeFiles] = useState<EpisodeTypeAdapted | null>(null);
   const [episodeQuizz, setEpisodeQuizz] = useState<EpisodeTypeAdapted | null>(null);
   const [selectedFileUrl, setSelectedFileUrl] = useState<string | null>(null);
-
+  
   // Estado do player
   const [videoState, setVideoState] = useState({
-    playing: true,
+    playing: false, // Inicia sem tocar
     muted: false,
-    volume: 0.5,         // valor entre 0 e 1
+    volume: 0.5,
     playbackRate: 1.0,
-    played: 0,           // fração entre 0 e 1
+    played: 0,
     seeking: false,
   });
 
   // Estado para indicar quando o player está pronto
   const [playerReady, setPlayerReady] = useState(false);
+  const [hasSetInitialPlayback, setHasSetInitialPlayback] = useState(false);
 
   // Referências
   const videoPlayerRef = useRef<ReactPlayer>(null);
@@ -80,10 +81,15 @@ export default function EpisodePlayer({
 
   // Quando o player estiver pronto e o watchTime carregado, busca para o tempo salvo.
   useEffect(() => {
-    if (playerReady && watchTime > 0 && videoPlayerRef.current) {
-      videoPlayerRef.current.seekTo(watchTime, "seconds");
+    if (playerReady && !hasSetInitialPlayback && videoPlayerRef.current) {
+      if (watchTime > 0) {
+        videoPlayerRef.current.seekTo(watchTime, "seconds");
+      }
+
+      setVideoState((prev) => ({ ...prev, playing: true }));
+      setHasSetInitialPlayback(true);
     }
-  }, [playerReady, watchTime]);
+  }, [playerReady, watchTime, hasSetInitialPlayback]);
 
   // Busca arquivos e quizz do episódio
   useEffect(() => {
@@ -164,7 +170,6 @@ export default function EpisodePlayer({
   // HANDLERS DOS CONTROLES DO PLAYER
   // ****************************************************
 
-  // PLAY/PAUSE, REWIND e FAST-FORWARD
   const togglePlayPause = () =>
     setVideoState((prev) => ({ ...prev, playing: !prev.playing }));
 
@@ -179,6 +184,7 @@ export default function EpisodePlayer({
   };
 
   // --- HANDLERS DO SLIDER DE SEEK ---
+
   const onSeekMouseDownHandler = () =>
     setVideoState((prev) => ({ ...prev, seeking: true }));
   
@@ -218,7 +224,9 @@ export default function EpisodePlayer({
       console.error('Valor de seek inválido:', safeFraction);
     }
   };
+
   // --- HANDLERS DO VOLUME ---
+
   const handleVolumeChange = (valueOrEvent: any) => {
     let value: number;
     if (typeof valueOrEvent === "number") {

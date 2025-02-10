@@ -13,7 +13,7 @@ $dropdown-text-color: #000;
     display: flex;
     align-items: center;
     position: relative;
-
+    z-index: 500000;
     // Botão do hamburger
     .menuButton {
         background: none;

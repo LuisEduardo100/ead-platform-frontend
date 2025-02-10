@@ -76,6 +76,8 @@ export default function PaginaPrecos() {
                             controls
                             width="100%"
                             height="100%"
+                            playing={true} // Adiciona o atributo playing com valor true
+                            muted={false} // Adiciona o atributo muted com valor false
                             config={{
                                 vimeo: {
                                     playerOptions: {
@@ -83,7 +85,7 @@ export default function PaginaPrecos() {
                                         quality: '1080p',
                                         byline: false,
                                         portrait: false,
-                                        title: false
+                                        title: false,
                                     }
                                 }
                             }}
