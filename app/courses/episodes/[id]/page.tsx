@@ -11,6 +11,7 @@ import PageSpinner from "../../../../src/components/common/pageSpinner";
 import Control from "../../../../src/components/common/videoControls";
 import EpisodeAdaptedList from "../../../../src/components/common/episodeListAdapted";
 import FileListToEpisode from "../../../../src/components/common/filePageToEpisode";
+import { Close, FileOpen } from "@mui/icons-material";
 
 type EpisodeTypeAdapted = {
   id: number;
@@ -40,7 +41,7 @@ export default function EpisodePlayer({
   const [episodeFiles, setEpisodeFiles] = useState<EpisodeTypeAdapted | null>(null);
   const [episodeQuizz, setEpisodeQuizz] = useState<EpisodeTypeAdapted | null>(null);
   const [selectedFileUrl, setSelectedFileUrl] = useState<string | null>(null);
-  
+
   // Estado do player
   const [videoState, setVideoState] = useState({
     playing: false, // Inicia sem tocar
@@ -159,9 +160,11 @@ export default function EpisodePlayer({
   useEffect(() => {
     if (course?.Episodes && course.Episodes[episodeOrder]) {
       if (Math.round(episodeTime) >= course.Episodes[episodeOrder].secondsLong) {
-        router.push(
-          `/courses/episodes/${episodeOrder + 1}?courseid=${course.id}&episodeid=${episodeId + 1}`
-        );
+        if (episodeOrder < course.Episodes.length - 1) {
+          router.push(
+            `/courses/episodes/${episodeOrder + 1}?courseid=${course.id}&episodeid=${episodeId + 1}`
+          );
+        }
       }
     }
   }, [episodeTime, course, episodeOrder, episodeId, router]);
@@ -187,7 +190,7 @@ export default function EpisodePlayer({
 
   const onSeekMouseDownHandler = () =>
     setVideoState((prev) => ({ ...prev, seeking: true }));
-  
+
   const handleSeekChange = (
     event: Event,
     value: number | number[],
@@ -195,29 +198,29 @@ export default function EpisodePlayer({
   ) => {
     const sliderValue = Array.isArray(value) ? value[0] : value;
     const fraction = sliderValue / 100;
-    setVideoState((prev) => ({ 
-      ...prev, 
-      played: isFinite(fraction) ? fraction : prev.played 
+    setVideoState((prev) => ({
+      ...prev,
+      played: isFinite(fraction) ? fraction : prev.played
     }));
   };
-  
+
   const handleSeekMouseUp = (
     event: React.SyntheticEvent,
     value: number | number[]
   ) => {
     setVideoState((prev) => ({ ...prev, seeking: false }));
-    
+
     const sliderValue = Array.isArray(value) ? value[0] : value;
-    
+
     // Verificação de segurança
     if (typeof sliderValue !== 'number' || isNaN(sliderValue)) {
       console.error('Valor inválido:', sliderValue);
       return;
     }
-  
+
     const fraction = sliderValue / 100;
     const safeFraction = Math.max(0, Math.min(1, fraction));
-  
+
     if (isFinite(safeFraction)) {
       videoPlayerRef.current?.seekTo(safeFraction, "fraction");
     } else {
@@ -250,6 +253,7 @@ export default function EpisodePlayer({
     setVideoState((prev) => ({ ...prev, muted: !prev.muted }));
 
   // --- HANDLER DA PLAYBACK RATE ---
+
   const changePlaybackRate = () =>
     setVideoState((prev) => {
       let newRate = prev.playbackRate + 0.25;
@@ -258,6 +262,7 @@ export default function EpisodePlayer({
     });
 
   // --- UTILITÁRIO: FORMATAÇÃO DO TEMPO (mm:ss) ---
+
   const formatTime = (time: number) => {
     if (isNaN(time)) return "00:00";
     const date = new Date(time * 1000);
@@ -269,6 +274,7 @@ export default function EpisodePlayer({
   // ****************************************************
   // RENDERIZAÇÃO
   // ****************************************************
+
   if (loading || !course?.Episodes) return <PageSpinner />;
 
   const calculateProgress = () => {
@@ -375,14 +381,31 @@ export default function EpisodePlayer({
                     allowFullScreen
                     style={{ border: "none" }}
                   />
-                  <button onClick={() => setSelectedFileUrl(null)}>Close</button>
-                  <button
-                    onClick={() =>
-                      window.open(`${process.env.NEXT_PUBLIC_BASEURL}/${selectedFileUrl}`)
-                    }
-                  >
-                    Abrir em nova aba
-                  </button>
+                  <div style={{
+                    position: 'fixed',
+                    top: 20,
+                  }}>
+                    <button
+                      style={{
+                        padding: '8px',
+                        border: 'none'
+                      }}
+                      onClick={() =>
+                        window.open(`${process.env.NEXT_PUBLIC_BASEURL}/${selectedFileUrl}`)
+                      }
+                    >
+                      Abrir em nova aba <FileOpen fontSize={"small"} />
+                    </button>
+                    <button
+                      style={{
+                        padding: '8px',
+                        color: 'white',
+                        backgroundColor: '#E50914',
+                        marginLeft: 10,
+                        border: 'none'
+                      }}
+                      onClick={() => setSelectedFileUrl(null)}><Close /></button>
+                  </div>
                 </>
               ) : (
                 <>
