@@ -17,7 +17,7 @@ const EpisodeList: React.FC<EpisodeListProps> = ({ episode, course }) => {
     const router = useRouter()
 
     /* User premium handler */
-    
+
     const [hasFullAccess, setHasFullAccess] = useState(true)
 
     useEffect(() => {
@@ -79,21 +79,21 @@ const EpisodeList: React.FC<EpisodeListProps> = ({ episode, course }) => {
     const handleEpisodePlayer = () => {
         router.push(`/courses/episodes/${episode.order - 1}?courseid=${course.id}&episodeid=${episode.id}`)
     }
-    
+
     return (
-        <div className={styles.card} onClick={handleEpisodePlayer}>
+        <div className={styles.card}>
             <div className={styles.info}>
-                <h3 className={styles.time}>
+                <h3 className={styles.time} onClick={handleEpisodePlayer}>
                     <div className={styles.playBtn}>
                         <PlayArrow fontSize='medium' />
                     </div>
                     {formatDuration(episode.secondsLong)}
                 </h3>
-                <p className={styles.title}>{episode.name}</p>
+                <p className={styles.title} onClick={handleEpisodePlayer}>{episode.name}</p>
                 {completePdfUrl &&
                     completePdfUrl.toLowerCase().endsWith(".pdf") && hasFullAccess && (
                         <Link href={completePdfUrl} target="_blank" className={styles.pdfLink}>
-                            <PictureAsPdf fontSize="small" style={{color: '#E50914', marginRight: '10px'}}/>
+                            <PictureAsPdf fontSize="small" style={{ color: '#E50914', marginRight: '10px' }} />
                             {episodeFile?.Files[0].name}
                         </Link>
                     )}

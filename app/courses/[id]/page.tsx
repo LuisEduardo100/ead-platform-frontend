@@ -154,7 +154,7 @@ export default function Course({ params }: ParamsProps) {
               height: "600px",
             }}
           >
-            <HeaderAuth />
+            <HeaderAuth/>
           </div>
 
           {/* Informações do Curso */}
