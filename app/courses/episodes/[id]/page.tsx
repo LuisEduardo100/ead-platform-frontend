@@ -41,7 +41,7 @@ export default function EpisodePlayer({
   const [episodeFiles, setEpisodeFiles] = useState<EpisodeTypeAdapted | null>(null);
   const [episodeQuizz, setEpisodeQuizz] = useState<EpisodeTypeAdapted | null>(null);
   const [selectedFileUrl, setSelectedFileUrl] = useState<string | null>(null);
-
+  
   // Estado do player
   const [videoState, setVideoState] = useState({
     playing: false, // Inicia sem tocar
@@ -51,11 +51,11 @@ export default function EpisodePlayer({
     played: 0,
     seeking: false,
   });
-
+  
   // Estado para indicar quando o player está pronto
   const [playerReady, setPlayerReady] = useState(false);
   const [hasSetInitialPlayback, setHasSetInitialPlayback] = useState(false);
-
+  
   // Referências
   const videoPlayerRef = useRef<ReactPlayer>(null);
   const controlRef = useRef<HTMLDivElement>(null);
@@ -150,6 +150,7 @@ export default function EpisodePlayer({
       interval = setInterval(() => {
         const current = videoPlayerRef.current?.getCurrentTime() || 0;
         setEpisodeTime(current);
+
         watchEpisodeService.setWatchTime({ episodeId, seconds: Math.round(current) });
       }, 3000);
     }
@@ -161,9 +162,13 @@ export default function EpisodePlayer({
     if (course?.Episodes && course.Episodes[episodeOrder]) {
       if (Math.round(episodeTime) >= course.Episodes[episodeOrder].secondsLong) {
         if (episodeOrder < course.Episodes.length - 1) {
-          router.push(
-            `/courses/episodes/${episodeOrder + 1}?courseid=${course.id}&episodeid=${episodeId + 1}`
-          );
+          const intervalID = setInterval(()=> {
+            router.push(
+              `/courses/episodes/${episodeOrder + 1}?courseid=${course.id}&episodeid=${episodeId + 1}`
+            );
+          }, 3000)
+
+          return () => clearInterval(intervalID)
         }
       }
     }
@@ -315,6 +320,7 @@ export default function EpisodePlayer({
               onReady={() => setPlayerReady(true)}
             />
             <Control
+              playerRef={videoPlayerRef}
               onPlayPause={togglePlayPause}
               playing={videoState.playing}
               onRewind={rewind}

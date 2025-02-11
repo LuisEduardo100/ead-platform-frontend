@@ -5,7 +5,7 @@
   overflow: visible;
   background-color: white;
   border-radius: 8px;
-  transition: margin 0.25s ease-in 0.3s ;
+  transition: margin 0.3s ease-in-out 0.25s;
   cursor: pointer;
 }
 
@@ -121,7 +121,7 @@
   line-height: 1.2;
   color: #ccc;
   margin: 0;
-  padding-right: 10px; 
+  padding-right: 10px;
   overflow: hidden;
   max-width: 300px;
   max-height: 60px;
@@ -133,6 +133,7 @@
   line-height: 1.2;
   margin: 0;
 }
+
 .liked {
   color: #FF3130;
 }

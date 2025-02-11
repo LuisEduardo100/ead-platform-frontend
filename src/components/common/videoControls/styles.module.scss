@@ -9,25 +9,35 @@
     flex-direction: column;
     justify-content: space-between;
     z-index: 1;
-    
+
     @media (max-width: 480px) {
-        padding: 10px; /* Adiciona padding para telas menores */
+        padding: 10px;
+        /* Adiciona padding para telas menores */
     }
 
     @media (max-width: 320px) {
         padding: 5px;
-        justify-content: center; /* Centraliza o conteúdo para telas menores */
+        justify-content: center;
+        /* Centraliza o conteúdo para telas menores */
     }
 
     @media (max-width: 392px) {
         .mid_container {
             display: none;
         }
+
         .top_container {
-            display: none;
+            display: block;
         }
+
         justify-content: end;
-    } 
+    }
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 }
 
 .top_container {
@@ -35,7 +45,7 @@
     padding: 16px;
     display: flex;
     align-items: center;
-    
+
     .h2 {
         color: white;
         margin-left: 8px;
@@ -43,7 +53,8 @@
         font-size: 1.2rem;
 
         @media (max-width: 480px) {
-            font-size: 1rem; /* Ajusta o tamanho da fonte para telas menores */
+            font-size: 1rem;
+            /* Ajusta o tamanho da fonte para telas menores */
         }
 
         @media (max-width: 320px) {
@@ -56,10 +67,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap; /* Quebra para a próxima linha se necessário */
+    flex-wrap: wrap;
+    /* Quebra para a próxima linha se necessário */
 
     @media (max-width: 320px) {
-        flex-direction: column; /* Alinha verticalmente em telas muito pequenas */
+        flex-direction: column;
+        /* Alinha verticalmente em telas muito pequenas */
     }
 }
 
@@ -88,7 +101,8 @@
 
     @media (max-width: 480px) {
         flex-direction: column;
-        align-items: center; /* Centraliza os controles */
+        align-items: center;
+        /* Centraliza os controles */
     }
 
     @media (max-width: 320px) {
@@ -106,7 +120,8 @@
     }
 
     @media (max-width: 320px) {
-        justify-content: center; /* Centraliza os controles em telas pequenas */
+        justify-content: center;
+        /* Centraliza os controles em telas pequenas */
     }
 }
 
@@ -115,7 +130,8 @@
     align-items: center;
 
     @media (max-width: 320px) {
-        width: 100%; /* Permite que o controle de volume se ajuste a telas pequenas */
+        width: 100%;
+        /* Permite que o controle de volume se ajuste a telas pequenas */
     }
 }
 
@@ -130,9 +146,12 @@
 
     @media (max-width: 320px) {
         width: 90%;
-        justify-content: center; /* Centraliza os controles */
+        justify-content: center;
+        /* Centraliza os controles */
     }
 }
+
+
 
 .span {
     color: #fff;
@@ -140,6 +159,7 @@
     margin-left: 12px;
 
     @media (max-width: 320px) {
-        font-size: 0.8rem; /* Reduz o tamanho da fonte em dispositivos muito pequenos */
+        font-size: 0.8rem;
+        /* Reduz o tamanho da fonte em dispositivos muito pequenos */
     }
 }
