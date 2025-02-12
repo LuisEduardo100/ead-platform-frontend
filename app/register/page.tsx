@@ -312,7 +312,7 @@ const Register = function () {
                                         type="radio"
                                         name="serie"
                                         className={styles.radioInput}
-                                        value="9º ano"
+                                        value="1º ano"
                                         required
                                     />{' '}
                                     1º ano EM
@@ -322,7 +322,7 @@ const Register = function () {
                                         type="radio"
                                         name="serie"
                                         className={styles.radioInput}
-                                        value="9º ano"
+                                        value="2º ano"
                                         required
                                     />{' '}
                                     2º ano EM
@@ -332,7 +332,7 @@ const Register = function () {
                                         type="radio"
                                         name="serie"
                                         className={styles.radioInput}
-                                        value="9º ano"
+                                        value="3º ano"
                                         required
                                     />{' '}
                                     3º ano EM
