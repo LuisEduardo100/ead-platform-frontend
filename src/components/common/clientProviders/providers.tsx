@@ -1,21 +1,21 @@
-// // src/app/providers.tsx
-// 'use client'
+// app/ClientLayout.tsx
+'use client'; // ⚠️ Adicione esta diretiva no topo!
 
-// import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3'
-// import { MenuProvider } from '../menu/menuProvider'
-// import { YearProvider } from '../../HomeAuth/selectBox/yearProvider'
+import { useEffect } from 'react';
+import Modal from 'react-modal';
+import { YearProvider } from '../../HomeAuth/selectBox/yearProvider';
+import { MenuProvider } from '../menu/menuProvider';
 
-// export function Providers({ children }: { children: React.ReactNode }) {
-//   return (
-//     <GoogleReCaptchaProvider
-//       reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-//       scriptProps={{ async: true, defer: true }}
-//     >
-//       <MenuProvider>
-//         <YearProvider>
-//           {children}
-//         </YearProvider>
-//       </MenuProvider>
-//     </GoogleReCaptchaProvider>
-//   )
-// }
+export default function ClientLayout({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    Modal.setAppElement('#__next');
+  }, []);
+
+  return (
+    <YearProvider>
+      <MenuProvider>
+        {children}
+      </MenuProvider>
+    </YearProvider>
+  );
+}

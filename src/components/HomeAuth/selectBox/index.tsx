@@ -12,35 +12,12 @@ const YearSelect = ({
   onYearChange: (year: string) => void,
   showDropdown: boolean,
 }) => {
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const data = await profileService.fetchCurrent();
-
-        if (data?.serie) {
-          onYearChange(data.serie);
-        }
-      } catch (error) {
-        console.error("Erro ao buscar os dados do usuário:", error);
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchUserData()
-  })
-
-  if (loading) {
-    return <PageSpinner />
-  }
   return (
     <div className={styles.selectBoxContainer}>
       <div className={styles.selectedOption}>{selectedYear}</div>
       {showDropdown && (
         <ul className={styles.dropdownMenu}>
-          {["6º ano", "7º ano", "8º ano", "9º ano"].map((year) => (
+          {["6º ano", "7º ano", "8º ano", "9º ano", "1º ano", "2º ano", "3º ano"].map((year) => (
             <li key={year} className={styles.dropdownItem} onClick={() => onYearChange(year)}>
               {year}
             </li>

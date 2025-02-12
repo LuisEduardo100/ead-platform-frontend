@@ -19,9 +19,8 @@ import OnGoingCategory from '../../src/components/HomeAuth/keepWatchingSlide';
 const HomeAuth = function () {
     const router = useRouter()
     const { isMenuOpen } = useMenu();
-    const [loading, setLoading] = useState(true);
     const {selectedYear, onYearChange} = useYear()
-
+    const [userSerie, setUserSerie] = useState<string | null>()
     useEffect(() => {
         AOS.init();
         AOS.refresh();
@@ -29,19 +28,22 @@ const HomeAuth = function () {
 
     useEffect(() => {
         if (!sessionStorage.getItem("vocenotadez-token")) {
-            setLoading(false)
             router.push("/login");
         } 
     }, [router])
 
     useEffect(()=> {
         profileService.fetchCurrent().then((user)=>{
-            onYearChange(user?.serie)
-            setLoading(false)
+            setUserSerie(user.serie)
         })
     })
 
-    if (loading) return <PageSpinner/>
+    useEffect(() => {
+        if (userSerie) {
+            onYearChange(userSerie)
+        }
+    }, [userSerie])
+
     return (
         <>
             <main className={`${styles.main} ${isMenuOpen ? styles.menuOpen : ""}`}>

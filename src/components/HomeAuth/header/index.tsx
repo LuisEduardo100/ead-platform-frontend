@@ -17,7 +17,6 @@ import { useYear } from "../selectBox/yearProvider";
 import Menuhamburger from "../../common/menu";
 import { useMenu } from "../../common/menu/menuProvider";
 import Image from "next/image";
-import PageSpinner from "../../common/pageSpinner";
 import PaymentButton from "../../common/precos/paymentButton";
 
 export default function HeaderAuth() {
@@ -55,7 +54,7 @@ export default function HeaderAuth() {
         event.preventDefault();
         router.push(`/search?name=${searchName}&serie=${selectedYear}`);
         setSearchName("");
-        setIsSearchOpen(false); 
+        setIsSearchOpen(false);
     };
     const handleSearchG = () => {
         router.push(`/search?name=${searchName}&serie=${selectedYear}`);
@@ -63,7 +62,7 @@ export default function HeaderAuth() {
 
     const handleSearchIconClick = () => {
         if (availableWidth <= 800) {
-            setIsSearchOpen(true); 
+            setIsSearchOpen(true);
         }
     };
 
@@ -88,105 +87,109 @@ export default function HeaderAuth() {
         return () => window.removeEventListener("resize", getAvailableWidth);
     }, []);
 
-    if (loading) return <PageSpinner/>
     return (
         <div className={`${styles.header} ${isMenuOpen ? styles.menuOpen : ""}`}>
             {/* Menu Hamburguer */}
             <Menuhamburger accessType={accessType} />
-            {availableWidth > 800 && (
-                <Form className={`${styles.formSearch} ${isSearchOpen ? styles.formSearchOpen : ''}`} onSubmit={handleSearch}>
-                    <Input
-                        name="search"
-                        id="search"
-                        className={styles.inputSearch}
-                        placeholder="Buscar curso"
-                        value={searchName}
-                        onChange={(e) => setSearchName(e.currentTarget.value.toLowerCase())}
-                    />
-                    {!isSearchOpen && (
-                        <SearchOutlined className={styles.searchIcon} onClick={handleSearchG} />
-                    )}
-                </Form>
-            )}
-            <div className={styles.divProfile}>
-                {!accessType && (
-                    <PaymentButton />
-                )}
-                {availableWidth <= 800 && !isSearchOpen && (
-                    <SearchOutlined
-                        style={{ marginRight: "10px", cursor: "pointer", fontSize: "2.2rem" }}
-                        onClick={handleSearchIconClick}
-                    />
-                )}
-                {isSearchOpen && availableWidth <= 800 && !isMenuOpen && (
-                    <div className={styles.searchOverlay}>
-                        <Form className={styles.mobileSearchForm} onSubmit={handleSearch}>
+            {!loading && (
+                <>
+                    {availableWidth > 800 && (
+                        <Form className={`${styles.formSearch} ${isSearchOpen ? styles.formSearchOpen : ''}`} onSubmit={handleSearch}>
                             <Input
                                 name="search"
-                                id="search-mobile"
+                                id="search"
+                                className={styles.inputSearch}
                                 placeholder="Buscar curso"
                                 value={searchName}
                                 onChange={(e) => setSearchName(e.currentTarget.value.toLowerCase())}
                             />
-                            {/* Ícone de busca para submeter */}
-                            <div className={styles.iconDiv}>
-                                <SearchOutlined
-                                    className={styles.iconAction}
-                                    onClick={() => {
-                                        router.push(`/search?name=${searchName}&serie=${selectedYear}`);
-                                        setSearchName("");
-                                        setIsSearchOpen(false);
-                                    }}
-                                />
-                                <CloseIcon className={styles.iconAction} onClick={handleCloseSearch} />
-                            </div>
+                            {!isSearchOpen && (
+                                <SearchOutlined className={styles.searchIcon} onClick={handleSearchG} />
+                            )}
                         </Form>
-                    </div>
-                )}
-                {/* Imagem ou ícone de perfil */}
-                {profilePicture ? (
-                    <Image
-                        src={`${process.env.NEXT_PUBLIC_BASEURL}/${profilePicture}`}
-                        alt="user picture"
-                        className={styles.imageProfile}
-                        onClick={handleOpenModal}
-                        width={45}
-                        height={45}
-                    />
-                ) : (
-                    <AccountCircle
-                        className={styles.userProfile}
-                        fontSize="small"
-                        onClick={handleOpenModal}
-                    />
-                )}
+                    )}
+                    <div className={styles.divProfile}>
+                        {!accessType && (
+                            <PaymentButton />
+                        )}
+                        {availableWidth <= 800 && !isSearchOpen && (
+                            <SearchOutlined
+                                style={{ marginRight: "10px", cursor: "pointer", fontSize: "2.2rem" }}
+                                onClick={handleSearchIconClick}
+                            />
+                        )}
+                        {isSearchOpen && availableWidth <= 800 && !isMenuOpen && (
+                            <div className={styles.searchOverlay}>
+                                <Form className={styles.mobileSearchForm} onSubmit={handleSearch}>
+                                    <Input
+                                        name="search"
+                                        id="search-mobile"
+                                        placeholder="Buscar curso"
+                                        value={searchName}
+                                        onChange={(e) => setSearchName(e.currentTarget.value.toLowerCase())}
+                                    />
+                                    {/* Ícone de busca para submeter */}
+                                    <div className={styles.iconDiv}>
+                                        <SearchOutlined
+                                            className={styles.iconAction}
+                                            onClick={() => {
+                                                router.push(`/search?name=${searchName}&serie=${selectedYear}`);
+                                                setSearchName("");
+                                                setIsSearchOpen(false);
+                                            }}
+                                        />
+                                        <CloseIcon className={styles.iconAction} onClick={handleCloseSearch} />
+                                    </div>
+                                </Form>
+                            </div>
+                        )}
+                        {/* Imagem ou ícone de perfil */}
+                        {profilePicture ? (
+                            <Image
+                                src={`${process.env.NEXT_PUBLIC_BASEURL}/${profilePicture}`}
+                                alt="user picture"
+                                className={styles.imageProfile}
+                                onClick={handleOpenModal}
+                                width={45}
+                                height={45}
+                            />
+                        ) : (
+                            <AccountCircle
+                                className={styles.userProfile}
+                                fontSize="small"
+                                onClick={handleOpenModal}
+                            />
+                        )}
 
-                {/** 
+                        {/** 
                 {/* Modal de perfil */}
-                <Modal
-                    isOpen={modalOpen}
-                    onRequestClose={handleCloseModal}
-                    shouldCloseOnEsc={true}
-                    className={styles.modal}
-                    overlayClassName={styles.overlayModal}
-                    style={{
-                        content: {
-                            position: "absolute",
-                            top: "12%",
-                            right: "3%"
-                        }
-                    }}
-                >
-                    <Link href="/profile" className={styles.modalLink}>
-                        <Save fontSize="medium" style={{ marginRight: "10px" }} />
-                        Meus Dados
-                    </Link>
-                    <p className={styles.modalLink} onClick={handleLogout}>
-                        <Logout fontSize="medium" style={{ marginRight: "10px" }} />
-                        Sair
-                    </p>
-                </Modal>
-            </div>
+                        <Modal
+                            isOpen={modalOpen}
+                            appElement={document.getElementById('__next')!}
+                            onRequestClose={handleCloseModal}
+                            shouldCloseOnEsc={true}
+                            className={styles.modal}
+                            overlayClassName={styles.overlayModal}
+                            style={{
+                                content: {
+                                    position: "absolute",
+                                    top: "12%",
+                                    right: "3%"
+                                }
+                            }}
+                        >
+                            <Link href="/profile" className={styles.modalLink}>
+                                <Save fontSize="medium" style={{ marginRight: "10px" }} />
+                                Meus Dados
+                            </Link>
+                            <p className={styles.modalLink} onClick={handleLogout}>
+                                <Logout fontSize="medium" style={{ marginRight: "10px" }} />
+                                Sair
+                            </p>
+                        </Modal>
+                    </div>
+                </>
+            )}
         </div>
     );
 }

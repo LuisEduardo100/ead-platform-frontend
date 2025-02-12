@@ -307,6 +307,36 @@ const Register = function () {
                                     />{' '}
                                     9º ano
                                 </Label>
+                                <Label className={styles.radioLabel} check>
+                                    <Input
+                                        type="radio"
+                                        name="serie"
+                                        className={styles.radioInput}
+                                        value="9º ano"
+                                        required
+                                    />{' '}
+                                    1º ano EM
+                                </Label>
+                                <Label className={styles.radioLabel} check>
+                                    <Input
+                                        type="radio"
+                                        name="serie"
+                                        className={styles.radioInput}
+                                        value="9º ano"
+                                        required
+                                    />{' '}
+                                    2º ano EM
+                                </Label>
+                                <Label className={styles.radioLabel} check>
+                                    <Input
+                                        type="radio"
+                                        name="serie"
+                                        className={styles.radioInput}
+                                        value="9º ano"
+                                        required
+                                    />{' '}
+                                    3º ano EM
+                                </Label>
                             </FormGroup>
                         </FormGroup>
                         <Button type="submit" outline className={styles.formBtn}>

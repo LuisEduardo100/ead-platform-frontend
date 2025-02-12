@@ -12,15 +12,13 @@ const YearContext = createContext<YearContextType | undefined>(undefined);
 
 export const YearProvider = ({ children }: { children: ReactNode }) => {
     const [selectedYear, setSelectedYear] = useState<string | null>(null);
-
-    const onYearChange = (year: string | null) => setSelectedYear(year);
-
+  
     return (
-        <YearContext.Provider value={{ selectedYear, onYearChange }}>
-            {children}
-        </YearContext.Provider>
+      <YearContext.Provider value={{ selectedYear, onYearChange: setSelectedYear }}>
+        {children}
+      </YearContext.Provider>
     );
-};
+  };
 
 export const useYear = () => {
     const context = useContext(YearContext);

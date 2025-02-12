@@ -2,8 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./styles/globals.scss";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { YearProvider } from "../src/components/HomeAuth/selectBox/yearProvider";
-import { MenuProvider } from "../src/components/common/menu/menuProvider";
+import ClientLayout from '../src/components/common/clientProviders/providers';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,12 +52,10 @@ export default function RootLayout({
         <meta name="keywords" content="cursos online, suporte escolar, ensino EAD, plataforma de estudo" />
         <link rel="canonical" href={siteUrl} />
       </head>
-      <body className={inter.className}>
-        <MenuProvider>
-          <YearProvider>
-            {children}
-          </YearProvider>
-        </MenuProvider>
+      <body className={inter.className} id="__next">
+        <ClientLayout>
+          {children}
+        </ClientLayout>
       </body>
     </html>
   );

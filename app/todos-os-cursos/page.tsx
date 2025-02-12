@@ -15,7 +15,6 @@ import CloseIcon from '@mui/icons-material/Close'
 import { useMenu } from "../../src/components/common/menu/menuProvider"
 import { useYear } from "../../src/components/HomeAuth/selectBox/yearProvider"
 import profileService from "../../src/services/profileService"
-import ToastComponent from "../../src/components/common/toastComponent"
 
 export default function AllCourses() {
   const { isMenuOpen } = useMenu()
@@ -30,6 +29,7 @@ export default function AllCourses() {
   const router = useRouter()
   const { data } = useSWR('/categories', categoriesService.getCategories)
 
+  
   useEffect(() => {
     setSelectedCategory(paramsCategoria)
   }, [paramsCategoria])

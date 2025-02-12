@@ -9,14 +9,12 @@ export const metadata: Metadata = {
     follow: false, // Impede que siga links dessa página
   },
 };
-export default function RootLayout({children} : { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-br">
-      <body>
-        <RecaptchaLayout>
-          {children}
-        </RecaptchaLayout>
-      </body>
-    </html>
-  );
+    <section>
+      <RecaptchaLayout>
+        {children}
+      </RecaptchaLayout>
+    </section>
+  )
 }
