@@ -21,6 +21,7 @@ const HomeAuth = function () {
     const { isMenuOpen } = useMenu();
     const {selectedYear, onYearChange} = useYear()
     const [userSerie, setUserSerie] = useState<string | null>()
+    const [loading, setLoading] = useState(true)
     useEffect(() => {
         AOS.init();
         AOS.refresh();
@@ -41,9 +42,11 @@ const HomeAuth = function () {
     useEffect(() => {
         if (userSerie) {
             onYearChange(userSerie)
+            setLoading(false)
         }
     }, [userSerie])
 
+    if (loading) return <PageSpinner/>
     return (
         <>
             <main className={`${styles.main} ${isMenuOpen ? styles.menuOpen : ""}`}>
