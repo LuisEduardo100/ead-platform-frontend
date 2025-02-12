@@ -224,6 +224,9 @@ export default function UserForm() {
                             <option value="7º ano">7º ano</option>
                             <option value="8º ano">8º ano</option>
                             <option value="9º ano">9º ano</option>
+                            <option value="1º ano">1º ano</option>
+                            <option value="2º ano">2º ano</option>
+                            <option value="3º ano">3º ano</option>
                         </Input>
                     </FormGroup>
                 </div>
