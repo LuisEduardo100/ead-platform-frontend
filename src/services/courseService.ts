@@ -1,4 +1,5 @@
 import api from './api'
+import { CategoryType } from './categoriesService';
 
 export type EpisodeType = {
     id: number;
@@ -67,6 +68,7 @@ export type EpisodeFileType = {
     fileUrl: string[] // conferir se da erro em outras paginas
     course: string
     serie: string
+    category: string
 }
 export type EpisodeFileTypeAdapted = {
     id: number;

@@ -70,6 +70,7 @@
     &:focus {
         outline: none;
         box-shadow: none;
+        border: 2px solid #fcca6760;
     }
 }
 .ulDiv {
@@ -113,14 +114,9 @@
             width: 200px;
         }
         @media (max-width: 509px) {
-            width: 150px;
+            width: 100%;
         }
-        @media (max-width: 409px) {
-            width: 130px;
-        }
-        @media (max-width: 369px) {
-            width: 100px;
-        }
+ 
         &:hover {
             opacity: .75;
             background-color: #adadadb0;
@@ -159,3 +155,38 @@
         }
     }
 }
+
+.paiFilter {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  
+    &:hover .filhoLista {
+      display: block;
+    }
+  }
+  
+  .filhoLista {
+    display: none;
+    position: absolute;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+  
+  .filhoListaItem {
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+  
+    &:hover {
+      background: #f0f0f0;
+    }
+  }
+  

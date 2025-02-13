@@ -5,15 +5,17 @@ import episodeFileService from "../../../services/episodeFileService";
 import { CategoryType } from "../../../services/categoriesService";
 import Link from "next/link";
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import { EpisodeFileType, EpisodeTypeAdapted } from '../../../services/courseService';
+import { EpisodeFileType, EpisodeFileTypeAdapted } from '../../../services/courseService';
 import ToastComponent from '../toastComponent';
 import { Lock } from '@mui/icons-material';
 
 interface Props {
-    searchTerm: string
-    access: boolean
+    filterCategory: string;
+    searchTerm: string;
+    access: boolean;
 }
-export default function AllHandouts({ searchTerm, access }: Props) {
+
+export default function AllHandouts({ filterCategory, searchTerm, access }: Props) {
     const [pdfFiles, setPdfFiles] = useState<EpisodeFileType[]>([]);
     const [filteredFiles, setFilteredFiles] = useState<EpisodeFileType[]>([]);
     const [toastColor, setToastColor] = useState("");
@@ -23,20 +25,21 @@ export default function AllHandouts({ searchTerm, access }: Props) {
     useEffect(() => {
         const getAllApostila = async () => {
             try {
-                const response = await episodeFileService.getAllFiles(); // Chama a API
+                const response = await episodeFileService.getAllFiles();
 
                 if (!response || !response.data) {
                     console.error("Data não recebida!");
                     return;
                 }
-                //@ts-ignore
+
                 const extractedHandouts = response.data.flatMap((category: CategoryType) =>
                     category?.courses?.flatMap((course) =>
                         //@ts-ignore
                         course.episodes.flatMap((episode: EpisodeTypeAdapted) =>
-                            episode.files.flatMap((file) =>
+                            episode.files.flatMap((file: EpisodeFileType) =>
                                 file.url.map((url) => ({
                                     name: file.name || "Arquivo sem nome",
+                                    category: category.name,
                                     url: url,
                                     course: course.name || "",
                                     serie: course.serie || "",
@@ -46,28 +49,32 @@ export default function AllHandouts({ searchTerm, access }: Props) {
                     )
                 );
 
-                setPdfFiles(extractedHandouts); // Atualiza o estado com os arquivos PDF
-                setFilteredFiles(extractedHandouts); // Inicia
+                setPdfFiles(extractedHandouts); 
+                setFilteredFiles(extractedHandouts);
             } catch (error) {
                 console.error("Erro ao buscar apostilas:", error);
             }
         };
 
         getAllApostila();
-    }, []); // Executa apenas ao montar o componente
+    }, []); 
 
     useEffect(() => {
-        if (searchTerm === "") {
-            // Se o campo de busca estiver vazio, retorna a lista completa
-            setFilteredFiles(pdfFiles);
-        } else {
-            // Filtra os arquivos com base no termo de busca
-            const results = pdfFiles.filter((file) =>
+        let results = pdfFiles;
+        
+        if (filterCategory && filterCategory.toLowerCase() !== "todas as matérias") {
+            results = results.filter((file) =>
+                file.category.toLowerCase() === filterCategory.toLowerCase()
+            );
+        }
+
+        if (searchTerm) {
+            results = results.filter((file) =>
                 file.name?.toLowerCase().includes(searchTerm.toLowerCase())
             );
-            setFilteredFiles(results);
         }
-    }, [searchTerm, pdfFiles]);
+        setFilteredFiles(results);
+    }, [filterCategory, searchTerm, pdfFiles]);
 
     const handleFileClick = () => {
         setToastColor("bg-danger");
