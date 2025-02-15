@@ -34,7 +34,7 @@ export default function HomeAuthPresentation() {
 
     return (
         <>
-            {filteredFeaturedCourses.length > 0 ? (
+            {filteredFeaturedCourses.length > 0 && (
                 filteredFeaturedCourses.map((course: CourseType) => (
                     <div
                         key={course.id}
@@ -58,8 +58,6 @@ export default function HomeAuthPresentation() {
                         </div>
                     </div>
                 ))[0]
-            ) : (
-                <p>Nenhum curso disponível para o ano selecionado.</p>
             )}
         </>
     );

@@ -10,7 +10,7 @@ export default function CustomSelectBox() {
   const [isOpen, setIsOpen] = useState(false);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const options = ["6º ano", "7º ano", "8º ano", "9º ano"];
+  const options = ["6º ano", "7º ano", "8º ano", "9º ano", "1º ano", "2º ano", "3º ano"];
 
   const handleSelect = (year: string) => {
     onYearChange(year);

@@ -1,15 +1,14 @@
 'use client';
 import React, { useState, useRef } from "react";
 import styles from './styles.module.scss';
-import { CategoryType } from "../../../services/categoriesService";
 
-interface CategoryFilterProps {
-  categories: CategoryType[];
-  searchCategoryTerm: string;
-  setSearchCategoryTerm: React.Dispatch<React.SetStateAction<string>>;
+interface SeriesFilterProps {
+  series: string[];                  // lista de séries disponíveis
+  searchSeriesTerm: string;         // valor atual do filtro de séries
+  setSearchSeriesTerm: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const CategoryFilter: React.FC<CategoryFilterProps> = ({ categories, searchCategoryTerm, setSearchCategoryTerm }) => {
+const SeriesFilter: React.FC<SeriesFilterProps> = ({ series, searchSeriesTerm, setSearchSeriesTerm }) => {
   const [isOpen, setIsOpen] = useState(false);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -26,12 +25,12 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({ categories, searchCateg
     }, 200);
   };
 
-  const handleSelect = (category: string) => {
-    setSearchCategoryTerm(category);
+  const handleSelect = (serie: string) => {
+    setSearchSeriesTerm(serie);
     setIsOpen(false);
   };
 
-  const options = ["Todas as matérias", ...categories.map((cat) => cat.name)];
+  const options = ["Todas as séries", ...series];
 
   return (
     <div
@@ -41,7 +40,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({ categories, searchCateg
       onClick={() => setIsOpen(prev => !prev)}
     >
       <div className={styles.selectedValue}>
-        {searchCategoryTerm || "Todas as matérias"}
+        {searchSeriesTerm || "Todas as séries"}
       </div>
       {isOpen && (
         <ul className={styles.optionsList}>
@@ -63,4 +62,4 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({ categories, searchCateg
   );
 };
 
-export default CategoryFilter;
+export default SeriesFilter;

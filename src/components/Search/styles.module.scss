@@ -10,6 +10,9 @@
     margin-left: 0;
     width: 100%;
 
+    .mainContent {
+        padding: 20px 0px;
+    }
     &.menuOpen {
         margin-left: 250px; // Largura do menu
         width: calc(100% - 250px); // Ajuste a largura restante

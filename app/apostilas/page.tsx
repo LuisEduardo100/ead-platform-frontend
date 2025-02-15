@@ -13,6 +13,7 @@ import AllHandouts from "../../src/components/common/allHandouts";
 import FooterAuth from "../../src/components/HomeAuth/footerAuth";
 import profileService from "../../src/services/profileService";
 import CategoryFilter from "../../src/components/common/filterCategory";
+import SeriesFilter from "../../src/components/common/filterSerie";
 
 export default function ApostilaPage() {
   const [apostilas, setApostilas] = useState<any[]>([]);
@@ -23,6 +24,8 @@ export default function ApostilaPage() {
   const [hasFullAccess, setHasFullAccess] = useState<boolean>(false);
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [searchCategoryTerm, setSearchCategoryTerm] = useState<string>("Todas as matérias");
+  const [searchSeriesTerm, setSearchSeriesTerm] = useState<string>("Todas as séries");
+  const [showFilters, setShowFilters] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -46,7 +49,6 @@ export default function ApostilaPage() {
         console.error("Erro ao buscar apostilas:", error);
       }
     };
-
     getAllApostila();
   }, [apostilas]);
 
@@ -88,6 +90,8 @@ export default function ApostilaPage() {
       <HeaderAuth />
       <div className={styles.mainContent}>
         <HandoutNavigation serie={null} topic={null} />
+        
+        {/* Exemplo de lista de séries, caso queira manter esse bloco */}
         <ul className={styles.ulDiv}>
           {uniqueSeries().map(serie => (
             <li
@@ -101,15 +105,11 @@ export default function ApostilaPage() {
             </li>
           ))}
         </ul>
+
         <div>
           <div className={styles.containerHeader}>
             <p>Todas as apostilas</p>
-            <div className="d-flex gap-2 align-items-center flex-wrap-reverse">
-              <CategoryFilter
-                categories={categories}
-                searchCategoryTerm={searchCategoryTerm}
-                setSearchCategoryTerm={setSearchCategoryTerm}
-              />
+            <div className="d-flex gap-2 align-items-center flex-wrap">
               <Input
                 type="text"
                 placeholder="Pesquisar"
@@ -117,12 +117,39 @@ export default function ApostilaPage() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.currentTarget.value)}
               />
+              <Button
+                onClick={() => setShowFilters((prev) => !prev)}
+                style={{
+                  height: '40px',
+                  fontWeight: 'bold',
+                  color: 'white',
+                  background: '#CC202C',
+                  borderRadius: '50px'
+                 }}
+              >
+                {showFilters ? "Ocultar filtro" : "Mostrar filtro"}
+              </Button>
+            </div>
+          </div>
+          <div className={`${styles.filtersContainer} ${showFilters ? styles.open : ""}`}>
+            <div className={styles.filtersRow}>
+              <CategoryFilter
+                categories={categories}
+                searchCategoryTerm={searchCategoryTerm}
+                setSearchCategoryTerm={setSearchCategoryTerm}
+              />
+              <SeriesFilter
+                series={uniqueSeries()}
+                searchSeriesTerm={searchSeriesTerm}
+                setSearchSeriesTerm={setSearchSeriesTerm}
+              />
             </div>
           </div>
           <AllHandouts
             searchTerm={searchTerm}
             access={hasFullAccess}
             filterCategory={searchCategoryTerm}
+            filterSeries={searchSeriesTerm} 
           />
         </div>
       </div>

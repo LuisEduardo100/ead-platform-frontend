@@ -130,7 +130,7 @@ export default function SearchComponents(
 
         <section className={styles.mainContent}>
           {loading ? (
-            <BtnSpinner />
+              <BtnSpinner />
           ) : (
             <>
               {searchResult.length >= 1 ? (

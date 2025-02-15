@@ -22,11 +22,18 @@ const HomeAuth = function () {
     const {selectedYear, onYearChange} = useYear()
     const [userSerie, setUserSerie] = useState<string | null>()
     const [loading, setLoading] = useState(true)
+
     useEffect(() => {
         AOS.init();
         AOS.refresh();
     }, []);
 
+    useEffect(()=> {
+        const intervalID = setInterval(() => {
+            setLoading(false)
+        }, 500)
+        return () => clearInterval(intervalID)
+    })
     useEffect(() => {
         if (!sessionStorage.getItem("vocenotadez-token")) {
             router.push("/login");
@@ -42,7 +49,6 @@ const HomeAuth = function () {
     useEffect(() => {
         if (userSerie) {
             onYearChange(userSerie)
-            setLoading(false)
         }
     }, [userSerie])
 
