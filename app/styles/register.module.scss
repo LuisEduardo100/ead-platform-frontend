@@ -79,7 +79,6 @@
 
 .inputName {
     @extend .input;
-    text-transform: uppercase;
 
     &::placeholder {
         text-transform: none;

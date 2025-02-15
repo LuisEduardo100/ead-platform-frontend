@@ -171,7 +171,7 @@ const Register = function () {
                                 type="text"
                                 placeholder="Qual o seu nome?"
                                 required
-                                maxLength={20}
+                                maxLength={30}
                                 className={styles.inputName}
                                 autoComplete='first-name'
                             />
@@ -184,7 +184,7 @@ const Register = function () {
                                 type="text"
                                 placeholder="Qual o seu sobrenome?"
                                 required
-                                maxLength={20}
+                                maxLength={30}
                                 className={styles.inputName}
                             />
                         </FormGroup>

@@ -104,7 +104,7 @@ export default function PaginaPrecos() {
                         <div className={styles.beneficiosLista}>
                             <h2 className={styles.investimentoTitle}>
                                 <SchoolIcon className={styles.priceIcon} />
-                                Investimento no Conhecimento
+                                Investindo no Conhecimento
                             </h2>
 
                             <div className={styles.priceOption}>
@@ -128,7 +128,7 @@ export default function PaginaPrecos() {
                                 className={styles.paymentButton}
                                 onClick={handlePayment}
                             >
-                                QUERO ME MATRICULAR AGORA
+                                MATRICULE-SE
                             </button>
                         </div>
                     </div>
