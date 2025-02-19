@@ -1,130 +1,117 @@
 .h1Title {
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 2rem;
 }
 .main {
-    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
-    margin-left: 0;
-    width: 100%;
-    min-height: 100vh;
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    &.menuOpen {
-        margin-left: 250px; // Largura do menu
-        width: calc(100% - 250px); // Ajuste a largura restante
-    }
+  transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+  margin-left: 0;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  &.menuOpen {
+    margin-left: 250px; // Largura do menu
+    width: calc(100% - 250px); // Ajuste a largura restante
+  }
 
-    .mainContent {
-        padding: 20px 50px;
-        width: 100%;
-        flex: 1;
-    }
+  .mainContent {
+    padding: 20px 50px;
+    width: 100%;
+    flex: 1;
+  }
 }
 
 .ulDiv {
-    list-style: none;
-    padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  justify-content: flex-start;
+  .liDiv {
+    background-color: #e8e8e8;
+    border: 1px solid #adadad;
+    padding: 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    flex: 1 1 316px;
+    max-width: 316px;
     display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    @media(max-width: 573px) {
-        justify-content: center;
-        width: 100%;
-
+    flex-direction: column;
+    justify-content: center;
+    // Efeito hover / selecionado
+    &:hover {
+      background-color: #dcdcdc;
+    }
+    &.selected {
+      background-color: #c2e7ff;
     }
 
-    .folderLi {
+    // Conteúdo interno
+    .topRow {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-width: 0; // importante para evitar transbordamento
+
+      .folderLi {
         font-size: 2rem;
-    }
-    .liDiv {
+        flex-shrink: 0; // não deixa o ícone encolher
+      }
+
+      .divTextos {
         display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        padding: 0.8rem;
-        border: 1px solid #adadad;
-        width: 250px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-
-        @media(max-width: 869px) {
-            width: 220px;
-            .folderLi {
-                font-size: 1.8rem;
-            }
-            .buttonStyle {
-                font-size: 0.8rem;
-            }
-        }
-        @media(max-width: 779px) {
-            width: 200px;
-            .folderLi {
-                font-size: 1.5rem;
-            }
-            .buttonStyle {
-                font-size: 0.8rem;
-            }
-        }
-        @media(max-width: 720px) {
-            width: 180px;
-            .folderLi {
-                font-size: 1.5rem;
-            }
-            .buttonStyle {
-                font-size: 0.8rem;
-            }
-        }
-        @media(max-width: 659px) {
-            width: 150px;
-            .folderLi {
-                font-size: 1.5rem;
-            }
-            .buttonStyle {
-                font-size: 0.5rem;
-            }
-        }
-        @media(max-width: 573px) {
-            .buttonStyle {
-                font-size: 0.9rem;
-            }
-            width: 100%;
-        }
-        &:hover {
-            opacity: .75;
-            background-color: #adadadb0;
-            cursor: pointer;
-        }
-
-        &.selected {
-            background-color: #C2E7FF;
-        }
+        flex-direction: column;
+        gap: 0.3rem;
+        flex: 1 1 auto;
+        min-width: 0;
 
         .buttonStyle {
-            background-color: transparent;
-            border: none;
-            display: inline-block;
-            text-decoration: none;
-            color: #000;
-            margin-left: 0.5rem;
-            max-width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            text-wrap: nowrap;
-            .fileName {
-                margin-top: 5.5px;
-                display: inline-block;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                max-width: calc(100% - 10px);
+          background-color: transparent;
+          border: none;
+          color: #000;
+          text-align: left;
+          padding: 0;
+          margin: 0;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
 
-                &:hover {
-                    overflow: visible;
-                    white-space: normal;
-                }
-            }
+          // Quebra de linha em caso de texto muito longo
+          white-space: normal;
+          word-wrap: break-word;
         }
+
+        .bottomRow {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          min-width: 0;
+
+          p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #666;
+
+            // Permite quebra de linha se for grande
+            white-space: normal;
+            word-wrap: break-word;
+          }
+        }
+      }
     }
+  }
+
+  /* EXEMPLO DE MEDIA QUERIES: 
+       Se quiser que, em telas menores, os itens ocupem 100% da largura */
+
+  @media (max-width: 800px) {
+    .liDiv {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+  }
 }
